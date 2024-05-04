@@ -15,7 +15,7 @@ class StudyBuddies extends StatelessWidget {
                 height: 10,
               ),
 
-              //Find Your Study Buddies button
+//Find Your Study Buddies button
 
               Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -55,7 +55,7 @@ class StudyBuddies extends StatelessWidget {
                 ),
               ),
 
-              //Search Bar
+//Search Bar
 
               Padding(
                 padding: const EdgeInsets.all(15.0),
@@ -70,7 +70,7 @@ class StudyBuddies extends StatelessWidget {
                 ),
               ),
 
-              //Buttons
+//Buttons
 
               Container(
                 color: Colors.white,
@@ -135,961 +135,55 @@ class StudyBuddies extends StatelessWidget {
                 height: 20,
               ),
 
-              //study buddie tution card
+//study buddie tution card method calling
 
-              Container(
-                width: 370,
-                height: 100,
-                decoration: ShapeDecoration(
-                  color: const Color(0xEAF6EEEE),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  shadows: const [
-                    BoxShadow(
-                      color: Color(0x3F000000),
-                      blurRadius: 4,
-                      offset: Offset(0, 4),
-                      spreadRadius: 0,
-                    )
-                  ],
-                ),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Center(
-                      child: SizedBox(
-                        width: 97,
-                        height: 97,
-                        child: Image.asset("assets/profilepic.png"),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 16,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Text(
-                          'David Laid',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 16,
-                            fontFamily: 'Work Sans',
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 2,
-                        ),
-                        const Text(
-                          'CS Major',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 16,
-                            fontFamily: 'Work Sans',
-                            fontWeight: FontWeight.w200,
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Container(
-                          width: 132,
-                          height: 21,
-                          decoration: ShapeDecoration(
-                            color: const Color(0xFF74FE8A),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(5),
-                            ),
-                            shadows: const [
-                              BoxShadow(
-                                color: Color(0x3F000000),
-                                blurRadius: 4,
-                                offset: Offset(0, 4),
-                                spreadRadius: 0,
-                              )
-                            ],
-                          ),
-                          child: const Center(
-                            child: Text(
-                              'request tution',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 16,
-                                fontFamily: 'Work Sans',
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      width: 16,
-                    ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Container(
-                          width: 71,
-                          height: 21,
-                          decoration: ShapeDecoration(
-                            color: const Color(0xFFFCFCFC),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(5),
-                            ),
-                            shadows: const [
-                              BoxShadow(
-                                color: Color(0x3F000000),
-                                blurRadius: 4,
-                                offset: Offset(0, 4),
-                                spreadRadius: 0,
-                              )
-                            ],
-                          ),
-                          child: const Center(
-                            child: Text(
-                              'Add',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 16,
-                                fontFamily: 'Work Sans',
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 15.55,
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
+              _studybuddyCard(
+                const AssetImage('assets/profilepic.png'),
+                'Chamod Ganegoda',
+                'SE Junior',
               ),
               const SizedBox(
                 height: 20,
               ),
-              //study buddie tution card
 
-              Container(
-                width: 370,
-                height: 100,
-                decoration: ShapeDecoration(
-                  color: const Color(0xEAF6EEEE),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  shadows: const [
-                    BoxShadow(
-                      color: Color(0x3F000000),
-                      blurRadius: 4,
-                      offset: Offset(0, 4),
-                      spreadRadius: 0,
-                    )
-                  ],
-                ),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Center(
-                      child: SizedBox(
-                        width: 97,
-                        height: 97,
-                        child: Image.asset("assets/profilepic.png"),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 16,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Text(
-                          'David Laid',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 16,
-                            fontFamily: 'Work Sans',
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 2,
-                        ),
-                        const Text(
-                          'CS Major',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 16,
-                            fontFamily: 'Work Sans',
-                            fontWeight: FontWeight.w200,
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Container(
-                          width: 132,
-                          height: 21,
-                          decoration: ShapeDecoration(
-                            color: const Color(0xFF74FE8A),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(5),
-                            ),
-                            shadows: const [
-                              BoxShadow(
-                                color: Color(0x3F000000),
-                                blurRadius: 4,
-                                offset: Offset(0, 4),
-                                spreadRadius: 0,
-                              )
-                            ],
-                          ),
-                          child: const Center(
-                            child: Text(
-                              'request tution',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 16,
-                                fontFamily: 'Work Sans',
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      width: 16,
-                    ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Container(
-                          width: 71,
-                          height: 21,
-                          decoration: ShapeDecoration(
-                            color: const Color(0xFFFCFCFC),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(5),
-                            ),
-                            shadows: const [
-                              BoxShadow(
-                                color: Color(0x3F000000),
-                                blurRadius: 4,
-                                offset: Offset(0, 4),
-                                spreadRadius: 0,
-                              )
-                            ],
-                          ),
-                          child: const Center(
-                            child: Text(
-                              'Add',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 16,
-                                fontFamily: 'Work Sans',
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 15.55,
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
+              _studybuddyCard(
+                const AssetImage('assets/profilepic.png'),
+                'Chamod Ganegoda',
+                'SE Junior',
               ),
               const SizedBox(
                 height: 20,
               ),
-              //study buddie tution card
-
-              Container(
-                width: 370,
-                height: 100,
-                decoration: ShapeDecoration(
-                  color: const Color(0xEAF6EEEE),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  shadows: const [
-                    BoxShadow(
-                      color: Color(0x3F000000),
-                      blurRadius: 4,
-                      offset: Offset(0, 4),
-                      spreadRadius: 0,
-                    )
-                  ],
-                ),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Center(
-                      child: SizedBox(
-                        width: 97,
-                        height: 97,
-                        child: Image.asset("assets/profilepic.png"),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 16,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Text(
-                          'David Laid',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 16,
-                            fontFamily: 'Work Sans',
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 2,
-                        ),
-                        const Text(
-                          'CS Major',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 16,
-                            fontFamily: 'Work Sans',
-                            fontWeight: FontWeight.w200,
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Container(
-                          width: 132,
-                          height: 21,
-                          decoration: ShapeDecoration(
-                            color: const Color(0xFF74FE8A),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(5),
-                            ),
-                            shadows: const [
-                              BoxShadow(
-                                color: Color(0x3F000000),
-                                blurRadius: 4,
-                                offset: Offset(0, 4),
-                                spreadRadius: 0,
-                              )
-                            ],
-                          ),
-                          child: const Center(
-                            child: Text(
-                              'request tution',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 16,
-                                fontFamily: 'Work Sans',
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      width: 16,
-                    ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Container(
-                          width: 71,
-                          height: 21,
-                          decoration: ShapeDecoration(
-                            color: const Color(0xFFFCFCFC),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(5),
-                            ),
-                            shadows: const [
-                              BoxShadow(
-                                color: Color(0x3F000000),
-                                blurRadius: 4,
-                                offset: Offset(0, 4),
-                                spreadRadius: 0,
-                              )
-                            ],
-                          ),
-                          child: const Center(
-                            child: Text(
-                              'Add',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 16,
-                                fontFamily: 'Work Sans',
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 15.55,
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
+              _studybuddyCard(
+                const AssetImage('assets/profilepic.png'),
+                'Chamod Ganegoda',
+                'SE Junior',
               ),
               const SizedBox(
                 height: 20,
               ),
-              //study buddie tution card
 
-              Container(
-                width: 370,
-                height: 100,
-                decoration: ShapeDecoration(
-                  color: const Color(0xEAF6EEEE),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  shadows: const [
-                    BoxShadow(
-                      color: Color(0x3F000000),
-                      blurRadius: 4,
-                      offset: Offset(0, 4),
-                      spreadRadius: 0,
-                    )
-                  ],
-                ),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Center(
-                      child: SizedBox(
-                        width: 97,
-                        height: 97,
-                        child: Image.asset("assets/profilepic.png"),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 16,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Text(
-                          'David Laid',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 16,
-                            fontFamily: 'Work Sans',
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 2,
-                        ),
-                        const Text(
-                          'CS Major',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 16,
-                            fontFamily: 'Work Sans',
-                            fontWeight: FontWeight.w200,
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Container(
-                          width: 132,
-                          height: 21,
-                          decoration: ShapeDecoration(
-                            color: const Color(0xFF74FE8A),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(5),
-                            ),
-                            shadows: const [
-                              BoxShadow(
-                                color: Color(0x3F000000),
-                                blurRadius: 4,
-                                offset: Offset(0, 4),
-                                spreadRadius: 0,
-                              )
-                            ],
-                          ),
-                          child: const Center(
-                            child: Text(
-                              'request tution',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 16,
-                                fontFamily: 'Work Sans',
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      width: 16,
-                    ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Container(
-                          width: 71,
-                          height: 21,
-                          decoration: ShapeDecoration(
-                            color: const Color(0xFFFCFCFC),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(5),
-                            ),
-                            shadows: const [
-                              BoxShadow(
-                                color: Color(0x3F000000),
-                                blurRadius: 4,
-                                offset: Offset(0, 4),
-                                spreadRadius: 0,
-                              )
-                            ],
-                          ),
-                          child: const Center(
-                            child: Text(
-                              'Add',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 16,
-                                fontFamily: 'Work Sans',
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 15.55,
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
+              _studybuddyCard(
+                const AssetImage('assets/profilepic.png'),
+                'Chamod Ganegoda',
+                'SE Junior',
               ),
               const SizedBox(
                 height: 20,
               ),
-              //study buddie tution card
-
-              Container(
-                width: 370,
-                height: 100,
-                decoration: ShapeDecoration(
-                  color: const Color(0xEAF6EEEE),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  shadows: const [
-                    BoxShadow(
-                      color: Color(0x3F000000),
-                      blurRadius: 4,
-                      offset: Offset(0, 4),
-                      spreadRadius: 0,
-                    )
-                  ],
-                ),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Center(
-                      child: SizedBox(
-                        width: 97,
-                        height: 97,
-                        child: Image.asset("assets/profilepic.png"),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 16,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Text(
-                          'David Laid',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 16,
-                            fontFamily: 'Work Sans',
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 2,
-                        ),
-                        const Text(
-                          'CS Major',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 16,
-                            fontFamily: 'Work Sans',
-                            fontWeight: FontWeight.w200,
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Container(
-                          width: 132,
-                          height: 21,
-                          decoration: ShapeDecoration(
-                            color: const Color(0xFF74FE8A),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(5),
-                            ),
-                            shadows: const [
-                              BoxShadow(
-                                color: Color(0x3F000000),
-                                blurRadius: 4,
-                                offset: Offset(0, 4),
-                                spreadRadius: 0,
-                              )
-                            ],
-                          ),
-                          child: const Center(
-                            child: Text(
-                              'request tution',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 16,
-                                fontFamily: 'Work Sans',
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      width: 16,
-                    ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Container(
-                          width: 71,
-                          height: 21,
-                          decoration: ShapeDecoration(
-                            color: const Color(0xFFFCFCFC),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(5),
-                            ),
-                            shadows: const [
-                              BoxShadow(
-                                color: Color(0x3F000000),
-                                blurRadius: 4,
-                                offset: Offset(0, 4),
-                                spreadRadius: 0,
-                              )
-                            ],
-                          ),
-                          child: const Center(
-                            child: Text(
-                              'Add',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 16,
-                                fontFamily: 'Work Sans',
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 15.55,
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
+              _studybuddyCard(
+                const AssetImage('assets/profilepic.png'),
+                'Chamod Ganegoda',
+                'SE Junior',
               ),
               const SizedBox(
                 height: 20,
               ),
-              //study buddie tution card
 
-              Container(
-                width: 370,
-                height: 100,
-                decoration: ShapeDecoration(
-                  color: const Color(0xEAF6EEEE),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  shadows: const [
-                    BoxShadow(
-                      color: Color(0x3F000000),
-                      blurRadius: 4,
-                      offset: Offset(0, 4),
-                      spreadRadius: 0,
-                    )
-                  ],
-                ),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Center(
-                      child: SizedBox(
-                        width: 97,
-                        height: 97,
-                        child: Image.asset("assets/profilepic.png"),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 16,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Text(
-                          'David Laid',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 16,
-                            fontFamily: 'Work Sans',
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 2,
-                        ),
-                        const Text(
-                          'CS Major',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 16,
-                            fontFamily: 'Work Sans',
-                            fontWeight: FontWeight.w200,
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Container(
-                          width: 132,
-                          height: 21,
-                          decoration: ShapeDecoration(
-                            color: const Color(0xFF74FE8A),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(5),
-                            ),
-                            shadows: const [
-                              BoxShadow(
-                                color: Color(0x3F000000),
-                                blurRadius: 4,
-                                offset: Offset(0, 4),
-                                spreadRadius: 0,
-                              )
-                            ],
-                          ),
-                          child: const Center(
-                            child: Text(
-                              'request tution',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 16,
-                                fontFamily: 'Work Sans',
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      width: 16,
-                    ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Container(
-                          width: 71,
-                          height: 21,
-                          decoration: ShapeDecoration(
-                            color: const Color(0xFFFCFCFC),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(5),
-                            ),
-                            shadows: const [
-                              BoxShadow(
-                                color: Color(0x3F000000),
-                                blurRadius: 4,
-                                offset: Offset(0, 4),
-                                spreadRadius: 0,
-                              )
-                            ],
-                          ),
-                          child: const Center(
-                            child: Text(
-                              'Add',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 16,
-                                fontFamily: 'Work Sans',
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 15.55,
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              //study buddie tution card
-
-              Container(
-                width: 370,
-                height: 100,
-                decoration: ShapeDecoration(
-                  color: const Color(0xEAF6EEEE),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  shadows: const [
-                    BoxShadow(
-                      color: Color(0x3F000000),
-                      blurRadius: 4,
-                      offset: Offset(0, 4),
-                      spreadRadius: 0,
-                    )
-                  ],
-                ),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Center(
-                      child: SizedBox(
-                        width: 97,
-                        height: 97,
-                        child: Image.asset("assets/profilepic.png"),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 16,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Text(
-                          'David Laid',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 16,
-                            fontFamily: 'Work Sans',
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 2,
-                        ),
-                        const Text(
-                          'CS Major',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 16,
-                            fontFamily: 'Work Sans',
-                            fontWeight: FontWeight.w200,
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Container(
-                          width: 132,
-                          height: 21,
-                          decoration: ShapeDecoration(
-                            color: const Color(0xFF74FE8A),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(5),
-                            ),
-                            shadows: const [
-                              BoxShadow(
-                                color: Color(0x3F000000),
-                                blurRadius: 4,
-                                offset: Offset(0, 4),
-                                spreadRadius: 0,
-                              )
-                            ],
-                          ),
-                          child: const Center(
-                            child: Text(
-                              'request tution',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 16,
-                                fontFamily: 'Work Sans',
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      width: 16,
-                    ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Container(
-                          width: 71,
-                          height: 21,
-                          decoration: ShapeDecoration(
-                            color: const Color(0xFFFCFCFC),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(5),
-                            ),
-                            shadows: const [
-                              BoxShadow(
-                                color: Color(0x3F000000),
-                                blurRadius: 4,
-                                offset: Offset(0, 4),
-                                spreadRadius: 0,
-                              )
-                            ],
-                          ),
-                          child: const Center(
-                            child: Text(
-                              'Add',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 16,
-                                fontFamily: 'Work Sans',
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 15.55,
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
+              _studybuddyCard(
+                const AssetImage('assets/profilepic.png'),
+                'Chamod Ganegoda',
+                'SE Junior',
               ),
               const SizedBox(
                 height: 20,
@@ -1100,4 +194,149 @@ class StudyBuddies extends StatelessWidget {
       ),
     );
   }
+}
+
+//study buddie tution card method
+
+Widget _studybuddyCard(
+    ImageProvider<Object> userImage, String userName, String userLevel) {
+  return Container(
+    width: 370,
+    height: 100,
+    decoration: ShapeDecoration(
+      color: const Color(0xEAF6EEEE),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+      ),
+      shadows: const [
+        BoxShadow(
+          color: Color(0x3F000000),
+          blurRadius: 4,
+          offset: Offset(0, 4),
+          spreadRadius: 0,
+        )
+      ],
+    ),
+    child: Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Center(
+          child: Container(
+            margin: const EdgeInsets.all(5),
+            width: 100,
+            height: 100,
+            decoration: const BoxDecoration(
+              shape: BoxShape.circle,
+            ),
+            child: Image(
+              image: userImage,
+              fit: BoxFit.cover,
+            ),
+          ),
+        ),
+        const SizedBox(
+          width: 16,
+        ),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              userName,
+              style: const TextStyle(
+                color: Colors.black,
+                fontSize: 16,
+                fontFamily: 'Work Sans',
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            const SizedBox(
+              height: 2,
+            ),
+            Text(
+              userLevel,
+              style: const TextStyle(
+                color: Colors.black,
+                fontSize: 16,
+                fontFamily: 'Work Sans',
+                fontWeight: FontWeight.w200,
+              ),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Container(
+              width: 132,
+              height: 21,
+              decoration: ShapeDecoration(
+                color: const Color(0xFF74FE8A),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(5),
+                ),
+                shadows: const [
+                  BoxShadow(
+                    color: Color(0x3F000000),
+                    blurRadius: 4,
+                    offset: Offset(0, 4),
+                    spreadRadius: 0,
+                  )
+                ],
+              ),
+              child: const Center(
+                child: Text(
+                  'request tution',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 16,
+                    fontFamily: 'Work Sans',
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(
+          width: 16,
+        ),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Container(
+              width: 70,
+              height: 20,
+              decoration: ShapeDecoration(
+                color: const Color(0xFFFCFCFC),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(5),
+                ),
+                shadows: const [
+                  BoxShadow(
+                    color: Color(0x3F000000),
+                    blurRadius: 4,
+                    offset: Offset(0, 4),
+                    spreadRadius: 0,
+                  )
+                ],
+              ),
+              child: const Center(
+                child: Text(
+                  'Add',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 16,
+                    fontFamily: 'Work Sans',
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 15.55,
+            ),
+          ],
+        ),
+      ],
+    ),
+  );
 }

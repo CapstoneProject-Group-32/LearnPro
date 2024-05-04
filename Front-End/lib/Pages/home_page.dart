@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Pages/find_studybuddies.dart';
-import 'package:flutter_application_1/Pages/focus_to_studies.dart';
+import 'package:flutter_application_1/Pages/learndesk_page.dart';
 import 'package:flutter_application_1/Pages/library.dart';
 
 class HomePage extends StatelessWidget {
@@ -17,13 +17,13 @@ class HomePage extends StatelessWidget {
             children: [
               Column(
                 children: [
-                  // First container
+// First container
 
                   Container(
-                    height: 275,
+                    height: 300,
                     width: double.infinity,
                     decoration: const BoxDecoration(
-                      color: Color(0xFFAFDBE3),
+                      color: Color(0xFF74FE8A),
                     ),
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
@@ -31,55 +31,58 @@ class HomePage extends StatelessWidget {
                         padding: const EdgeInsets.all(8.0),
                         child: Column(
                           children: [
-                            // Name and Date
+// Name and Date
 
-                            const Row(
-                              children: [
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "Hi, Chamod",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 30,
-                                            color: Colors.black),
-                                      ),
-                                      Text(
-                                        "April 28, 2024",
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 20,
-                                          color: Colors.black,
+                            const Padding(
+                              padding: EdgeInsets.only(top: 12, left: 10),
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          "Hi, Chamod",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 30,
+                                              color: Colors.black),
                                         ),
-                                      ),
+                                        Text(
+                                          "April 28, 2024",
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 20,
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+
+                                  SizedBox(
+                                    width: 200,
+                                  ),
+
+//Notification
+
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    children: [
+                                      Icon(Icons.notifications,
+                                          size: 30, color: Colors.black),
                                     ],
                                   ),
-                                ),
-
-                                SizedBox(
-                                  width: 200,
-                                ),
-
-                                //Notification
-
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: [
-                                    Icon(Icons.notifications,
-                                        size: 30, color: Colors.black),
-                                  ],
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
 
                             const SizedBox(
                               height: 30,
                             ),
 
-                            // Today progress container
+// Today progress container
 
                             Container(
                               height: 150,
@@ -196,7 +199,7 @@ class HomePage extends StatelessWidget {
                     height: 10,
                   ),
 
-                  // Search bar(design only)
+// Search bar(design only)
 
                   Padding(
                     padding: const EdgeInsets.all(15.0),
@@ -215,13 +218,13 @@ class HomePage extends StatelessWidget {
                     height: 10,
                   ),
 
-                  //Daily moto
+//Daily moto
 
                   Container(
                     height: 250,
                     width: 350,
                     decoration: BoxDecoration(
-                      color: const Color(0xFFAFDBE3),
+                      color: const Color(0xFF74FE8A),
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: Row(
@@ -249,7 +252,7 @@ class HomePage extends StatelessWidget {
                     height: 20,
                   ),
 
-                  //Icons
+//Icons
 
                   Container(
                     width: 400,
@@ -273,7 +276,7 @@ class HomePage extends StatelessWidget {
                         ),
                         _iconMethod(
                           context,
-                          const FocusToStudies(),
+                          const LearnDesk(),
                           const AssetImage('assets/reading.png'),
                           'Focus',
                         ),
@@ -287,7 +290,7 @@ class HomePage extends StatelessWidget {
                     ),
                   ),
 
-                  //Today Goals heading Text
+//Today Goals heading Text
 
                   const Padding(
                     padding: EdgeInsets.all(10.0),
