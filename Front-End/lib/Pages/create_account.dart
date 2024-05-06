@@ -1,9 +1,50 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Pages/Login_Page.dart';
 import 'package:flutter_application_1/Pages/home_page.dart';
+import 'package:http/http.dart' as http;
 
 class CreateAccount extends StatelessWidget {
-  const CreateAccount({super.key});
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _confirmPasswordController =
+      TextEditingController();
+
+  final String apiUrl = 'http://127.0.0.1:8000/';
+
+  CreateAccount({super.key});
+
+  Future<void> _register(BuildContext context) async {
+    try {
+      final response = await http.post(
+        Uri.parse(apiUrl),
+        body: {
+          'email': _emailController.text,
+          'password': _passwordController.text,
+          'confirm_password': _confirmPasswordController.text,
+        },
+      );
+
+      if (response.statusCode == 200) {
+        // Registration successful
+        print('Registration successful');
+
+        // Navigate to the home page or login page after successful registration
+
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const HomePage(),
+          ),
+        );
+      } else {
+        // Registration failed
+        print('Registration failed');
+      }
+    } catch (e) {
+      // Handle any exceptions
+      print('Error: $e');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -15,24 +56,13 @@ class CreateAccount extends StatelessWidget {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                const SizedBox(
-                  height: 30,
-                ),
-
-                //App Logo
-
+                const SizedBox(height: 30),
                 Image.asset(
                   "assets/LearnProLogo.jpg",
                   height: 200,
                   width: 200,
                 ),
-
-                const SizedBox(
-                  height: 30,
-                ),
-
-                //Create Account Part
-
+                const SizedBox(height: 30),
                 const Center(
                   child: Text(
                     "Create Account",
@@ -42,16 +72,11 @@ class CreateAccount extends StatelessWidget {
                     ),
                   ),
                 ),
-
-                const SizedBox(
-                  height: 45,
-                ),
-
-                //E-mail
-
-                const TextField(
+                const SizedBox(height: 45),
+                TextField(
+                  controller: _emailController,
                   keyboardType: TextInputType.emailAddress,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     hintText: "Email",
                     prefixIcon: Icon(
                       Icons.mail,
@@ -59,14 +84,12 @@ class CreateAccount extends StatelessWidget {
                     ),
                   ),
                 ),
-
                 const SizedBox(height: 20),
-
-                //Password
-
-                const TextField(
+                TextField(
+                  controller: _passwordController,
+                  obscureText: true,
                   keyboardType: TextInputType.visiblePassword,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     hintText: "Password",
                     prefixIcon: Icon(
                       Icons.lock,
@@ -74,14 +97,12 @@ class CreateAccount extends StatelessWidget {
                     ),
                   ),
                 ),
-
                 const SizedBox(height: 20),
-
-                //Confirm Password
-
-                const TextField(
+                TextField(
+                  controller: _confirmPasswordController,
+                  obscureText: true,
                   keyboardType: TextInputType.visiblePassword,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     hintText: "Confirm Password",
                     prefixIcon: Icon(
                       Icons.lock,
@@ -89,26 +110,16 @@ class CreateAccount extends StatelessWidget {
                     ),
                   ),
                 ),
-
                 const SizedBox(height: 50),
-
-                //Register button
-
                 InkWell(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const HomePage(),
-                      ),
-                    );
-                  },
+                  onTap: () => _register(context),
                   child: Container(
                     height: 50,
                     width: 400,
                     decoration: BoxDecoration(
-                        color: Colors.black,
-                        borderRadius: BorderRadius.circular(10)),
+                      color: Colors.black,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
                     child: const Center(
                       child: Text(
                         "Register",
@@ -117,16 +128,12 @@ class CreateAccount extends StatelessWidget {
                     ),
                   ),
                 ),
-
                 const SizedBox(height: 50),
-
-                // Don't have account? Create now
-
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "Already have account?",
+                      "Already have an account?",
                       style: TextStyle(color: Colors.grey[700]),
                     ),
                     const SizedBox(width: 4),
@@ -135,7 +142,7 @@ class CreateAccount extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const LoginPage(),
+                            builder: (context) => LoginPage(),
                           ),
                         );
                       },

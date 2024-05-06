@@ -1,50 +1,36 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/Pages/Create_account.dart';
+import 'package:flutter_application_1/Pages/create_account.dart';
+import 'package:http/http.dart' as http;
 
-/* class LoginPage extends StatefulWidget {
-  @override
-  _LoginPageState createState() => _LoginPageState();
-}
+class LoginPage extends StatelessWidget {
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
-class _LoginPageState extends State<LoginPage> {
-  TextEditingController usernameController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
+  final String apiUrl = 'http://127.0.0.1:8000/';
 
-  // Function to handle the login button press
-  void login(BuildContext context) async {
-    // URL of the Django backend endpoint for login
-    var url = 'http://your-django-backend-url/login/';
-
-    // Send a POST request to the backend with the username and password
-    var response = await http.post(Uri.parse(url), body: {
-      'username': usernameController.text,
-      'password': passwordController.text,
-    });
-
-    // Check the response status code
-    if (response.statusCode == 200) {
-      // If the response is successful, navigate to the home page
-      Navigator.pushReplacementNamed(context, '/home');
-    } else {
-      // If the response is not successful, show an error message
-      showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: Text('Error'),
-          content: Text('Incorrect username or password.'),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(context),
-              child: Text('OK'),
-            ),
-          ],
-        ),
+  Future<void> _login(BuildContext context) async {
+    try {
+      final response = await http.post(
+        Uri.parse(apiUrl),
+        body: {
+          'email': _emailController.text,
+          'password': _passwordController.text
+        },
       );
+
+      if (response.statusCode == 200) {
+        // Authentication successful
+        print('Login successful');
+        // Navigate to the next screen after successful login
+      } else {
+        // Authentication failed
+        print('Login failed');
+      }
+    } catch (e) {
+      // Handle any exceptions
+      print('Error: $e');
     }
   }
-  */
-class LoginPage extends StatelessWidget {
-  const LoginPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -55,24 +41,13 @@ class LoginPage extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              const SizedBox(
-                height: 30,
-              ),
-
-              //App Logo
-
+              const SizedBox(height: 30),
               Image.asset(
                 "assets/LearnProLogo.jpg",
                 height: 200,
                 width: 200,
               ),
-
-              const SizedBox(
-                height: 30,
-              ),
-
-              //Login Part
-
+              const SizedBox(height: 30),
               const Center(
                 child: Text(
                   "Login",
@@ -82,17 +57,11 @@ class LoginPage extends StatelessWidget {
                   ),
                 ),
               ),
-
-              const SizedBox(
-                height: 45,
-              ),
-
-              //E-mail
-
-              const TextField(
-                //    controller: usernameController,
+              const SizedBox(height: 45),
+              TextField(
+                controller: _emailController,
                 keyboardType: TextInputType.emailAddress,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   hintText: "Email",
                   prefixIcon: Icon(
                     Icons.mail,
@@ -100,18 +69,12 @@ class LoginPage extends StatelessWidget {
                   ),
                 ),
               ),
-
-              const SizedBox(
-                height: 20,
-              ),
-
-              //Password
-
-              const TextField(
-                //   controller: passwordController,
+              const SizedBox(height: 20),
+              TextField(
+                controller: _passwordController,
                 obscureText: true,
                 keyboardType: TextInputType.visiblePassword,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   hintText: "Password",
                   prefixIcon: Icon(
                     Icons.lock,
@@ -119,9 +82,6 @@ class LoginPage extends StatelessWidget {
                   ),
                 ),
               ),
-
-              // forgot password?
-
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 25.0),
                 child: Row(
@@ -134,33 +94,12 @@ class LoginPage extends StatelessWidget {
                   ],
                 ),
               ),
-
               const SizedBox(height: 30),
-
-              //Login button
-
-              //    ElevatedButton(
-              //     onPressed: () => login(context),
-              // child :
-              Container(
-                height: 50,
-                width: 400,
-                decoration: BoxDecoration(
-                    color: Colors.black,
-                    borderRadius: BorderRadius.circular(10)),
-                child: const Center(
-                  child: Text(
-                    "Log In",
-                    style: TextStyle(color: Colors.white),
-                  ),
-                ),
+              ElevatedButton(
+                onPressed: () =>_login(context),
+                child: const Text('Log In'),
               ),
-              //  ),
-
               const SizedBox(height: 50),
-
-              // or continue with
-
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10.0),
                 child: Text(
@@ -168,16 +107,10 @@ class LoginPage extends StatelessWidget {
                   style: TextStyle(color: Colors.grey[700]),
                 ),
               ),
-
               const SizedBox(height: 20),
-
-              // google + facebook sign in buttons
-
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  // google button
-
                   Container(
                     height: 50,
                     width: 150,
@@ -194,20 +127,13 @@ class LoginPage extends StatelessWidget {
                             height: 25,
                             width: 25,
                           ),
-                          const SizedBox(
-                            width: 40,
-                          ),
-                          const Text("Google")
+                          const SizedBox(width: 40),
+                          const Text("Google"),
                         ],
                       ),
                     ),
                   ),
-                  const SizedBox(
-                    width: 20,
-                  ),
-
-                  // facebook button
-
+                  const SizedBox(width: 20),
                   Container(
                     height: 50,
                     width: 150,
@@ -224,28 +150,20 @@ class LoginPage extends StatelessWidget {
                             height: 25,
                             width: 25,
                           ),
-                          const SizedBox(
-                            width: 40,
-                          ),
-                          const Text(
-                            "Facebook",
-                          )
+                          const SizedBox(width: 40),
+                          const Text("Facebook"),
                         ],
                       ),
                     ),
                   ),
                 ],
               ),
-
               const SizedBox(height: 50),
-
-              // Don't have account? Create now
-
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    "Don't have account?",
+                    "Don't have an account?",
                     style: TextStyle(color: Colors.grey[700]),
                   ),
                   const SizedBox(width: 4),
@@ -254,7 +172,7 @@ class LoginPage extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const CreateAccount(),
+                          builder: (context) => CreateAccount(),
                         ),
                       );
                     },
