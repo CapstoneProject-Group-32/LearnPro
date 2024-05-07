@@ -290,22 +290,160 @@ class HomePage extends StatelessWidget {
                     ),
                   ),
 
-//Today Goals heading Text
+//Today Goals subheading by calling subtopic method
 
-                  const Padding(
-                    padding: EdgeInsets.all(10.0),
+                  _subtopics('Today Goals'),
+
+//Join Groups subheading by calling subtopic method
+
+                  _subtopics('Join Groups'),
+
+                  const SizedBox(
+                    height: 10,
+                  ),
+
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
                     child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          "Today Goals",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 25,
-                              color: Colors.black),
+                        const SizedBox(
+                          width: 25,
+                        ),
+                        _groupContainer(
+                          context,
+                          const StudyBuddies(),
+                          const AssetImage('assets/google.png'),
+                          'Java Programming',
+                        ),
+                        const SizedBox(
+                          width: 25,
+                        ),
+                        _groupContainer(
+                          context,
+                          const StudyBuddies(),
+                          const AssetImage('assets/google.png'),
+                          'Java Programming',
+                        ),
+                        const SizedBox(
+                          width: 25,
+                        ),
+                        _groupContainer(
+                          context,
+                          const StudyBuddies(),
+                          const AssetImage('assets/google.png'),
+                          'Java Programming',
+                        ),
+                        const SizedBox(
+                          width: 25,
+                        ),
+                        _groupContainer(
+                          context,
+                          const StudyBuddies(),
+                          const AssetImage('assets/google.png'),
+                          'Java Programming',
+                        ),
+                        const SizedBox(
+                          width: 25,
+                        ),
+                        _groupContainer(
+                          context,
+                          const StudyBuddies(),
+                          const AssetImage('assets/google.png'),
+                          'Java Programming',
+                        ),
+                        const SizedBox(
+                          width: 25,
                         ),
                       ],
                     ),
+                  ),
+
+                  const SizedBox(
+                    height: 20,
+                  ),
+
+// View Button method calling
+
+                  _viewallButton(),
+
+                  const SizedBox(
+                    height: 20,
+                  ),
+
+//Your Freinds subheading by calling subtopic method
+
+                  _subtopics('Your Freinds'),
+
+                  const SizedBox(
+                    height: 10,
+                  ),
+
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: [
+                        const SizedBox(
+                          width: 25,
+                        ),
+                        _groupContainer(
+                          context,
+                          const StudyBuddies(),
+                          const AssetImage('assets/google.png'),
+                          'Java Programming',
+                        ),
+                        const SizedBox(
+                          width: 25,
+                        ),
+                        _groupContainer(
+                          context,
+                          const StudyBuddies(),
+                          const AssetImage('assets/google.png'),
+                          'Java Programming',
+                        ),
+                        const SizedBox(
+                          width: 25,
+                        ),
+                        _groupContainer(
+                          context,
+                          const StudyBuddies(),
+                          const AssetImage('assets/google.png'),
+                          'Java Programming',
+                        ),
+                        const SizedBox(
+                          width: 25,
+                        ),
+                        _groupContainer(
+                          context,
+                          const StudyBuddies(),
+                          const AssetImage('assets/google.png'),
+                          'Java Programming',
+                        ),
+                        const SizedBox(
+                          width: 25,
+                        ),
+                        _groupContainer(
+                          context,
+                          const StudyBuddies(),
+                          const AssetImage('assets/google.png'),
+                          'Java Programming',
+                        ),
+                        const SizedBox(
+                          width: 25,
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  const SizedBox(
+                    height: 20,
+                  ),
+
+// View Button method calling
+
+                  _viewallButton(),
+
+                  const SizedBox(
+                    height: 20,
                   ),
                 ],
               ),
@@ -321,42 +459,202 @@ class HomePage extends StatelessWidget {
 
 Widget _iconMethod(BuildContext context, Widget linkedPage,
     ImageProvider<Object> iconImage, String imageTopic) {
-  return Container(
-    child: InkWell(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => linkedPage,
-          ),
-        );
-      },
-      child: Container(
-        height: 100,
-        width: 100,
-        decoration: const BoxDecoration(
-          color: Colors.white,
+  return InkWell(
+    onTap: () {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => linkedPage,
         ),
-        child: Column(
-          children: [
-            Image(
-              image: iconImage,
-              height: 50,
-              width: 50,
+      );
+    },
+    child: Container(
+      height: 100,
+      width: 100,
+      decoration: const BoxDecoration(
+        color: Colors.white,
+      ),
+      child: Column(
+        children: [
+          Image(
+            image: iconImage,
+            height: 50,
+            width: 50,
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          Text(
+            imageTopic,
+            style: const TextStyle(
+                fontSize: 15, fontWeight: FontWeight.w400, color: Colors.black),
+          ),
+        ],
+      ),
+    ),
+  );
+}
+
+//Subtopic Method
+
+Widget _subtopics(String subtopic) {
+  return Padding(
+    padding: const EdgeInsets.all(10.0),
+    child: Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          subtopic,
+          style: const TextStyle(
+              fontWeight: FontWeight.bold, fontSize: 25, color: Colors.black),
+        ),
+      ],
+    ),
+  );
+}
+
+//Group Container Method
+
+Widget _groupContainer(BuildContext context, Widget linkedPage,
+    ImageProvider<Object> groupImage, String groupTopic) {
+  return Container(
+    width: 240,
+    height: 250,
+    decoration: const BoxDecoration(
+      color: Colors.white,
+    ),
+    child: Column(
+      children: [
+        Container(
+          width: 240,
+          height: 145,
+          decoration: const BoxDecoration(
+            color: Color(0xFFF4F4F4),
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(10),
+              topRight: Radius.circular(10),
             ),
-            const SizedBox(
-              height: 10,
+            boxShadow: [
+              BoxShadow(
+                color: Color(0x3F000000),
+                blurRadius: 4,
+                offset: Offset(0, 4),
+                spreadRadius: 0,
+              ),
+            ],
+          ),
+          child: Image(
+            image: groupImage,
+            fit: BoxFit.cover,
+          ),
+        ),
+        Container(
+          width: 240,
+          height: 90,
+          decoration: const BoxDecoration(
+            color: Color(0xFFF4F4F4),
+            borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(10),
+              bottomRight: Radius.circular(10),
             ),
-            Text(
-              imageTopic,
-              style: const TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.w400,
-                  color: Colors.black),
-            ),
-          ],
+            boxShadow: [
+              BoxShadow(
+                color: Color(0x3F000000),
+                blurRadius: 4,
+                offset: Offset(0, 4),
+                spreadRadius: 0,
+              ),
+            ],
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Center(
+                child: Text(
+                  groupTopic,
+                  style: const TextStyle(
+                    color: Colors.black,
+                    fontSize: 20,
+                    fontFamily: 'Work Sans',
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              InkWell(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => linkedPage,
+                    ),
+                  );
+                },
+                child: Container(
+                  width: 127,
+                  height: 27.56,
+                  decoration: ShapeDecoration(
+                    color: const Color(0xFF7BE7FF),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    shadows: const [
+                      BoxShadow(
+                        color: Color(0x3F000000),
+                        blurRadius: 4,
+                        offset: Offset(0, 4),
+                        spreadRadius: 0,
+                      )
+                    ],
+                  ),
+                  child: const Center(
+                    child: Text(
+                      'View',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 16,
+                        fontFamily: 'Work Sans',
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    ),
+  );
+}
+
+//View All Button
+
+Widget _viewallButton() {
+  return Container(
+    width: 275,
+    height: 40,
+    decoration: ShapeDecoration(
+      color: const Color(0xFFD9D9D9),
+      shape: RoundedRectangleBorder(
+        side: const BorderSide(width: 1),
+        borderRadius: BorderRadius.circular(10),
+      ),
+    ),
+    child: const Center(
+      child: Text(
+        'View All',
+        style: TextStyle(
+          color: Colors.black,
+          fontSize: 20,
+          fontFamily: 'Work Sans',
+          fontWeight: FontWeight.w400,
         ),
       ),
     ),
   );
 }
+
+//Freind container methods

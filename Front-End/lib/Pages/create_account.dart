@@ -63,12 +63,22 @@ class CreateAccount extends StatelessWidget {
                   width: 200,
                 ),
                 const SizedBox(height: 30),
-                const Center(
-                  child: Text(
-                    "Create Account",
-                    style: TextStyle(
-                      fontSize: 40,
-                      fontWeight: FontWeight.w500,
+                Center(
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const HomePage(),
+                        ),
+                      );
+                    },
+                    child: const Text(
+                      "Create Account",
+                      style: TextStyle(
+                        fontSize: 40,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
                   ),
                 ),
