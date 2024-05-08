@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/Pages/Login_Page.dart';
-import 'package:flutter_application_1/Pages/home_page.dart';
+import 'package:flutter_application_1/Screens/Login_Page.dart';
+import 'package:flutter_application_1/Screens/home_page.dart';
 
 class CreateAccount extends StatelessWidget {
   const CreateAccount({super.key});

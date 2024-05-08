@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/Pages/find_studybuddies.dart';
-import 'package:flutter_application_1/Pages/learndesk_page.dart';
-import 'package:flutter_application_1/Pages/library.dart';
+import 'package:flutter_application_1/Screens/find_studybuddies.dart';
+import 'package:flutter_application_1/Screens//learndesk_page.dart';
+import 'package:flutter_application_1/Screens//library.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
