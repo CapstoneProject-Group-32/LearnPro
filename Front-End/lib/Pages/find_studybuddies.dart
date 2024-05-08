@@ -43,7 +43,7 @@ class StudyBuddies extends StatelessWidget {
                         width: 8,
                       ),
                       Text(
-                        "Find Your Study Buddies",
+                        "Student Community",
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 30,

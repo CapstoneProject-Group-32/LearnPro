@@ -1,50 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Pages/Login_Page.dart';
 import 'package:flutter_application_1/Pages/home_page.dart';
-import 'package:http/http.dart' as http;
 
 class CreateAccount extends StatelessWidget {
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmPasswordController =
-      TextEditingController();
-
-  final String apiUrl = 'http://127.0.0.1:8000/';
-
-  CreateAccount({super.key});
-
-  Future<void> _register(BuildContext context) async {
-    try {
-      final response = await http.post(
-        Uri.parse(apiUrl),
-        body: {
-          'email': _emailController.text,
-          'password': _passwordController.text,
-          'confirm_password': _confirmPasswordController.text,
-        },
-      );
-
-      if (response.statusCode == 200) {
-        // Registration successful
-        print('Registration successful');
-
-        // Navigate to the home page or login page after successful registration
-
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const HomePage(),
-          ),
-        );
-      } else {
-        // Registration failed
-        print('Registration failed');
-      }
-    } catch (e) {
-      // Handle any exceptions
-      print('Error: $e');
-    }
-  }
+  const CreateAccount({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -83,10 +42,9 @@ class CreateAccount extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 45),
-                TextField(
-                  controller: _emailController,
+                const TextField(
                   keyboardType: TextInputType.emailAddress,
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     hintText: "Email",
                     prefixIcon: Icon(
                       Icons.mail,
@@ -95,11 +53,10 @@ class CreateAccount extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 20),
-                TextField(
-                  controller: _passwordController,
+                const TextField(
                   obscureText: true,
                   keyboardType: TextInputType.visiblePassword,
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     hintText: "Password",
                     prefixIcon: Icon(
                       Icons.lock,
@@ -108,11 +65,10 @@ class CreateAccount extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 20),
-                TextField(
-                  controller: _confirmPasswordController,
+                const TextField(
                   obscureText: true,
                   keyboardType: TextInputType.visiblePassword,
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     hintText: "Confirm Password",
                     prefixIcon: Icon(
                       Icons.lock,
@@ -122,7 +78,14 @@ class CreateAccount extends StatelessWidget {
                 ),
                 const SizedBox(height: 50),
                 InkWell(
-                  onTap: () => _register(context),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const HomePage(),
+                      ),
+                    );
+                  },
                   child: Container(
                     height: 50,
                     width: 400,

@@ -1,36 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Pages/create_account.dart';
-import 'package:http/http.dart' as http;
 
 class LoginPage extends StatelessWidget {
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
-
-  final String apiUrl = 'http://127.0.0.1:8000/';
-
-  Future<void> _login(BuildContext context) async {
-    try {
-      final response = await http.post(
-        Uri.parse(apiUrl),
-        body: {
-          'email': _emailController.text,
-          'password': _passwordController.text
-        },
-      );
-
-      if (response.statusCode == 200) {
-        // Authentication successful
-        print('Login successful');
-        // Navigate to the next screen after successful login
-      } else {
-        // Authentication failed
-        print('Login failed');
-      }
-    } catch (e) {
-      // Handle any exceptions
-      print('Error: $e');
-    }
-  }
+  const LoginPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -58,10 +30,9 @@ class LoginPage extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 45),
-              TextField(
-                controller: _emailController,
+              const TextField(
                 keyboardType: TextInputType.emailAddress,
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   hintText: "Email",
                   prefixIcon: Icon(
                     Icons.mail,
@@ -70,11 +41,10 @@ class LoginPage extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 20),
-              TextField(
-                controller: _passwordController,
+              const TextField(
                 obscureText: true,
                 keyboardType: TextInputType.visiblePassword,
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   hintText: "Password",
                   prefixIcon: Icon(
                     Icons.lock,
@@ -95,9 +65,18 @@ class LoginPage extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 30),
-              ElevatedButton(
-                onPressed: () =>_login(context),
-                child: const Text('Log In'),
+              InkWell(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const CreateAccount(),
+                    ),
+                  );
+                },
+                child: const Text(
+                  'Log In',
+                ),
               ),
               const SizedBox(height: 50),
               Padding(
@@ -172,7 +151,7 @@ class LoginPage extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => CreateAccount(),
+                          builder: (context) => const CreateAccount(),
                         ),
                       );
                     },

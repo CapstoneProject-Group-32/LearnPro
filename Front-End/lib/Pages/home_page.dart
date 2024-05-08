@@ -299,7 +299,7 @@ class HomePage extends StatelessWidget {
                   _subtopics('Join Groups'),
 
                   const SizedBox(
-                    height: 10,
+                    height: 18,
                   ),
 
                   SingleChildScrollView(
@@ -385,48 +385,39 @@ class HomePage extends StatelessWidget {
                         const SizedBox(
                           width: 25,
                         ),
-                        _groupContainer(
-                          context,
-                          const StudyBuddies(),
-                          const AssetImage('assets/google.png'),
-                          'Java Programming',
-                        ),
+                        _friendContainer(
+                            context,
+                            const StudyBuddies(),
+                            const AssetImage('assets/flutterbook.png'),
+                            'Chamod Gangeoda',
+                            'CS Undergraduate'),
                         const SizedBox(
                           width: 25,
                         ),
-                        _groupContainer(
-                          context,
-                          const StudyBuddies(),
-                          const AssetImage('assets/google.png'),
-                          'Java Programming',
-                        ),
+                        _friendContainer(
+                            context,
+                            const StudyBuddies(),
+                            const AssetImage('assets/flutterbook.png'),
+                            'Chamod Gangeoda',
+                            'CS Undergraduate'),
                         const SizedBox(
                           width: 25,
                         ),
-                        _groupContainer(
-                          context,
-                          const StudyBuddies(),
-                          const AssetImage('assets/google.png'),
-                          'Java Programming',
-                        ),
+                        _friendContainer(
+                            context,
+                            const StudyBuddies(),
+                            const AssetImage('assets/flutterbook.png'),
+                            'Chamod Gangeoda',
+                            'CS Undergraduate'),
                         const SizedBox(
                           width: 25,
                         ),
-                        _groupContainer(
-                          context,
-                          const StudyBuddies(),
-                          const AssetImage('assets/google.png'),
-                          'Java Programming',
-                        ),
-                        const SizedBox(
-                          width: 25,
-                        ),
-                        _groupContainer(
-                          context,
-                          const StudyBuddies(),
-                          const AssetImage('assets/google.png'),
-                          'Java Programming',
-                        ),
+                        _friendContainer(
+                            context,
+                            const StudyBuddies(),
+                            const AssetImage('assets/flutterbook.png'),
+                            'Chamod Gangeoda',
+                            'CS Undergraduate'),
                         const SizedBox(
                           width: 25,
                         ),
@@ -435,7 +426,7 @@ class HomePage extends StatelessWidget {
                   ),
 
                   const SizedBox(
-                    height: 20,
+                    height: 27,
                   ),
 
 // View Button method calling
@@ -658,3 +649,108 @@ Widget _viewallButton() {
 }
 
 //Freind container methods
+
+Widget _friendContainer(BuildContext context, Widget linkedPage,
+    ImageProvider<Object> friendImage, String friendname, String frindLevel) {
+  return Container(
+    width: 200,
+    height: 250,
+    decoration: const BoxDecoration(
+      color: Colors.white,
+    ),
+    child: Center(
+      child: Container(
+        height: 230,
+        width: 200,
+        decoration: BoxDecoration(
+          color: const Color(0xFFF4F4F4),
+          borderRadius: BorderRadius.circular(
+            10,
+          ),
+          boxShadow: const [
+            BoxShadow(
+              color: Color(0x3F000000),
+              blurRadius: 4,
+              offset: Offset(0, 4),
+              spreadRadius: 0,
+            ),
+          ],
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.values[2],
+          children: [
+            ClipOval(
+              child: Image(
+                image: friendImage,
+                height: 100,
+                width: 100,
+                fit: BoxFit.cover,
+              ),
+            ),
+            const SizedBox(
+              height: 18,
+            ),
+            Text(
+              friendname,
+              style: const TextStyle(
+                color: Colors.black,
+                fontSize: 20,
+                fontFamily: 'Work Sans',
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            Text(
+              frindLevel,
+              style: const TextStyle(
+                color: Colors.black,
+                fontSize: 16,
+                fontFamily: 'Work Sans',
+                fontWeight: FontWeight.w200,
+              ),
+            ),
+            const SizedBox(
+              height: 11,
+            ),
+            InkWell(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => linkedPage),
+                );
+              },
+              child: Container(
+                width: 130,
+                height: 28,
+                decoration: ShapeDecoration(
+                  color: const Color(0xFF7BE7FF),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  shadows: const [
+                    BoxShadow(
+                      color: Color(0x3F000000),
+                      blurRadius: 4,
+                      offset: Offset(0, 4),
+                      spreadRadius: 0,
+                    )
+                  ],
+                ),
+                child: const Center(
+                  child: Text(
+                    'Request Tution',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 16,
+                      fontFamily: 'Work Sans',
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    ),
+  );
+}

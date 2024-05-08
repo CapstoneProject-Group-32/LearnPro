@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1043776246821",
+    "project_id": "learnpro-mobile-app",
+    "storage_bucket": "learnpro-mobile-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1043776246821:android:9744e66358f8f4a9b61bcc",
+        "android_client_info": {
+          "package_name": "com.example.flutter_application_1"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCcTW-DW_vznUw5kbILvMvCMx7tlQStNOs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
