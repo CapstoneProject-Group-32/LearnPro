@@ -1,10 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/Screens/find_studybuddies.dart';
-import 'package:flutter_application_1/Screens//learndesk_page.dart';
-import 'package:flutter_application_1/Screens//library.dart';
+import 'package:flutter_application_1/Screens/Authentication/authenticate.dart';
+import 'package:flutter_application_1/Screens/Timer/timer_page.dart';
 
-class HomePage extends StatelessWidget {
+import 'package:flutter_application_1/Screens/find_studybuddies.dart';
+import 'package:flutter_application_1/Screens/learndesk_page.dart';
+import 'package:flutter_application_1/Screens/library.dart';
+import 'package:flutter_application_1/Services/auth_firebase.dart';
+
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+//create a object from Authservices
+
+  final AuthServices _auth = AuthServices();
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +36,7 @@ class HomePage extends StatelessWidget {
                     height: 300,
                     width: double.infinity,
                     decoration: const BoxDecoration(
-                      color: Color(0xFF74FE8A),
+                      color: Color(0xFFDFFCE4),
                     ),
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
@@ -33,11 +46,11 @@ class HomePage extends StatelessWidget {
                           children: [
 // Name and Date
 
-                            const Padding(
-                              padding: EdgeInsets.only(top: 12, left: 10),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 12, left: 10),
                               child: Row(
                                 children: [
-                                  Expanded(
+                                  const Expanded(
                                     child: Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
@@ -61,8 +74,8 @@ class HomePage extends StatelessWidget {
                                     ),
                                   ),
 
-                                  SizedBox(
-                                    width: 200,
+                                  const SizedBox(
+                                    width: 100,
                                   ),
 
 //Notification
@@ -70,8 +83,22 @@ class HomePage extends StatelessWidget {
                                   Column(
                                     crossAxisAlignment: CrossAxisAlignment.end,
                                     children: [
-                                      Icon(Icons.notifications,
-                                          size: 30, color: Colors.black),
+                                      ElevatedButton(
+                                        onPressed: () async {
+                                          await AuthServices().logOut();
+                                          Navigator.of(context).pushReplacement(
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const Authenticate(),
+                                            ),
+                                          );
+                                        },
+                                        child: const Icon(
+                                          Icons.logout,
+                                          size: 20,
+                                          color: Colors.black,
+                                        ),
+                                      ),
                                     ],
                                   ),
                                 ],
@@ -224,7 +251,7 @@ class HomePage extends StatelessWidget {
                     height: 250,
                     width: 350,
                     decoration: BoxDecoration(
-                      color: const Color(0xFF74FE8A),
+                      color: const Color(0xFFDFFCE4),
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: Row(
@@ -282,7 +309,7 @@ class HomePage extends StatelessWidget {
                         ),
                         _iconMethod(
                           context,
-                          const Library(),
+                          const MainScreen(),
                           const AssetImage('assets/notebook.png'),
                           'Study Plan',
                         ),
