@@ -1,9 +1,13 @@
 import 'dart:async';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'package:flutter_application_1/Controllers/history_controller.dart';
+import 'package:flutter_application_1/Screens/Timer/history_page.dart';
 import 'package:flutter_application_1/Screens/home_page.dart';
 import 'package:sleek_circular_slider/sleek_circular_slider.dart';
+import 'package:flutter_application_1/models/timer_history_model.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
@@ -18,7 +22,11 @@ class _MainScreenState extends State<MainScreen> {
   bool isStarted = false;
   int focusedMins = 0;
 
+  List<History> listHistory = [];
+
   late Timer _timer;
+
+  HistoryController historyController = HistoryController();
 
   void startTimer() {
     focusedMins = value.toInt();
@@ -31,7 +39,11 @@ class _MainScreenState extends State<MainScreen> {
             timer.cancel();
             value = defaultValue;
             isStarted = false;
-            // Add your logic here for saving the history
+            listHistory = historyController.read("history");
+            listHistory.add(
+                History(dateTime: DateTime.now(), focusedSecs: focusedMins));
+            historyController.save("history", listHistory);
+            // print(historyController.read("history"));
           });
         } else {
           setState(() {
@@ -62,12 +74,12 @@ class _MainScreenState extends State<MainScreen> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Row(
-                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisSize: MainAxisSize.max,
-
-// Timmer Button
-
                 children: <Widget>[
+//Timer back button
+//
                   Padding(
                     padding: const EdgeInsets.all(4.0),
                     child: InkWell(
@@ -105,8 +117,31 @@ class _MainScreenState extends State<MainScreen> {
                       ),
                     ),
                   ),
+
+//History button
+//
+                  Padding(
+                    padding: const EdgeInsets.only(right: 15),
+                    child: IconButton(
+                      icon: const Icon(
+                        Icons.history,
+                        color: Colors.black,
+                        size: 35,
+                      ),
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            CupertinoPageRoute(
+                                builder: (BuildContext context) =>
+                                    const HistoryScreen()));
+                      },
+                    ),
+                  ),
                 ],
               ),
+
+// start focus session
+
               const SizedBox(
                 height: 50,
               ),
@@ -114,6 +149,8 @@ class _MainScreenState extends State<MainScreen> {
                 "Start a Focus session",
                 style: TextStyle(fontSize: 20),
               ),
+
+//timer
               Expanded(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,

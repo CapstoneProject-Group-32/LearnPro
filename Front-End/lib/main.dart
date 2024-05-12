@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
           major: '',
           profilePic: '',
           friends: []),
-      child: MaterialApp(
+      child: const MaterialApp(
         debugShowCheckedModeBanner: false,
         home: Wrapper(),
       ),
