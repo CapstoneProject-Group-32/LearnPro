@@ -6,6 +6,7 @@ import 'package:flutter_application_1/Screens/find_studybuddies.dart';
 import 'package:flutter_application_1/Screens/learndesk_page.dart';
 import 'package:flutter_application_1/Screens/library.dart';
 import 'package:flutter_application_1/Services/auth_firebase.dart';
+import 'package:flutter_application_1/Widgets/navigation_bar.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -19,6 +20,8 @@ class _HomePageState extends State<HomePage> {
 
   final AuthServices _auth = AuthServices();
 
+  int myIndex = 0;
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -31,7 +34,7 @@ class _HomePageState extends State<HomePage> {
               Column(
                 children: [
 // First container
-
+                  //NavigationBarBottom(),
                   Container(
                     height: 300,
                     width: double.infinity,
@@ -303,7 +306,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                         _iconMethod(
                           context,
-                          const LearnDesk(),
+                          const StudyBuddies(),
                           const AssetImage('assets/reading.png'),
                           'Focus',
                         ),

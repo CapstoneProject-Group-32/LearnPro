@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/Screens/home_page.dart';
+
+import 'package:flutter_application_1/Widgets/navigation_bar.dart';
 
 class Library extends StatelessWidget {
   const Library({super.key});
@@ -26,7 +27,7 @@ class Library extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const HomePage(),
+                        builder: (context) => const NavigationBarBottom(),
                       ),
                     );
                   },

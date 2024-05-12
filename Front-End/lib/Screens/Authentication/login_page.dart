@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/Screens/home_page.dart';
+
 import 'package:flutter_application_1/Services/auth_firebase.dart';
+import 'package:flutter_application_1/Widgets/navigation_bar.dart';
 import 'package:flutter_application_1/utils/util_functions.dart';
 
 class LoginPage extends StatefulWidget {
@@ -58,7 +59,7 @@ class _LoginPageState extends State<LoginPage> {
 
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => const HomePage()),
+        MaterialPageRoute(builder: (context) => const NavigationBarBottom()),
       );
     }
 
@@ -275,7 +276,7 @@ class _LoginPageState extends State<LoginPage> {
                           dynamic result = await _auth.logInAnonymously();
                           Navigator.of(context).pushReplacement(
                             MaterialPageRoute(
-                              builder: (context) => const HomePage(),
+                              builder: (context) => const NavigationBarBottom(),
                             ),
                           );
                           if (result == Null) {

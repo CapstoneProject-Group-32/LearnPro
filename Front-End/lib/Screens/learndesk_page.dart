@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/Screens/home_page.dart';
+
+import 'package:flutter_application_1/Widgets/navigation_bar.dart';
 
 class LearnDesk extends StatelessWidget {
   const LearnDesk({super.key});
@@ -25,7 +26,7 @@ class LearnDesk extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const HomePage(),
+                        builder: (context) => const NavigationBarBottom(),
                       ),
                     );
                   },

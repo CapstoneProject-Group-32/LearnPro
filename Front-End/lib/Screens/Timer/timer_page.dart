@@ -5,7 +5,8 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_application_1/Controllers/history_controller.dart';
 import 'package:flutter_application_1/Screens/Timer/history_page.dart';
-import 'package:flutter_application_1/Screens/home_page.dart';
+
+import 'package:flutter_application_1/Widgets/navigation_bar.dart';
 import 'package:sleek_circular_slider/sleek_circular_slider.dart';
 import 'package:flutter_application_1/models/timer_history_model.dart';
 
@@ -79,7 +80,7 @@ class _MainScreenState extends State<MainScreen> {
                 mainAxisSize: MainAxisSize.max,
                 children: <Widget>[
 //Timer back button
-//
+
                   Padding(
                     padding: const EdgeInsets.all(4.0),
                     child: InkWell(
@@ -87,7 +88,7 @@ class _MainScreenState extends State<MainScreen> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const HomePage(),
+                            builder: (context) => const NavigationBarBottom(),
                           ),
                         );
                       },
@@ -119,7 +120,7 @@ class _MainScreenState extends State<MainScreen> {
                   ),
 
 //History button
-//
+
                   Padding(
                     padding: const EdgeInsets.only(right: 15),
                     child: IconButton(

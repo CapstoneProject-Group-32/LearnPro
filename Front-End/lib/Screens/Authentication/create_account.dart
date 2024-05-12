@@ -1,8 +1,9 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/Screens/home_page.dart';
+
 import 'package:flutter_application_1/Services/auth_firebase.dart';
+import 'package:flutter_application_1/Widgets/navigation_bar.dart';
 import 'package:flutter_application_1/utils/util_functions.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -65,7 +66,7 @@ class _CreateAccountState extends State<CreateAccount> {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => const HomePage(),
+          builder: (context) => const NavigationBarBottom(),
         ),
       );
     }
@@ -99,24 +100,16 @@ class _CreateAccountState extends State<CreateAccount> {
                   height: 200,
                   width: 200,
                 ),
-                const SizedBox(height: 30),
-                Center(
-                  child: InkWell(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const HomePage(),
-                        ),
-                      );
-                    },
-                    child: const Text(
-                      "Create an Account",
-                      style: TextStyle(
-                        fontSize: 40,
-                        fontWeight: FontWeight.w500,
-                        color: Color(0xFF051A85),
-                      ),
+                const SizedBox(
+                  height: 30,
+                ),
+                const Center(
+                  child: Text(
+                    "Create an Account",
+                    style: TextStyle(
+                      fontSize: 40,
+                      fontWeight: FontWeight.w500,
+                      color: Color(0xFF051A85),
                     ),
                   ),
                 ),
