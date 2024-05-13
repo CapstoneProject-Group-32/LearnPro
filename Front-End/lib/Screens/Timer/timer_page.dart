@@ -25,7 +25,7 @@ class _MainScreenState extends State<MainScreen> {
 
   List<History> listHistory = [];
 
-  late Timer _timer;
+  late Timer _timer = Timer(Duration.zero, () {});
 
   HistoryController historyController = HistoryController();
 

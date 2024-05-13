@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/Models/timer_history_model.dart';
-import 'package:flutter_application_1/Screens/Timer/timer_page.dart';
+
 import 'package:flutter_application_1/Screens/find_studybuddies.dart';
 import 'package:flutter_application_1/Screens/home_page.dart';
 import 'package:flutter_application_1/Screens/learndesk_page.dart';
 import 'package:flutter_application_1/Screens/library.dart';
+import 'package:flutter_application_1/Screens/user_profile.dart';
 
 class NavigationBarBottom extends StatefulWidget {
   const NavigationBarBottom({super.key});
@@ -20,7 +20,7 @@ class _NavigationBarBottomState extends State<NavigationBarBottom> {
     const Library(),
     const LearnDesk(),
     const StudyBuddies(),
-    const MainScreen(),
+    const UserProfile(),
   ];
 
   @override

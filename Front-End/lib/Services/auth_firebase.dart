@@ -73,7 +73,10 @@ class AuthServices {
 
         //the profile pic to the storage
         String photoURL = await StorageMethods().uploadImage(
-            folderName: "ProfileImages", isFile: false, file: profilePic);
+          folderName: "ProfileImages",
+          isFile: false,
+          file: profilePic,
+        );
 
         UserModel user = UserModel(
             uid: _auth.currentUser!.uid,
@@ -133,6 +136,32 @@ class AuthServices {
     }
 
     return res;
+  }
+
+  //get the current user details
+
+  Future<UserModel?> getCurrentUser() async {
+    User? currentUser = _auth.currentUser;
+
+    if (currentUser != null) {
+      try {
+        DocumentSnapshot snapshot =
+            await _firestore.collection('users').doc(currentUser.uid).get();
+
+        if (snapshot.exists) {
+          return UserModel.fromJSON(snapshot.data() as Map<String, dynamic>);
+        } else {
+          print('User document does not exist');
+          return null;
+        }
+      } catch (error) {
+        print('Error getting user document: $error');
+        return null;
+      }
+    } else {
+      print('No current user');
+      return null;
+    }
   }
 
   //logout

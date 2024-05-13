@@ -150,7 +150,7 @@ class _CreateAccountState extends State<CreateAccount> {
                           onPressed: selectImage,
                           icon: Icon(
                             Icons.add_a_photo,
-                            color: Colors.yellow.shade600,
+                            color: Colors.grey[300],
                           ),
                         ),
                       ),

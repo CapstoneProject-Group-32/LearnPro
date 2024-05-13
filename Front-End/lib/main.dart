@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_application_1/Models/usermodel.dart';
-import 'package:flutter_application_1/Screens/home_page.dart';
+
 import 'package:flutter_application_1/Services/auth_firebase.dart';
-import 'package:flutter_application_1/Widgets/navigation_bar.dart';
+
 import 'package:flutter_application_1/choosing_page.dart';
 import 'package:provider/provider.dart';
 
@@ -26,11 +26,9 @@ class MyApp extends StatelessWidget {
           major: '',
           profilePic: '',
           friends: []),
-          
       child: const MaterialApp(
         debugShowCheckedModeBanner: false,
         home: Wrapper(),
-        
       ),
     );
   }

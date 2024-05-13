@@ -7,7 +7,7 @@ import 'package:uuid/uuid.dart';
 class StorageMethods {
   //create a storage instance
 
-  FirebaseStorage _storage = FirebaseStorage.instance;
+  final FirebaseStorage _storage = FirebaseStorage.instance;
 
   //firebase instance
 
