@@ -6,6 +6,7 @@ import 'package:flutter_application_1/utils/util_functions.dart';
 
 class LoginPage extends StatefulWidget {
   //function
+
   final Function toggle;
   const LoginPage({Key? key, required this.toggle}) : super(key: key);
 
@@ -23,19 +24,24 @@ class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
 
   //controllers for the text feilds
+
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   bool isLoaging = false;
 
   //this  dispose methode is for remove the controller data from the memory
+
   void dispose() {
     super.dispose();
+
     //dispose the controllers
+
     _emailController.dispose();
     _passwordController.dispose();
   }
 
   //login the user
+
   void loginUser() async {
     setState(() {
       isLoaging = true;

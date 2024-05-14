@@ -122,7 +122,7 @@ class _UserProfileState extends State<UserProfile> {
                       child: CircleAvatar(
                         radius: 50,
                         backgroundColor: Colors.grey[300],
-                        backgroundImage: AssetImage(user.profilePic),
+                        backgroundImage: NetworkImage(user.profilePic),
                       ),
                     ),
                     const SizedBox(
