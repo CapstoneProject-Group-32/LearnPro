@@ -276,47 +276,47 @@ class _LoginPageState extends State<LoginPage> {
 
 //Login as Guest
 
-                      GestureDetector(
-                        //method for create account
-                        onTap: () async {
-                          dynamic result = await _auth.logInAnonymously();
-                          Navigator.of(context).pushReplacement(
-                            MaterialPageRoute(
-                              builder: (context) => const NavigationBarBottom(),
-                            ),
-                          );
-                          if (result == Null) {
-                            print("error in login");
-                          } else {
-                            print("log in Anonymously");
-                          }
-                        },
-                        child: Container(
-                          width: 275,
-                          height: 50,
-                          decoration: ShapeDecoration(
-                            color: Colors.white,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(35),
-                              side: const BorderSide(
-                                width: 2,
-                                color: Color(0xFF29F6D2),
-                              ),
-                            ),
-                          ),
-                          child: const Center(
-                            child: Text(
-                              'Login as Guest',
-                              style: TextStyle(
-                                color: Color(0xFF29F6D2),
-                                fontSize: 25,
-                                fontFamily: 'Work Sans',
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
+                      // GestureDetector(
+                      //   //method for create account
+                      //   onTap: () async {
+                      //     dynamic result = await _auth.logInAnonymously();
+                      //     Navigator.of(context).pushReplacement(
+                      //       MaterialPageRoute(
+                      //         builder: (context) => const NavigationBarBottom(),
+                      //       ),
+                      //     );
+                      //     if (result == Null) {
+                      //       print("error in login");
+                      //     } else {
+                      //       print("log in Anonymously");
+                      //     }
+                      //   },
+                      //   child: Container(
+                      //     width: 275,
+                      //     height: 50,
+                      //     decoration: ShapeDecoration(
+                      //       color: Colors.white,
+                      //       shape: RoundedRectangleBorder(
+                      //         borderRadius: BorderRadius.circular(35),
+                      //         side: const BorderSide(
+                      //           width: 2,
+                      //           color: Color(0xFF29F6D2),
+                      //         ),
+                      //       ),
+                      //     ),
+                      //     child: const Center(
+                      //       child: Text(
+                      //         'Login as Guest',
+                      //         style: TextStyle(
+                      //           color: Color(0xFF29F6D2),
+                      //           fontSize: 25,
+                      //           fontFamily: 'Work Sans',
+                      //           fontWeight: FontWeight.w500,
+                      //         ),
+                      //       ),
+                      //     ),
+                      //   ),
+                      // ),
                     ],
                   ),
                 ),

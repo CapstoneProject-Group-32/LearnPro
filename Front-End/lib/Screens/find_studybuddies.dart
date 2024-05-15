@@ -1,7 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/Models/usermodel.dart';
 
 import 'package:flutter_application_1/Widgets/navigation_bar.dart';
+import 'package:flutter_application_1/friends/presentation/widgets/add_friend_button.dart';
 
 class StudyBuddies extends StatefulWidget {
   const StudyBuddies({super.key});
@@ -390,31 +393,47 @@ Widget _studybuddyCard(
         Column(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            Container(
-              width: 70,
-              height: 20,
-              decoration: ShapeDecoration(
-                color: const Color(0xFFFCFCFC),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(5),
+            GestureDetector(
+              onTap: () {
+                AddFriendButton(
+                  userName: UserModel(
+                    uid: 'userId',
+                    email: 'email',
+                    userName: 'userName',
+                    major: 'major',
+                    profilePic: 'profilePic',
+                    friends: [],
+                    sentRequests: [],
+                    receivedRequests: [],
+                  ),
+                );
+              },
+              child: Container(
+                width: 70,
+                height: 20,
+                decoration: ShapeDecoration(
+                  color: const Color(0xFFFCFCFC),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  shadows: const [
+                    BoxShadow(
+                      color: Color(0x3F000000),
+                      blurRadius: 4,
+                      offset: Offset(0, 4),
+                      spreadRadius: 0,
+                    )
+                  ],
                 ),
-                shadows: const [
-                  BoxShadow(
-                    color: Color(0x3F000000),
-                    blurRadius: 4,
-                    offset: Offset(0, 4),
-                    spreadRadius: 0,
-                  )
-                ],
-              ),
-              child: const Center(
-                child: Text(
-                  'Add',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 16,
-                    fontFamily: 'Work Sans',
-                    fontWeight: FontWeight.w400,
+                child: const Center(
+                  child: Text(
+                    'Add',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 16,
+                      fontFamily: 'Work Sans',
+                      fontWeight: FontWeight.w400,
+                    ),
                   ),
                 ),
               ),

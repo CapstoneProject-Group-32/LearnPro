@@ -24,7 +24,10 @@ class AuthServices {
             userName: '',
             major: '',
             profilePic: '',
-            friends: [])
+            friends: [],
+            sentRequests: [],
+            receivedRequests: [],
+          )
         : null;
   }
 
@@ -79,12 +82,15 @@ class AuthServices {
         );
 
         UserModel user = UserModel(
-            uid: _auth.currentUser!.uid,
-            email: email,
-            userName: userName,
-            major: major,
-            profilePic: photoURL,
-            friends: []);
+          uid: _auth.currentUser!.uid,
+          email: email,
+          userName: userName,
+          major: major,
+          profilePic: photoURL,
+          friends: [],
+          sentRequests: [],
+          receivedRequests: [],
+        );
 
         if (userCredential.user != null) {
           await _firestore.collection('users').doc(_auth.currentUser!.uid).set(
