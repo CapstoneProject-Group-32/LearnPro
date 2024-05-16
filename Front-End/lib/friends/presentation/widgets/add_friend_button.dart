@@ -7,10 +7,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 class AddFriendButton extends ConsumerStatefulWidget {
   const AddFriendButton({
     super.key,
-    required this.userName,
+    required this.user,
   });
 
-  final UserModel userName;
+  final UserModel user;
 
   @override
   ConsumerState<AddFriendButton> createState() => _AddFriendButtonState();
@@ -22,9 +22,10 @@ class _AddFriendButtonState extends ConsumerState<AddFriendButton> {
   @override
   Widget build(BuildContext context) {
     final myUid = FirebaseAuth.instance.currentUser!.uid;
-    final requestSent = widget.userName.receivedRequests.contains(myUid);
-    final requestReceived = widget.userName.sentRequests.contains(myUid);
-    final alreadyFriend = widget.userName.friends.contains(myUid);
+    final requestSent = widget.user.receivedRequests.contains(myUid);
+    final requestReceived = widget.user.sentRequests.contains(myUid);
+    final alreadyFriend = widget.user.friends.contains(myUid);
+
     return isLoading
         ? const CircularProgressIndicator()
         : ElevatedButton(
@@ -33,16 +34,16 @@ class _AddFriendButtonState extends ConsumerState<AddFriendButton> {
                 : () async {
                     setState(() => isLoading = true);
                     final provider = ref.read(friendProvider);
-                    final userId = widget.userName.uid;
+                    final userId = widget.user.uid;
                     if (requestSent) {
-                      // cancel request
+                      // Cancel request
                       await provider.removeFriendRequest(userId: userId);
                     } else if (alreadyFriend) {
-                      // remove friendship
+                      // Remove friendship
                       await provider.removeFriend(userId: userId);
                     } else {
-                      // sent friend request
-                      await provider.sendFriendReuqest(userId: userId);
+                      // Send friend request
+                      await provider.sendFriendRequest(userId: userId);
                     }
                     setState(() => isLoading = false);
                   },
@@ -52,6 +53,7 @@ class _AddFriendButtonState extends ConsumerState<AddFriendButton> {
                   : alreadyFriend
                       ? 'Remove Friend'
                       : 'Add Friend',
-            ));
+            ),
+          );
   }
 }

@@ -3,51 +3,48 @@ import 'package:flutter_application_1/friends/presentation/widgets/friends_list.
 import 'package:flutter_application_1/friends/presentation/widgets/requests_list.dart';
 
 class FriendsScreen extends StatelessWidget {
-  const FriendsScreen({super.key});
+  const FriendsScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       backgroundColor: Colors.white,
-      body: Padding(
-        padding: EdgeInsets.all(5),
-        child: CustomScrollView(
-          slivers: [
-            SliverToBoxAdapter(
-              child: Padding(
-                padding: EdgeInsets.symmetric(vertical: 10),
-                child: Text(
-                  'Requests',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 28,
-                  ),
+      body: CustomScrollView(
+        slivers: [
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: EdgeInsets.symmetric(vertical: 10),
+              child: Text(
+                'Requests',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 28,
                 ),
               ),
             ),
-            SliverToBoxAdapter(
-              child: Divider(
-                height: 50,
-                thickness: 3,
-                color: Colors.black,
-              ),
+          ),
+          SliverToBoxAdapter(
+            child: Divider(
+              height: 50,
+              thickness: 3,
+              color: Colors.black,
             ),
-            RequestsList(),
-            SliverToBoxAdapter(
-              child: Padding(
-                padding: EdgeInsets.symmetric(vertical: 10),
-                child: Text(
-                  'Friends',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 28,
-                  ),
+          ),
+          RequestsList(),
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: EdgeInsets.symmetric(vertical: 10),
+              child: Text(
+                'Friends',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 28,
                 ),
               ),
             ),
-            FriendsList(),
-          ],
-        ),
+          ),
+          FriendsList(),
+        ],
       ),
     );
   }

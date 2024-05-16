@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Screens/error.dart';
+import 'package:flutter_application_1/Widgets/navigation_bar.dart';
 import 'package:flutter_application_1/friends/presentation/widgets/get_user_info_as_stream_by_id_provider.dart';
 import 'package:flutter_application_1/friends/providers/friend_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -9,7 +10,7 @@ class RequestTile extends ConsumerWidget {
     super.key,
     required this.userId,
   });
-  static const routeName = '/profile';
+  //static const routeName = '/profile';
   final String userId;
 
   @override
@@ -26,9 +27,11 @@ class RequestTile extends ConsumerWidget {
                 flex: 1,
                 child: InkWell(
                   onTap: () {
-                    Navigator.of(context).pushNamed(
-                      routeName,
-                      arguments: user.uid,
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => const NavigationBarBottom(),
+                        settings: RouteSettings(arguments: user.uid),
+                      ),
                     );
                   },
                   child: CircleAvatar(

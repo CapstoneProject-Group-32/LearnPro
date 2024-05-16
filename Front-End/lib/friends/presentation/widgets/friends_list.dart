@@ -5,7 +5,8 @@ import 'package:flutter_application_1/friends/providers/get_all_friends_provider
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class FriendsList extends ConsumerStatefulWidget {
-  const FriendsList({super.key});
+  const FriendsList({Key? key}) : super(key: key);
+
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _FriendsListState();
 }
@@ -17,14 +18,16 @@ class _FriendsListState extends ConsumerState<FriendsList> {
 
     return friendsList.when(
       data: (friends) {
-        return SliverList.builder(
-          itemCount: friends.length,
-          itemBuilder: (context, index) {
-            final userId = friends.elementAt(index);
-            return FriendTile(
-              userId: userId,
-            );
-          },
+        return SliverList(
+          delegate: SliverChildBuilderDelegate(
+            (context, index) {
+              final userId = friends.elementAt(index);
+              return FriendTile(
+                userId: userId,
+              );
+            },
+            childCount: friends.length,
+          ),
         );
       },
       error: (error, stackTrace) {
@@ -34,7 +37,9 @@ class _FriendsListState extends ConsumerState<FriendsList> {
       },
       loading: () {
         return const SliverToBoxAdapter(
-          child: CircularProgressIndicator(),
+          child: Center(
+            child: CircularProgressIndicator(),
+          ),
         );
       },
     );

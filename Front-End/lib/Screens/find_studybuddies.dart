@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Models/usermodel.dart';
+import 'package:flutter_application_1/Screens/search_user_screen.dart';
+import 'package:flutter_application_1/Screens/user_profile.dart';
 
 import 'package:flutter_application_1/Widgets/navigation_bar.dart';
 import 'package:flutter_application_1/friends/presentation/widgets/add_friend_button.dart';
@@ -204,6 +206,7 @@ class _StudyBuddiesState extends State<StudyBuddies> {
                           ),
                         ),
                       ),
+//study buddie tution card method calling
 
                     if (userMap != null)
                       Padding(
@@ -212,62 +215,18 @@ class _StudyBuddiesState extends State<StudyBuddies> {
                           NetworkImage(userMap!['profilePic']),
                           userMap!['userName'],
                           userMap!['major'],
+                          () {
+                            UserModel user = UserModel.fromJSON(userMap!);
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    SearchUserScreen(user: user),
+                              ),
+                            );
+                          },
                         ),
                       ),
-
-//study buddie tution card method calling
-
-                    // _studybuddyCard(
-                    //   const AssetImage('assets/profilepic.png'),
-                    //   'Chamod Ganegoda',
-                    //   'SE Junior',
-                    // ),
-                    // const SizedBox(
-                    //   height: 20,
-                    // ),
-
-                    // _studybuddyCard(
-                    //   const AssetImage('assets/profilepic.png'),
-                    //   'Chamod Ganegoda',
-                    //   'SE Junior',
-                    // ),
-                    // const SizedBox(
-                    //   height: 20,
-                    // ),
-                    // _studybuddyCard(
-                    //   const AssetImage('assets/profilepic.png'),
-                    //   'Chamod Ganegoda',
-                    //   'SE Junior',
-                    // ),
-                    // const SizedBox(
-                    //   height: 20,
-                    // ),
-
-                    // _studybuddyCard(
-                    //   const AssetImage('assets/profilepic.png'),
-                    //   'Chamod Ganegoda',
-                    //   'SE Junior',
-                    // ),
-                    // const SizedBox(
-                    //   height: 20,
-                    // ),
-                    // _studybuddyCard(
-                    //   const AssetImage('assets/profilepic.png'),
-                    //   'Chamod Ganegoda',
-                    //   'SE Junior',
-                    // ),
-                    // const SizedBox(
-                    //   height: 20,
-                    // ),
-
-                    // _studybuddyCard(
-                    //   const AssetImage('assets/profilepic.png'),
-                    //   'Chamod Ganegoda',
-                    //   'SE Junior',
-                    // ),
-                    // const SizedBox(
-                    //   height: 20,
-                    // ),
                   ],
                 ),
               ),
@@ -279,136 +238,127 @@ class _StudyBuddiesState extends State<StudyBuddies> {
 //study buddie tution card method
 
 Widget _studybuddyCard(
-    ImageProvider<Object> userImage, String userName, String userLevel) {
-  return Container(
-    width: 370,
-    height: 100,
-    decoration: ShapeDecoration(
-      color: const Color(0xEAF6EEEE),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
+  ImageProvider<Object> userImage,
+  String userName,
+  String userLevel,
+  Function() onTap,
+) {
+  return GestureDetector(
+    onTap: onTap,
+    child: Container(
+      width: 370,
+      height: 100,
+      decoration: ShapeDecoration(
+        color: const Color(0xEAF6EEEE),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        shadows: const [
+          BoxShadow(
+            color: Color(0x3F000000),
+            blurRadius: 4,
+            offset: Offset(0, 4),
+            spreadRadius: 0,
+          )
+        ],
       ),
-      shadows: const [
-        BoxShadow(
-          color: Color(0x3F000000),
-          blurRadius: 4,
-          offset: Offset(0, 4),
-          spreadRadius: 0,
-        )
-      ],
-    ),
-    child: Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Center(
-          child: Padding(
-            padding: const EdgeInsets.only(left: 15),
-            child: Container(
-              margin: const EdgeInsets.all(5),
-              width: 80,
-              height: 80,
-              decoration: const BoxDecoration(
-                shape: BoxShape.circle,
-                boxShadow: [
-                  BoxShadow(
-                    color: Color(0x3F000000),
-                    blurRadius: 4,
-                    offset: Offset(0, 4),
-                    spreadRadius: 0,
-                  ),
-                ],
-              ),
-              child: CircleAvatar(
-                backgroundImage: userImage,
-                radius: 40,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Center(
+            child: Padding(
+              padding: const EdgeInsets.only(left: 15),
+              child: Container(
+                margin: const EdgeInsets.all(5),
+                width: 80,
+                height: 80,
+                decoration: const BoxDecoration(
+                  shape: BoxShape.circle,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Color(0x3F000000),
+                      blurRadius: 4,
+                      offset: Offset(0, 4),
+                      spreadRadius: 0,
+                    ),
+                  ],
+                ),
+                child: CircleAvatar(
+                  backgroundImage: userImage,
+                  radius: 40,
+                ),
               ),
             ),
           ),
-        ),
-        const SizedBox(
-          width: 16,
-        ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              userName,
-              style: const TextStyle(
-                color: Colors.black,
-                fontSize: 16,
-                fontFamily: 'Work Sans',
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-            const SizedBox(
-              height: 2,
-            ),
-            Text(
-              userLevel,
-              style: const TextStyle(
-                color: Colors.black,
-                fontSize: 16,
-                fontFamily: 'Work Sans',
-                fontWeight: FontWeight.w200,
-              ),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Container(
-              width: 132,
-              height: 21,
-              decoration: ShapeDecoration(
-                color: const Color(0xFF74FE8A),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(5),
+          const SizedBox(
+            width: 16,
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                userName,
+                style: const TextStyle(
+                  color: Colors.black,
+                  fontSize: 16,
+                  fontFamily: 'Work Sans',
+                  fontWeight: FontWeight.w600,
                 ),
-                shadows: const [
-                  BoxShadow(
-                    color: Color(0x3F000000),
-                    blurRadius: 4,
-                    offset: Offset(0, 4),
-                    spreadRadius: 0,
-                  )
-                ],
               ),
-              child: const Center(
-                child: Text(
-                  'request tution',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 16,
-                    fontFamily: 'Work Sans',
-                    fontWeight: FontWeight.w400,
+              const SizedBox(
+                height: 2,
+              ),
+              Text(
+                userLevel,
+                style: const TextStyle(
+                  color: Colors.black,
+                  fontSize: 16,
+                  fontFamily: 'Work Sans',
+                  fontWeight: FontWeight.w200,
+                ),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Container(
+                width: 132,
+                height: 21,
+                decoration: ShapeDecoration(
+                  color: const Color(0xFF74FE8A),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  shadows: const [
+                    BoxShadow(
+                      color: Color(0x3F000000),
+                      blurRadius: 4,
+                      offset: Offset(0, 4),
+                      spreadRadius: 0,
+                    )
+                  ],
+                ),
+                child: const Center(
+                  child: Text(
+                    'request tution',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 16,
+                      fontFamily: 'Work Sans',
+                      fontWeight: FontWeight.w400,
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
-        ),
-        const SizedBox(
-          width: 16,
-        ),
-        Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            GestureDetector(
-              onTap: () {
-                AddFriendButton(
-                  userName: UserModel(
-                    uid: 'userId',
-                    email: 'email',
-                    userName: 'userName',
-                    major: 'major',
-                    profilePic: 'profilePic',
-                    friends: [],
-                    sentRequests: [],
-                    receivedRequests: [],
-                  ),
-                );
-              },
-              child: Container(
+            ],
+          ),
+          const SizedBox(
+            width: 16,
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Container(
                 width: 70,
                 height: 20,
                 decoration: ShapeDecoration(
@@ -437,13 +387,13 @@ Widget _studybuddyCard(
                   ),
                 ),
               ),
-            ),
-            const SizedBox(
-              height: 15.55,
-            ),
-          ],
-        ),
-      ],
+              const SizedBox(
+                height: 15.55,
+              ),
+            ],
+          ),
+        ],
+      ),
     ),
   );
 }

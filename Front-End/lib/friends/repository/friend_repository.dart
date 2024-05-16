@@ -9,7 +9,7 @@ class FriendRepository {
   final _firestore = FirebaseFirestore.instance;
 
   // Send friend request
-  Future<String?> sendFriendReuqest({
+  Future<String?> sendFriendRequest({
     required String userId,
   }) async {
     try {
