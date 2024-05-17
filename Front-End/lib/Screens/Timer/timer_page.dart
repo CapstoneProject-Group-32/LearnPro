@@ -10,14 +10,14 @@ import 'package:flutter_application_1/Widgets/navigation_bar.dart';
 import 'package:sleek_circular_slider/sleek_circular_slider.dart';
 import 'package:flutter_application_1/models/timer_history_model.dart';
 
-class MainScreen extends StatefulWidget {
-  const MainScreen({Key? key}) : super(key: key);
+class TimerScreen extends StatefulWidget {
+  const TimerScreen({Key? key}) : super(key: key);
 
   @override
-  _MainScreenState createState() => _MainScreenState();
+  _TimerScreenState createState() => _TimerScreenState();
 }
 
-class _MainScreenState extends State<MainScreen> {
+class _TimerScreenState extends State<TimerScreen> {
   double defaultValue = 1800;
   double value = 1800.0;
   bool isStarted = false;

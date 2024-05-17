@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-import 'package:flutter_application_1/Screens/find_studybuddies.dart';
+import 'package:flutter_application_1/Screens/Community/find_studybuddies.dart';
 import 'package:flutter_application_1/Screens/home_page.dart';
 import 'package:flutter_application_1/Screens/learndesk_page.dart';
 import 'package:flutter_application_1/Screens/library.dart';
-import 'package:flutter_application_1/Screens/user_profile.dart';
+import 'package:flutter_application_1/Screens/Profile/user_profile.dart';
 
 class NavigationBarBottom extends StatefulWidget {
   const NavigationBarBottom({super.key});

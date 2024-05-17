@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Models/usermodel.dart';
 import 'package:flutter_application_1/Screens/Authentication/authenticate.dart';
 
-import 'package:flutter_application_1/Screens/notification_screen.dart';
+import 'package:flutter_application_1/Screens/Profile/notification_screen.dart';
 import 'package:flutter_application_1/Services/auth_firebase.dart';
 import 'package:flutter_application_1/Widgets/navigation_bar.dart';
 

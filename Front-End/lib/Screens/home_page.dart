@@ -5,7 +5,7 @@ import 'package:flutter_application_1/Models/usermodel.dart';
 
 import 'package:flutter_application_1/Screens/Timer/timer_page.dart';
 
-import 'package:flutter_application_1/Screens/find_studybuddies.dart';
+import 'package:flutter_application_1/Screens/Community/find_studybuddies.dart';
 
 import 'package:flutter_application_1/Screens/library.dart';
 import 'package:intl/intl.dart';
@@ -327,13 +327,13 @@ class _HomePageState extends State<HomePage> {
                               ),
                               _iconMethod(
                                 context,
-                                const StudyBuddies(),
+                                const TimerScreen(),
                                 const AssetImage('assets/reading.png'),
                                 'Focus',
                               ),
                               _iconMethod(
                                 context,
-                                const MainScreen(),
+                                const StudyBuddies(),
                                 const AssetImage('assets/notebook.png'),
                                 'Study Plan',
                               ),

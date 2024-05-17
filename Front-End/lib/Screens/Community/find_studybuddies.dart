@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_application_1/Models/usermodel.dart';
-import 'package:flutter_application_1/Screens/search_user_screen.dart';
+import 'package:flutter_application_1/Screens/Community/request_tution.dart';
+import 'package:flutter_application_1/Screens/Community/search_user_screen.dart';
 import 'package:flutter_application_1/Widgets/navigation_bar.dart';
 
 class StudyBuddies extends StatefulWidget {
@@ -180,7 +182,37 @@ class _StudyBuddiesState extends State<StudyBuddies> {
                                 borderRadius: BorderRadius.circular(40),
                                 color: const Color(0xFF74FE8A),
                               ),
-                              child: const Center(child: Text("People")),
+                              child: const Center(
+                                child: Text("People"),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 5,
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      const RequestTutionScreen(),
+                                ),
+                              );
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Container(
+                                width: 100,
+                                height: 40,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(40),
+                                  color: const Color(0xFFD9D9D9),
+                                ),
+                                child: const Center(
+                                  child: Text("Groups"),
+                                ),
+                              ),
                             ),
                           ),
                           const SizedBox(
@@ -195,22 +227,9 @@ class _StudyBuddiesState extends State<StudyBuddies> {
                                 borderRadius: BorderRadius.circular(40),
                                 color: const Color(0xFFD9D9D9),
                               ),
-                              child: const Center(child: Text("Groups")),
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 5,
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Container(
-                              width: 100,
-                              height: 40,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(40),
-                                color: const Color(0xFFD9D9D9),
+                              child: const Center(
+                                child: Text("Tutored You"),
                               ),
-                              child: const Center(child: Text("Tutored You")),
                             ),
                           ),
                           const SizedBox(
@@ -236,7 +255,7 @@ class _StudyBuddiesState extends State<StudyBuddies> {
                     if (userMap != null)
                       Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: _studybuddyCard(
+                        child: _studybuddyCardBeforeAddFriend(
                           NetworkImage(userMap!['profilePic']),
                           userMap!['userName'],
                           userMap!['major'],
@@ -256,7 +275,7 @@ class _StudyBuddiesState extends State<StudyBuddies> {
                       ...friends.map((friend) {
                         return Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: _studybuddyCard(
+                          child: _studybuddyCardAfterAddFriend(
                             NetworkImage(friend.profilePic),
                             friend.userName,
                             friend.major,
@@ -280,9 +299,9 @@ class _StudyBuddiesState extends State<StudyBuddies> {
   }
 }
 
-//study buddie tution card method
+//study buddie tution card before add freind method
 
-Widget _studybuddyCard(
+Widget _studybuddyCardBeforeAddFriend(
   ImageProvider<Object> userImage,
   String userName,
   String userLevel,
@@ -308,7 +327,8 @@ Widget _studybuddyCard(
         ],
       ),
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Center(
             child: Padding(
@@ -335,8 +355,97 @@ Widget _studybuddyCard(
               ),
             ),
           ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                userName,
+                style: const TextStyle(
+                  color: Colors.black,
+                  fontSize: 20,
+                  fontFamily: 'Work Sans',
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              const SizedBox(
+                height: 5,
+              ),
+              Text(
+                userLevel,
+                style: const TextStyle(
+                  color: Colors.black,
+                  fontSize: 18,
+                  fontFamily: 'Work Sans',
+                  fontWeight: FontWeight.w200,
+                ),
+              ),
+            ],
+          ),
           const SizedBox(
-            width: 16,
+            width: 25,
+          ),
+        ],
+      ),
+    ),
+  );
+}
+
+//study buddie tution card after add friend method
+
+Widget _studybuddyCardAfterAddFriend(
+  ImageProvider<Object> userImage,
+  String userName,
+  String userLevel,
+  Function() onTap,
+) {
+  return GestureDetector(
+    onTap: onTap,
+    child: Container(
+      width: 370,
+      height: 100,
+      decoration: ShapeDecoration(
+        color: const Color(0xEAF6EEEE),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        shadows: const [
+          BoxShadow(
+            color: Color(0x3F000000),
+            blurRadius: 4,
+            offset: Offset(0, 4),
+            spreadRadius: 0,
+          )
+        ],
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Center(
+            child: Padding(
+              padding: const EdgeInsets.only(left: 15),
+              child: Container(
+                margin: const EdgeInsets.all(5),
+                width: 80,
+                height: 80,
+                decoration: const BoxDecoration(
+                  shape: BoxShape.circle,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Color(0x3F000000),
+                      blurRadius: 4,
+                      offset: Offset(0, 4),
+                      spreadRadius: 0,
+                    ),
+                  ],
+                ),
+                child: CircleAvatar(
+                  backgroundImage: userImage,
+                  radius: 40,
+                ),
+              ),
+            ),
           ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -346,7 +455,7 @@ Widget _studybuddyCard(
                 userName,
                 style: const TextStyle(
                   color: Colors.black,
-                  fontSize: 16,
+                  fontSize: 20,
                   fontFamily: 'Work Sans',
                   fontWeight: FontWeight.w600,
                 ),
@@ -358,41 +467,9 @@ Widget _studybuddyCard(
                 userLevel,
                 style: const TextStyle(
                   color: Colors.black,
-                  fontSize: 16,
+                  fontSize: 18,
                   fontFamily: 'Work Sans',
                   fontWeight: FontWeight.w200,
-                ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              Container(
-                width: 132,
-                height: 21,
-                decoration: ShapeDecoration(
-                  color: const Color(0xFF74FE8A),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                  shadows: const [
-                    BoxShadow(
-                      color: Color(0x3F000000),
-                      blurRadius: 4,
-                      offset: Offset(0, 4),
-                      spreadRadius: 0,
-                    )
-                  ],
-                ),
-                child: const Center(
-                  child: Text(
-                    'request tution',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 16,
-                      fontFamily: 'Work Sans',
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
                 ),
               ),
             ],
@@ -400,42 +477,37 @@ Widget _studybuddyCard(
           const SizedBox(
             width: 16,
           ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Container(
-                width: 70,
-                height: 20,
-                decoration: ShapeDecoration(
-                  color: const Color(0xFFFCFCFC),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                  shadows: const [
-                    BoxShadow(
-                      color: Color(0x3F000000),
-                      blurRadius: 4,
-                      offset: Offset(0, 4),
-                      spreadRadius: 0,
-                    )
-                  ],
-                ),
-                child: const Center(
-                  child: Text(
-                    'Add',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 16,
-                      fontFamily: 'Work Sans',
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
+          Container(
+            width: 130,
+            height: 35,
+            decoration: ShapeDecoration(
+              color: const Color(0xFF74FE8A),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(5),
+              ),
+              shadows: const [
+                BoxShadow(
+                  color: Color(0x3F000000),
+                  blurRadius: 4,
+                  offset: Offset(0, 4),
+                  spreadRadius: 0,
+                )
+              ],
+            ),
+            child: const Center(
+              child: Text(
+                'Request Tution',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 18,
+                  fontFamily: 'Work Sans',
+                  fontWeight: FontWeight.w500,
                 ),
               ),
-              const SizedBox(
-                height: 15.55,
-              ),
-            ],
+            ),
+          ),
+          const SizedBox(
+            width: 15,
           ),
         ],
       ),
