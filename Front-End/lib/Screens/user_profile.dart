@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Models/usermodel.dart';
 import 'package:flutter_application_1/Screens/Authentication/authenticate.dart';
 import 'package:flutter_application_1/Screens/home_page.dart';
+import 'package:flutter_application_1/Screens/notification_screen.dart';
 import 'package:flutter_application_1/Services/auth_firebase.dart';
 import 'package:flutter_application_1/Widgets/navigation_bar.dart';
-import 'package:flutter_application_1/friends/presentation/screens/friend_screans.dart';
 
 class UserProfile extends StatefulWidget {
   const UserProfile({super.key});
@@ -103,7 +103,7 @@ class _UserProfileState extends State<UserProfile> {
                                   context,
                                   CupertinoPageRoute(
                                       builder: (BuildContext context) =>
-                                          const FriendsScreen()));
+                                          const NotificationScreen()));
                             },
                           ),
                         ),
@@ -303,10 +303,10 @@ class _UserProfileState extends State<UserProfile> {
                           )
                         ],
                       ),
-                      child: const Row(
+                      child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Padding(
+                          const Padding(
                             padding: EdgeInsets.only(left: 30),
                             child: Text(
                               "Friends",
@@ -318,10 +318,10 @@ class _UserProfileState extends State<UserProfile> {
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsets.only(right: 30),
+                            padding: const EdgeInsets.only(right: 30),
                             child: Text(
-                              "6",
-                              style: TextStyle(
+                              user.friends.length.toString(),
+                              style: const TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.w400,
                                 color: Colors.black,
