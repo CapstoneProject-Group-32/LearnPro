@@ -1,7 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_application_1/Models/usermodel.dart';
+import 'package:flutter_application_1/Screens/Community/request_tution.dart';
 
 import 'package:flutter_application_1/Screens/Timer/timer_page.dart';
 
@@ -42,6 +45,8 @@ class _HomePageState extends State<HomePage> {
             if (snapshot.hasData) {
               final userData = snapshot.data!.data() as Map<String, dynamic>;
               UserModel user = UserModel.fromJSON(userData);
+              List<String> friends =
+                  List<String>.from(userData['friends'] ?? []);
 
               return SingleChildScrollView(
                 child: Column(
@@ -149,89 +154,17 @@ class _HomePageState extends State<HomePage> {
                                           ),
                                           Row(
                                             children: [
-                                              Container(
-                                                height: 58,
-                                                width: 110,
-                                                decoration: const BoxDecoration(
-                                                  color: Color(0xFF82C0CC),
-                                                ),
-                                                child: const Column(
-                                                  children: [
-                                                    Text(
-                                                      "4h",
-                                                      style: TextStyle(
-                                                          fontSize: 25,
-                                                          fontWeight:
-                                                              FontWeight.w400,
-                                                          color: Colors.black),
-                                                    ),
-                                                    Text(
-                                                      "Focus Time",
-                                                      style: TextStyle(
-                                                          fontSize: 25,
-                                                          fontWeight:
-                                                              FontWeight.w300,
-                                                          color: Color(
-                                                              0xFF6F7665)),
-                                                    ),
-                                                  ],
-                                                ),
+                                              _progressContainer(
+                                                "4h",
+                                                "Focus Time",
                                               ),
-                                              Container(
-                                                height: 58,
-                                                width: 110,
-                                                decoration: const BoxDecoration(
-                                                  color: Color(0xFF82C0CC),
-                                                ),
-                                                child: const Column(
-                                                  children: [
-                                                    Text(
-                                                      "300",
-                                                      style: TextStyle(
-                                                          fontSize: 25,
-                                                          fontWeight:
-                                                              FontWeight.w400,
-                                                          color: Colors.black),
-                                                    ),
-                                                    Text(
-                                                      "Points",
-                                                      style: TextStyle(
-                                                          fontSize: 25,
-                                                          fontWeight:
-                                                              FontWeight.w300,
-                                                          color: Color(
-                                                              0xFF6F7665)),
-                                                    ),
-                                                  ],
-                                                ),
+                                              _progressContainer(
+                                                "300",
+                                                "Points",
                                               ),
-                                              Container(
-                                                height: 58,
-                                                width: 110,
-                                                decoration: const BoxDecoration(
-                                                  color: Color(0xFF82C0CC),
-                                                ),
-                                                child: const Column(
-                                                  children: [
-                                                    Text(
-                                                      "3",
-                                                      style: TextStyle(
-                                                          fontSize: 25,
-                                                          fontWeight:
-                                                              FontWeight.w400,
-                                                          color: Colors.black),
-                                                    ),
-                                                    Text(
-                                                      "Tutored",
-                                                      style: TextStyle(
-                                                          fontSize: 25,
-                                                          fontWeight:
-                                                              FontWeight.w300,
-                                                          color: Color(
-                                                              0xFF6F7665)),
-                                                    ),
-                                                  ],
-                                                ),
+                                              _progressContainer(
+                                                "3",
+                                                "Tutored",
                                               ),
                                             ],
                                           ),
@@ -279,17 +212,16 @@ class _HomePageState extends State<HomePage> {
                           ),
                           child: Row(
                             children: [
-                              const Padding(
-                                padding: EdgeInsets.all(8.0),
-                                child: Text(
-                                  "\"The journey of a \n thousand miles \n begins with a single \n step. Take that step,\n keep studying,and \n you'll eventually \n reach your \n destination.\"",
-                                  style: TextStyle(
-                                      fontSize: 22,
-                                      fontWeight: FontWeight.w400),
+                              const Flexible(
+                                child: Padding(
+                                  padding: EdgeInsets.all(15.0),
+                                  child: Text(
+                                    "\"The journey of a thousand miles begins with a single step.Take that step, keep studying, and you'll eventually reach your destination.\"",
+                                    style: TextStyle(
+                                        fontSize: 22,
+                                        fontWeight: FontWeight.w400),
+                                  ),
                                 ),
-                              ),
-                              const SizedBox(
-                                width: 10,
                               ),
                               Image.asset(
                                 "assets/boy.png",
@@ -428,61 +360,25 @@ class _HomePageState extends State<HomePage> {
                         const SizedBox(
                           height: 10,
                         ),
+//Calling buildFreindsList method
 
-                        SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          child: Row(
-                            children: [
-                              const SizedBox(
-                                width: 25,
-                              ),
-                              _friendContainer(
-                                  context,
-                                  const StudyBuddies(),
-                                  const AssetImage('assets/flutterbook.png'),
-                                  'Chamod Gangeoda',
-                                  'CS Undergraduate'),
-                              const SizedBox(
-                                width: 25,
-                              ),
-                              _friendContainer(
-                                  context,
-                                  const StudyBuddies(),
-                                  const AssetImage('assets/flutterbook.png'),
-                                  'Chamod Gangeoda',
-                                  'CS Undergraduate'),
-                              const SizedBox(
-                                width: 25,
-                              ),
-                              _friendContainer(
-                                  context,
-                                  const StudyBuddies(),
-                                  const AssetImage('assets/flutterbook.png'),
-                                  'Chamod Gangeoda',
-                                  'CS Undergraduate'),
-                              const SizedBox(
-                                width: 25,
-                              ),
-                              _friendContainer(
-                                  context,
-                                  const StudyBuddies(),
-                                  const AssetImage('assets/flutterbook.png'),
-                                  'Chamod Gangeoda',
-                                  'CS Undergraduate'),
-                              const SizedBox(
-                                width: 25,
-                              ),
-                            ],
-                          ),
-                        ),
-
+                        _buildFriendsList(friends),
                         const SizedBox(
                           height: 27,
                         ),
 
 // View Button method calling
 
-                        _viewallButton(),
+                        GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const StudyBuddies(),
+                                ),
+                              );
+                            },
+                            child: _viewallButton()),
 
                         const SizedBox(
                           height: 20,
@@ -502,6 +398,37 @@ class _HomePageState extends State<HomePage> {
             );
           },
         ),
+      ),
+    );
+  }
+//progress Container Method
+
+  Widget _progressContainer(String value, String label) {
+    return Container(
+      height: 58,
+      width: 110,
+      decoration: const BoxDecoration(
+        color: Color(0xFF82C0CC),
+      ),
+      child: Column(
+        children: [
+          Text(
+            value,
+            style: const TextStyle(
+              fontSize: 25,
+              fontWeight: FontWeight.w400,
+              color: Colors.black,
+            ),
+          ),
+          Text(
+            label,
+            style: const TextStyle(
+              fontSize: 25,
+              fontWeight: FontWeight.w300,
+              color: Color(0xFF6F7665),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -559,7 +486,10 @@ class _HomePageState extends State<HomePage> {
           Text(
             subtopic,
             style: const TextStyle(
-                fontWeight: FontWeight.bold, fontSize: 25, color: Colors.black),
+              fontWeight: FontWeight.bold,
+              fontSize: 25,
+              color: Colors.black,
+            ),
           ),
         ],
       ),
@@ -710,6 +640,52 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+//friend list method
+
+  Widget _buildFriendsList(List<String> friends) {
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Row(
+        children: [
+          const SizedBox(width: 25), // Add space at the beginning
+          for (int i = 0; i < friends.length; i++) ...[
+            _buildFriend(friends[i]),
+            const SizedBox(width: 25), // Add space between friendContainer
+          ],
+          const SizedBox(width: 25), // Add space at the end
+        ],
+      ),
+    );
+  }
+
+  //gettinf friends details from fire store
+
+  Widget _buildFriend(String friendId) {
+    return FutureBuilder<DocumentSnapshot>(
+      future:
+          FirebaseFirestore.instance.collection("users").doc(friendId).get(),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          final friendData = snapshot.data!.data() as Map<String, dynamic>;
+          String userName = friendData['userName'];
+          String major = friendData['major'];
+          String profilePic = friendData['profilePic'];
+
+          return _friendContainer(
+            context,
+            const RequestTutionScreen(),
+            NetworkImage(profilePic),
+            userName,
+            major,
+          );
+        } else if (snapshot.hasError) {
+          return const Text('Error loading friend');
+        }
+        return const CircularProgressIndicator();
+      },
+    );
+  }
+
 //Freind container methods
 
   Widget _friendContainer(BuildContext context, Widget linkedPage,
@@ -726,9 +702,7 @@ class _HomePageState extends State<HomePage> {
           width: 200,
           decoration: BoxDecoration(
             color: const Color(0xFFF4F4F4),
-            borderRadius: BorderRadius.circular(
-              10,
-            ),
+            borderRadius: BorderRadius.circular(10),
             boxShadow: const [
               BoxShadow(
                 color: Color(0x3F000000),

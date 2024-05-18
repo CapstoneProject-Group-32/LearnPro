@@ -272,25 +272,36 @@ class _StudyBuddiesState extends State<StudyBuddies> {
                         ),
                       )
                     else
-                      ...friends.map((friend) {
-                        return Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: _studybuddyCardAfterAddFriend(
-                            NetworkImage(friend.profilePic),
-                            friend.userName,
-                            friend.major,
-                            () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      SearchUserScreen(user: friend),
-                                ),
-                              );
-                            },
-                          ),
-                        );
-                      }).toList(),
+                      ...friends.map(
+                        (friend) {
+                          return Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: _studybuddyCardAfterAddFriend(
+                              NetworkImage(friend.profilePic),
+                              friend.userName,
+                              friend.major,
+                              () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        SearchUserScreen(user: friend),
+                                  ),
+                                );
+                              },
+                              () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        const RequestTutionScreen(),
+                                  ),
+                                );
+                              },
+                            ),
+                          );
+                        },
+                      ).toList(),
                   ],
                 ),
               ),
@@ -398,48 +409,49 @@ Widget _studybuddyCardAfterAddFriend(
   String userName,
   String userLevel,
   Function() onTap,
+  Function() onTapRequestButton,
 ) {
-  return GestureDetector(
-    onTap: onTap,
-    child: Container(
-      width: 370,
-      height: 100,
-      decoration: ShapeDecoration(
-        color: const Color(0xEAF6EEEE),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
-        shadows: const [
-          BoxShadow(
-            color: Color(0x3F000000),
-            blurRadius: 4,
-            offset: Offset(0, 4),
-            spreadRadius: 0,
-          )
-        ],
+  return Container(
+    width: 370,
+    height: 100,
+    decoration: ShapeDecoration(
+      color: const Color(0xEAF6EEEE),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
       ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Center(
-            child: Padding(
-              padding: const EdgeInsets.only(left: 15),
-              child: Container(
-                margin: const EdgeInsets.all(5),
-                width: 80,
-                height: 80,
-                decoration: const BoxDecoration(
-                  shape: BoxShape.circle,
-                  boxShadow: [
-                    BoxShadow(
-                      color: Color(0x3F000000),
-                      blurRadius: 4,
-                      offset: Offset(0, 4),
-                      spreadRadius: 0,
-                    ),
-                  ],
-                ),
+      shadows: const [
+        BoxShadow(
+          color: Color(0x3F000000),
+          blurRadius: 4,
+          offset: Offset(0, 4),
+          spreadRadius: 0,
+        )
+      ],
+    ),
+    child: Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Center(
+          child: Padding(
+            padding: const EdgeInsets.only(left: 15),
+            child: Container(
+              margin: const EdgeInsets.all(5),
+              width: 80,
+              height: 80,
+              decoration: const BoxDecoration(
+                shape: BoxShape.circle,
+                boxShadow: [
+                  BoxShadow(
+                    color: Color(0x3F000000),
+                    blurRadius: 4,
+                    offset: Offset(0, 4),
+                    spreadRadius: 0,
+                  ),
+                ],
+              ),
+              child: GestureDetector(
+                onTap: onTap,
                 child: CircleAvatar(
                   backgroundImage: userImage,
                   radius: 40,
@@ -447,37 +459,40 @@ Widget _studybuddyCardAfterAddFriend(
               ),
             ),
           ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                userName,
-                style: const TextStyle(
-                  color: Colors.black,
-                  fontSize: 20,
-                  fontFamily: 'Work Sans',
-                  fontWeight: FontWeight.w600,
-                ),
+        ),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              userName,
+              style: const TextStyle(
+                color: Colors.black,
+                fontSize: 20,
+                fontFamily: 'Work Sans',
+                fontWeight: FontWeight.w600,
               ),
-              const SizedBox(
-                height: 2,
+            ),
+            const SizedBox(
+              height: 2,
+            ),
+            Text(
+              userLevel,
+              style: const TextStyle(
+                color: Colors.black,
+                fontSize: 18,
+                fontFamily: 'Work Sans',
+                fontWeight: FontWeight.w200,
               ),
-              Text(
-                userLevel,
-                style: const TextStyle(
-                  color: Colors.black,
-                  fontSize: 18,
-                  fontFamily: 'Work Sans',
-                  fontWeight: FontWeight.w200,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(
-            width: 16,
-          ),
-          Container(
+            ),
+          ],
+        ),
+        const SizedBox(
+          width: 16,
+        ),
+        GestureDetector(
+          onTap: onTapRequestButton,
+          child: Container(
             width: 130,
             height: 35,
             decoration: ShapeDecoration(
@@ -506,11 +521,11 @@ Widget _studybuddyCardAfterAddFriend(
               ),
             ),
           ),
-          const SizedBox(
-            width: 15,
-          ),
-        ],
-      ),
+        ),
+        const SizedBox(
+          width: 15,
+        ),
+      ],
     ),
   );
 }
