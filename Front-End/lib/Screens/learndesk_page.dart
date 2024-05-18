@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_application_1/Screens/content_form.dart';
 
 import 'package:flutter_application_1/Widgets/navigation_bar.dart';
 
@@ -65,11 +67,21 @@ class LearnDesk extends StatelessWidget {
                 const AssetImage('assets/cloud.png'),
                 'Upload Notes',
               ),
-              _learndeskContainerRowMethod(
-                const AssetImage('assets/flashcards.png'),
-                'Create Flashcards',
-                const AssetImage('assets/help.png'),
-                'Request Tution',
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ContentForm(),
+                    ),
+                  );
+                },
+                child: _learndeskContainerRowMethod(
+                  const AssetImage('assets/flashcards.png'),
+                  'Create Flashcards',
+                  const AssetImage('assets/help.png'),
+                  'Request Tution',
+                ),
               ),
               _learndeskContainerRowMethod(
                 const AssetImage('assets/target.png'),
