@@ -673,7 +673,9 @@ class _HomePageState extends State<HomePage> {
 
           return _friendContainer(
             context,
-            const RequestTuitionScreen(),
+            const RequestTuitionScreen(
+              friendUid: '',
+            ),
             NetworkImage(profilePic),
             userName,
             major,

@@ -301,7 +301,9 @@ class _StudyBuddiesState extends State<StudyBuddies> {
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) =>
-                                        const RequestTuitionScreen(),
+                                        const RequestTuitionScreen(
+                                      friendUid: '',
+                                    ),
                                   ),
                                 );
                               },
