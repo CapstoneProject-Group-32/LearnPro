@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_application_1/Models/usermodel.dart';
 import 'package:flutter_application_1/Screens/Community/request_tution.dart';
 import 'package:flutter_application_1/Screens/Community/search_user_screen.dart';
@@ -37,22 +36,33 @@ class _StudyBuddiesState extends State<StudyBuddies> {
           .collection('users')
           .doc(userUid)
           .get();
-      UserModel currentUser =
-          UserModel.fromJSON(userSnapshot.data() as Map<String, dynamic>);
-      List<UserModel> fetchedFriends = [];
-      for (String friendUid in currentUser.friends) {
-        DocumentSnapshot friendSnapshot = await FirebaseFirestore.instance
-            .collection('users')
-            .doc(friendUid)
-            .get();
-        UserModel friend =
-            UserModel.fromJSON(friendSnapshot.data() as Map<String, dynamic>);
-        fetchedFriends.add(friend);
+      if (userSnapshot.exists) {
+        Map<String, dynamic> userData =
+            userSnapshot.data() as Map<String, dynamic>;
+        UserModel currentUser = UserModel.fromJSON(userData);
+        List<UserModel> fetchedFriends = [];
+        for (String friendUid in currentUser.friends) {
+          DocumentSnapshot friendSnapshot = await FirebaseFirestore.instance
+              .collection('users')
+              .doc(friendUid)
+              .get();
+          if (friendSnapshot.exists) {
+            Map<String, dynamic> friendData =
+                friendSnapshot.data() as Map<String, dynamic>;
+            UserModel friend = UserModel.fromJSON(friendData);
+            fetchedFriends.add(friend);
+          }
+        }
+        setState(() {
+          friends = fetchedFriends;
+          isLoading = false;
+        });
+      } else {
+        setState(() {
+          errorMessage = "User document does not exist";
+          isLoading = false;
+        });
       }
-      setState(() {
-        friends = fetchedFriends;
-        isLoading = false;
-      });
     } catch (e) {
       setState(() {
         errorMessage = "Failed to load friends: $e";
@@ -69,14 +79,17 @@ class _StudyBuddiesState extends State<StudyBuddies> {
       errorMessage = null;
       userMap = null;
     });
-    await _firestore
-        .collection('users')
-        .where("userName", isEqualTo: _search.text)
-        .get()
-        .then((value) {
-      if (value.docs.isNotEmpty) {
+    try {
+      QuerySnapshot searchResult = await _firestore
+          .collection('users')
+          .where("userName", isEqualTo: _search.text)
+          .get();
+
+      if (searchResult.docs.isNotEmpty) {
+        Map<String, dynamic> userData =
+            searchResult.docs[0].data() as Map<String, dynamic>;
         setState(() {
-          userMap = value.docs[0].data();
+          userMap = userData;
           isLoading = false;
         });
       } else {
@@ -85,7 +98,12 @@ class _StudyBuddiesState extends State<StudyBuddies> {
           isLoading = false;
         });
       }
-    });
+    } catch (e) {
+      setState(() {
+        errorMessage = "Error searching user: $e";
+        isLoading = false;
+      });
+    }
   }
 
   @override
@@ -190,28 +208,17 @@ class _StudyBuddiesState extends State<StudyBuddies> {
                           const SizedBox(
                             width: 5,
                           ),
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      const RequestTutionScreen(),
-                                ),
-                              );
-                            },
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Container(
-                                width: 100,
-                                height: 40,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(40),
-                                  color: const Color(0xFFD9D9D9),
-                                ),
-                                child: const Center(
-                                  child: Text("Groups"),
-                                ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                              width: 100,
+                              height: 40,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(40),
+                                color: const Color(0xFFD9D9D9),
+                              ),
+                              child: const Center(
+                                child: Text("Groups"),
                               ),
                             ),
                           ),
@@ -271,7 +278,7 @@ class _StudyBuddiesState extends State<StudyBuddies> {
                           },
                         ),
                       )
-                    else
+                    else if (friends.isNotEmpty)
                       ...friends.map(
                         (friend) {
                           return Padding(
@@ -294,14 +301,18 @@ class _StudyBuddiesState extends State<StudyBuddies> {
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) =>
-                                        const RequestTutionScreen(),
+                                        const RequestTuitionScreen(),
                                   ),
                                 );
                               },
                             ),
                           );
                         },
-                      ).toList(),
+                      ).toList()
+                    else
+                      const Center(
+                        child: Text("No friends found."),
+                      ),
                   ],
                 ),
               ),
@@ -310,106 +321,12 @@ class _StudyBuddiesState extends State<StudyBuddies> {
   }
 }
 
-//study buddie tution card before add freind method
-
+// Study Buddy card before adding friend
 Widget _studybuddyCardBeforeAddFriend(
   ImageProvider<Object> userImage,
   String userName,
   String userLevel,
-  Function() onTap,
-) {
-  return GestureDetector(
-    onTap: onTap,
-    child: Container(
-      width: 370,
-      height: 100,
-      decoration: ShapeDecoration(
-        color: const Color(0xEAF6EEEE),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
-        shadows: const [
-          BoxShadow(
-            color: Color(0x3F000000),
-            blurRadius: 4,
-            offset: Offset(0, 4),
-            spreadRadius: 0,
-          )
-        ],
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Center(
-            child: Padding(
-              padding: const EdgeInsets.only(left: 15),
-              child: Container(
-                margin: const EdgeInsets.all(5),
-                width: 80,
-                height: 80,
-                decoration: const BoxDecoration(
-                  shape: BoxShape.circle,
-                  boxShadow: [
-                    BoxShadow(
-                      color: Color(0x3F000000),
-                      blurRadius: 4,
-                      offset: Offset(0, 4),
-                      spreadRadius: 0,
-                    ),
-                  ],
-                ),
-                child: CircleAvatar(
-                  backgroundImage: userImage,
-                  radius: 40,
-                ),
-              ),
-            ),
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                userName,
-                style: const TextStyle(
-                  color: Colors.black,
-                  fontSize: 20,
-                  fontFamily: 'Work Sans',
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              const SizedBox(
-                height: 5,
-              ),
-              Text(
-                userLevel,
-                style: const TextStyle(
-                  color: Colors.black,
-                  fontSize: 18,
-                  fontFamily: 'Work Sans',
-                  fontWeight: FontWeight.w200,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(
-            width: 25,
-          ),
-        ],
-      ),
-    ),
-  );
-}
-
-//study buddie tution card after add friend method
-
-Widget _studybuddyCardAfterAddFriend(
-  ImageProvider<Object> userImage,
-  String userName,
-  String userLevel,
-  Function() onTap,
-  Function() onTapRequestButton,
+  Function() onTapView,
 ) {
   return Container(
     width: 370,
@@ -430,28 +347,27 @@ Widget _studybuddyCardAfterAddFriend(
     ),
     child: Row(
       crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
         Center(
-          child: Padding(
-            padding: const EdgeInsets.only(left: 15),
-            child: Container(
-              margin: const EdgeInsets.all(5),
-              width: 80,
-              height: 80,
-              decoration: const BoxDecoration(
-                shape: BoxShape.circle,
-                boxShadow: [
-                  BoxShadow(
-                    color: Color(0x3F000000),
-                    blurRadius: 4,
-                    offset: Offset(0, 4),
-                    spreadRadius: 0,
-                  ),
-                ],
-              ),
-              child: GestureDetector(
-                onTap: onTap,
+          child: Center(
+            child: Padding(
+              padding: const EdgeInsets.only(left: 10),
+              child: Container(
+                margin: const EdgeInsets.all(5),
+                width: 75,
+                height: 75,
+                decoration: const BoxDecoration(
+                  shape: BoxShape.circle,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Color(0x3F000000),
+                      blurRadius: 4,
+                      offset: Offset(0, 4),
+                      spreadRadius: 0,
+                    ),
+                  ],
+                ),
                 child: CircleAvatar(
                   backgroundImage: userImage,
                   radius: 40,
@@ -460,45 +376,42 @@ Widget _studybuddyCardAfterAddFriend(
             ),
           ),
         ),
+        const SizedBox(
+          width: 15,
+        ),
         Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               userName,
               style: const TextStyle(
                 color: Colors.black,
                 fontSize: 20,
-                fontFamily: 'Work Sans',
-                fontWeight: FontWeight.w600,
+                fontWeight: FontWeight.bold,
               ),
-            ),
-            const SizedBox(
-              height: 2,
             ),
             Text(
               userLevel,
               style: const TextStyle(
                 color: Colors.black,
-                fontSize: 18,
-                fontFamily: 'Work Sans',
-                fontWeight: FontWeight.w200,
+                fontSize: 16,
               ),
             ),
           ],
         ),
         const SizedBox(
-          width: 16,
+          width: 25,
         ),
         GestureDetector(
-          onTap: onTapRequestButton,
+          onTap: onTapView,
           child: Container(
-            width: 130,
-            height: 35,
+            width: 125,
+            height: 30,
             decoration: ShapeDecoration(
               color: const Color(0xFF74FE8A),
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(5),
+                borderRadius: BorderRadius.circular(45),
               ),
               shadows: const [
                 BoxShadow(
@@ -511,12 +424,73 @@ Widget _studybuddyCardAfterAddFriend(
             ),
             child: const Center(
               child: Text(
-                'Request Tution',
+                'View',
                 style: TextStyle(
                   color: Colors.black,
-                  fontSize: 18,
+                  fontSize: 16,
                   fontFamily: 'Work Sans',
-                  fontWeight: FontWeight.w500,
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
+    ),
+  );
+}
+
+// Study Buddy card after adding friend
+Widget _studybuddyCardAfterAddFriend(
+  ImageProvider<Object> userImage,
+  String userName,
+  String userLevel,
+  Function() onTapView,
+  Function() onTapRequestTuition,
+) {
+  return Container(
+    width: 370,
+    height: 100,
+    decoration: ShapeDecoration(
+      color: const Color(0xEAF6EEEE),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+      ),
+      shadows: const [
+        BoxShadow(
+          color: Color(0x3F000000),
+          blurRadius: 4,
+          offset: Offset(0, 4),
+          spreadRadius: 0,
+        )
+      ],
+    ),
+    child: Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: [
+        Center(
+          child: Center(
+            child: Padding(
+              padding: const EdgeInsets.only(left: 10),
+              child: Container(
+                margin: const EdgeInsets.all(5),
+                width: 75,
+                height: 75,
+                decoration: const BoxDecoration(
+                  shape: BoxShape.circle,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Color(0x3F000000),
+                      blurRadius: 4,
+                      offset: Offset(0, 4),
+                      spreadRadius: 0,
+                    ),
+                  ],
+                ),
+                child: CircleAvatar(
+                  backgroundImage: userImage,
+                  radius: 40,
                 ),
               ),
             ),
@@ -524,6 +498,99 @@ Widget _studybuddyCardAfterAddFriend(
         ),
         const SizedBox(
           width: 15,
+        ),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              userName,
+              style: const TextStyle(
+                color: Colors.black,
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            Text(
+              userLevel,
+              style: const TextStyle(
+                color: Colors.black,
+                fontSize: 16,
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(
+          width: 25,
+        ),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            GestureDetector(
+              onTap: onTapView,
+              child: Container(
+                width: 125,
+                height: 30,
+                decoration: ShapeDecoration(
+                  color: const Color(0xFF74FE8A),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(45),
+                  ),
+                  shadows: const [
+                    BoxShadow(
+                      color: Color(0x3F000000),
+                      blurRadius: 4,
+                      offset: Offset(0, 4),
+                      spreadRadius: 0,
+                    )
+                  ],
+                ),
+                child: const Center(
+                  child: Text(
+                    'View',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 16,
+                      fontFamily: 'Work Sans',
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            GestureDetector(
+              onTap: onTapRequestTuition,
+              child: Container(
+                width: 125,
+                height: 30,
+                decoration: ShapeDecoration(
+                  color: const Color(0xFF74FE8A),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(45),
+                  ),
+                  shadows: const [
+                    BoxShadow(
+                      color: Color(0x3F000000),
+                      blurRadius: 4,
+                      offset: Offset(0, 4),
+                      spreadRadius: 0,
+                    )
+                  ],
+                ),
+                child: const Center(
+                  child: Text(
+                    'Request Tution',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 16,
+                      fontFamily: 'Work Sans',
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
       ],
     ),

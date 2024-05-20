@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_application_1/Screens/Profile/user_profile.dart';
+import 'package:flutter_application_1/Widgets/navigation_bar.dart';
 
 class NotificationScreen extends StatefulWidget {
   const NotificationScreen({super.key});
@@ -32,7 +34,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const UserProfile(),
+                          builder: (context) => const NavigationBarBottom(),
                         ),
                       );
                     },
@@ -70,7 +72,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
 
                 Container(
                   width: 380,
-                  height: 100,
+                  height: 130,
                   decoration: ShapeDecoration(
                     color: const Color(0x190043CE),
                     shape: RoundedRectangleBorder(
@@ -116,29 +118,68 @@ class _NotificationScreenState extends State<NotificationScreen> {
                           ),
                         ),
                       ),
-                      const Column(
+                      Column(
                         mainAxisSize: MainAxisSize.min,
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            'Requested for tutoring',
+                          const Text(
+                            'Chamod Requested for tutoring',
                             style: TextStyle(
                               color: Colors.black,
-                              fontSize: 13,
+                              fontSize: 18,
                               fontFamily: 'Work Sans',
                               fontWeight: FontWeight.w600,
                             ),
                           ),
-                          SizedBox(height: 5),
-                          SizedBox(
+                          const SizedBox(height: 5),
+                          Container(
                             width: 208,
-                            height: 25,
-                            child: Text(
-                              'meeting request: March 12 Monday\n8am-12am',
+                            height: 15,
+                            child: const Text(
+                              'Subject: JAVA Programming',
                               style: TextStyle(
                                 color: Colors.black,
-                                fontSize: 10,
+                                fontSize: 15,
+                                fontFamily: 'Work Sans',
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                          ),
+                          Container(
+                            width: 208,
+                            height: 15,
+                            child: const Text(
+                              'Lessson: OOP Theories',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 15,
+                                fontFamily: 'Work Sans',
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                          ),
+                          Container(
+                            width: 208,
+                            height: 15,
+                            child: const Text(
+                              'Date: 2024-06-15',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 15,
+                                fontFamily: 'Work Sans',
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                          ),
+                          Container(
+                            width: 208,
+                            height: 15,
+                            child: const Text(
+                              'Time: 14:30',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 15,
                                 fontFamily: 'Work Sans',
                                 fontWeight: FontWeight.w400,
                               ),
@@ -146,10 +187,12 @@ class _NotificationScreenState extends State<NotificationScreen> {
                           ),
                         ],
                       ),
-                      const Flexible(
-                        child: Icon(
-                          Icons.delete,
-                        ),
+                      const Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Icon(Icons.border_color_rounded),
+                          Icon(Icons.delete)
+                        ],
                       ),
                     ],
                   ),
@@ -164,3 +207,74 @@ class _NotificationScreenState extends State<NotificationScreen> {
     );
   }
 }
+
+// import 'package:flutter/material.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
+
+// class NotificationScreen extends StatefulWidget {
+//   const NotificationScreen({Key? key}) : super(key: key);
+
+//   @override
+//   State<NotificationScreen> createState() => _NotificationScreenState();
+// }
+
+// class _NotificationScreenState extends State<NotificationScreen> {
+//   final User? currentUser = FirebaseAuth.instance.currentUser;
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return SafeArea(
+//       child: Scaffold(
+//         appBar: AppBar(
+//           title: const Text('Notifications'),
+//         ),
+//         body: currentUser == null
+//             ? const Center(child: Text('You are not logged in'))
+//             : StreamBuilder<DocumentSnapshot>(
+//                 stream: FirebaseFirestore.instance
+//                     .collection('users')
+//                     .doc(currentUser!.uid)
+//                     .snapshots(),
+//                 builder: (context, snapshot) {
+//                   if (snapshot.connectionState == ConnectionState.waiting) {
+//                     return const Center(child: CircularProgressIndicator());
+//                   }
+
+//                   if (snapshot.hasError) {
+//                     return const Center(child: Text('Something went wrong'));
+//                   }
+
+//                   if (!snapshot.hasData || !snapshot.data!.exists) {
+//                     return const Center(child: Text('No notifications found'));
+//                   }
+
+//                   final userDoc = snapshot.data!;
+//                   final receivedRequests = List<Map<String, dynamic>>.from(
+//                       userDoc['receivedRequests'] ?? []);
+
+//                   if (receivedRequests.isEmpty) {
+//                     return const Center(child: Text('No notifications found'));
+//                   }
+
+//                   return ListView.builder(
+//                     itemCount: receivedRequests.length,
+//                     itemBuilder: (context, index) {
+//                       final request = receivedRequests[index];
+//                       return Card(
+//                         child: ListTile(
+//                           title: Text('Subject: ${request['subject']}'),
+//                           subtitle: Text(
+//                               'Lesson: ${request['lesson']} \nDate: ${request['date']} \nTime: ${request['time']}'),
+//                           trailing: Text(
+//                               'Received: ${request['timestamp'].toDate().toString()}'),
+//                         ),
+//                       );
+//                     },
+//                   );
+//                 },
+//               ),
+//       ),
+//     );
+//   }
+// }
