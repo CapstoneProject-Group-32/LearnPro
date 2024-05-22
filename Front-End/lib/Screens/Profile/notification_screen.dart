@@ -1,16 +1,205 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter_application_1/Screens/Profile/user_profile.dart';
-import 'package:flutter_application_1/Widgets/navigation_bar.dart';
+import 'package:flutter_application_1/Screens/Community/schedule_meeting.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+import 'user_profile.dart';
+
+class StorageMethods {
+  final FirebaseStorage _storage = FirebaseStorage.instance;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  Future<String> getDownloadURL(String folderName) async {
+    String uid = _auth.currentUser!.uid;
+    Reference ref = _storage.ref().child(folderName).child(uid);
+    return await ref.getDownloadURL();
+  }
+}
 
 class NotificationScreen extends StatefulWidget {
-  const NotificationScreen({super.key});
+  const NotificationScreen({Key? key}) : super(key: key);
 
   @override
   State<NotificationScreen> createState() => _NotificationScreenState();
 }
 
 class _NotificationScreenState extends State<NotificationScreen> {
+  final currentUser = FirebaseAuth.instance.currentUser!;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final StorageMethods _storageMethods = StorageMethods();
+
+  Future<void> _deleteNotification(
+      String requestId, String senderUid, String senderName) async {
+    try {
+      final userSnapshot =
+          await _firestore.collection('users').doc(currentUser.uid).get();
+      final userName = userSnapshot.data()?['userName'] ?? 'User';
+
+      // Delete the notification from the current user's received requests
+      await _firestore
+          .collection('users')
+          .doc(currentUser.uid)
+          .collection('receivedTuitionRequests')
+          .doc(requestId)
+          .delete();
+
+      // Send a rejection notification to the sender
+      await _firestore
+          .collection('users')
+          .doc(senderUid)
+          .collection('rejectedRequests')
+          .add({
+        'message': '$userName rejected your request',
+        'timestamp': FieldValue.serverTimestamp(),
+      });
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Request rejected and sender notified')),
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to reject request: $e')),
+      );
+    }
+  }
+
+  void _showDeleteConfirmationDialog(
+      String requestId, String senderUid, String senderName) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Are you sure?'),
+          content: const Text('Do you want to reject this request?'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the dialog
+              },
+              child: const Text('No'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the dialog
+                _deleteNotification(requestId, senderUid,
+                    senderName); // Delete the notification
+              },
+              child: const Text('Yes'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future<void> _deleteNotificationlink(
+      String receivedId, String receiverUid, String receiverName) async {
+    try {
+      final userSnapshot =
+          await _firestore.collection('users').doc(currentUser.uid).get();
+      final userName = userSnapshot.data()?['userName'] ?? 'User';
+
+      // Delete the notification from the current user's received requests
+      await _firestore
+          .collection('users')
+          .doc(currentUser.uid)
+          .collection('AcceptedRequests')
+          .doc(receivedId)
+          .delete();
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Link Deleted')),
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to reject request: $e')),
+      );
+    }
+  }
+
+  void _showDeleteConfirmationDialogForlink(
+      String receivedId, String receiverUid, String receiverName) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Are you sure?'),
+          content: const Text(
+              'Do you copy that given link ? Because there are no chance to get back that link agin after delete the notification ?'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the dialog
+              },
+              child: const Text('No'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the dialog
+                _deleteNotificationlink(receivedId, receiverUid,
+                    receiverName); // Delete the notification
+              },
+              child: const Text('Yes'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future<String> _getProfilePicUrl() async {
+    return await _storageMethods.getDownloadURL('profilePictures');
+  }
+
+  Future<String> _getCurrentUserName() async {
+    final snapshot =
+        await _firestore.collection('users').doc(currentUser.uid).get();
+    return snapshot.data()?['userName'] ?? 'User';
+  }
+
+  Future<void> _deleteRejectedNotification(String notificationId) async {
+    try {
+      await _firestore
+          .collection('users')
+          .doc(currentUser.uid)
+          .collection('rejectedRequests')
+          .doc(notificationId)
+          .delete();
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Rejected request notification deleted')),
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to delete notification: $e')),
+      );
+    }
+  }
+
+  void _navigateToAcceptRequest(String senderUid, String requestId) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) =>
+            AcceptRequest(senderUid: senderUid, requestId: requestId),
+      ),
+    );
+  }
+
+  _launchURL(String url) async {
+    try {
+      if (await canLaunch(url)) {
+        await launch(url);
+      } else {
+        throw 'Could not launch $url';
+      }
+    } catch (e) {
+      throw 'Error launching URL: $e';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -25,8 +214,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-//Profile back button
-
+                // Notifications back button
                 Padding(
                   padding: const EdgeInsets.all(4.0),
                   child: InkWell(
@@ -34,26 +222,22 @@ class _NotificationScreenState extends State<NotificationScreen> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const NavigationBarBottom(),
+                          builder: (context) => const UserProfile(),
                         ),
                       );
                     },
                     child: const Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        SizedBox(
-                          width: 10,
-                        ),
+                        SizedBox(width: 10),
                         Icon(
                           Icons.arrow_back_ios_new_rounded,
                           size: 28,
                           color: Colors.black,
                         ),
-                        SizedBox(
-                          width: 8,
-                        ),
+                        SizedBox(width: 8),
                         Text(
-                          "Profile",
+                          "Notifications",
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 30,
@@ -64,141 +248,413 @@ class _NotificationScreenState extends State<NotificationScreen> {
                     ),
                   ),
                 ),
+                const SizedBox(height: 10),
+                // Notification list
+                StreamBuilder<QuerySnapshot>(
+                  stream: FirebaseFirestore.instance
+                      .collection('users')
+                      .doc(currentUser.uid)
+                      .collection('receivedTuitionRequests')
+                      .snapshots(),
+                  builder: (context, snapshot) {
+                    if (!snapshot.hasData) {
+                      return const Center(child: CircularProgressIndicator());
+                    }
 
-                const SizedBox(
-                  height: 30,
+                    final requests = snapshot.data!.docs;
+
+                    return ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: requests.length,
+                      itemBuilder: (context, index) {
+                        final request =
+                            requests[index].data() as Map<String, dynamic>;
+                        final requestId = requests[index].id;
+                        final senderName = request['senderName'];
+                        final subject = request['subject'];
+                        final lesson = request['lesson'];
+                        final date = request['date'];
+                        final time = request['time'];
+                        final senderUid = request['sender'];
+                        final senderProfilePic = request['senderProfilePic'];
+
+                        return Padding(
+                          padding: const EdgeInsets.only(left: 10, right: 10),
+                          child: Container(
+                            width: 380,
+                            height: 140,
+                            margin: const EdgeInsets.symmetric(vertical: 10),
+                            decoration: ShapeDecoration(
+                              color: const Color(0x190043CE),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              shadows: const [
+                                BoxShadow(
+                                  color: Color(0x190043CE),
+                                  blurRadius: 4,
+                                  offset: Offset(0, 4),
+                                  spreadRadius: 0,
+                                )
+                              ],
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                senderProfilePic.isNotEmpty
+                                    ? Padding(
+                                        padding:
+                                            const EdgeInsets.only(left: 18),
+                                        child: Container(
+                                          height: 85,
+                                          width: 85,
+                                          child: CircleAvatar(
+                                            backgroundImage:
+                                                NetworkImage(senderProfilePic),
+                                          ),
+                                        ),
+                                      )
+                                    : Padding(
+                                        padding:
+                                            const EdgeInsets.only(left: 18),
+                                        child: Container(
+                                          height: 85,
+                                          width: 85,
+                                          child: const CircleAvatar(
+                                            child: Icon(Icons.person),
+                                          ),
+                                        ),
+                                      ),
+                                Flexible(
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(left: 25),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          '$senderName Requested for tutoring',
+                                          style: const TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 18,
+                                            fontFamily: 'Work Sans',
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                        ),
+                                        const SizedBox(height: 5),
+                                        Container(
+                                          width: 208,
+                                          child: Text(
+                                            'Subject: $subject',
+                                            style: const TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 15,
+                                              fontFamily: 'Work Sans',
+                                              fontWeight: FontWeight.w400,
+                                            ),
+                                          ),
+                                        ),
+                                        Container(
+                                          width: 208,
+                                          child: Text(
+                                            'Lesson: $lesson',
+                                            style: const TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 15,
+                                              fontFamily: 'Work Sans',
+                                              fontWeight: FontWeight.w400,
+                                            ),
+                                          ),
+                                        ),
+                                        Container(
+                                          width: 208,
+                                          child: Text(
+                                            'Date: $date',
+                                            style: const TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 15,
+                                              fontFamily: 'Work Sans',
+                                              fontWeight: FontWeight.w400,
+                                            ),
+                                          ),
+                                        ),
+                                        Container(
+                                          width: 208,
+                                          child: Text(
+                                            'Time: $time',
+                                            style: const TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 15,
+                                              fontFamily: 'Work Sans',
+                                              fontWeight: FontWeight.w400,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: [
+                                    IconButton(
+                                      icon: const Icon(
+                                          Icons.border_color_rounded),
+                                      onPressed: () {
+                                        _navigateToAcceptRequest(
+                                            senderUid, requestId);
+                                      },
+                                    ),
+                                    IconButton(
+                                      icon: const Icon(Icons.close_rounded),
+                                      onPressed: () {
+                                        _showDeleteConfirmationDialog(
+                                            requestId, senderUid, senderName);
+                                      },
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    );
+                  },
                 ),
-                //.......................................
 
-                Container(
-                  width: 380,
-                  height: 130,
-                  decoration: ShapeDecoration(
-                    color: const Color(0x190043CE),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    shadows: const [
-                      BoxShadow(
-                        color: Color(0x190043CE),
-                        blurRadius: 4,
-                        offset: Offset(0, 4),
-                        spreadRadius: 0,
-                      )
-                    ],
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Flexible(
-                        child: Container(
-                          margin: const EdgeInsets.all(5),
-                          width: 66,
-                          height: 66,
-                          decoration: const BoxDecoration(
-                            shape: BoxShape.circle,
-                            boxShadow: [
-                              BoxShadow(
-                                color: Color(0x3F000000),
-                                blurRadius: 4,
-                                offset: Offset(0, 4),
-                                spreadRadius: 0,
-                              ),
-                            ],
-                          ),
-                          child: GestureDetector(
-                            onTap: () {},
-                            child: const CircleAvatar(
-                              backgroundImage:
-                                  AssetImage("assets/profilepic.png"),
-                              radius: 40,
-                            ),
-                          ),
-                        ),
-                      ),
-                      Column(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text(
-                            'Chamod Requested for tutoring',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 18,
-                              fontFamily: 'Work Sans',
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                          const SizedBox(height: 5),
-                          Container(
-                            width: 208,
-                            height: 15,
-                            child: const Text(
-                              'Subject: JAVA Programming',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 15,
-                                fontFamily: 'Work Sans',
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                          ),
-                          Container(
-                            width: 208,
-                            height: 15,
-                            child: const Text(
-                              'Lessson: OOP Theories',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 15,
-                                fontFamily: 'Work Sans',
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                          ),
-                          Container(
-                            width: 208,
-                            height: 15,
-                            child: const Text(
-                              'Date: 2024-06-15',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 15,
-                                fontFamily: 'Work Sans',
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                          ),
-                          Container(
-                            width: 208,
-                            height: 15,
-                            child: const Text(
-                              'Time: 14:30',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 15,
-                                fontFamily: 'Work Sans',
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      const Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Icon(Icons.border_color_rounded),
-                          Icon(Icons.delete)
-                        ],
-                      ),
-                    ],
-                  ),
-                )
+                StreamBuilder<QuerySnapshot>(
+                  stream: FirebaseFirestore.instance
+                      .collection('users')
+                      .doc(currentUser.uid)
+                      .collection('rejectedRequests')
+                      .orderBy('timestamp', descending: true)
+                      .snapshots(),
+                  builder: (context, snapshot) {
+                    if (!snapshot.hasData) {
+                      return const Center(child: CircularProgressIndicator());
+                    }
 
-                //.........................................
+                    final notifications = snapshot.data!.docs;
+
+                    return ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: notifications.length,
+                      itemBuilder: (context, index) {
+                        final notification =
+                            notifications[index].data() as Map<String, dynamic>;
+                        final message = notification['message'];
+                        final notificationId = notifications[index].id;
+
+                        return Padding(
+                          padding: const EdgeInsets.only(left: 10, right: 10),
+                          child: Container(
+                            width: 380,
+                            height: 50,
+                            margin: const EdgeInsets.symmetric(vertical: 10),
+                            decoration: ShapeDecoration(
+                              color: const Color(0x190043CE),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              shadows: const [
+                                BoxShadow(
+                                  color: Color(0x190043CE),
+                                  blurRadius: 4,
+                                  offset: Offset(0, 4),
+                                  spreadRadius: 0,
+                                )
+                              ],
+                            ),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 18),
+                                  child: Text(
+                                    message,
+                                    style: const TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.red,
+                                    ),
+                                  ),
+                                ),
+                                IconButton(
+                                  icon: const Icon(Icons.delete),
+                                  onPressed: () {
+                                    _deleteRejectedNotification(notificationId);
+                                  },
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    );
+                  },
+                ),
+
+                StreamBuilder<QuerySnapshot>(
+                  stream: FirebaseFirestore.instance
+                      .collection('users')
+                      .doc(currentUser.uid)
+                      .collection('AcceptedRequests')
+                      .snapshots(),
+                  builder: (context, snapshot) {
+                    if (!snapshot.hasData) {
+                      return const Center(child: CircularProgressIndicator());
+                    }
+
+                    final requests = snapshot.data!.docs;
+
+                    return ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: requests.length,
+                      itemBuilder: (context, index) {
+                        final request =
+                            requests[index].data() as Map<String, dynamic>;
+                        final receivedId = requests[index].id;
+                        final receiverName = request['receiverName'];
+                        final Link = request['link'];
+                        final date = request['date'];
+                        final time = request['time'];
+                        final receiverUid = request['receiverUid'];
+                        final senderProfilePic = request['senderProfilePic'];
+
+                        return Padding(
+                          padding: const EdgeInsets.only(left: 10, right: 10),
+                          child: Container(
+                            width: 380,
+                            height: 140,
+                            margin: const EdgeInsets.symmetric(vertical: 10),
+                            decoration: ShapeDecoration(
+                              color: const Color(0x190043CE),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              shadows: const [
+                                BoxShadow(
+                                  color: Color(0x190043CE),
+                                  blurRadius: 4,
+                                  offset: Offset(0, 4),
+                                  spreadRadius: 0,
+                                )
+                              ],
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                senderProfilePic.isNotEmpty
+                                    ? Padding(
+                                        padding:
+                                            const EdgeInsets.only(left: 18),
+                                        child: Container(
+                                          height: 85,
+                                          width: 85,
+                                          child: CircleAvatar(
+                                            backgroundImage:
+                                                NetworkImage(senderProfilePic),
+                                          ),
+                                        ),
+                                      )
+                                    : Padding(
+                                        padding:
+                                            const EdgeInsets.only(left: 18),
+                                        child: Container(
+                                          height: 85,
+                                          width: 85,
+                                          child: const CircleAvatar(
+                                            child: Icon(Icons.person),
+                                          ),
+                                        ),
+                                      ),
+                                Flexible(
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(left: 25),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          '$receiverName Accepted for tutoring',
+                                          style: const TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 18,
+                                            fontFamily: 'Work Sans',
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                        ),
+                                        const SizedBox(height: 5),
+                                        GestureDetector(
+                                          onTap: () {
+                                            _launchURL(
+                                                Link); // Define _launchURL function below
+                                          },
+                                          child: Container(
+                                            width: 208,
+                                            child: Text(
+                                              'link: $Link',
+                                              style: const TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 15,
+                                                fontFamily: 'Work Sans',
+                                                fontWeight: FontWeight.w400,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        Container(
+                                          width: 208,
+                                          child: Text(
+                                            'Date: $date',
+                                            style: const TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 15,
+                                              fontFamily: 'Work Sans',
+                                              fontWeight: FontWeight.w400,
+                                            ),
+                                          ),
+                                        ),
+                                        Container(
+                                          width: 208,
+                                          child: Text(
+                                            'Time: $time',
+                                            style: const TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 15,
+                                              fontFamily: 'Work Sans',
+                                              fontWeight: FontWeight.w400,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                IconButton(
+                                  icon: const Icon(Icons.close_rounded),
+                                  onPressed: () {
+                                    _showDeleteConfirmationDialogForlink(
+                                        receivedId, receiverUid, receiverName);
+                                  },
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    );
+                  },
+                ),
               ],
             ),
           ),
@@ -207,74 +663,3 @@ class _NotificationScreenState extends State<NotificationScreen> {
     );
   }
 }
-
-// import 'package:flutter/material.dart';
-// import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'package:firebase_auth/firebase_auth.dart';
-
-// class NotificationScreen extends StatefulWidget {
-//   const NotificationScreen({Key? key}) : super(key: key);
-
-//   @override
-//   State<NotificationScreen> createState() => _NotificationScreenState();
-// }
-
-// class _NotificationScreenState extends State<NotificationScreen> {
-//   final User? currentUser = FirebaseAuth.instance.currentUser;
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return SafeArea(
-//       child: Scaffold(
-//         appBar: AppBar(
-//           title: const Text('Notifications'),
-//         ),
-//         body: currentUser == null
-//             ? const Center(child: Text('You are not logged in'))
-//             : StreamBuilder<DocumentSnapshot>(
-//                 stream: FirebaseFirestore.instance
-//                     .collection('users')
-//                     .doc(currentUser!.uid)
-//                     .snapshots(),
-//                 builder: (context, snapshot) {
-//                   if (snapshot.connectionState == ConnectionState.waiting) {
-//                     return const Center(child: CircularProgressIndicator());
-//                   }
-
-//                   if (snapshot.hasError) {
-//                     return const Center(child: Text('Something went wrong'));
-//                   }
-
-//                   if (!snapshot.hasData || !snapshot.data!.exists) {
-//                     return const Center(child: Text('No notifications found'));
-//                   }
-
-//                   final userDoc = snapshot.data!;
-//                   final receivedRequests = List<Map<String, dynamic>>.from(
-//                       userDoc['receivedRequests'] ?? []);
-
-//                   if (receivedRequests.isEmpty) {
-//                     return const Center(child: Text('No notifications found'));
-//                   }
-
-//                   return ListView.builder(
-//                     itemCount: receivedRequests.length,
-//                     itemBuilder: (context, index) {
-//                       final request = receivedRequests[index];
-//                       return Card(
-//                         child: ListTile(
-//                           title: Text('Subject: ${request['subject']}'),
-//                           subtitle: Text(
-//                               'Lesson: ${request['lesson']} \nDate: ${request['date']} \nTime: ${request['time']}'),
-//                           trailing: Text(
-//                               'Received: ${request['timestamp'].toDate().toString()}'),
-//                         ),
-//                       );
-//                     },
-//                   );
-//                 },
-//               ),
-//       ),
-//     );
-//   }
-// }

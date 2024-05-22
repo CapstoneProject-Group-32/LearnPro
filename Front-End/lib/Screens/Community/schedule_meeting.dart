@@ -1,34 +1,35 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_application_1/Services/auth_firebase.dart';
 
-class RequestTuitionScreen extends StatefulWidget {
-  final String friendUid; // The UID of the friend you're sending the request to
-  const RequestTuitionScreen({required this.friendUid, Key? key})
+class AcceptRequest extends StatefulWidget {
+  final String senderUid; // The UID of the sender
+  final String requestId; // The ID of the request
+  const AcceptRequest(
+      {required this.senderUid, required this.requestId, Key? key})
       : super(key: key);
 
   @override
-  State<RequestTuitionScreen> createState() => _RequestTuitionScreenState();
+  State<AcceptRequest> createState() => _AcceptRequestState();
 }
 
-class _RequestTuitionScreenState extends State<RequestTuitionScreen> {
-  final currentUser = FirebaseAuth.instance.currentUser!;
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  final authService = AuthServices();
-  late String userName; // Declare userName as a class field
-  late String profilePic;
-
+class _AcceptRequestState extends State<AcceptRequest> {
   final _dateController = TextEditingController();
   final _timeController = TextEditingController();
-  final _subjectController = TextEditingController();
-  final _lessonController = TextEditingController();
+  final _zoomlinkController = TextEditingController();
+
+  final currentUser = FirebaseAuth.instance.currentUser!;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final authService = AuthServices();
+  late String userName;
+  late String profilePic;
 
   @override
   void initState() {
     super.initState();
-    _initializeUserName(); // Call the method to fetch the user's name
+    _initializeUserName();
     _initializegetProfilePicURL();
     _dateController.addListener(_updateDateText);
     _timeController.addListener(_updateTimeText);
@@ -38,8 +39,7 @@ class _RequestTuitionScreenState extends State<RequestTuitionScreen> {
   void dispose() {
     _dateController.dispose();
     _timeController.dispose();
-    _subjectController.dispose();
-    _lessonController.dispose();
+    _zoomlinkController.dispose();
     super.dispose();
   }
 
@@ -79,46 +79,50 @@ class _RequestTuitionScreenState extends State<RequestTuitionScreen> {
     }
   }
 
-  Future<void> _sendTuitionRequest() async {
-    final subject = _subjectController.text;
-    final lesson = _lessonController.text;
+  Future<void> _acceptRequest() async {
     final date = _dateController.text;
     final time = _timeController.text;
+    final link = _zoomlinkController.text;
 
-    // Validate that all fields are filled
-    if (subject.isEmpty || lesson.isEmpty || date.isEmpty || time.isEmpty) {
+    if (date.isEmpty || time.isEmpty || link.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Please fill in all fields')),
       );
       return;
     }
 
-    // Create the request data
-    final request = {
-      'subject': subject,
-      'lesson': lesson,
-      'date': date,
-      'time': time,
-      'sender': _auth.currentUser!.uid, // The UID of the sender
-      'senderName': userName, // The name of the sender
-      'senderProfilePic': profilePic, // The prodilePic of the sender
-    };
-
     try {
-      // Add the request to the receiver's document
-      await FirebaseFirestore.instance
+      // Add the accepted request to the sender's document
+      await _firestore
           .collection('users')
-          .doc(widget.friendUid)
+          .doc(widget.senderUid)
+          .collection('AcceptedRequests')
+          .doc(currentUser.uid)
+          .set({
+        'date': date,
+        'time': time,
+        'link': link,
+        'receiverName': userName,
+        'receiverUid': currentUser.uid,
+        'senderProfilePic': profilePic, // The prodilePic of the sender
+      });
+
+      // Delete the request from the receiver's receivedTuitionRequests
+      await _firestore
+          .collection('users')
+          .doc(currentUser.uid)
           .collection('receivedTuitionRequests')
-          .doc(_auth.currentUser!.uid)
-          .set(request);
+          .doc(widget.requestId)
+          .delete();
 
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Request sent successfully')),
+        const SnackBar(content: Text('Request accepted and sender notified')),
       );
+
+      Navigator.pop(context); // Go back to the notifications page
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Failed to send request: $e')),
+        SnackBar(content: Text('Failed to accept request: $e')),
       );
     }
   }
@@ -137,6 +141,7 @@ class _RequestTuitionScreenState extends State<RequestTuitionScreen> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+                // Schedule Meeting back button
                 Padding(
                   padding: const EdgeInsets.all(4.0),
                   child: InkWell(
@@ -147,14 +152,20 @@ class _RequestTuitionScreenState extends State<RequestTuitionScreen> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         SizedBox(width: 10),
-                        Icon(Icons.arrow_back_ios_new_rounded,
-                            size: 28, color: Colors.black),
+                        Icon(
+                          Icons.arrow_back_ios_new_rounded,
+                          size: 28,
+                          color: Colors.black,
+                        ),
                         SizedBox(width: 8),
-                        Text("Request Tuition",
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 30,
-                                color: Colors.black)),
+                        Text(
+                          "Schedule Meeting",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 30,
+                            color: Colors.black,
+                          ),
+                        ),
                       ],
                     ),
                   ),
@@ -166,48 +177,6 @@ class _RequestTuitionScreenState extends State<RequestTuitionScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        TextFormField(
-                          controller: _subjectController,
-                          obscureText: false,
-                          decoration: InputDecoration(
-                            labelText: "Subject",
-                            labelStyle: const TextStyle(
-                                color: Color(0xFF16697A),
-                                fontSize: 20,
-                                fontWeight: FontWeight.w400),
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(5)),
-                            focusedBorder: const OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    color: Color(0xFF16697A), width: 2)),
-                          ),
-                        ),
-                        const SizedBox(height: 30),
-                        TextFormField(
-                          controller: _lessonController,
-                          obscureText: false,
-                          decoration: InputDecoration(
-                            labelText: "Lesson or Theory",
-                            labelStyle: const TextStyle(
-                                color: Color(0xFF16697A),
-                                fontSize: 20,
-                                fontWeight: FontWeight.w400),
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(5)),
-                            focusedBorder: const OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    color: Color(0xFF16697A), width: 2)),
-                          ),
-                        ),
-                        const SizedBox(height: 30),
-                        const Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: Text(
-                              "Mention an available time period to arrange a meeting with your study buddy.",
-                              style: TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.w400)),
-                        ),
-                        const SizedBox(height: 30),
                         TextFormField(
                           controller: _dateController,
                           decoration: InputDecoration(
@@ -249,13 +218,30 @@ class _RequestTuitionScreenState extends State<RequestTuitionScreen> {
                             FilteringTextInputFormatter.allow(RegExp(r'\d|:'))
                           ],
                         ),
+                        const SizedBox(height: 30),
+                        TextFormField(
+                          controller: _zoomlinkController,
+                          obscureText: false,
+                          decoration: InputDecoration(
+                            labelText: "Paste your Zoom link here",
+                            labelStyle: const TextStyle(
+                                color: Color(0xFF16697A),
+                                fontSize: 20,
+                                fontWeight: FontWeight.w400),
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(5)),
+                            focusedBorder: const OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Color(0xFF16697A), width: 2)),
+                          ),
+                        ),
                         const SizedBox(height: 35),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             Flexible(
                               child: GestureDetector(
-                                onTap: _sendTuitionRequest,
+                                onTap: _acceptRequest,
                                 child: Container(
                                   width: 150,
                                   height: 50,

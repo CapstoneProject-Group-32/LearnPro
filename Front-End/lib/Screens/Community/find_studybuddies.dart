@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_application_1/Models/usermodel.dart';
 import 'package:flutter_application_1/Screens/Community/request_tution.dart';
 import 'package:flutter_application_1/Screens/Community/search_user_screen.dart';
@@ -300,9 +302,8 @@ class _StudyBuddiesState extends State<StudyBuddies> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) =>
-                                        const RequestTuitionScreen(
-                                      friendUid: '',
+                                    builder: (context) => RequestTuitionScreen(
+                                      friendUid: friend.uid,
                                     ),
                                   ),
                                 );
@@ -467,134 +468,141 @@ Widget _studybuddyCardAfterAddFriend(
         )
       ],
     ),
-    child: Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: [
-        Center(
-          child: Center(
-            child: Padding(
-              padding: const EdgeInsets.only(left: 10),
-              child: Container(
-                margin: const EdgeInsets.all(5),
-                width: 75,
-                height: 75,
-                decoration: const BoxDecoration(
-                  shape: BoxShape.circle,
-                  boxShadow: [
-                    BoxShadow(
-                      color: Color(0x3F000000),
-                      blurRadius: 4,
-                      offset: Offset(0, 4),
-                      spreadRadius: 0,
-                    ),
-                  ],
-                ),
-                child: CircleAvatar(
-                  backgroundImage: userImage,
-                  radius: 40,
+    child: Padding(
+      padding: const EdgeInsets.all(4.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Center(
+            child: Center(
+              child: Padding(
+                padding: const EdgeInsets.only(left: 10),
+                child: Container(
+                  margin: const EdgeInsets.all(5),
+                  width: 75,
+                  height: 75,
+                  decoration: const BoxDecoration(
+                    shape: BoxShape.circle,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Color(0x3F000000),
+                        blurRadius: 4,
+                        offset: Offset(0, 4),
+                        spreadRadius: 0,
+                      ),
+                    ],
+                  ),
+                  child: CircleAvatar(
+                    backgroundImage: userImage,
+                    radius: 40,
+                  ),
                 ),
               ),
             ),
           ),
-        ),
-        const SizedBox(
-          width: 15,
-        ),
-        Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              userName,
-              style: const TextStyle(
-                color: Colors.black,
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            Text(
-              userLevel,
-              style: const TextStyle(
-                color: Colors.black,
-                fontSize: 16,
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(
-          width: 25,
-        ),
-        Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            GestureDetector(
-              onTap: onTapView,
-              child: Container(
-                width: 125,
-                height: 30,
-                decoration: ShapeDecoration(
-                  color: const Color(0xFF74FE8A),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(45),
+          const SizedBox(
+            width: 15,
+          ),
+          Flexible(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  userName,
+                  style: const TextStyle(
+                    color: Colors.black,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
                   ),
-                  shadows: const [
-                    BoxShadow(
-                      color: Color(0x3F000000),
-                      blurRadius: 4,
-                      offset: Offset(0, 4),
-                      spreadRadius: 0,
-                    )
-                  ],
                 ),
-                child: const Center(
-                  child: Text(
-                    'View',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 16,
-                      fontFamily: 'Work Sans',
-                      fontWeight: FontWeight.w400,
+                Text(
+                  userLevel,
+                  style: const TextStyle(
+                    color: Colors.black,
+                    fontSize: 14,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(
+            width: 25,
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                GestureDetector(
+                  onTap: onTapView,
+                  child: Container(
+                    width: 125,
+                    height: 30,
+                    decoration: ShapeDecoration(
+                      color: const Color(0xFF74FE8A),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(45),
+                      ),
+                      shadows: const [
+                        BoxShadow(
+                          color: Color(0x3F000000),
+                          blurRadius: 4,
+                          offset: Offset(0, 4),
+                          spreadRadius: 0,
+                        )
+                      ],
+                    ),
+                    child: const Center(
+                      child: Text(
+                        'View',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 16,
+                          fontFamily: 'Work Sans',
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ),
-            GestureDetector(
-              onTap: onTapRequestTuition,
-              child: Container(
-                width: 125,
-                height: 30,
-                decoration: ShapeDecoration(
-                  color: const Color(0xFF74FE8A),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(45),
-                  ),
-                  shadows: const [
-                    BoxShadow(
-                      color: Color(0x3F000000),
-                      blurRadius: 4,
-                      offset: Offset(0, 4),
-                      spreadRadius: 0,
-                    )
-                  ],
-                ),
-                child: const Center(
-                  child: Text(
-                    'Request Tution',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 16,
-                      fontFamily: 'Work Sans',
-                      fontWeight: FontWeight.w400,
+                GestureDetector(
+                  onTap: onTapRequestTuition,
+                  child: Container(
+                    width: 125,
+                    height: 30,
+                    decoration: ShapeDecoration(
+                      color: const Color(0xFF74FE8A),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(45),
+                      ),
+                      shadows: const [
+                        BoxShadow(
+                          color: Color(0x3F000000),
+                          blurRadius: 4,
+                          offset: Offset(0, 4),
+                          spreadRadius: 0,
+                        )
+                      ],
+                    ),
+                    child: const Center(
+                      child: Text(
+                        'Request Tution',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 16,
+                          fontFamily: 'Work Sans',
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
                     ),
                   ),
                 ),
-              ),
+              ],
             ),
-          ],
-        ),
-      ],
+          ),
+        ],
+      ),
     ),
   );
 }

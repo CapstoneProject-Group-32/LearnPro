@@ -157,6 +157,57 @@ class AuthServices {
     }
   }
 
+  // get the current user's username
+  Future<String?> getCurrentUserName() async {
+    User? currentUser = _auth.currentUser;
+
+    if (currentUser != null) {
+      try {
+        DocumentSnapshot snapshot =
+            await _firestore.collection('users').doc(currentUser.uid).get();
+
+        if (snapshot.exists) {
+          return snapshot.get('userName') as String?;
+        } else {
+          print('User document does not exist');
+          return null;
+        }
+      } catch (error) {
+        print('Error getting user document: $error');
+        return null;
+      }
+    } else {
+      print('No current user');
+      return null;
+    }
+  }
+
+// get the current user's userprofilePic
+
+  Future<String?> getProfilePicURL(String uid) async {
+    User? currentUser = _auth.currentUser;
+
+    if (currentUser != null) {
+      try {
+        DocumentSnapshot snapshot =
+            await _firestore.collection('users').doc(currentUser.uid).get();
+
+        if (snapshot.exists) {
+          return snapshot.get('profilePic') as String?;
+        } else {
+          print('User document does not exist');
+          return null;
+        }
+      } catch (error) {
+        print('Error getting user document: $error');
+        return null;
+      }
+    } else {
+      print('No current user');
+      return null;
+    }
+  }
+
   //logout
 
   Future logOut() async {
