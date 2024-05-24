@@ -8,12 +8,13 @@ class History {
   });
 
   Map<String, dynamic> toJson() => {
-        "dateTime": dateTime.millisecondsSinceEpoch,
+        "dateTime": dateTime.toIso8601String(), // Store as ISO 8601 string
         "focusedSecs": focusedSecs,
       };
 
   History.fromJson(Map<String, dynamic> json)
-      : dateTime = DateTime.fromMillisecondsSinceEpoch(json['dateTime']),
+      : dateTime =
+            DateTime.parse(json['dateTime']), // Parse from ISO 8601 string
         focusedSecs = json['focusedSecs'];
 
   @override

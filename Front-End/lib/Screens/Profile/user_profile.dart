@@ -31,6 +31,8 @@ class _UserProfileState extends State<UserProfile> {
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               final userData = snapshot.data!.data() as Map<String, dynamic>;
+              final timerData = userData['timer'];
+
               UserModel user = UserModel.fromJSON(userData);
 
               return Container(
@@ -208,16 +210,26 @@ class _UserProfileState extends State<UserProfile> {
                                   decoration: const BoxDecoration(
                                     color: Color(0xEAF6EEEE),
                                   ),
-                                  child: const Column(
+                                  child: Column(
                                     children: [
                                       Text(
-                                        "20H",
-                                        style: TextStyle(
+                                        //"${(snapshot.data!.get('timer.sumOfFocusTime') / 3600).toStringAsFixed(1)}H",
+                                        //"${(snapshot.data!.get('timer.sumOfFocusTime')).toInt()}s",
+                                        timerData != null
+                                            ? (timerData['sumOfFocusTime'] !=
+                                                    null
+                                                ? (timerData['sumOfFocusTime'] /
+                                                            3600)
+                                                        .toStringAsFixed(1) +
+                                                    'H'
+                                                : '0.0H')
+                                            : '0.0H',
+                                        style: const TextStyle(
                                             fontSize: 25,
                                             fontWeight: FontWeight.w400,
                                             color: Colors.black),
                                       ),
-                                      Text(
+                                      const Text(
                                         "Time",
                                         style: TextStyle(
                                             fontSize: 25,

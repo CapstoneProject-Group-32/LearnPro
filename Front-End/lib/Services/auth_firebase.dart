@@ -25,8 +25,6 @@ class AuthServices {
             major: '',
             profilePic: '',
             friends: [],
-            sentRequests: [],
-            receivedRequests: [],
           )
         : null;
   }
@@ -75,8 +73,6 @@ class AuthServices {
           major: major,
           profilePic: photoURL,
           friends: [],
-          sentRequests: [],
-          receivedRequests: [],
         );
 
         if (userCredential.user != null) {

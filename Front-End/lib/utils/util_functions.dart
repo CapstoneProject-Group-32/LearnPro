@@ -25,3 +25,13 @@ showSnakBar(BuildContext context, String res) {
     ),
   );
 }
+
+//timer fomat
+
+String formatDuration(int totalSeconds) {
+  final hours = totalSeconds ~/ 3600;
+  final minutes = (totalSeconds % 3600) ~/ 60;
+  final seconds = totalSeconds % 60;
+
+  return '${hours}h ${minutes}min ${seconds}sec';
+}

@@ -672,13 +672,19 @@ class _HomePageState extends State<HomePage> {
           String profilePic = friendData['profilePic'];
 
           return _friendContainer(
-            context,
-            const RequestTuitionScreen(
-              friendUid: '',
-            ),
             NetworkImage(profilePic),
             userName,
             major,
+            () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => RequestTuitionScreen(
+                    friendUid: friendId,
+                  ),
+                ),
+              );
+            },
           );
         } else if (snapshot.hasError) {
           return const Text('Error loading friend');
@@ -690,8 +696,12 @@ class _HomePageState extends State<HomePage> {
 
 //Freind container methods
 
-  Widget _friendContainer(BuildContext context, Widget linkedPage,
-      ImageProvider<Object> friendImage, String friendname, String frindLevel) {
+  Widget _friendContainer(
+    ImageProvider<Object> friendImage,
+    String friendname,
+    String frindLevel,
+    Function() onTapRequestTuition,
+  ) {
     return Container(
       width: 200,
       height: 250,
@@ -749,13 +759,8 @@ class _HomePageState extends State<HomePage> {
               const SizedBox(
                 height: 11,
               ),
-              InkWell(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => linkedPage),
-                  );
-                },
+              GestureDetector(
+                onTap: onTapRequestTuition,
                 child: Container(
                   width: 130,
                   height: 28,

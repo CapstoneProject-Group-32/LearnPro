@@ -1,11 +1,9 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-
 import 'package:flutter_application_1/Controllers/history_controller.dart';
-import 'package:flutter_application_1/Models/timer_history_model.dart';
-import 'package:flutter_application_1/Widgets/history_item.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_application_1/models/timer_history_model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
+import 'package:flutter_application_1/utils/util_functions.dart'; // Import the utility file
 
 class HistoryScreen extends StatefulWidget {
   const HistoryScreen({Key? key}) : super(key: key);
@@ -15,85 +13,69 @@ class HistoryScreen extends StatefulWidget {
 }
 
 class _HistoryScreenState extends State<HistoryScreen> {
-  late HistoryController historyController;
-  late List<History> listHistory;
-  late SharedPreferences prefs;
+  List<History> listHistory = [];
+  int sumOfFocusTimeInSeconds = 0;
+  HistoryController historyController = HistoryController();
+  User? user = FirebaseAuth.instance.currentUser; // Get the current user
+  bool isLoading = true;
+  String? errorMessage;
 
   @override
   void initState() {
     super.initState();
-    historyController = HistoryController();
-    listHistory = [];
-    _initPrefs();
-    _loadHistory();
-  }
-
-  Future<void> _initPrefs() async {
-    await HistoryController.init();
-    prefs = HistoryController.getPrefs();
     _loadHistory();
   }
 
   Future<void> _loadHistory() async {
     try {
-      await HistoryController.init();
-      final historyStrings = prefs.getStringList("history");
-      if (historyStrings != null) {
-        setState(() {
-          listHistory = historyStrings
-              .map((jsonString) => History.fromJson(json.decode(jsonString)))
-              .toList();
-          listHistory.sort((a, b) => b.dateTime.compareTo(a.dateTime));
-        });
-      } else {
-        // Handle the case when historyStrings is null
-        print("History is null");
+      if (user != null) {
+        listHistory = await historyController.readFocusTime(user!.uid);
+        sumOfFocusTimeInSeconds =
+            await historyController.readSumOfFocusTime(user!.uid);
       }
     } catch (e) {
-      // Handle any exceptions that occur during the reading process
-      print("Failed to load history: $e");
+      errorMessage = e.toString();
+    } finally {
+      setState(() {
+        isLoading = false;
+      });
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: Colors.white,
-        appBar: AppBar(
-          elevation: 0.0,
-          centerTitle: true,
-          backgroundColor: Colors.transparent,
-          iconTheme: const IconThemeData(color: Colors.blue),
-          title: const Text(
-            "History",
-            style: TextStyle(
-              color: Colors.black,
-              fontWeight: FontWeight.w500,
-              fontSize: 30,
-            ),
-          ),
-        ),
-        body: ListView.separated(
-          itemBuilder: (context, index) {
-            final item = listHistory[index];
-            final prevItem = index > 0 ? listHistory[index - 1] : null;
-            final isNewDay = prevItem == null ||
-                item.dateTime.day != prevItem.dateTime.day ||
-                item.dateTime.month != prevItem.dateTime.month ||
-                item.dateTime.year != prevItem.dateTime.year;
-            return HistoryItem(
-              history: item,
-              isNewDay: isNewDay,
-            );
-          },
-          itemCount: listHistory.length,
-          separatorBuilder: (BuildContext context, int index) => const Divider(
-            thickness: 0,
-            color: Colors.transparent,
-          ),
-        ),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Focus History'),
       ),
+      body: isLoading
+          ? Center(child: CircularProgressIndicator())
+          : errorMessage != null
+              ? Center(child: Text('Error: $errorMessage'))
+              : Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        'Total Focus Time: ${formatDuration(sumOfFocusTimeInSeconds)}', // Display the correctly formatted total focus time
+                        style: TextStyle(fontSize: 18),
+                      ),
+                    ),
+                    Expanded(
+                      child: ListView.builder(
+                        itemCount: listHistory.length,
+                        itemBuilder: (context, index) {
+                          return ListTile(
+                            title: Text(
+                                'Focus Duration: ${formatDuration(listHistory[index].focusedSecs)}'),
+                            subtitle: Text(
+                                'Date: ${listHistory[index].dateTime.toLocal().toString().split(' ')[0]}'),
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                ),
     );
   }
 }

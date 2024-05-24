@@ -1,11 +1,10 @@
 import 'dart:async';
-
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import 'package:flutter_application_1/Controllers/history_controller.dart';
 import 'package:flutter_application_1/Screens/Timer/history_page.dart';
-
 import 'package:flutter_application_1/Widgets/navigation_bar.dart';
 import 'package:sleek_circular_slider/sleek_circular_slider.dart';
 import 'package:flutter_application_1/models/timer_history_model.dart';
@@ -22,12 +21,10 @@ class _TimerScreenState extends State<TimerScreen> {
   double value = 1800.0;
   bool isStarted = false;
   int focusedMins = 0;
-
   List<History> listHistory = [];
-
   late Timer _timer = Timer(Duration.zero, () {});
-
   HistoryController historyController = HistoryController();
+  User? user = FirebaseAuth.instance.currentUser; // Get the current user
 
   void startTimer() {
     focusedMins = value.toInt();
@@ -40,11 +37,11 @@ class _TimerScreenState extends State<TimerScreen> {
             timer.cancel();
             value = defaultValue;
             isStarted = false;
-            listHistory = historyController.read("history");
-            listHistory.add(
-                History(dateTime: DateTime.now(), focusedSecs: focusedMins));
-            historyController.save("history", listHistory);
-            // print(historyController.read("history"));
+            History history =
+                History(dateTime: DateTime.now(), focusedSecs: focusedMins);
+            historyController.saveFocusTime(
+                user!.uid, history); // Save to Firestore
+            listHistory.add(history);
           });
         } else {
           setState(() {
@@ -79,8 +76,6 @@ class _TimerScreenState extends State<TimerScreen> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisSize: MainAxisSize.max,
                 children: <Widget>[
-//Timer back button
-
                   Padding(
                     padding: const EdgeInsets.all(4.0),
                     child: InkWell(
@@ -118,9 +113,6 @@ class _TimerScreenState extends State<TimerScreen> {
                       ),
                     ),
                   ),
-
-//History button
-
                   Padding(
                     padding: const EdgeInsets.only(right: 15),
                     child: IconButton(
@@ -140,9 +132,6 @@ class _TimerScreenState extends State<TimerScreen> {
                   ),
                 ],
               ),
-
-// start focus session
-
               const SizedBox(
                 height: 50,
               ),
@@ -150,8 +139,6 @@ class _TimerScreenState extends State<TimerScreen> {
                 "Start a Focus session",
                 style: TextStyle(fontSize: 20),
               ),
-
-//timer
               Expanded(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -236,23 +223,15 @@ class _TimerScreenState extends State<TimerScreen> {
                         height: 50,
                         decoration: BoxDecoration(
                           color: const Color.fromARGB(255, 138, 241, 207),
-                          borderRadius: BorderRadius.circular(7),
-                          boxShadow: const [
-                            BoxShadow(
-                              spreadRadius: 3,
-                              blurRadius: 3,
-                              offset: Offset(0, 3),
-                              color: Colors.black12,
-                            )
-                          ],
+                          borderRadius: BorderRadius.circular(100),
                         ),
-                        alignment: Alignment.center,
-                        child: Text(
-                          isStarted ? "STOP" : "START",
-                          style: const TextStyle(
-                            color: Colors.black,
-                            fontSize: 24,
-                            fontWeight: FontWeight.w500,
+                        child: Center(
+                          child: Text(
+                            isStarted ? "STOP" : "START",
+                            style: const TextStyle(
+                              color: Colors.black,
+                              fontSize: 22,
+                            ),
                           ),
                         ),
                       ),
