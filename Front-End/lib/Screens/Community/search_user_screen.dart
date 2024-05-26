@@ -16,6 +16,23 @@ class SearchUserScreen extends StatefulWidget {
 
 class _SearchUserScreenState extends State<SearchUserScreen> {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final userUid = FirebaseAuth.instance.currentUser!.uid;
+  int calculatePoints(double sumOfFocusTime) {
+    if (sumOfFocusTime >= 4) return 7500;
+    if (sumOfFocusTime >= 3) return 3500;
+    if (sumOfFocusTime >= 2) return 1500;
+    if (sumOfFocusTime >= 1) return 500;
+    return 0;
+  }
+
+  int calculateLevel(int points) {
+    if (points >= 8000) return 4;
+    if (points >= 4000) return 3;
+    if (points >= 2000) return 2;
+    if (points >= 500) return 1;
+    return 0;
+  }
+
   bool isFriend = false;
 
   @override
@@ -99,6 +116,14 @@ class _SearchUserScreenState extends State<SearchUserScreen> {
               final timerData = userData['timer'];
 
               UserModel user = UserModel.fromJSON(userData);
+
+              double sumOfFocusTime =
+                  timerData != null && timerData['sumOfFocusTime'] != null
+                      ? timerData['sumOfFocusTime'] / 3600
+                      : 0.0;
+
+              int points = calculatePoints(sumOfFocusTime);
+              int level = calculateLevel(points);
 
               return Container(
                 width: MediaQuery.of(context).size.width,
@@ -218,16 +243,16 @@ class _SearchUserScreenState extends State<SearchUserScreen> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
-                              const Column(
+                              Column(
                                 children: [
                                   Text(
-                                    "2",
-                                    style: TextStyle(
+                                    level.toString(),
+                                    style: const TextStyle(
                                         fontSize: 25,
                                         fontWeight: FontWeight.w400,
                                         color: Colors.black),
                                   ),
-                                  Text(
+                                  const Text(
                                     "Level",
                                     style: TextStyle(
                                         fontSize: 25,
@@ -379,10 +404,10 @@ class _SearchUserScreenState extends State<SearchUserScreen> {
                           )
                         ],
                       ),
-                      child: const Row(
+                      child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Padding(
+                          const Padding(
                             padding: EdgeInsets.only(left: 30),
                             child: Text(
                               "Points",
@@ -394,10 +419,10 @@ class _SearchUserScreenState extends State<SearchUserScreen> {
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsets.only(right: 30),
+                            padding: const EdgeInsets.only(right: 30),
                             child: Text(
-                              "2005",
-                              style: TextStyle(
+                              points.toString(),
+                              style: const TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.w400,
                                 color: Colors.black,

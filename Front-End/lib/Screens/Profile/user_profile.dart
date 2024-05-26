@@ -4,7 +4,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Models/usermodel.dart';
 import 'package:flutter_application_1/Screens/Authentication/authenticate.dart';
-
 import 'package:flutter_application_1/Screens/Profile/notification_screen.dart';
 import 'package:flutter_application_1/Services/auth_firebase.dart';
 import 'package:flutter_application_1/Widgets/navigation_bar.dart';
@@ -18,6 +17,22 @@ class UserProfile extends StatefulWidget {
 
 class _UserProfileState extends State<UserProfile> {
   final currentUser = FirebaseAuth.instance.currentUser!;
+
+  int calculatePoints(double sumOfFocusTime) {
+    if (sumOfFocusTime >= 4) return 7500;
+    if (sumOfFocusTime >= 3) return 3500;
+    if (sumOfFocusTime >= 2) return 1500;
+    if (sumOfFocusTime >= 1) return 500;
+    return 0;
+  }
+
+  int calculateLevel(int points) {
+    if (points >= 8000) return 4;
+    if (points >= 4000) return 3;
+    if (points >= 2000) return 2;
+    if (points >= 500) return 1;
+    return 0;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,6 +50,14 @@ class _UserProfileState extends State<UserProfile> {
 
               UserModel user = UserModel.fromJSON(userData);
 
+              double sumOfFocusTime =
+                  timerData != null && timerData['sumOfFocusTime'] != null
+                      ? timerData['sumOfFocusTime'] / 3600
+                      : 0.0;
+
+              int points = calculatePoints(sumOfFocusTime);
+              int level = calculateLevel(points);
+
               return Container(
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height,
@@ -49,8 +72,7 @@ class _UserProfileState extends State<UserProfile> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisSize: MainAxisSize.max,
                       children: <Widget>[
-//Profile back button
-
+                        // Profile back button
                         Padding(
                           padding: const EdgeInsets.all(4.0),
                           child: InkWell(
@@ -89,9 +111,7 @@ class _UserProfileState extends State<UserProfile> {
                             ),
                           ),
                         ),
-
-//Notification button
-
+                        // Notification button
                         Padding(
                           padding: const EdgeInsets.only(right: 15),
                           child: IconButton(
@@ -111,7 +131,6 @@ class _UserProfileState extends State<UserProfile> {
                         ),
                       ],
                     ),
-
                     const SizedBox(
                       height: 20,
                     ),
@@ -139,7 +158,6 @@ class _UserProfileState extends State<UserProfile> {
                         color: Colors.black,
                       ),
                     ),
-
                     Text(
                       user.major,
                       style: const TextStyle(
@@ -148,13 +166,10 @@ class _UserProfileState extends State<UserProfile> {
                         color: Colors.black,
                       ),
                     ),
-
                     const SizedBox(
                       height: 15,
                     ),
-
-                    //progress container
-
+                    // Progress container
                     Container(
                       height: 100,
                       width: 350,
@@ -185,16 +200,16 @@ class _UserProfileState extends State<UserProfile> {
                                   decoration: const BoxDecoration(
                                     color: Color(0xEAF6EEEE),
                                   ),
-                                  child: const Column(
+                                  child: Column(
                                     children: [
                                       Text(
-                                        "2",
-                                        style: TextStyle(
+                                        level.toString(),
+                                        style: const TextStyle(
                                             fontSize: 25,
                                             fontWeight: FontWeight.w400,
                                             color: Colors.black),
                                       ),
-                                      Text(
+                                      const Text(
                                         "Level",
                                         style: TextStyle(
                                             fontSize: 25,
@@ -213,17 +228,7 @@ class _UserProfileState extends State<UserProfile> {
                                   child: Column(
                                     children: [
                                       Text(
-                                        //"${(snapshot.data!.get('timer.sumOfFocusTime') / 3600).toStringAsFixed(1)}H",
-                                        //"${(snapshot.data!.get('timer.sumOfFocusTime')).toInt()}s",
-                                        timerData != null
-                                            ? (timerData['sumOfFocusTime'] !=
-                                                    null
-                                                ? (timerData['sumOfFocusTime'] /
-                                                            3600)
-                                                        .toStringAsFixed(1) +
-                                                    'H'
-                                                : '0.0H')
-                                            : '0.0H',
+                                        "${sumOfFocusTime.toStringAsFixed(1)}H",
                                         style: const TextStyle(
                                             fontSize: 25,
                                             fontWeight: FontWeight.w400,
@@ -274,7 +279,6 @@ class _UserProfileState extends State<UserProfile> {
                     const SizedBox(
                       height: 30,
                     ),
-
                     const Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -294,9 +298,7 @@ class _UserProfileState extends State<UserProfile> {
                     const SizedBox(
                       height: 10,
                     ),
-
-                    // statistic containers
-
+                    // Statistic containers
                     Container(
                       width: 350,
                       height: 60,
@@ -343,7 +345,6 @@ class _UserProfileState extends State<UserProfile> {
                         ],
                       ),
                     ),
-                    // statistic containers
                     const SizedBox(
                       height: 20,
                     ),
@@ -365,10 +366,10 @@ class _UserProfileState extends State<UserProfile> {
                           )
                         ],
                       ),
-                      child: const Row(
+                      child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Padding(
+                          const Padding(
                             padding: EdgeInsets.only(left: 30),
                             child: Text(
                               "Points",
@@ -380,10 +381,10 @@ class _UserProfileState extends State<UserProfile> {
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsets.only(right: 30),
+                            padding: const EdgeInsets.only(right: 30),
                             child: Text(
-                              "2005",
-                              style: TextStyle(
+                              points.toString(),
+                              style: const TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.w400,
                                 color: Colors.black,
@@ -396,8 +397,7 @@ class _UserProfileState extends State<UserProfile> {
                     const SizedBox(
                       height: 20,
                     ),
-                    // statistic containers
-
+                    // Statistic containers
                     Container(
                       width: 350,
                       height: 60,
@@ -447,9 +447,7 @@ class _UserProfileState extends State<UserProfile> {
                     const SizedBox(
                       height: 20,
                     ),
-
-//log out button
-
+                    // Log out button
                     GestureDetector(
                       onTap: () async {
                         await AuthServices().logOut();

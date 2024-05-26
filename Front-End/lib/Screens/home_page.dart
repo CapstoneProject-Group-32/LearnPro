@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_application_1/Models/usermodel.dart';
+import 'package:flutter_application_1/Screens/Community/community_tabbar.dart';
 import 'package:flutter_application_1/Screens/Community/request_tution.dart';
 
 import 'package:flutter_application_1/Screens/Timer/timer_page.dart';
@@ -265,7 +266,7 @@ class _HomePageState extends State<HomePage> {
                               ),
                               _iconMethod(
                                 context,
-                                const StudyBuddies(),
+                                const CommunityTabBar(),
                                 const AssetImage('assets/notebook.png'),
                                 'Study Plan',
                               ),

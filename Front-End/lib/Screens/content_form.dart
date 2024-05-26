@@ -135,11 +135,11 @@ class _ContentFormState extends State<ContentForm> {
                           }
                         });
                       },
-                      child: const Icon(Icons.add_circle_outline_outlined),
                       style: ElevatedButton.styleFrom(
                         padding: EdgeInsets.zero,
                         shape: const CircleBorder(),
                       ),
+                      child: const Icon(Icons.add_circle_outline_outlined),
                     ),
                   ],
                 ),

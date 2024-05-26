@@ -116,6 +116,7 @@ class _RequestTuitionScreenState extends State<RequestTuitionScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Request sent successfully')),
       );
+      Navigator.pop(context); // Go back to the findstudybuddy page
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Failed to send request: $e')),
