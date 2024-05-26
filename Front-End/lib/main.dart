@@ -7,10 +7,17 @@ import 'package:flutter_application_1/Services/auth_firebase.dart';
 import 'package:flutter_application_1/choosing_page.dart';
 import 'package:provider/provider.dart';
 
+import 'Flashcards/generate_flashcard.dart';
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(const MyApp());
+  runApp(MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => GenerateFlashcard()),
+      ],
+      child: MyApp(),
+    ),);
 }
 
 class MyApp extends StatelessWidget {
