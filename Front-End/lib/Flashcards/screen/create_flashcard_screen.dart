@@ -1,11 +1,10 @@
-
 // import 'package:flutter/material.dart';
 // import 'package:provider/provider.dart';
-// import 'package:flutter_application_1/Flashcards/generate_flashcard.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:flutter_application_1/Flashcards/generate_flashcard.dart';
+// import '../utill/dialog_utils.dart';
 // import 'flashcard_home _screen.dart';
 
-// import 'flashcard_library_screen.dart';
 // import 'flashcard_library_screen.dart';
 
 // class CreateFlashcardScreen extends StatelessWidget {
@@ -60,8 +59,15 @@
 //                     final uid = user.uid;
 
 //                     try {
+//                       // Show the loading dialog
+//                       showLoadingDialog(context);
+
 //                       final flashcards = await Provider.of<GenerateFlashcard>(context, listen: false)
 //                           .createFlashcard(uid, subject, topic, points);
+
+//                       // Hide the loading dialog
+//                       hideLoadingDialog(context);
+
 //                       Navigator.push(
 //                         context,
 //                         MaterialPageRoute(
@@ -69,6 +75,8 @@
 //                         ),
 //                       );
 //                     } catch (e) {
+//                       // Hide the loading dialog in case of an error
+//                       hideLoadingDialog(context);
 //                       print('Error creating flashcards: $e');
 //                       ScaffoldMessenger.of(context).showSnackBar(
 //                         SnackBar(content: Text('Failed to create flashcards')),
@@ -91,17 +99,13 @@
 //   }
 // }
 
-// lib/screens/create_flashcard_screen.dart
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_application_1/Flashcards/generate_flashcard.dart';
 import '../utill/dialog_utils.dart';
 import 'flashcard_home _screen.dart';
-
 import 'flashcard_library_screen.dart';
-
 
 class CreateFlashcardScreen extends StatelessWidget {
   final TextEditingController _subjectController = TextEditingController();
@@ -119,7 +123,8 @@ class CreateFlashcardScreen extends StatelessWidget {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => FlashcardLibraryScreen()),
+                MaterialPageRoute(
+                    builder: (context) => FlashcardLibraryScreen()),
               );
             },
           ),
@@ -148,30 +153,37 @@ class CreateFlashcardScreen extends StatelessWidget {
                 final topic = _topicController.text;
                 final points = _pointsController.text;
 
-                if (subject.isNotEmpty && topic.isNotEmpty && points.isNotEmpty) {
-                  // Get the current user's ID
+                if (subject.isNotEmpty &&
+                    topic.isNotEmpty &&
+                    points.isNotEmpty) {
                   final User? user = FirebaseAuth.instance.currentUser;
                   if (user != null) {
                     final uid = user.uid;
 
                     try {
-                      // Show the loading dialog
                       showLoadingDialog(context);
 
-                      final flashcards = await Provider.of<GenerateFlashcard>(context, listen: false)
+                      final flashcards = await Provider.of<GenerateFlashcard>(
+                              context,
+                              listen: false)
                           .createFlashcard(uid, subject, topic, points);
 
-                      // Hide the loading dialog
                       hideLoadingDialog(context);
 
+                      final flashcardSetID =
+                          Provider.of<GenerateFlashcard>(context, listen: false)
+                              .flashcardSetId;
+
+                      // Navigate with the correct flashcardSetId
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => FlashcardScreen(flashcards: flashcards),
+                          builder: (context) => FlashcardScreen(
+                              flashcards: flashcards,
+                              flashcardSetId: flashcardSetID),
                         ),
                       );
                     } catch (e) {
-                      // Hide the loading dialog in case of an error
                       hideLoadingDialog(context);
                       print('Error creating flashcards: $e');
                       ScaffoldMessenger.of(context).showSnackBar(
@@ -179,7 +191,6 @@ class CreateFlashcardScreen extends StatelessWidget {
                       );
                     }
                   } else {
-                    // Handle the case when the user is not signed in
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(content: Text('User not signed in')),
                     );
