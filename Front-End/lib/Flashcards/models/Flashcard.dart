@@ -31,6 +31,25 @@ class Flashcard {
     };
   }
 
+
+  // Method to create a copy of the flashcard with updated fields
+  Flashcard copyWith({
+    String? id,
+    String? subject,
+    String? topic,
+    String? content,
+    bool? isMarked,
+  }) {
+    return Flashcard(
+      id: id ?? this.id,
+      subject: subject ?? this.subject,
+      topic: topic ?? this.topic,
+      content: content ?? this.content,
+      isMarked: isMarked ?? this.isMarked,
+    );
+  }
+
+
   factory Flashcard.fromMap(Map<String, dynamic> map) {
     return Flashcard(
       id: map['id'],

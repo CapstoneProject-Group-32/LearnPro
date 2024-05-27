@@ -1,6 +1,14 @@
+import 'dart:convert';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/Flashcards/utill/dialog_utils.dart';
 import 'package:flutter_application_1/Models/studiedcontent.dart';
 import 'package:flutter_application_1/Widgets/myuploadbutton.dart';
+import 'package:provider/provider.dart';
+
+import '../generate_flashcard.dart';
+import 'flashcard_home _screen.dart';
 
 class ContentForm extends StatefulWidget {
   @override
@@ -18,7 +26,7 @@ class _ContentFormState extends State<ContentForm> {
   String subject1 = '';
   String mainTopic1 = '';
 
-  void _submitForm() {
+  void _submitForm() async {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
       Studiedcontent studiedcontent = Studiedcontent(
@@ -30,6 +38,41 @@ class _ContentFormState extends State<ContentForm> {
       print('Main Topic: $mainTopic1');
       print('Data Set Map: $dataSetMap');
       // Here you can store the studiedcontent object as needed.
+      String jsonString = jsonEncode(dataSetMap);
+      final User? user = FirebaseAuth.instance.currentUser;
+      if (user != null) {
+        final uid = user.uid;
+        try {
+          showLoadingDialog(context);
+
+          final flashcards =
+              await Provider.of<GenerateFlashcard>(context, listen: false)
+                  .createFlashcard(uid, subject1, mainTopic1, jsonString);
+
+          hideLoadingDialog(context);
+
+          final flashcardSetID =
+              Provider.of<GenerateFlashcard>(context, listen: false)
+                  .flashcardSetId;
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => FlashcardScreen(
+                  flashcards: flashcards, flashcardSetId: flashcardSetID),
+            ),
+          );
+        } catch (e) {
+          hideLoadingDialog(context);
+          print('Error creating flashcards: $e');
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Failed to create flashcards, Try again!')),
+          );
+        }
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('User not signed in')),
+        );
+      }
     }
   }
 
@@ -250,7 +293,9 @@ class _ContentFormState extends State<ContentForm> {
                             "Cancel",
                             style: TextStyle(color: Colors.black),
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
                         ),
                       ),
                     ),
