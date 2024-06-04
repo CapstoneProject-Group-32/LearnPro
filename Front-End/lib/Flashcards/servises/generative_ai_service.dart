@@ -24,28 +24,16 @@ under that main topic this is a list of subtopics and points under each of those
  create 10 flashcards.
 
 
-The output should be a valid JSON array where each flashcard object has the following structure:
-{
-  "Flashcard ": \$flashcardnumber,
-  "title": "\$flashTitle",
-  "body": "\$flashcardBody"
-}
+
 
 Ensure the JSON output is a valid array and properly formatted. Here is an example of the expected structure:
 
 [
-  {
-    "Flashcard ": 1,
-    "title": "The title of flashcard",
-    "body": "the body of the flascards"
-  },
-  {
-    "Flashcard ": 2,
-    "title": "The title of flashcard",
-    "body": "the body of the flascards"
-  }
-  // more flashcards...
+  {"flashcardNumber": 1, "title": "Title 1", "body": "Content 1"},
+  {"flashcardNumber": 2, "title": "Title 2", "body": "Content 2"},
+  ...
 ]
+
 
 
 """;
