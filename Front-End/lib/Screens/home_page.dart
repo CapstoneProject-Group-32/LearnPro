@@ -43,8 +43,6 @@ class _HomePageState extends State<HomePage> {
               UserModel user = UserModel.fromJSON(userData);
               List<String> friends =
                   List<String>.from(userData['friends'] ?? []);
-              List<String> yourjoinedGroups =
-                  List<String>.from(userData['joinedgroups'] ?? []);
 
               return SingleChildScrollView(
                 child: Column(
