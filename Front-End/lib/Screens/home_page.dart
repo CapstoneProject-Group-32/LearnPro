@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Flashcards/screen/home_screen.dart';
 import 'package:flutter_application_1/Models/usermodel.dart';
+import 'package:flutter_application_1/Screens/Community/find_studybuddies.dart';
 import 'package:flutter_application_1/Screens/Community/request_tution.dart';
 import 'package:flutter_application_1/Screens/Timer/timer_page.dart';
 import 'package:flutter_application_1/Screens/library.dart';
@@ -42,6 +43,8 @@ class _HomePageState extends State<HomePage> {
               UserModel user = UserModel.fromJSON(userData);
               List<String> friends =
                   List<String>.from(userData['friends'] ?? []);
+              List<String> yourjoinedGroups =
+                  List<String>.from(userData['joinedgroups'] ?? []);
 
               return SingleChildScrollView(
                 child: Column(
@@ -260,7 +263,7 @@ class _HomePageState extends State<HomePage> {
                               ),
                               _iconMethod(
                                 context,
-                                const StudyBuddies(),
+                                HomeScreen(),
                                 const AssetImage('assets/notebook.png'),
                                 'Study Plan',
                               ),
