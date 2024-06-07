@@ -1,6 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter_application_1/Flashcards/screen/content_form.dart';
+import 'package:flutter_application_1/Screens/Timer/timer_page.dart';
+import 'package:flutter_application_1/Screens/library.dart';
 import 'package:flutter_application_1/Widgets/navigation_bar.dart';
 
 class LearnDesk extends StatelessWidget {
@@ -61,32 +63,32 @@ class LearnDesk extends StatelessWidget {
 //Learn Desk Container Row Method calling
 
               _learndeskContainerRowMethod(
+                context,
                 const AssetImage('assets/clock.png'),
                 'Focus Timer',
+                const TimerScreen(),
                 const AssetImage('assets/cloud.png'),
                 'Upload Notes',
-              ),
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => ContentForm(),
-                    ),
-                  );
-                },
-                child: _learndeskContainerRowMethod(
-                  const AssetImage('assets/flashcards.png'),
-                  'Create Flashcards',
-                  const AssetImage('assets/help.png'),
-                  'Request Tution',
-                ),
+                const Library(),
               ),
               _learndeskContainerRowMethod(
+                context,
+                const AssetImage('assets/flashcards.png'),
+                'Create Flashcards',
+                const Library(),
+                const AssetImage('assets/help.png'),
+                'Request Tution',
+                const Library(),
+              ),
+
+              _learndeskContainerRowMethod(
+                context,
                 const AssetImage('assets/target.png'),
                 'Set Goals',
+                const Library(),
                 const AssetImage('assets/quize.png'),
                 'Quizes',
+                const Library(),
               ),
             ],
           ),
@@ -99,10 +101,14 @@ class LearnDesk extends StatelessWidget {
 //Learn Desk Container Row Method
 
 Widget _learndeskContainerRowMethod(
-    ImageProvider<Object> containerImage1,
-    String containerTopic1,
-    ImageProvider<Object> containerImage2,
-    String containerTopic2) {
+  BuildContext context,
+  ImageProvider<Object> containerImage1,
+  String containerTopic1,
+  Widget linkedPage1,
+  ImageProvider<Object> containerImage2,
+  String containerTopic2,
+  Widget linkedPage2,
+) {
   return Container(
     color: Colors.white,
     height: 230,
@@ -112,89 +118,109 @@ Widget _learndeskContainerRowMethod(
       children: [
 //first icon start
 
-        Container(
-          width: 180,
-          height: 200,
-          decoration: BoxDecoration(
-            color: Colors.grey[400],
-            borderRadius: BorderRadius.circular(20),
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(15.0),
-                child: Image(
-                  image: containerImage1,
-                  width: 120,
-                  height: 120,
-                ),
+        InkWell(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => linkedPage1,
               ),
-              Container(
-                height: 50,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  borderRadius: const BorderRadius.only(
-                    bottomLeft: Radius.circular(20),
-                    bottomRight: Radius.circular(20),
+            );
+          },
+          child: Container(
+            width: 180,
+            height: 200,
+            decoration: BoxDecoration(
+              color: Colors.grey[400],
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: Image(
+                    image: containerImage1,
+                    width: 120,
+                    height: 120,
                   ),
-                  color: Colors.grey[400],
                 ),
-                child: Center(
-                  child: Text(
-                    containerTopic1,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20,
+                Container(
+                  height: 50,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    borderRadius: const BorderRadius.only(
+                      bottomLeft: Radius.circular(20),
+                      bottomRight: Radius.circular(20),
+                    ),
+                    color: Colors.grey[400],
+                  ),
+                  child: Center(
+                    child: Text(
+                      containerTopic1,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
 
 //first icon stopped and second icon started
 
-        Container(
-          width: 180,
-          height: 200,
-          decoration: BoxDecoration(
-            color: Colors.grey[400],
-            borderRadius: BorderRadius.circular(20),
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(15.0),
-                child: Image(
-                  image: containerImage2,
-                  width: 120,
-                  height: 120,
-                ),
+        InkWell(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => linkedPage2,
               ),
-              Container(
-                height: 50,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  borderRadius: const BorderRadius.only(
-                    bottomLeft: Radius.circular(20),
-                    bottomRight: Radius.circular(20),
+            );
+          },
+          child: Container(
+            width: 180,
+            height: 200,
+            decoration: BoxDecoration(
+              color: Colors.grey[400],
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: Image(
+                    image: containerImage2,
+                    width: 120,
+                    height: 120,
                   ),
-                  color: Colors.grey[400],
                 ),
-                child: Center(
-                  child: Text(
-                    containerTopic2,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20,
+                Container(
+                  height: 50,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    borderRadius: const BorderRadius.only(
+                      bottomLeft: Radius.circular(20),
+                      bottomRight: Radius.circular(20),
+                    ),
+                    color: Colors.grey[400],
+                  ),
+                  child: Center(
+                    child: Text(
+                      containerTopic2,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ],

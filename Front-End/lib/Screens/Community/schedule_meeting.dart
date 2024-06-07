@@ -115,6 +115,14 @@ class _AcceptRequestState extends State<AcceptRequest> {
           .doc(widget.requestId)
           .delete();
 
+      // Add the sender's UID to the receiver's tutored list
+      await _firestore
+          .collection('users')
+          .doc(currentUser.uid)
+          .collection('tutored')
+          .doc(widget.senderUid)
+          .set({});
+
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Request accepted and sender notified')),
       );

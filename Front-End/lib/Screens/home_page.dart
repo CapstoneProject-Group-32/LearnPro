@@ -431,8 +431,12 @@ class _HomePageState extends State<HomePage> {
 
 //Icon Method
 
-  Widget _iconMethod(BuildContext context, Widget linkedPage,
-      ImageProvider<Object> iconImage, String imageTopic) {
+  Widget _iconMethod(
+    BuildContext context,
+    Widget linkedPage,
+    ImageProvider<Object> iconImage,
+    String imageTopic,
+  ) {
     return InkWell(
       onTap: () {
         Navigator.push(

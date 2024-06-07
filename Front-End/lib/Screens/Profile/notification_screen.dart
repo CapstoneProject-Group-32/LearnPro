@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_application_1/Screens/Community/schedule_meeting.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -188,7 +189,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
     );
   }
 
-  _launchURL(String url) async {
+  Future<void> _launchURL(String url) async {
     try {
       if (await canLaunch(url)) {
         await launch(url);
@@ -198,6 +199,57 @@ class _NotificationScreenState extends State<NotificationScreen> {
     } catch (e) {
       throw 'Error launching URL: $e';
     }
+  }
+
+//dialog box for copy link
+
+  void _showLinkDialog(BuildContext context, String link) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text(
+            'Link',
+            style: TextStyle(fontWeight: FontWeight.w600),
+          ),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              GestureDetector(
+                onTap: () async {
+                  await _launchURL(link);
+                },
+                child: Text(
+                  link,
+                  style: const TextStyle(
+                    color: Colors.blue,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 20),
+              ElevatedButton.icon(
+                onPressed: () {
+                  Clipboard.setData(ClipboardData(text: link));
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Link copied to clipboard')),
+                  );
+                },
+                icon: const Icon(Icons.copy),
+                label: const Text('Copy Link'),
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('Close'),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
@@ -527,82 +579,82 @@ class _NotificationScreenState extends State<NotificationScreen> {
                         final receiverUid = request['receiverUid'];
                         final senderProfilePic = request['senderProfilePic'];
 
-                        return Padding(
-                          padding: const EdgeInsets.only(left: 10, right: 10),
-                          child: Container(
-                            width: 380,
-                            height: 140,
-                            margin: const EdgeInsets.symmetric(vertical: 10),
-                            decoration: ShapeDecoration(
-                              color: const Color(0x190043CE),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8),
+                        return GestureDetector(
+                          onTap: () {
+                            _showLinkDialog(context, Link);
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 10, right: 10),
+                            child: Container(
+                              width: 380,
+                              height: 140,
+                              margin: const EdgeInsets.symmetric(vertical: 10),
+                              decoration: ShapeDecoration(
+                                color: const Color(0x190043CE),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                shadows: const [
+                                  BoxShadow(
+                                    color: Color(0x190043CE),
+                                    blurRadius: 4,
+                                    offset: Offset(0, 4),
+                                    spreadRadius: 0,
+                                  )
+                                ],
                               ),
-                              shadows: const [
-                                BoxShadow(
-                                  color: Color(0x190043CE),
-                                  blurRadius: 4,
-                                  offset: Offset(0, 4),
-                                  spreadRadius: 0,
-                                )
-                              ],
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                senderProfilePic.isNotEmpty
-                                    ? Padding(
-                                        padding:
-                                            const EdgeInsets.only(left: 18),
-                                        child: Container(
-                                          height: 85,
-                                          width: 85,
-                                          child: CircleAvatar(
-                                            backgroundImage:
-                                                NetworkImage(senderProfilePic),
-                                          ),
-                                        ),
-                                      )
-                                    : Padding(
-                                        padding:
-                                            const EdgeInsets.only(left: 18),
-                                        child: Container(
-                                          height: 85,
-                                          width: 85,
-                                          child: const CircleAvatar(
-                                            child: Icon(Icons.person),
-                                          ),
-                                        ),
-                                      ),
-                                Flexible(
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(left: 25),
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          '$receiverName Accepted for tutoring',
-                                          style: const TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 18,
-                                            fontFamily: 'Work Sans',
-                                            fontWeight: FontWeight.w600,
-                                          ),
-                                        ),
-                                        const SizedBox(height: 5),
-                                        GestureDetector(
-                                          onTap: () {
-                                            _launchURL(
-                                                Link); // Define _launchURL function below
-                                          },
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  senderProfilePic.isNotEmpty
+                                      ? Padding(
+                                          padding:
+                                              const EdgeInsets.only(left: 18),
                                           child: Container(
+                                            height: 85,
+                                            width: 85,
+                                            child: CircleAvatar(
+                                              backgroundImage: NetworkImage(
+                                                  senderProfilePic),
+                                            ),
+                                          ),
+                                        )
+                                      : Padding(
+                                          padding:
+                                              const EdgeInsets.only(left: 18),
+                                          child: Container(
+                                            height: 85,
+                                            width: 85,
+                                            child: const CircleAvatar(
+                                              child: Icon(Icons.person),
+                                            ),
+                                          ),
+                                        ),
+                                  Flexible(
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(left: 25),
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            '$receiverName Accepted for tutoring',
+                                            style: const TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 18,
+                                              fontFamily: 'Work Sans',
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                          ),
+                                          const SizedBox(height: 5),
+                                          Container(
                                             width: 208,
                                             child: Text(
-                                              'link: $Link',
+                                              'Link: $Link',
                                               style: const TextStyle(
                                                 color: Colors.black,
                                                 fontSize: 15,
@@ -611,43 +663,45 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                               ),
                                             ),
                                           ),
-                                        ),
-                                        Container(
-                                          width: 208,
-                                          child: Text(
-                                            'Date: $date',
-                                            style: const TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 15,
-                                              fontFamily: 'Work Sans',
-                                              fontWeight: FontWeight.w400,
+                                          Container(
+                                            width: 208,
+                                            child: Text(
+                                              'Date: $date',
+                                              style: const TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 15,
+                                                fontFamily: 'Work Sans',
+                                                fontWeight: FontWeight.w400,
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                        Container(
-                                          width: 208,
-                                          child: Text(
-                                            'Time: $time',
-                                            style: const TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 15,
-                                              fontFamily: 'Work Sans',
-                                              fontWeight: FontWeight.w400,
+                                          Container(
+                                            width: 208,
+                                            child: Text(
+                                              'Time: $time',
+                                              style: const TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 15,
+                                                fontFamily: 'Work Sans',
+                                                fontWeight: FontWeight.w400,
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                      ],
+                                        ],
+                                      ),
                                     ),
                                   ),
-                                ),
-                                IconButton(
-                                  icon: const Icon(Icons.close_rounded),
-                                  onPressed: () {
-                                    _showDeleteConfirmationDialogForlink(
-                                        receivedId, receiverUid, receiverName);
-                                  },
-                                ),
-                              ],
+                                  IconButton(
+                                    icon: const Icon(Icons.close_rounded),
+                                    onPressed: () {
+                                      _showDeleteConfirmationDialogForlink(
+                                          receivedId,
+                                          receiverUid,
+                                          receiverName);
+                                    },
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         );

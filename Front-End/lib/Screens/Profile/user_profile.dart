@@ -137,14 +137,20 @@ class _UserProfileState extends State<UserProfile> {
                     Container(
                       height: 100,
                       width: 100,
-                      decoration: BoxDecoration(
-                        color: Colors.white70,
-                        borderRadius: BorderRadius.circular(30),
+                      decoration: const BoxDecoration(
+                        shape: BoxShape.circle,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Color(0x3F000000),
+                            blurRadius: 4,
+                            offset: Offset(0, 4),
+                            spreadRadius: 0,
+                          ),
+                        ],
                       ),
                       child: CircleAvatar(
-                        radius: 50,
-                        backgroundColor: Colors.grey[300],
                         backgroundImage: NetworkImage(user.profilePic),
+                        radius: 50,
                       ),
                     ),
                     const SizedBox(
@@ -169,7 +175,9 @@ class _UserProfileState extends State<UserProfile> {
                     const SizedBox(
                       height: 15,
                     ),
+
                     // Progress container
+
                     Container(
                       height: 100,
                       width: 350,
@@ -198,7 +206,7 @@ class _UserProfileState extends State<UserProfile> {
                                   height: 58,
                                   width: 110,
                                   decoration: const BoxDecoration(
-                                    color: Color(0xEAF6EEEE),
+                                    color: Color(0x129F6EEEE),
                                   ),
                                   child: Column(
                                     children: [
@@ -223,7 +231,7 @@ class _UserProfileState extends State<UserProfile> {
                                   height: 58,
                                   width: 110,
                                   decoration: const BoxDecoration(
-                                    color: Color(0xEAF6EEEE),
+                                    color: Color(0x129F6EEEE),
                                   ),
                                   child: Column(
                                     children: [
@@ -248,7 +256,7 @@ class _UserProfileState extends State<UserProfile> {
                                   height: 58,
                                   width: 110,
                                   decoration: const BoxDecoration(
-                                    color: Color(0xEAF6EEEE),
+                                    color: Color(0x129F6EEEE),
                                   ),
                                   child: const Column(
                                     children: [

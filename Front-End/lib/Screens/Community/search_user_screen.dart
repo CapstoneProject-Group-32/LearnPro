@@ -237,79 +237,104 @@ class _SearchUserScreenState extends State<SearchUserScreen> {
                           )
                         ],
                       ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              Column(
-                                children: [
-                                  Text(
-                                    level.toString(),
-                                    style: const TextStyle(
-                                        fontSize: 25,
-                                        fontWeight: FontWeight.w400,
-                                        color: Colors.black),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Row(
+                              children: [
+                                Container(
+                                  height: 58,
+                                  width: 110,
+                                  decoration: const BoxDecoration(
+                                    color: Color(0x129F6EEEE),
                                   ),
-                                  const Text(
-                                    "Level",
-                                    style: TextStyle(
-                                        fontSize: 25,
-                                        fontWeight: FontWeight.w300,
-                                        color: Color(0xFF6F7665)),
+                                  child: Column(
+                                    children: [
+                                      Text(
+                                        level.toString(),
+                                        style: const TextStyle(
+                                            fontSize: 25,
+                                            fontWeight: FontWeight.w400,
+                                            color: Colors.black),
+                                      ),
+                                      const Text(
+                                        "Level",
+                                        style: TextStyle(
+                                            fontSize: 25,
+                                            fontWeight: FontWeight.w300,
+                                            color: Color(0xFF6F7665)),
+                                      ),
+                                    ],
                                   ),
-                                ],
-                              ),
-                              Column(
-                                children: [
-                                  Text(
-                                    timerData != null
-                                        ? (timerData['sumOfFocusTime'] != null
-                                            ? (timerData['sumOfFocusTime'] /
-                                                        3600)
-                                                    .toStringAsFixed(1) +
-                                                'H'
-                                            : '0.0H')
-                                        : '0.0H',
-                                    style: const TextStyle(
-                                        fontSize: 25,
-                                        fontWeight: FontWeight.w400,
-                                        color: Colors.black),
+                                ),
+                                Container(
+                                  height: 58,
+                                  width: 110,
+                                  decoration: const BoxDecoration(
+                                    color: Color(0x129F6EEEE),
                                   ),
-                                  const Text(
-                                    "Time",
-                                    style: TextStyle(
-                                        fontSize: 25,
-                                        fontWeight: FontWeight.w300,
-                                        color: Color(0xFF6F7665)),
+                                  child: Column(
+                                    children: [
+                                      Text(
+                                        timerData != null
+                                            ? (timerData['sumOfFocusTime'] !=
+                                                    null
+                                                ? (timerData['sumOfFocusTime'] /
+                                                            3600)
+                                                        .toStringAsFixed(1) +
+                                                    'H'
+                                                : '0.0H')
+                                            : '0.0H',
+                                        style: const TextStyle(
+                                            fontSize: 25,
+                                            fontWeight: FontWeight.w400,
+                                            color: Colors.black),
+                                      ),
+                                      const Text(
+                                        "Time",
+                                        style: TextStyle(
+                                            fontSize: 25,
+                                            fontWeight: FontWeight.w300,
+                                            color: Color(0xFF6F7665)),
+                                      ),
+                                    ],
                                   ),
-                                ],
-                              ),
-                              const Column(
-                                children: [
-                                  Text(
-                                    "4",
-                                    style: TextStyle(
-                                        fontSize: 25,
-                                        fontWeight: FontWeight.w400,
-                                        color: Colors.black),
+                                ),
+                                Container(
+                                  height: 58,
+                                  width: 110,
+                                  decoration: const BoxDecoration(
+                                    color: Color(0x129F6EEEE),
                                   ),
-                                  Text(
-                                    "Tutored",
-                                    style: TextStyle(
-                                      fontSize: 25,
-                                      fontWeight: FontWeight.w300,
-                                      color: Color(0xFF6F7665),
-                                    ),
+                                  child: const Column(
+                                    children: [
+                                      Text(
+                                        "4",
+                                        style: TextStyle(
+                                            fontSize: 25,
+                                            fontWeight: FontWeight.w400,
+                                            color: Colors.black),
+                                      ),
+                                      Text(
+                                        "Tutored",
+                                        style: TextStyle(
+                                          fontSize: 25,
+                                          fontWeight: FontWeight.w300,
+                                          color: Color(0xFF6F7665),
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ],
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
                     ),
+
                     const SizedBox(
                       height: 30,
                     ),
