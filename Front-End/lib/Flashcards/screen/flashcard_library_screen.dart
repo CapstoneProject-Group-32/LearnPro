@@ -1,10 +1,8 @@
-
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../models/Flashcard.dart';
 import 'flashcard_home _screen.dart';
-
 
 class FlashcardLibraryScreen extends StatelessWidget {
   @override
@@ -63,7 +61,10 @@ class FlashcardLibraryScreen extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => FlashcardScreen(flashcards: flashcardList, flashcardSetId: flashcardSetId,),
+                      builder: (context) => FlashcardScreen(
+                        flashcards: flashcardList,
+                        flashcardSetId: flashcardSetId,
+                      ),
                     ),
                   );
                 },

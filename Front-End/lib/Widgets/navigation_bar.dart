@@ -16,8 +16,15 @@ class NavigationBarBottom extends StatefulWidget {
 }
 
 class _NavigationBarBottomState extends State<NavigationBarBottom> {
-  int myIndex = 0;
-  final screens = [
+  int _selectedIndex = 0;
+
+  void _navigateBottomBar(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
+  final List<Widget> _screens = [
     const HomePage(),
     LibraryPage(),
     const LearnDesk(),
@@ -28,46 +35,35 @@ class _NavigationBarBottomState extends State<NavigationBarBottom> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: screens[myIndex],
+      body: _screens[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
-        //showSelectedLabels: false,
         showUnselectedLabels: false,
-
         backgroundColor: Colors.white,
         selectedItemColor: Colors.lightBlue,
         iconSize: 28,
         type: BottomNavigationBarType.fixed,
-        onTap: (index) {
-          setState(() {
-            myIndex = index;
-          });
-        },
-        currentIndex: myIndex,
+        onTap: _navigateBottomBar,
+        currentIndex: _selectedIndex,
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
             label: 'Home',
-            //backgroundColor: Colors.green,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.newspaper),
             label: 'Library',
-            // backgroundColor: Colors.red,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.abc),
             label: 'LearnDesk',
-            //backgroundColor: Colors.blue,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.group_outlined),
             label: 'Groups',
-            //backgroundColor: Colors.blue,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.account_circle_outlined),
             label: 'Profile',
-            //backgroundColor: Colors.blue,
           ),
         ],
       ),
