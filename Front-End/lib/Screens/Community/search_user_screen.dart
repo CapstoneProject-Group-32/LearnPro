@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_application_1/Models/usermodel.dart';
+import 'package:flutter_application_1/Screens/Community/community_tabbar.dart';
 import 'package:flutter_application_1/Screens/Community/find_studybuddies.dart';
 
 class SearchUserScreen extends StatefulWidget {
@@ -147,7 +148,7 @@ class _SearchUserScreenState extends State<SearchUserScreen> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => const StudyBuddies(),
+                                  builder: (context) => const CommunityTabBar(),
                                 ),
                               );
                             },

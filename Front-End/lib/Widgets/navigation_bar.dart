@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/Screens/Community/community_tabbar.dart';
 
 import 'package:flutter_application_1/Screens/Community/find_studybuddies.dart';
 import 'package:flutter_application_1/Screens/home_page.dart';
@@ -28,7 +29,7 @@ class _NavigationBarBottomState extends State<NavigationBarBottom> {
     const HomePage(),
     LibraryPage(),
     const LearnDesk(),
-    const StudyBuddies(),
+    const CommunityTabBar(),
     const UserProfile(),
   ];
 

@@ -1,148 +1,10 @@
-// import 'package:flutter/material.dart';
-
-// class CommunityTabBar extends StatefulWidget {
-//   const CommunityTabBar({super.key});
-
-//   @override
-//   State<CommunityTabBar> createState() => _CommunityTabBarState();
-// }
-
-// class _CommunityTabBarState extends State<CommunityTabBar> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return SafeArea(
-//       child: DefaultTabController(
-//         length: 3,
-//         child: Column(
-//           children: [
-//             Material(
-//               child: Container(
-//                 height: 100,
-//                 color: Colors.white,
-//                 child: TabBar(
-//                   physics: const ClampingScrollPhysics(),
-//                   padding: const EdgeInsets.all(10),
-//                   unselectedLabelColor: Colors.black,
-//                   indicatorSize: TabBarIndicatorSize.label,
-//                   indicator: BoxDecoration(
-//                     borderRadius: BorderRadius.circular(30),
-//                     color: const Color(0xFF74FE8A),
-//                   ),
-//                   tabs: [
-//                     Tab(
-//                       child: Container(
-//                         height: 40,
-//                         decoration: BoxDecoration(
-//                           borderRadius: BorderRadius.circular(30),
-//                           color: const Color(0xFFD9D9D9),
-//                         ),
-//                         child: const Align(
-//                           alignment: Alignment.center,
-//                           child: Text("People"),
-//                         ),
-//                       ),
-//                     ),
-//                     Tab(
-//                       child: Container(
-//                         height: 40,
-//                         decoration: BoxDecoration(
-//                             borderRadius: BorderRadius.circular(30),
-//                             color: const Color(0xFFD9D9D9)),
-//                         child: const Align(
-//                           alignment: Alignment.center,
-//                           child: Text("Group"),
-//                         ),
-//                       ),
-//                     ),
-//                     Tab(
-//                       child: Container(
-//                         height: 40,
-//                         decoration: BoxDecoration(
-//                             borderRadius: BorderRadius.circular(30),
-//                             color: const Color(0xFFD9D9D9)),
-//                         child: const Align(
-//                           alignment: Alignment.center,
-//                           child: Text("Tutored You"),
-//                         ),
-//                       ),
-//                     )
-//                   ],
-//                 ),
-//               ),
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
-
-// import 'package:flutter/material.dart';
-
-// class CommunityTabBar extends StatefulWidget {
-//   const CommunityTabBar({super.key});
-
-//   @override
-//   State<CommunityTabBar> createState() => _CommunityTabBarState();
-// }
-
-// class _CommunityTabBarState extends State<CommunityTabBar> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return SafeArea(
-//       child: DefaultTabController(
-//         length: 3,
-//         child: Column(
-//           children: [
-//             Material(
-//               child: Container(
-//                 height: 100,
-//                 color: Colors.white,
-//                 child: TabBar(
-//                   physics: const ClampingScrollPhysics(),
-//                   padding: const EdgeInsets.all(10),
-//                   unselectedLabelColor: Colors.black,
-//                   indicatorSize: TabBarIndicatorSize.tab,
-//                   indicator: BoxDecoration(
-//                     borderRadius: BorderRadius.circular(30),
-//                     color: const Color(0xFF74FE8A),
-//                   ),
-//                   tabs: [
-//                     _buildTab("People"),
-//                     _buildTab("Group"),
-//                     _buildTab("Tutored You"),
-//                   ],
-//                 ),
-//               ),
-//             ),
-//             Expanded(
-//               child: TabBarView(
-//                 children: [
-//                   Center(child: Text('People Content')),
-//                   Center(child: Text('Group Content')),
-//                   Center(child: Text('Tutored You Content')),
-//                 ],
-//               ),
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-
-//   Widget _buildTab(String text) {
-//     return Tab(
-//       child: Container(
-//         height: 50,
-//         child: Align(
-//           alignment: Alignment.center,
-//           child: Text(text),
-//         ),
-//       ),
-//     );
-//   }
-// }
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+
+import 'package:flutter_application_1/Screens/Community/find_studybuddies.dart';
+
+import 'package:flutter_application_1/Screens/learndesk_page.dart';
+import 'package:flutter_application_1/Widgets/navigation_bar.dart';
 
 class CommunityTabBar extends StatefulWidget {
   const CommunityTabBar({super.key});
@@ -154,78 +16,188 @@ class CommunityTabBar extends StatefulWidget {
 class _CommunityTabBarState extends State<CommunityTabBar>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
+  Map<String, dynamic>? userMap;
+  bool isLoading = false;
+  final TextEditingController _search = TextEditingController();
+  String? errorMessage;
 
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 3, vsync: this);
-    _tabController.addListener(() {
-      setState(() {}); // Refresh to update the tab sizes
-    });
   }
 
-  @override
-  void dispose() {
-    _tabController.dispose();
-    super.dispose();
+  void onSearch() async {
+    FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+    setState(() {
+      isLoading = true;
+      errorMessage = null;
+      userMap = null;
+    });
+    try {
+      QuerySnapshot searchResult = await _firestore
+          .collection('users')
+          .where("userName", isEqualTo: _search.text)
+          .get();
+
+      if (searchResult.docs.isNotEmpty) {
+        Map<String, dynamic> userData =
+            searchResult.docs[0].data() as Map<String, dynamic>;
+        setState(() {
+          userMap = userData;
+          isLoading = false;
+        });
+      } else {
+        setState(() {
+          errorMessage = "Invalid user";
+          isLoading = false;
+        });
+      }
+    } catch (e) {
+      setState(() {
+        errorMessage = "Error searching user: $e";
+        isLoading = false;
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: DefaultTabController(
-        length: 3,
-        child: Column(
-          children: [
-            Material(
-              child: Container(
-                height: 100,
-                color: Colors.white,
-                child: TabBar(
-                  controller: _tabController,
-                  physics: const ClampingScrollPhysics(),
-                  padding: const EdgeInsets.all(10),
-                  unselectedLabelColor: Colors.black,
-                  indicatorSize: TabBarIndicatorSize.tab,
-                  indicator: BoxDecoration(
-                    borderRadius: BorderRadius.circular(30),
-                    color: const Color(0xFF74FE8A),
-                  ),
-                  tabs: [
-                    _buildTab("People", 0),
-                    _buildTab("Group", 1),
-                    _buildTab("Tutored You", 2),
-                  ],
+      child: Scaffold(
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          title: InkWell(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => NavigationBarBottom(),
                 ),
-              ),
+              );
+            },
+            child: const Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Icon(
+                  Icons.arrow_back_ios_new_rounded,
+                  size: 28,
+                  color: Colors.black,
+                ),
+                SizedBox(
+                  width: 10,
+                ),
+                Text(
+                  "Student Community",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 30,
+                    color: Colors.black,
+                  ),
+                ),
+              ],
             ),
-            Expanded(
-              child: TabBarView(
-                controller: _tabController,
+          ),
+        ),
+        body: isLoading
+            ? Center(
+                child: Container(
+                  height: 20,
+                  width: 20,
+                  child: const CircularProgressIndicator(),
+                ),
+              )
+            : Column(
                 children: [
-                  Center(child: Text('People Content')),
-                  Center(child: Text('Group Content')),
-                  Center(child: Text('Tutored You Content')),
+                  Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: TextField(
+                      controller: _search,
+                      decoration: InputDecoration(
+                        hintText: 'Search...',
+                        prefixIcon: GestureDetector(
+                          onTap: () {
+                            onSearch();
+                          },
+                          child: const Icon(Icons.search),
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(40),
+                        ),
+                      ),
+                    ),
+                  ),
+                  TabBar(
+                    controller: _tabController,
+                    indicator: BoxDecoration(
+                      color: const Color(0xFF00FF00),
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    tabs: [
+                      _buildTab(
+                        'People',
+                        0,
+                      ),
+                      _buildTab(
+                        'Groups',
+                        1,
+                      ),
+                      _buildTab(
+                        'Tutored You',
+                        2,
+                      ),
+                    ],
+                  ),
+                  Expanded(
+                    child: TabBarView(
+                      controller: _tabController,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(
+                            left: 15,
+                            right: 15,
+                            top: 10,
+                            bottom: 10,
+                          ),
+                          child: Container(
+                            child: StudyBuddies(
+                              userMap: userMap,
+                              isLoading: isLoading,
+                              errorMessage: errorMessage,
+                              onSearch: onSearch,
+                            ),
+                          ),
+                        ),
+                        LearnDesk(),
+                        LearnDesk(),
+                      ],
+                    ),
+                  ),
                 ],
               ),
-            ),
-          ],
-        ),
       ),
     );
   }
+}
 
-  Widget _buildTab(String text, int index) {
-    bool isSelected = _tabController.index == index;
-    return Tab(
-      child: AnimatedContainer(
-        duration: Duration(milliseconds: 300),
-        height: isSelected ? 50 : 40, // Increase height if selected
-        child: Align(
-          alignment: Alignment.center,
-          child: Text(text),
+//Tab bar widget
+
+Widget _buildTab(String text, int tabIndex) {
+  return Tab(
+    child: Container(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      decoration: BoxDecoration(
+        // color: const Color(0xFFEEEEEE),
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Text(
+        text,
+        style: const TextStyle(
+          color: Colors.black,
+          fontWeight: FontWeight.bold,
         ),
       ),
-    );
-  }
+    ),
+  );
 }
