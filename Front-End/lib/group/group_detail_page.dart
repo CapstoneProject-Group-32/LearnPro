@@ -3,11 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-
 import 'package:flutter_application_1/Screens/pdf_viewer_page.dart';
 import 'package:flutter_application_1/group/comment_section.dart';
 import 'package:flutter_application_1/group/content_upload_form.dart';
-
+import 'package:flutter_application_1/group/send_group_invites.dart';
 import 'group_content_request_page.dart';
 
 class GroupDetailPage extends StatelessWidget {
@@ -63,7 +62,7 @@ class GroupDetailPage extends StatelessWidget {
               .get(),
           builder: (context, snapshot) {
             if (!snapshot.hasData) {
-              return Center(child: CircularProgressIndicator());
+              return Center(child: const CircularProgressIndicator());
             }
 
             var groupData = snapshot.data!.data() as Map<String, dynamic>;
@@ -84,7 +83,7 @@ class GroupDetailPage extends StatelessWidget {
                             fontWeight: FontWeight.bold, fontSize: 24),
                         textAlign: TextAlign.center,
                       ),
-                      SizedBox(height: 8),
+                      const SizedBox(height: 8),
                       Text('Members: ${groupData['members'].length}'),
                       SizedBox(height: 8),
                       Text(groupData['groupdescription']),
@@ -92,7 +91,7 @@ class GroupDetailPage extends StatelessWidget {
                   ),
                 ),
                 TabBar(
-                  tabs: [
+                  tabs: const [
                     Tab(text: "Content"),
                     Tab(text: "Members"),
                   ],
@@ -447,7 +446,7 @@ class _ContentCardState extends State<ContentCard> {
                           : Icons.thumb_up_off_alt_outlined),
                       onPressed: toggleLike,
                     ),
-                    SizedBox(width: 5),
+                    const SizedBox(width: 5),
                     Text('$likeCount likes'),
                   ],
                 ),
@@ -466,7 +465,7 @@ class _ContentCardState extends State<ContentCard> {
                               _fetchCommentCount()); // Fetch comment count after returning
                         },
                         child: Icon(Icons.comment)),
-                    SizedBox(width: 5),
+                    const SizedBox(width: 5),
                     Text('$_commentCount comments'),
                   ],
                 ),
@@ -574,18 +573,18 @@ class MembersTab extends StatelessWidget {
                                       }
                                     },
                                     itemBuilder: (context) => [
-                                      PopupMenuItem(
+                                      const PopupMenuItem(
                                         value: 'view',
                                         child: Text('View'),
                                       ),
-                                      PopupMenuItem(
+                                      const PopupMenuItem(
                                         value: 'remove',
                                         child: Text('Remove'),
                                       ),
                                     ],
                                   )
                                 : null
-                            : Text("owner"),
+                            : const Text("owner"),
                       );
                     },
                   );
@@ -594,13 +593,62 @@ class MembersTab extends StatelessWidget {
             },
           ),
         ),
-        if (FirebaseAuth.instance.currentUser!.uid != owner)
-          ElevatedButton(
-            onPressed: () {
-              _showLeaveDialog(context);
-            },
-            child: Text('Leave'),
+        if (FirebaseAuth.instance.currentUser!.uid == owner)
+          Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          SendGroupInvites(groupName: groupName)),
+                );
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xFF29F6D2),
+                foregroundColor:
+                    Colors.black, // Use foregroundColor for text color
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+                textStyle: const TextStyle(
+                  fontSize: 25.0,
+                  fontFamily: 'Work Sans',
+                  fontWeight: FontWeight.w500,
+                ),
+                minimumSize: const Size(150.0, 50.0), // Set width and height
+                padding: EdgeInsets.zero, // Remove default padding
+              ),
+              child: const Text('Invite'),
+            ),
           ),
+        if (FirebaseAuth.instance.currentUser!.uid != owner)
+//
+          Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: ElevatedButton(
+              onPressed: () {
+                _showLeaveDialog(context);
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xFF29F6D2),
+                foregroundColor:
+                    Colors.black, // Use foregroundColor for text color
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+                textStyle: const TextStyle(
+                  fontSize: 25.0,
+                  fontFamily: 'Work Sans',
+                  fontWeight: FontWeight.w500,
+                ),
+                minimumSize: const Size(150.0, 50.0), // Set width and height
+                padding: EdgeInsets.zero, // Remove default padding
+              ),
+              child: const Text('Leave'),
+            ),
+          )
       ],
     );
   }
