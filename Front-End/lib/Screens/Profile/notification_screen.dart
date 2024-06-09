@@ -358,7 +358,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                     ? Padding(
                                         padding:
                                             const EdgeInsets.only(left: 18),
-                                        child: Container(
+                                        child: SizedBox(
                                           height: 85,
                                           width: 85,
                                           child: CircleAvatar(
@@ -367,13 +367,13 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                           ),
                                         ),
                                       )
-                                    : Padding(
+                                    : const Padding(
                                         padding:
-                                            const EdgeInsets.only(left: 18),
-                                        child: Container(
+                                            EdgeInsets.only(left: 18),
+                                        child: SizedBox(
                                           height: 85,
                                           width: 85,
-                                          child: const CircleAvatar(
+                                          child: CircleAvatar(
                                             child: Icon(Icons.person),
                                           ),
                                         ),
@@ -397,7 +397,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                           ),
                                         ),
                                         const SizedBox(height: 5),
-                                        Container(
+                                        SizedBox(
                                           width: 208,
                                           child: Text(
                                             'Subject: $subject',
@@ -409,7 +409,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                             ),
                                           ),
                                         ),
-                                        Container(
+                                        SizedBox(
                                           width: 208,
                                           child: Text(
                                             'Lesson: $lesson',
@@ -421,7 +421,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                             ),
                                           ),
                                         ),
-                                        Container(
+                                        SizedBox(
                                           width: 208,
                                           child: Text(
                                             'Date: $date',
@@ -433,7 +433,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                             ),
                                           ),
                                         ),
-                                        Container(
+                                        SizedBox(
                                           width: 208,
                                           child: Text(
                                             'Time: $time',
@@ -612,7 +612,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                       ? Padding(
                                           padding:
                                               const EdgeInsets.only(left: 18),
-                                          child: Container(
+                                          child: SizedBox(
                                             height: 85,
                                             width: 85,
                                             child: CircleAvatar(
@@ -621,13 +621,13 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                             ),
                                           ),
                                         )
-                                      : Padding(
+                                      : const Padding(
                                           padding:
-                                              const EdgeInsets.only(left: 18),
-                                          child: Container(
+                                              EdgeInsets.only(left: 18),
+                                          child: SizedBox(
                                             height: 85,
                                             width: 85,
-                                            child: const CircleAvatar(
+                                            child: CircleAvatar(
                                               child: Icon(Icons.person),
                                             ),
                                           ),
@@ -651,7 +651,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                             ),
                                           ),
                                           const SizedBox(height: 5),
-                                          Container(
+                                          SizedBox(
                                             width: 208,
                                             child: Text(
                                               'Link: $Link',
@@ -663,7 +663,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                               ),
                                             ),
                                           ),
-                                          Container(
+                                          SizedBox(
                                             width: 208,
                                             child: Text(
                                               'Date: $date',
@@ -675,7 +675,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                               ),
                                             ),
                                           ),
-                                          Container(
+                                          SizedBox(
                                             width: 208,
                                             child: Text(
                                               'Time: $time',

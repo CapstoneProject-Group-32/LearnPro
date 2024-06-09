@@ -2,15 +2,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Flashcards/generate_flashcard.dart';
-import 'package:flutter_application_1/Flashcards/widgets/flashcard_widget.dart';
 import 'package:flutter_application_1/Widgets/navigation_bar.dart';
 import 'package:provider/provider.dart';
 
 import 'content_form.dart';
-import 'create_flashcard_screen.dart';
 import 'flashcard_library_screen.dart';
 
 class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     final flashcardProvider = Provider.of<GenerateFlashcard>(context);
@@ -68,7 +68,7 @@ class HomeScreen extends StatelessWidget {
                     context,
                     CupertinoPageRoute(
                         builder: (BuildContext context) =>
-                            FlashcardLibraryScreen()));
+                            const FlashcardLibraryScreen()));
               },
             ),
           ],
@@ -78,10 +78,10 @@ class HomeScreen extends StatelessWidget {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => ContentForm()),
+            MaterialPageRoute(builder: (context) => const ContentForm()),
           );
         },
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
       ),
     );
   }

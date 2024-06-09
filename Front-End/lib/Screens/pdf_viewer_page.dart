@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/Screens/upload_pdf_page.dart';
-import 'package:http/http.dart';
 import 'package:internet_file/internet_file.dart';
-import 'package:path/path.dart';
 import 'package:pdfx/pdfx.dart';
 
 class PdfViewerPage extends StatefulWidget {
@@ -38,7 +35,7 @@ class _PdfViewerPageState extends State<PdfViewerPage> {
             color: Color.fromARGB(255, 38, 4, 4),
           ),
         ),
-        backgroundColor: Color.fromARGB(255, 255, 255, 255),
+        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       ),
       body: _buildUI(),
     );
@@ -52,31 +49,31 @@ class _PdfViewerPageState extends State<PdfViewerPage> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text("Total Pages: ${totalPageCount}"),
+            Text("Total Pages: $totalPageCount"),
             IconButton(
               onPressed: () {
                 pdfControllerPinch.previousPage(
-                  duration: Duration(
+                  duration: const Duration(
                     milliseconds: 500,
                   ),
                   curve: Curves.linear,
                 );
               },
-              icon: Icon(
+              icon: const Icon(
                 Icons.arrow_back,
               ),
             ),
-            Text("Current Page: ${currentPage}"),
+            Text("Current Page: $currentPage"),
             IconButton(
               onPressed: () {
                 pdfControllerPinch.nextPage(
-                  duration: Duration(
+                  duration: const Duration(
                     milliseconds: 500,
                   ),
                   curve: Curves.linear,
                 );
               },
-              icon: Icon(
+              icon: const Icon(
                 Icons.arrow_forward,
               ),
             ),

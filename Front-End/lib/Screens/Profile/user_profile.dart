@@ -798,7 +798,7 @@ class _UserProfileState extends State<UserProfile> {
     return Expanded(
       child: Container(
         decoration: const BoxDecoration(
-          color: Color(0x129F6EEEE),
+          color: Color(0x129f6eeee),
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

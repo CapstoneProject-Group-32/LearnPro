@@ -10,7 +10,7 @@ import 'package:uuid/uuid.dart';
 class ContentUploadForm extends StatefulWidget {
   final String groupName;
 
-  ContentUploadForm({required this.groupName});
+  const ContentUploadForm({super.key, required this.groupName});
 
   @override
   _ContentUploadFormState createState() => _ContentUploadFormState();
@@ -29,7 +29,7 @@ class _ContentUploadFormState extends State<ContentUploadForm> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Upload Content'),
+        title: const Text('Upload Content'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -38,7 +38,7 @@ class _ContentUploadFormState extends State<ContentUploadForm> {
           child: Column(
             children: [
               TextFormField(
-                decoration: InputDecoration(labelText: 'Title'),
+                decoration: const InputDecoration(labelText: 'Title'),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Please enter a title';
@@ -48,7 +48,7 @@ class _ContentUploadFormState extends State<ContentUploadForm> {
                 onSaved: (value) => _title = value,
               ),
               TextFormField(
-                decoration: InputDecoration(labelText: 'Description'),
+                decoration: const InputDecoration(labelText: 'Description'),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Please enter a description';
@@ -59,7 +59,7 @@ class _ContentUploadFormState extends State<ContentUploadForm> {
               ),
               Row(
                 children: [
-                  Text('File Type:'),
+                  const Text('File Type:'),
                   Radio(
                     value: 'pdf',
                     groupValue: _fileType,
@@ -70,7 +70,7 @@ class _ContentUploadFormState extends State<ContentUploadForm> {
                       });
                     },
                   ),
-                  Text('PDF'),
+                  const Text('PDF'),
                   Radio(
                     value: 'images',
                     groupValue: _fileType,
@@ -81,7 +81,7 @@ class _ContentUploadFormState extends State<ContentUploadForm> {
                       });
                     },
                   ),
-                  Text('Images'),
+                  const Text('Images'),
                 ],
               ),
               ElevatedButton(
@@ -98,15 +98,15 @@ class _ContentUploadFormState extends State<ContentUploadForm> {
                   ElevatedButton(
                     onPressed: _isLoading ? null : () => _uploadContent(),
                     child: _isLoading
-                        ? CircularProgressIndicator(
+                        ? const CircularProgressIndicator(
                             valueColor:
                                 AlwaysStoppedAnimation<Color>(Colors.white),
                           )
-                        : Text('Upload'),
+                        : const Text('Upload'),
                   ),
                   ElevatedButton(
                     onPressed: _isLoading ? null : () => Navigator.pop(context),
-                    child: Text('Cancel'),
+                    child: const Text('Cancel'),
                   ),
                 ],
               ),
@@ -123,7 +123,7 @@ class _ContentUploadFormState extends State<ContentUploadForm> {
       itemBuilder: (context, index) {
         File file = _files[index];
         return ListTile(
-          leading: Icon(Icons.picture_as_pdf),
+          leading: const Icon(Icons.picture_as_pdf),
           title: Text(file.path.split('/').last),
           subtitle: Text('${(file.lengthSync() / 1024).toStringAsFixed(2)} KB'),
         );
@@ -174,7 +174,7 @@ class _ContentUploadFormState extends State<ContentUploadForm> {
 
       if (_files.isEmpty) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Please select at least one file')),
+          const SnackBar(content: Text('Please select at least one file')),
         );
         return;
       }
@@ -186,7 +186,7 @@ class _ContentUploadFormState extends State<ContentUploadForm> {
       User? currentUser = FirebaseAuth.instance.currentUser;
       if (currentUser == null) return;
 
-      String contentId = Uuid().v4();
+      String contentId = const Uuid().v4();
       Map<String, String> fileUrls = {};
 
       for (File file in _files) {
@@ -225,7 +225,7 @@ class _ContentUploadFormState extends State<ContentUploadForm> {
         });
 
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Content uploaded successfully')),
+          const SnackBar(content: Text('Content uploaded successfully')),
         );
 
         setState(() {
@@ -235,7 +235,7 @@ class _ContentUploadFormState extends State<ContentUploadForm> {
         Navigator.pop(context);
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Group not found')),
+          const SnackBar(content: Text('Group not found')),
         );
 
         setState(() {

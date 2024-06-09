@@ -49,7 +49,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
         title: const Text('Focus History'),
       ),
       body: isLoading
-          ? Center(child: CircularProgressIndicator())
+          ? const Center(child: CircularProgressIndicator())
           : errorMessage != null
               ? Center(child: Text('Error: $errorMessage'))
               : Column(
@@ -58,7 +58,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
                         'Total Focus Time: ${formatDuration(sumOfFocusTimeInSeconds)}', // Display the correctly formatted total focus time
-                        style: TextStyle(fontSize: 18),
+                        style: const TextStyle(fontSize: 18),
                       ),
                     ),
                     Expanded(

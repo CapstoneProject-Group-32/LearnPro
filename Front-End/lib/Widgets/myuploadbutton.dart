@@ -3,6 +3,8 @@ import 'package:file_picker/file_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class FilePickerButton extends StatefulWidget {
+  const FilePickerButton({super.key});
+
   @override
   _FilePickerButtonState createState() => _FilePickerButtonState();
 }

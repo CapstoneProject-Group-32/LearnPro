@@ -3,6 +3,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class InviteFriendsScreen extends StatefulWidget {
+  const InviteFriendsScreen({super.key});
+
   @override
   _InviteFriendsScreenState createState() => _InviteFriendsScreenState();
 }
@@ -44,7 +46,7 @@ class _InviteFriendsScreenState extends State<InviteFriendsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Invite Friends')),
+      appBar: AppBar(title: const Text('Invite Friends')),
       body: ListView.builder(
         itemCount: friends.length,
         itemBuilder: (context, index) {
@@ -53,7 +55,7 @@ class _InviteFriendsScreenState extends State<InviteFriendsScreen> {
             future:
                 FirebaseFirestore.instance.collection('users').doc(uid).get(),
             builder: (context, snapshot) {
-              if (!snapshot.hasData) return CircularProgressIndicator();
+              if (!snapshot.hasData) return const CircularProgressIndicator();
               var userData = snapshot.data!.data() as Map<String, dynamic>;
               friendUsernames[uid] = userData['userName'];
               return ListTile(
@@ -76,7 +78,7 @@ class _InviteFriendsScreenState extends State<InviteFriendsScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: invite,
-        child: Icon(Icons.check),
+        child: const Icon(Icons.check),
       ),
     );
   }

@@ -2,17 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter_application_1/Widgets/navigation_bar.dart';
 
 import '../upload_pdf_page.dart';
 import '../pdf_viewer_page.dart';
 
 class LibraryPage extends StatelessWidget {
+  const LibraryPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     User? user = FirebaseAuth.instance.currentUser;
     if (user == null) {
-      return Center(child: Text('Please log in to view your library.'));
+      return const Center(child: Text('Please log in to view your library.'));
     }
 
     return Scaffold(
@@ -58,11 +59,11 @@ class LibraryPage extends StatelessWidget {
             .snapshots(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           }
 
           if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-            return Center(child: Text('No PDFs found.'));
+            return const Center(child: Text('No PDFs found.'));
           }
 
           var groupedData = <String, List<DocumentSnapshot>>{};
@@ -80,17 +81,17 @@ class LibraryPage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(8.0),
                     child: Text(
                       entry.key,
                       style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                          const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                     ),
                   ),
                   GridView.builder(
                     shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    physics: const NeverScrollableScrollPhysics(),
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2),
                     itemCount: entry.value.length,
                     itemBuilder: (context, index) {
@@ -104,16 +105,16 @@ class LibraryPage extends StatelessWidget {
                           ));
                         },
                         child: Card(
-                          margin: EdgeInsets.all(15.0),
+                          margin: const EdgeInsets.all(15.0),
                           child: Stack(
                             children: [
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Icon(Icons.picture_as_pdf,
+                                  const Icon(Icons.picture_as_pdf,
                                       size: 100, color: Colors.red),
-                                  Spacer(),
+                                  const Spacer(),
                                   Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: Text(
@@ -139,21 +140,21 @@ class LibraryPage extends StatelessWidget {
                                             context: context,
                                             builder: (BuildContext context) {
                                               return AlertDialog(
-                                                title: Text('Confirm Delete'),
-                                                content: Text(
+                                                title: const Text('Confirm Delete'),
+                                                content: const Text(
                                                     'Do you want to delete this PDF?'),
                                                 actions: [
                                                   TextButton(
                                                     onPressed: () =>
                                                         Navigator.of(context)
                                                             .pop(false),
-                                                    child: Text('No'),
+                                                    child: const Text('No'),
                                                   ),
                                                   TextButton(
                                                     onPressed: () =>
                                                         Navigator.of(context)
                                                             .pop(true),
-                                                    child: Text('Yes'),
+                                                    child: const Text('Yes'),
                                                   ),
                                                 ],
                                               );
@@ -195,9 +196,9 @@ class LibraryPage extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.of(context)
-              .push(MaterialPageRoute(builder: (context) => UploadPdfPage()));
+              .push(MaterialPageRoute(builder: (context) => const UploadPdfPage()));
         },
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
       ),
     );
   }

@@ -8,7 +8,7 @@ import 'package:flutter_application_1/Screens/pdf_viewer_page.dart';
 class GroupContentRequestsPage extends StatefulWidget {
   final String groupName;
 
-  GroupContentRequestsPage({required this.groupName});
+  const GroupContentRequestsPage({super.key, required this.groupName});
 
   @override
   _GroupContentRequestsPageState createState() =>
@@ -108,9 +108,9 @@ class _GroupContentRequestsPageState extends State<GroupContentRequestsPage> {
     if (isLoading) {
       return Scaffold(
         appBar: AppBar(
-          title: Text('Content Requests'),
+          title: const Text('Content Requests'),
         ),
-        body: Center(
+        body: const Center(
           child: CircularProgressIndicator(),
         ),
       );
@@ -119,9 +119,9 @@ class _GroupContentRequestsPageState extends State<GroupContentRequestsPage> {
     if (!isOwner) {
       return Scaffold(
         appBar: AppBar(
-          title: Text('Content Requests'),
+          title: const Text('Content Requests'),
         ),
-        body: Center(
+        body: const Center(
           child: Text("You don't have access to this page"),
         ),
       );
@@ -129,7 +129,7 @@ class _GroupContentRequestsPageState extends State<GroupContentRequestsPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Content Requests'),
+        title: const Text('Content Requests'),
       ),
       body: StreamBuilder(
         stream: FirebaseFirestore.instance
@@ -139,13 +139,13 @@ class _GroupContentRequestsPageState extends State<GroupContentRequestsPage> {
             .snapshots(),
         builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (!snapshot.hasData) {
-            return Center(
+            return const Center(
               child: CircularProgressIndicator(),
             );
           }
 
           if (snapshot.data!.docs.isEmpty) {
-            return Center(
+            return const Center(
               child: Text('No content requests'),
             );
           }
@@ -163,7 +163,7 @@ class _GroupContentRequestsPageState extends State<GroupContentRequestsPage> {
                 builder:
                     (context, AsyncSnapshot<DocumentSnapshot> userSnapshot) {
                   if (!userSnapshot.hasData) {
-                    return Center(
+                    return const Center(
                       child: CircularProgressIndicator(),
                     );
                   }
@@ -173,7 +173,7 @@ class _GroupContentRequestsPageState extends State<GroupContentRequestsPage> {
                   String profilePic = userData['profilePic'];
 
                   return Card(
-                    margin: EdgeInsets.all(10),
+                    margin: const EdgeInsets.all(10),
                     child: Padding(
                       padding: const EdgeInsets.all(10.0),
                       child: Column(
@@ -185,26 +185,26 @@ class _GroupContentRequestsPageState extends State<GroupContentRequestsPage> {
                                 backgroundImage:
                                     CachedNetworkImageProvider(profilePic),
                               ),
-                              SizedBox(width: 10),
+                              const SizedBox(width: 10),
                               Expanded(
                                 child: Text(
                                   '$username has requested to post this on ${widget.groupName}',
-                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                  style: const TextStyle(fontWeight: FontWeight.bold),
                                 ),
                               ),
                             ],
                           ),
-                          SizedBox(height: 10),
+                          const SizedBox(height: 10),
                           Text(contentData['contentTitle'],
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontSize: 18, fontWeight: FontWeight.bold)),
-                          SizedBox(height: 5),
+                          const SizedBox(height: 5),
                           Text(contentData['contentDescription']),
-                          SizedBox(height: 10),
+                          const SizedBox(height: 10),
                           contentData['filetype'] == 'images'
                               ? _buildImageSlider(contentData['contentfiles'])
                               : _buildPdfList(contentData['contentfiles']),
-                          SizedBox(height: 10),
+                          const SizedBox(height: 10),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
@@ -215,7 +215,7 @@ class _GroupContentRequestsPageState extends State<GroupContentRequestsPage> {
                                     // Update state to reflect changes
                                   });
                                 },
-                                child: Text('Accept'),
+                                child: const Text('Accept'),
                               ),
                               ElevatedButton(
                                 onPressed: () async {
@@ -224,7 +224,7 @@ class _GroupContentRequestsPageState extends State<GroupContentRequestsPage> {
                                     // Update state to reflect changes
                                   });
                                 },
-                                child: Text('Reject'),
+                                child: const Text('Reject'),
                               ),
                             ],
                           ),
@@ -246,7 +246,7 @@ class _GroupContentRequestsPageState extends State<GroupContentRequestsPage> {
       return Image.network(entry.value);
     }).toList();
 
-    return Container(
+    return SizedBox(
       height: 200,
       child: PageView(
         children: imageWidgets,
@@ -268,8 +268,8 @@ class _GroupContentRequestsPageState extends State<GroupContentRequestsPage> {
           },
           child: Row(
             children: [
-              Icon(Icons.picture_as_pdf),
-              SizedBox(width: 10),
+              const Icon(Icons.picture_as_pdf),
+              const SizedBox(width: 10),
               Text(entry.key),
             ],
           ),

@@ -6,13 +6,15 @@ import 'package:file_picker/file_picker.dart';
 import 'dart:io';
 
 class UploadPdfPage extends StatefulWidget {
+  const UploadPdfPage({super.key});
+
   @override
   _UploadPdfPageState createState() => _UploadPdfPageState();
 }
 
 class _UploadPdfPageState extends State<UploadPdfPage> {
-  TextEditingController _subjectController = TextEditingController();
-  TextEditingController _titleController = TextEditingController();
+  final TextEditingController _subjectController = TextEditingController();
+  final TextEditingController _titleController = TextEditingController();
   PlatformFile? _pickedFile;
   bool _isLoading = false;
 
@@ -33,7 +35,7 @@ class _UploadPdfPageState extends State<UploadPdfPage> {
         _subjectController.text.isEmpty ||
         _titleController.text.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Please fill all fields and select a file')));
+          const SnackBar(content: Text('Please fill all fields and select a file')));
       return;
     }
 
@@ -72,7 +74,7 @@ class _UploadPdfPageState extends State<UploadPdfPage> {
         });
 
         ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text('Upload successful')));
+            .showSnackBar(const SnackBar(content: Text('Upload successful')));
         Navigator.of(context).pop();
       }
     } catch (e) {
@@ -88,9 +90,9 @@ class _UploadPdfPageState extends State<UploadPdfPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Upload PDF')),
+      appBar: AppBar(title: const Text('Upload PDF')),
       body: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
             TextField(
@@ -101,7 +103,7 @@ class _UploadPdfPageState extends State<UploadPdfPage> {
                   ),
                   labelText: 'Subject'),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             TextField(
               controller: _titleController,
               decoration: InputDecoration(
@@ -110,7 +112,7 @@ class _UploadPdfPageState extends State<UploadPdfPage> {
                   ),
                   labelText: 'Title'),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             _pickedFile != null
                 ? Column(
                     children: [
@@ -122,14 +124,14 @@ class _UploadPdfPageState extends State<UploadPdfPage> {
                 : Container(),
             ElevatedButton(
               onPressed: _pickFile,
-              child: Text('Choose PDF'),
+              child: const Text('Choose PDF'),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             _isLoading
-                ? CircularProgressIndicator()
+                ? const CircularProgressIndicator()
                 : ElevatedButton(
                     onPressed: _uploadFile,
-                    child: Text('Submit'),
+                    child: const Text('Submit'),
                   ),
           ],
         ),

@@ -27,7 +27,7 @@ void showLoadingDialog(BuildContext context) {
     context: context,
     barrierDismissible: false,
     builder: (context) {
-      return Center(
+      return const Center(
         child: CustomLoadingAnimation(),
       );
     },

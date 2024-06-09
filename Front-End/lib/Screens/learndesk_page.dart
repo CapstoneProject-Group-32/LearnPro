@@ -1,4 +1,3 @@
-import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Screens/Timer/timer_page.dart';
@@ -20,7 +19,7 @@ class LearnDesk extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => NavigationBarBottom(),
+                  builder: (context) => const NavigationBarBottom(),
                 ),
               );
             },

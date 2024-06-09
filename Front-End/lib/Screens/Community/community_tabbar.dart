@@ -29,7 +29,7 @@ class _CommunityTabBarState extends State<CommunityTabBar>
   }
 
   void onSearch() async {
-    FirebaseFirestore _firestore = FirebaseFirestore.instance;
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
 
     setState(() {
       isLoading = true;
@@ -37,7 +37,7 @@ class _CommunityTabBarState extends State<CommunityTabBar>
       userMap = null;
     });
     try {
-      QuerySnapshot searchResult = await _firestore
+      QuerySnapshot searchResult = await firestore
           .collection('users')
           .where("userName", isEqualTo: _search.text)
           .get();
@@ -74,7 +74,7 @@ class _CommunityTabBarState extends State<CommunityTabBar>
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => NavigationBarBottom(),
+                  builder: (context) => const NavigationBarBottom(),
                 ),
               );
             },
@@ -102,11 +102,11 @@ class _CommunityTabBarState extends State<CommunityTabBar>
           ),
         ),
         body: isLoading
-            ? Center(
-                child: Container(
+            ? const Center(
+                child: SizedBox(
                   height: 20,
                   width: 20,
-                  child: const CircularProgressIndicator(),
+                  child: CircularProgressIndicator(),
                 ),
               )
             : Column(
@@ -170,8 +170,10 @@ class _CommunityTabBarState extends State<CommunityTabBar>
                             ),
                           ),
                         ),
-                        JoinedGroupsScreen(),
-                        LearnDesk(),
+                        const JoinedGroupsScreen(),
+                        const Center(
+                          child: Text("Still developing"),
+                        ),
                       ],
                     ),
                   ),

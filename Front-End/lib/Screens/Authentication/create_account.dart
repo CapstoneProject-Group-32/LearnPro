@@ -78,9 +78,9 @@ class _CreateAccountState extends State<CreateAccount> {
 //this methode is for select the image from the gallery
 
   void selectImage() async {
-    Uint8List _profileImage = await pickImage(ImageSource.gallery);
+    Uint8List profileImage = await pickImage(ImageSource.gallery);
     setState(() {
-      this._profileImage = _profileImage;
+      _profileImage = profileImage;
     });
   }
 

@@ -7,7 +7,7 @@ class CommentSection extends StatefulWidget {
   final String groupName;
   final String contentId;
 
-  CommentSection({required this.groupName, required this.contentId});
+  const CommentSection({super.key, required this.groupName, required this.contentId});
 
   @override
   _CommentSectionState createState() => _CommentSectionState();
@@ -53,14 +53,14 @@ class _CommentSectionState extends State<CommentSection> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text('Delete Comment'),
-          content: Text('Are you sure you want to delete this comment?'),
+          title: const Text('Delete Comment'),
+          content: const Text('Are you sure you want to delete this comment?'),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('No'),
+              child: const Text('No'),
             ),
             TextButton(
               onPressed: () async {
@@ -86,7 +86,7 @@ class _CommentSectionState extends State<CommentSection> {
 
                 Navigator.of(context).pop();
               },
-              child: Text('Yes'),
+              child: const Text('Yes'),
             ),
           ],
         );
@@ -123,7 +123,7 @@ class _CommentSectionState extends State<CommentSection> {
                   .snapshots(),
               builder: (context, snapshot) {
                 if (!snapshot.hasData) {
-                  return Center(child: CircularProgressIndicator());
+                  return const Center(child: CircularProgressIndicator());
                 }
 
                 var contentData = snapshot.data!.data() as Map<String, dynamic>;
@@ -193,11 +193,11 @@ class _CommentSectionState extends State<CommentSection> {
                 Expanded(
                   child: TextField(
                     controller: _commentController,
-                    decoration: InputDecoration(hintText: 'Add a comment...'),
+                    decoration: const InputDecoration(hintText: 'Add a comment...'),
                   ),
                 ),
                 IconButton(
-                  icon: Icon(Icons.send),
+                  icon: const Icon(Icons.send),
                   onPressed: _addComment,
                 ),
               ],

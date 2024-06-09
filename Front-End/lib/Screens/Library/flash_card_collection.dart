@@ -5,12 +5,14 @@ import 'package:flutter_application_1/Flashcards/models/Flashcard.dart';
 import 'package:flutter_application_1/Flashcards/screen/flashcard_home%20_screen.dart';
 
 class FlashCardCollectionScreen extends StatelessWidget {
+  const FlashCardCollectionScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     final User? user = FirebaseAuth.instance.currentUser;
 
     if (user == null) {
-      return Scaffold(
+      return const Scaffold(
         // appBar: AppBar(
         //   title: Text('Flashcard yyyy '),
         // ),
@@ -31,7 +33,7 @@ class FlashCardCollectionScreen extends StatelessWidget {
             .snapshots(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
-            return Center(
+            return const Center(
               child: CircularProgressIndicator(),
             );
           }
@@ -60,11 +62,11 @@ class FlashCardCollectionScreen extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  margin: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+                  margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
                   child: ListTile(
                     title: Text(
                       subject,
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                      style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
                     subtitle: Text('Created on: $date'),
                     onTap: () {
@@ -94,14 +96,14 @@ class FlashCardCollectionScreen extends StatelessWidget {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text('Delete Flashcard Set'),
-          content: Text('Are you sure you want to delete this flashcard set?'),
+          title: const Text('Delete Flashcard Set'),
+          content: const Text('Are you sure you want to delete this flashcard set?'),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop(); // Close the dialog
               },
-              child: Text('No'),
+              child: const Text('No'),
             ),
             TextButton(
               onPressed: () {
@@ -121,7 +123,7 @@ class FlashCardCollectionScreen extends StatelessWidget {
                   );
                 });
               },
-              child: Text('Yes'),
+              child: const Text('Yes'),
             ),
           ],
         );

@@ -112,41 +112,43 @@ class CreateFlashcardScreen extends StatelessWidget {
   final TextEditingController _topicController = TextEditingController();
   final TextEditingController _pointsController = TextEditingController();
 
+  CreateFlashcardScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Create Flashcard'),
+        title: const Text('Create Flashcard'),
         actions: [
           IconButton(
-            icon: Icon(Icons.library_books),
+            icon: const Icon(Icons.library_books),
             onPressed: () {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => FlashcardLibraryScreen()),
+                    builder: (context) => const FlashcardLibraryScreen()),
               );
             },
           ),
         ],
       ),
       body: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
             TextField(
               controller: _subjectController,
-              decoration: InputDecoration(labelText: 'Subject'),
+              decoration: const InputDecoration(labelText: 'Subject'),
             ),
             TextField(
               controller: _topicController,
-              decoration: InputDecoration(labelText: 'Topic'),
+              decoration: const InputDecoration(labelText: 'Topic'),
             ),
             TextField(
               controller: _pointsController,
-              decoration: InputDecoration(labelText: 'Points'),
+              decoration: const InputDecoration(labelText: 'Points'),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () async {
                 final subject = _subjectController.text;
@@ -187,17 +189,17 @@ class CreateFlashcardScreen extends StatelessWidget {
                       hideLoadingDialog(context);
                       print('Error creating flashcards: $e');
                       ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('Failed to create flashcards')),
+                        const SnackBar(content: Text('Failed to create flashcards')),
                       );
                     }
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('User not signed in')),
+                      const SnackBar(content: Text('User not signed in')),
                     );
                   }
                 }
               },
-              child: Text('Create'),
+              child: const Text('Create'),
             ),
           ],
         ),

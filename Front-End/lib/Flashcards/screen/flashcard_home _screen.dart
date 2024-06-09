@@ -111,7 +111,7 @@ class FlashcardScreen extends StatelessWidget {
   final List<Flashcard> flashcards;
   final String flashcardSetId;
 
-  FlashcardScreen({required this.flashcards, required this.flashcardSetId});
+  const FlashcardScreen({super.key, required this.flashcards, required this.flashcardSetId});
 
   @override
   Widget build(BuildContext context) {
@@ -119,15 +119,15 @@ class FlashcardScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Flashcards'),
+        title: const Text('Flashcards'),
         actions: [
           IconButton(
-            icon: Icon(Icons.library_books),
+            icon: const Icon(Icons.library_books),
             onPressed: () {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => FlashcardLibraryScreen()),
+                    builder: (context) => const FlashcardLibraryScreen()),
               );
             },
           ),
@@ -139,7 +139,7 @@ class FlashcardScreen extends StatelessWidget {
           itemBuilder: (BuildContext context, int index) {
             final flashcard = flashcards[index];
             return Card(
-              color: Color.fromARGB(255, 69, 248, 233),
+              color: const Color.fromARGB(255, 69, 248, 233),
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
@@ -148,11 +148,11 @@ class FlashcardScreen extends StatelessWidget {
                     Text(
                       flashcard.topic,
                       style:
-                          TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                          const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     Text(flashcard.content),
-                    SizedBox(height: 50),
+                    const SizedBox(height: 50),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
@@ -172,14 +172,14 @@ class FlashcardScreen extends StatelessWidget {
                           },
                         ),
                         IconButton(
-                          icon: Icon(Icons.edit),
+                          icon: const Icon(Icons.edit),
                           onPressed: () {
                             _showEditFlashcardDialog(
                                 context, uid, flashcard, flashcardSetId);
                           },
                         ),
                         IconButton(
-                          icon: Icon(Icons.delete),
+                          icon: const Icon(Icons.delete),
                           onPressed: () {
                             if (uid != null) {
                               Provider.of<GenerateFlashcard>(context,
@@ -206,7 +206,7 @@ class FlashcardScreen extends StatelessWidget {
         onPressed: () {
           _showAddFlashcardDialog(context, uid);
         },
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
       ),
     );
   }
@@ -219,17 +219,17 @@ class FlashcardScreen extends StatelessWidget {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text('Add Flashcard'),
+          title: const Text('Add Flashcard'),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               TextField(
                 controller: titleController,
-                decoration: InputDecoration(labelText: 'Title'),
+                decoration: const InputDecoration(labelText: 'Title'),
               ),
               TextField(
                 controller: contentController,
-                decoration: InputDecoration(labelText: 'Content'),
+                decoration: const InputDecoration(labelText: 'Content'),
               ),
             ],
           ),
@@ -238,7 +238,7 @@ class FlashcardScreen extends StatelessWidget {
               onPressed: () {
                 Navigator.pop(context);
               },
-              child: Text('Cancel'),
+              child: const Text('Cancel'),
             ),
             TextButton(
               onPressed: () {
@@ -257,7 +257,7 @@ class FlashcardScreen extends StatelessWidget {
                   });
                 }
               },
-              child: Text('Add'),
+              child: const Text('Add'),
             ),
           ],
         );
@@ -276,17 +276,17 @@ class FlashcardScreen extends StatelessWidget {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text('Edit Flashcard'),
+          title: const Text('Edit Flashcard'),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               TextField(
                 controller: titleController,
-                decoration: InputDecoration(labelText: 'Title'),
+                decoration: const InputDecoration(labelText: 'Title'),
               ),
               TextField(
                 controller: contentController,
-                decoration: InputDecoration(labelText: 'Content'),
+                decoration: const InputDecoration(labelText: 'Content'),
               ),
             ],
           ),
@@ -295,7 +295,7 @@ class FlashcardScreen extends StatelessWidget {
               onPressed: () {
                 Navigator.pop(context);
               },
-              child: Text('Cancel'),
+              child: const Text('Cancel'),
             ),
             TextButton(
               onPressed: () {
@@ -315,7 +315,7 @@ class FlashcardScreen extends StatelessWidget {
                   });
                 }
               },
-              child: Text('Save'),
+              child: const Text('Save'),
             ),
           ],
         );

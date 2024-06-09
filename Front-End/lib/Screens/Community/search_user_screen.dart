@@ -91,7 +91,7 @@ class _SearchUserScreenState extends State<SearchUserScreen> {
       });
 
       ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text('Removed friend')));
+          .showSnackBar(const SnackBar(content: Text('Removed friend')));
       setState(() {
         isFriend = false;
       });
@@ -249,7 +249,7 @@ class _SearchUserScreenState extends State<SearchUserScreen> {
                                   height: 58,
                                   width: 110,
                                   decoration: const BoxDecoration(
-                                    color: Color(0x129F6EEEE),
+                                    color: Color(0x129f6eeee),
                                   ),
                                   child: Column(
                                     children: [
@@ -274,7 +274,7 @@ class _SearchUserScreenState extends State<SearchUserScreen> {
                                   height: 58,
                                   width: 110,
                                   decoration: const BoxDecoration(
-                                    color: Color(0x129F6EEEE),
+                                    color: Color(0x129f6eeee),
                                   ),
                                   child: Column(
                                     children: [
@@ -307,7 +307,7 @@ class _SearchUserScreenState extends State<SearchUserScreen> {
                                   height: 58,
                                   width: 110,
                                   decoration: const BoxDecoration(
-                                    color: Color(0x129F6EEEE),
+                                    color: Color(0x129f6eeee),
                                   ),
                                   child: const Column(
                                     children: [

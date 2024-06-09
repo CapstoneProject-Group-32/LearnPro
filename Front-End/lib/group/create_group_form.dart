@@ -7,6 +7,8 @@ import 'dart:io';
 import 'invite_friends_screen.dart';
 
 class CreateGroupScreen extends StatefulWidget {
+  const CreateGroupScreen({super.key});
+
   @override
   _CreateGroupScreenState createState() => _CreateGroupScreenState();
 }
@@ -31,7 +33,7 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
     // Navigate to invite friends screen and get the invited friends' UIDs and usernames
     final result = await Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => InviteFriendsScreen()),
+      MaterialPageRoute(builder: (context) => const InviteFriendsScreen()),
     );
     if (result != null) {
       setState(() {
@@ -47,7 +49,7 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
 
       if (groupIcon == null) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Please add a group icon')),
+          const SnackBar(content: Text('Please add a group icon')),
         );
         return;
       }
@@ -64,7 +66,7 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
             .get();
         if (groupDoc.exists) {
           ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('Group name already exists')));
+              const SnackBar(content: Text('Group name already exists')));
           setState(() {
             isLoading = false;
           });
@@ -111,7 +113,7 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
         });
 
         ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Group created successfully')));
+            const SnackBar(content: Text('Group created successfully')));
         Navigator.pop(context);
       } catch (e) {
         ScaffoldMessenger.of(context)
@@ -123,7 +125,7 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
       }
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Please fill every field and add a group icon')),
+        const SnackBar(content: Text('Please fill every field and add a group icon')),
       );
     }
   }
@@ -131,7 +133,7 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Create Group')),
+      appBar: AppBar(title: const Text('Create Group')),
       body: Form(
         key: _formKey,
         child: SingleChildScrollView(
@@ -146,13 +148,14 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
                       ),
                       labelText: 'Group Name'),
                   validator: (value) {
-                    if (value == null || value.isEmpty)
+                    if (value == null || value.isEmpty) {
                       return 'Please enter a group name';
+                    }
                     return null;
                   },
                   onSaved: (value) => groupName = value,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 TextFormField(
@@ -162,13 +165,14 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
                       ),
                       labelText: 'Major'),
                   validator: (value) {
-                    if (value == null || value.isEmpty)
+                    if (value == null || value.isEmpty) {
                       return 'Please enter the major';
+                    }
                     return null;
                   },
                   onSaved: (value) => groupMajor = value,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 TextFormField(
@@ -178,24 +182,25 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
                       ),
                       labelText: 'Description'),
                   validator: (value) {
-                    if (value == null || value.isEmpty)
+                    if (value == null || value.isEmpty) {
                       return 'Please enter a description';
+                    }
                     return null;
                   },
                   onSaved: (value) => groupDescription = value,
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: pickGroupIcon,
-                  child: Text('Choose Group Icon'),
+                  child: const Text('Choose Group Icon'),
                 ),
                 groupIcon != null
                     ? Image.file(File(groupIcon!.path))
                     : Container(),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: inviteFriends,
-                  child: Text('Invite Friends'),
+                  child: const Text('Invite Friends'),
                 ),
                 ListView.builder(
                   shrinkWrap: true,
@@ -213,15 +218,15 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
                     ElevatedButton(
                       onPressed: isLoading ? null : createGroup,
                       child: isLoading
-                          ? CircularProgressIndicator(
+                          ? const CircularProgressIndicator(
                               valueColor:
                                   AlwaysStoppedAnimation<Color>(Colors.white),
                             )
-                          : Text('Create'),
+                          : const Text('Create'),
                     ),
                     ElevatedButton(
                       onPressed: () => Navigator.pop(context),
-                      child: Text('Cancel'),
+                      child: const Text('Cancel'),
                     ),
                   ],
                 ),

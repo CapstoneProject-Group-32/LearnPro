@@ -17,7 +17,7 @@ Future<void> main() async {
       providers: [
         ChangeNotifierProvider(create: (_) => GenerateFlashcard()),
       ],
-      child: MyApp(),
+      child: const MyApp(),
     ),
   );
 }

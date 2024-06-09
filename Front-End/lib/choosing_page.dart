@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Models/usermodel.dart';
 
 import 'package:flutter_application_1/Screens/Authentication/authenticate.dart';
-import 'package:flutter_application_1/Screens/home_page.dart';
+import 'package:flutter_application_1/Widgets/navigation_bar.dart';
 import 'package:provider/provider.dart';
 
 class Wrapper extends StatelessWidget {
@@ -16,7 +16,7 @@ class Wrapper extends StatelessWidget {
     if (user == null) {
       return const Authenticate();
     } else {
-      return const HomePage();
+      return const NavigationBarBottom();
     }
   }
 }

@@ -12,7 +12,7 @@ import 'group_content_request_page.dart';
 class GroupDetailPage extends StatelessWidget {
   final String groupName;
 
-  GroupDetailPage({required this.groupName});
+  const GroupDetailPage({super.key, required this.groupName});
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +37,7 @@ class GroupDetailPage extends StatelessWidget {
 
                 if (currentUser!.uid == groupData['owner']) {
                   return IconButton(
-                    icon: Icon(Icons.notifications),
+                    icon: const Icon(Icons.notifications),
                     onPressed: () {
                       Navigator.push(
                         context,
@@ -62,7 +62,7 @@ class GroupDetailPage extends StatelessWidget {
               .get(),
           builder: (context, snapshot) {
             if (!snapshot.hasData) {
-              return Center(child: const CircularProgressIndicator());
+              return const Center(child: CircularProgressIndicator());
             }
 
             var groupData = snapshot.data!.data() as Map<String, dynamic>;
@@ -79,24 +79,24 @@ class GroupDetailPage extends StatelessWidget {
                     children: [
                       Text(
                         groupData['groupname'],
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 24),
                         textAlign: TextAlign.center,
                       ),
                       const SizedBox(height: 8),
                       Text('Members: ${groupData['members'].length}'),
-                      SizedBox(height: 8),
+                      const SizedBox(height: 8),
                       Text(groupData['groupdescription']),
                     ],
                   ),
                 ),
-                TabBar(
-                  tabs: const [
+                const TabBar(
+                  tabs: [
                     Tab(text: "Content"),
                     Tab(text: "Members"),
                   ],
                 ),
-                Container(
+                SizedBox(
                   height: 500,
                   child: TabBarView(
                     children: [
@@ -121,7 +121,7 @@ class GroupDetailPage extends StatelessWidget {
               ),
             );
           },
-          child: Icon(Icons.add),
+          child: const Icon(Icons.add),
         ),
       ),
     );
@@ -131,7 +131,7 @@ class GroupDetailPage extends StatelessWidget {
 class ContentTab extends StatelessWidget {
   final String groupName;
 
-  ContentTab({required this.groupName});
+  const ContentTab({super.key, required this.groupName});
 
   @override
   Widget build(BuildContext context) {
@@ -140,7 +140,7 @@ class ContentTab extends StatelessWidget {
           FirebaseFirestore.instance.collection('groups').doc(groupName).get(),
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
-          return Center(child: CircularProgressIndicator());
+          return const Center(child: CircularProgressIndicator());
         }
 
         var groupData = snapshot.data!.data() as Map<String, dynamic>;
@@ -154,7 +154,7 @@ class ContentTab extends StatelessWidget {
               .snapshots(),
           builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
             if (!snapshot.hasData) {
-              return Center(child: CircularProgressIndicator());
+              return const Center(child: CircularProgressIndicator());
             }
 
             var currentUser = FirebaseAuth.instance.currentUser;
@@ -170,7 +170,7 @@ class ContentTab extends StatelessWidget {
                       .get(),
                   builder: (context, userSnapshot) {
                     if (!userSnapshot.hasData) {
-                      return Center(child: CircularProgressIndicator());
+                      return const Center(child: CircularProgressIndicator());
                     }
 
                     var userData =
@@ -204,7 +204,7 @@ class ContentCard extends StatefulWidget {
   final String profilePic;
   final bool isOwnerOrPoster;
 
-  ContentCard({
+  const ContentCard({super.key, 
     required this.groupName,
     required this.contentId,
     required this.contentData,
@@ -299,17 +299,17 @@ class _ContentCardState extends State<ContentCard> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text('Edit Post'),
+          title: const Text('Edit Post'),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               TextField(
                 controller: titleController,
-                decoration: InputDecoration(labelText: 'Title'),
+                decoration: const InputDecoration(labelText: 'Title'),
               ),
               TextField(
                 controller: descriptionController,
-                decoration: InputDecoration(labelText: 'Description'),
+                decoration: const InputDecoration(labelText: 'Description'),
               ),
             ],
           ),
@@ -318,7 +318,7 @@ class _ContentCardState extends State<ContentCard> {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('Cancel'),
+              child: const Text('Cancel'),
             ),
             TextButton(
               onPressed: () async {
@@ -334,7 +334,7 @@ class _ContentCardState extends State<ContentCard> {
 
                 Navigator.of(context).pop();
               },
-              child: Text('Ok'),
+              child: const Text('Ok'),
             ),
           ],
         );
@@ -348,14 +348,14 @@ class _ContentCardState extends State<ContentCard> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text('Delete Post'),
-          content: Text('Are you sure you want to delete this post?'),
+          title: const Text('Delete Post'),
+          content: const Text('Are you sure you want to delete this post?'),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('No'),
+              child: const Text('No'),
             ),
             TextButton(
               onPressed: () async {
@@ -376,7 +376,7 @@ class _ContentCardState extends State<ContentCard> {
                   }
                 });
               },
-              child: Text('Yes'),
+              child: const Text('Yes'),
             ),
           ],
         );
@@ -387,7 +387,7 @@ class _ContentCardState extends State<ContentCard> {
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: EdgeInsets.all(10),
+      margin: const EdgeInsets.all(10),
       child: Padding(
         padding: const EdgeInsets.all(10.0),
         child: Column(
@@ -399,7 +399,7 @@ class _ContentCardState extends State<ContentCard> {
                   backgroundImage:
                       CachedNetworkImageProvider(widget.profilePic),
                 ),
-                SizedBox(width: 10),
+                const SizedBox(width: 10),
                 Expanded(
                   child: Text(widget.username),
                 ),
@@ -413,11 +413,11 @@ class _ContentCardState extends State<ContentCard> {
                       }
                     },
                     itemBuilder: (context) => [
-                      PopupMenuItem(
+                      const PopupMenuItem(
                         value: 'edit',
                         child: Text('Edit'),
                       ),
-                      PopupMenuItem(
+                      const PopupMenuItem(
                         value: 'remove',
                         child: Text('Remove'),
                       ),
@@ -425,16 +425,16 @@ class _ContentCardState extends State<ContentCard> {
                   ),
               ],
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Text(widget.contentData['contentTitle'],
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-            SizedBox(height: 5),
+                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            const SizedBox(height: 5),
             Text(widget.contentData['contentDescription']),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             widget.contentData['filetype'] == 'images'
                 ? _buildImageSlider(widget.contentData['contentfiles'])
                 : _buildPdfList(widget.contentData['contentfiles'], context),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -464,7 +464,7 @@ class _ContentCardState extends State<ContentCard> {
                           ).then((_) =>
                               _fetchCommentCount()); // Fetch comment count after returning
                         },
-                        child: Icon(Icons.comment)),
+                        child: const Icon(Icons.comment)),
                     const SizedBox(width: 5),
                     Text('$_commentCount comments'),
                   ],
@@ -482,7 +482,7 @@ class _ContentCardState extends State<ContentCard> {
       return Image.network(entry.value);
     }).toList();
 
-    return Container(
+    return SizedBox(
       height: 200,
       child: PageView(
         children: imageWidgets,
@@ -505,8 +505,8 @@ class _ContentCardState extends State<ContentCard> {
           },
           child: Row(
             children: [
-              Icon(Icons.picture_as_pdf),
-              SizedBox(width: 10),
+              const Icon(Icons.picture_as_pdf),
+              const SizedBox(width: 10),
               Text(entry.key),
             ],
           ),
@@ -520,7 +520,7 @@ class MembersTab extends StatelessWidget {
   final String groupName;
   final String owner;
 
-  MembersTab({required this.groupName, required this.owner});
+  const MembersTab({super.key, required this.groupName, required this.owner});
 
   @override
   Widget build(BuildContext context) {
@@ -534,7 +534,7 @@ class MembersTab extends StatelessWidget {
                 .snapshots(),
             builder: (context, snapshot) {
               if (!snapshot.hasData) {
-                return Center(child: CircularProgressIndicator());
+                return const Center(child: CircularProgressIndicator());
               }
 
               var groupData = snapshot.data!.data() as Map<String, dynamic>;
@@ -549,7 +549,7 @@ class MembersTab extends StatelessWidget {
                         .snapshots(),
                     builder: (context, userSnapshot) {
                       if (!userSnapshot.hasData) {
-                        return Center(child: CircularProgressIndicator());
+                        return const Center(child: CircularProgressIndicator());
                       }
 
                       var userData =
@@ -658,7 +658,7 @@ class MembersTab extends StatelessWidget {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text('Remove Member'),
+          title: const Text('Remove Member'),
           content:
               Text('Are you sure you want to remove $username from the group?'),
           actions: [
@@ -666,7 +666,7 @@ class MembersTab extends StatelessWidget {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('No'),
+              child: const Text('No'),
             ),
             TextButton(
               onPressed: () async {
@@ -688,7 +688,7 @@ class MembersTab extends StatelessWidget {
 
                 Navigator.of(context).pop();
               },
-              child: Text('Yes'),
+              child: const Text('Yes'),
             ),
           ],
         );
@@ -701,14 +701,14 @@ class MembersTab extends StatelessWidget {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text('Leave Group'),
-          content: Text('Are you sure you want to leave this group?'),
+          title: const Text('Leave Group'),
+          content: const Text('Are you sure you want to leave this group?'),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('No'),
+              child: const Text('No'),
             ),
             TextButton(
               onPressed: () async {
@@ -733,7 +733,7 @@ class MembersTab extends StatelessWidget {
 
                 Navigator.of(context).pop();
               },
-              child: Text('Yes'),
+              child: const Text('Yes'),
             ),
           ],
         );

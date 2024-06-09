@@ -87,11 +87,11 @@ class _StudyBuddiesState extends State<StudyBuddies> {
     return SafeArea(
       child: Scaffold(
         body: isLoading
-            ? Center(
-                child: Container(
+            ? const Center(
+                child: SizedBox(
                   height: 20,
                   width: 20,
-                  child: const CircularProgressIndicator(),
+                  child: CircularProgressIndicator(),
                 ),
               )
             : SingleChildScrollView(

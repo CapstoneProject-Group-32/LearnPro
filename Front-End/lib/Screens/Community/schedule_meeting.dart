@@ -57,9 +57,9 @@ class _AcceptRequestState extends State<AcceptRequest> {
     final text = _dateController.text;
     if (text.length == 4 || text.length == 7) {
       if (text.length == 4 && !text.endsWith('-')) {
-        _dateController.text = text + '-';
+        _dateController.text = '$text-';
       } else if (text.length == 7 && !text.endsWith('-')) {
-        _dateController.text = text + '-';
+        _dateController.text = '$text-';
       }
       _dateController.selection = TextSelection.fromPosition(
         TextPosition(offset: _dateController.text.length),
@@ -71,7 +71,7 @@ class _AcceptRequestState extends State<AcceptRequest> {
     final text = _timeController.text;
     if (text.length == 2) {
       if (!text.endsWith(':')) {
-        _timeController.text = text + ':';
+        _timeController.text = '$text:';
       }
       _timeController.selection = TextSelection.fromPosition(
         TextPosition(offset: _timeController.text.length),

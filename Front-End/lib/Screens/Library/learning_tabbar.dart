@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/Flashcards/screen/flashcard_library_screen.dart';
 import 'package:flutter_application_1/Screens/Library/flash_card_collection.dart';
 import 'package:flutter_application_1/Screens/Library/libray_page.dart';
 import 'package:flutter_application_1/Widgets/navigation_bar.dart';
-import 'package:flutter_application_1/group/joined_group_screen.dart';
 
 class LearningTabBar extends StatefulWidget {
   const LearningTabBar({Key? key}) : super(key: key);
@@ -39,7 +37,7 @@ class _LearningTabBarState extends State<LearningTabBar>
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => NavigationBarBottom(),
+                  builder: (context) => const NavigationBarBottom(),
                 ),
               );
             },
@@ -83,7 +81,7 @@ class _LearningTabBarState extends State<LearningTabBar>
             Expanded(
               child: TabBarView(
                 controller: _tabController,
-                children: [
+                children: const [
                   LibraryPage(),
                   FlashCardCollectionScreen(),
                   Center(child: Text("Quiz feature is not available ")),

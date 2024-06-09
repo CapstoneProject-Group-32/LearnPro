@@ -11,6 +11,8 @@ import '../generate_flashcard.dart';
 import 'flashcard_home _screen.dart';
 
 class ContentForm extends StatefulWidget {
+  const ContentForm({super.key});
+
   @override
   State<ContentForm> createState() => _ContentFormState();
 }
@@ -65,12 +67,12 @@ class _ContentFormState extends State<ContentForm> {
           hideLoadingDialog(context);
           print('Error creating flashcards: $e');
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Failed to create flashcards, Try again!')),
+            const SnackBar(content: Text('Failed to create flashcards, Try again!')),
           );
         }
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('User not signed in')),
+          const SnackBar(content: Text('User not signed in')),
         );
       }
     }
@@ -140,11 +142,11 @@ class _ContentFormState extends State<ContentForm> {
                           }
                         });
                       },
-                      child: const Icon(Icons.add_circle_outline_outlined),
                       style: ElevatedButton.styleFrom(
                         padding: EdgeInsets.zero,
                         shape: const CircleBorder(),
                       ),
+                      child: const Icon(Icons.add_circle_outline_outlined),
                     ),
                   ],
                 ),
@@ -251,7 +253,7 @@ class _ContentFormState extends State<ContentForm> {
                   child: const Text("Clear"),
                 ),
                 const SizedBox(height: 30),
-                FilePickerButton(),
+                const FilePickerButton(),
                 const SizedBox(height: 50),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,

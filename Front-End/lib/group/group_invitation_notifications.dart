@@ -3,6 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class GroupInvitationNotificationScreen extends StatefulWidget {
+  const GroupInvitationNotificationScreen({super.key});
+
   @override
   _GroupInvitationNotificationScreenState createState() =>
       _GroupInvitationNotificationScreenState();
@@ -84,16 +86,16 @@ class _GroupInvitationNotificationScreenState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Notifications')),
+      appBar: AppBar(title: const Text('Notifications')),
       body: FutureBuilder<List<Map<String, dynamic>>>(
         future: invitationsFuture,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
           } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return Center(child: Text('No invitations'));
+            return const Center(child: Text('No invitations'));
           } else {
             List<Map<String, dynamic>> invitations = snapshot.data!;
             return ListView.builder(
@@ -116,7 +118,7 @@ class InvitationCard extends StatefulWidget {
   final Map<String, dynamic> groupDetails;
   final Map<String, dynamic> ownerDetails;
 
-  InvitationCard({required this.groupDetails, required this.ownerDetails});
+  const InvitationCard({super.key, required this.groupDetails, required this.ownerDetails});
 
   @override
   _InvitationCardState createState() => _InvitationCardState();
@@ -193,12 +195,12 @@ class _InvitationCardState extends State<InvitationCard> {
                   backgroundImage:
                       NetworkImage(widget.ownerDetails['profilePic'] ?? ''),
                 ),
-                SizedBox(width: 10),
+                const SizedBox(width: 10),
                 Text(
                     '${widget.ownerDetails['userName'] ?? 'Unknown user'} has invited you to his group'),
               ],
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Row(
               children: [
                 Image.network(
@@ -206,38 +208,38 @@ class _InvitationCardState extends State<InvitationCard> {
                   width: 50,
                   height: 50,
                 ),
-                SizedBox(width: 10),
+                const SizedBox(width: 10),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(widget.groupDetails['groupname'] ?? 'Unknown group',
-                        style: TextStyle(fontWeight: FontWeight.bold)),
+                        style: const TextStyle(fontWeight: FontWeight.bold)),
                     Text(widget.groupDetails['groupmajor'] ??
                         'No major specified'),
                   ],
                 ),
               ],
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Text(widget.groupDetails['groupdescription'] ??
                 'No description provided'),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             if (status == null) ...[
               Row(
                 children: [
                   ElevatedButton(
-                      onPressed: handleAccept, child: Text('Accept')),
-                  SizedBox(width: 10),
+                      onPressed: handleAccept, child: const Text('Accept')),
+                  const SizedBox(width: 10),
                   ElevatedButton(
-                      onPressed: handleReject, child: Text('Reject')),
+                      onPressed: handleReject, child: const Text('Reject')),
                 ],
               ),
             ] else if (status == 'accepted') ...[
-              Center(
+              const Center(
                 child: Text('Accepted', style: TextStyle(color: Colors.green)),
               ),
             ] else if (status == 'rejected') ...[
-              Center(
+              const Center(
                 child: Text('Rejected', style: TextStyle(color: Colors.red)),
               ),
             ],

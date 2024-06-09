@@ -4,6 +4,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_application_1/group/create_group_form.dart';
 
 class JoinedGroupsScreen extends StatefulWidget {
+  const JoinedGroupsScreen({super.key});
+
   @override
   _JoinedGroupsScreenState createState() => _JoinedGroupsScreenState();
 }
@@ -54,13 +56,13 @@ class _JoinedGroupsScreenState extends State<JoinedGroupsScreen> {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => CreateGroupScreen()),
+            MaterialPageRoute(builder: (context) => const CreateGroupScreen()),
           );
         },
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
       ),
       body: _joinedGroups.isEmpty
-          ? Center(
+          ? const Center(
               child: Text(
                 "No joined groups",
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),

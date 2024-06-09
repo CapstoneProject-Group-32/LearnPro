@@ -19,11 +19,6 @@ class History {
 
   @override
   String toString() {
-    return "\n{\n    dateTime: " +
-        dateTime.toIso8601String() +
-        ",\n    " +
-        "focusedSecs: " +
-        focusedSecs.toString() +
-        "\n},\n";
+    return "\n{\n    dateTime: ${dateTime.toIso8601String()},\n    focusedSecs: $focusedSecs\n},\n";
   }
 }

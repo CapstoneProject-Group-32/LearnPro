@@ -5,6 +5,8 @@ import '../models/Flashcard.dart';
 import 'flashcard_home _screen.dart';
 
 class FlashcardLibraryScreen extends StatelessWidget {
+  const FlashcardLibraryScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     final User? user = FirebaseAuth.instance.currentUser;
@@ -12,9 +14,9 @@ class FlashcardLibraryScreen extends StatelessWidget {
     if (user == null) {
       return Scaffold(
         appBar: AppBar(
-          title: Text('Flashcard Library'),
+          title: const Text('Flashcard Library'),
         ),
-        body: Center(
+        body: const Center(
           child: Text('User not signed in'),
         ),
       );
@@ -24,7 +26,7 @@ class FlashcardLibraryScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Flashcard Library yyyyyyyy'),
+        title: const Text('Flashcard Library yyyyyyyy'),
       ),
       body: StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance
@@ -34,7 +36,7 @@ class FlashcardLibraryScreen extends StatelessWidget {
             .snapshots(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
-            return Center(
+            return const Center(
               child: CircularProgressIndicator(),
             );
           }
