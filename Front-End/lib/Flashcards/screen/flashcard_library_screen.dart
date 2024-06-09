@@ -24,7 +24,7 @@ class FlashcardLibraryScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Flashcard Library'),
+        title: Text('Flashcard Library yyyyyyyy'),
       ),
       body: StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance

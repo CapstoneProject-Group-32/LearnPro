@@ -4,8 +4,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_application_1/Widgets/navigation_bar.dart';
 
-import 'upload_pdf_page.dart';
-import 'pdf_viewer_page.dart';
+import '../upload_pdf_page.dart';
+import '../pdf_viewer_page.dart';
 
 class LibraryPage extends StatelessWidget {
   @override
@@ -16,40 +16,40 @@ class LibraryPage extends StatelessWidget {
     }
 
     return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        title: InkWell(
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => NavigationBarBottom(),
-              ),
-            );
-          },
-          child: const Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Icon(
-                Icons.arrow_back_ios_new_rounded,
-                size: 28,
-                color: Colors.black,
-              ),
-              SizedBox(
-                width: 10,
-              ),
-              Text(
-                "Student Community",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 30,
-                  color: Colors.black,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
+      // appBar: AppBar(
+      //   automaticallyImplyLeading: false,
+      //   title: InkWell(
+      //     onTap: () {
+      //       Navigator.push(
+      //         context,
+      //         MaterialPageRoute(
+      //           builder: (context) => NavigationBarBottom(),
+      //         ),
+      //       );
+      //     },
+      //     child: const Row(
+      //       mainAxisAlignment: MainAxisAlignment.start,
+      //       children: [
+      //         Icon(
+      //           Icons.arrow_back_ios_new_rounded,
+      //           size: 28,
+      //           color: Colors.black,
+      //         ),
+      //         SizedBox(
+      //           width: 10,
+      //         ),
+      //         Text(
+      //           "Library",
+      //           style: TextStyle(
+      //             fontWeight: FontWeight.bold,
+      //             fontSize: 30,
+      //             color: Colors.black,
+      //           ),
+      //         ),
+      //       ],
+      //     ),
+      //   ),
+      // ),
       body: StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance
             .collection('users')

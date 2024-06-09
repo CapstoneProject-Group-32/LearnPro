@@ -5,6 +5,7 @@ import 'package:flutter_application_1/Screens/Community/find_studybuddies.dart';
 
 import 'package:flutter_application_1/Screens/learndesk_page.dart';
 import 'package:flutter_application_1/Widgets/navigation_bar.dart';
+import 'package:flutter_application_1/group/joined_group_screen.dart';
 
 class CommunityTabBar extends StatefulWidget {
   const CommunityTabBar({super.key});
@@ -132,7 +133,7 @@ class _CommunityTabBarState extends State<CommunityTabBar>
                     controller: _tabController,
                     indicator: BoxDecoration(
                       color: const Color(0xFF00FF00),
-                      borderRadius: BorderRadius.circular(30),
+                      borderRadius: BorderRadius.circular(10),
                     ),
                     tabs: [
                       _buildTab(
@@ -169,7 +170,7 @@ class _CommunityTabBarState extends State<CommunityTabBar>
                             ),
                           ),
                         ),
-                        LearnDesk(),
+                        JoinedGroupsScreen(),
                         LearnDesk(),
                       ],
                     ),

@@ -805,12 +805,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Flashcards/screen/home_screen.dart';
 import 'package:flutter_application_1/Models/usermodel.dart';
+import 'package:flutter_application_1/Screens/Community/community_tabbar.dart';
 
 import 'package:flutter_application_1/Screens/Community/request_tution.dart';
 import 'package:flutter_application_1/Screens/Timer/timer_page.dart';
+import 'package:flutter_application_1/Screens/Library/learning_tabbar.dart';
 
 import 'package:flutter_application_1/group/create_group_form.dart';
-import 'package:flutter_application_1/group/display.dart';
+import 'package:flutter_application_1/group/joined_group_screen.dart';
 import 'package:flutter_application_1/group/group_content_request_page.dart';
 import 'package:flutter_application_1/group/group_detail_page.dart';
 import 'package:flutter_application_1/group/group_invitation_notifications.dart';
@@ -968,6 +970,8 @@ class _HomePageState extends State<HomePage> {
                                             height: 20,
                                           ),
                                           Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceAround,
                                             children: [
                                               _progressContainer(
                                                 "4h",
@@ -1062,19 +1066,13 @@ class _HomePageState extends State<HomePage> {
                             children: [
                               _iconMethod(
                                 context,
-                                CreateGroupScreen(),
+                                const LearningTabBar(),
                                 const AssetImage('assets/task.png'),
                                 'Your Notes',
                               ),
                               _iconMethod(
                                 context,
-                                /* ContentUploadForm(
-                                  groupName: "Testing123",
-                                ),
-*/
-                                GroupContentRequestsPage(
-                                  groupName: "Avengers",
-                                ),
+                                const CommunityTabBar(),
                                 const AssetImage('assets/cooperation.png'),
                                 'Request Tutoring',
                               ),
@@ -1235,8 +1233,8 @@ class _HomePageState extends State<HomePage> {
 
   Widget _progressContainer(String value, String label) {
     return Container(
-      height: 58,
-      width: 110,
+      //height: 58,
+      //width: 110,
       decoration: const BoxDecoration(
         color: Color(0xFF82C0CC),
       ),

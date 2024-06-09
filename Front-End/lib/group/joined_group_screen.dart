@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_application_1/group/create_group_form.dart';
 
 class JoinedGroupsScreen extends StatefulWidget {
   @override
@@ -49,8 +50,14 @@ class _JoinedGroupsScreenState extends State<JoinedGroupsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Joined Groups'),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => CreateGroupScreen()),
+          );
+        },
+        child: Icon(Icons.add),
       ),
       body: _joinedGroups.isEmpty
           ? Center(
