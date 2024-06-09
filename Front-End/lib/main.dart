@@ -12,12 +12,14 @@ import 'Flashcards/generate_flashcard.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(MultiProvider(
+  runApp(
+    MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => GenerateFlashcard()),
       ],
-      child: MyApp(),
-    ),);
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {

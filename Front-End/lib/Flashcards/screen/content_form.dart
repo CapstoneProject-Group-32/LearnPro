@@ -65,7 +65,8 @@ class _ContentFormState extends State<ContentForm> {
           hideLoadingDialog(context);
           print('Error creating flashcards: $e');
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Failed to create flashcards, Try again!')),
+            const SnackBar(
+                content: Text('Failed to create flashcards, Try again!')),
           );
         }
       } else {
@@ -273,7 +274,18 @@ class _ContentFormState extends State<ContentForm> {
                             setState(() {
                               mainTopic1 = _inputText4.text;
                               subject1 = _inputText3.text;
-                              _submitForm(); // Call submit form here
+                              if (subject1.isEmpty ||
+                                  mainTopic1.isEmpty ||
+                                  dataSetMap.isEmpty) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                      content: Text(
+                                          'Please Enter the content you studied!')),
+                                );
+                              } else {
+                                _submitForm();
+                              }
+                              // Call submit form here
                             });
                           },
                         ),

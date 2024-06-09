@@ -6,8 +6,16 @@ import 'package:flutter_application_1/Models/usermodel.dart';
 import 'package:flutter_application_1/Screens/Community/find_studybuddies.dart';
 import 'package:flutter_application_1/Screens/Community/request_tution.dart';
 import 'package:flutter_application_1/Screens/Timer/timer_page.dart';
+import 'package:flutter_application_1/Screens/group/display.dart';
+import 'package:flutter_application_1/Screens/group/group_detail_page.dart';
+import 'package:flutter_application_1/Screens/group/group_invitation_notifications.dart';
+
 import 'package:flutter_application_1/Screens/library.dart';
 import 'package:intl/intl.dart';
+
+import 'group/content_upload_form.dart';
+import 'group/create_group_form.dart';
+import 'group/group_content_request_page.dart';
 
 class HomePage extends StatefulWidget {
   // final String uid;
@@ -43,7 +51,10 @@ class _HomePageState extends State<HomePage> {
               UserModel user = UserModel.fromJSON(userData);
               List<String> friends =
                   List<String>.from(userData['friends'] ?? []);
-
+//new code added by eranga
+              List<String> joinedgroups =
+                  List<String>.from(userData['joinedgroups'] ?? []);
+//new code added by eranga
               return SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -104,14 +115,23 @@ class _HomePageState extends State<HomePage> {
 
 //Notification
 
-                                        const Column(
+                                        Column(
                                           crossAxisAlignment:
                                               CrossAxisAlignment.end,
                                           children: [
-                                            Icon(
-                                              Icons.notifications,
-                                              size: 30,
-                                              color: Colors.black,
+                                            GestureDetector(
+                                              child: Icon(
+                                                Icons.notifications,
+                                                size: 30,
+                                              ),
+                                              onTap: () {
+                                                Navigator.push(
+                                                  context, // Context of the current widget
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          GroupInvitationNotificationScreen()),
+                                                );
+                                              },
                                             ),
                                           ],
                                         ),
@@ -243,13 +263,19 @@ class _HomePageState extends State<HomePage> {
                             children: [
                               _iconMethod(
                                 context,
-                                const Library(),
+                                CreateGroupScreen(),
                                 const AssetImage('assets/task.png'),
                                 'Your Notes',
                               ),
                               _iconMethod(
                                 context,
-                                const StudyBuddies(),
+                                /* ContentUploadForm(
+                                  groupName: "Testing123",
+                                ),
+*/
+                                GroupContentRequestsPage(
+                                  groupName: "Avengers",
+                                ),
                                 const AssetImage('assets/cooperation.png'),
                                 'Request Tutoring',
                               ),
@@ -261,7 +287,7 @@ class _HomePageState extends State<HomePage> {
                               ),
                               _iconMethod(
                                 context,
-                                 HomeScreen(),
+                                HomeScreen(),
                                 const AssetImage('assets/notebook.png'),
                                 'Study Plan',
                               ),
@@ -276,7 +302,13 @@ class _HomePageState extends State<HomePage> {
 //Join Groups subheading by calling subtopic method
 
                         _subtopics('Join Groups'),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        _buildGroupsList(joinedgroups),
 
+                        //going to comment this code by eranga
+/*
                         const SizedBox(
                           height: 18,
                         ),
@@ -348,6 +380,8 @@ class _HomePageState extends State<HomePage> {
                         const SizedBox(
                           height: 20,
                         ),
+                        */
+                        //commented this code by eranga
 
 //Your Freinds subheading by calling subtopic method
 
@@ -370,7 +404,8 @@ class _HomePageState extends State<HomePage> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => const StudyBuddies(),
+                                  builder: (context) => JoinedGroupsScreen(),
+                                  // const StudyBuddies(),
                                 ),
                               );
                             },
@@ -443,8 +478,8 @@ class _HomePageState extends State<HomePage> {
         );
       },
       child: Container(
-        height: 100,
-        width: 100,
+        height: 150,
+        width: 97,
         decoration: const BoxDecoration(
           color: Colors.white,
         ),
@@ -458,12 +493,14 @@ class _HomePageState extends State<HomePage> {
             const SizedBox(
               height: 10,
             ),
-            Text(
-              imageTopic,
-              style: const TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.w400,
-                  color: Colors.black),
+            Center(
+              child: Text(
+                imageTopic,
+                style: const TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.w400,
+                    color: Colors.black),
+              ),
             ),
           ],
         ),
@@ -491,9 +528,307 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
+//new code added by eranga
+
+  Widget _buildGroupsList(List<String> joinedGroups) {
+    if (joinedGroups.isEmpty) {
+      return Container(
+        alignment: Alignment.center,
+        child: Container(
+          height: 150,
+          child: const Center(
+            child: Text(
+              "No joined groups",
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+          ),
+        ),
+      );
+    }
+
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Row(
+        children: [
+          const SizedBox(width: 25),
+          for (int i = 0; i < joinedGroups.length; i++) ...[
+            _buildGroup(joinedGroups[i]),
+            const SizedBox(width: 25),
+          ],
+          const SizedBox(width: 25),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildGroup(String groupName) {
+    return FutureBuilder<DocumentSnapshot>(
+      future:
+          FirebaseFirestore.instance.collection("groups").doc(groupName).get(),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          final groupData = snapshot.data!.data() as Map<String, dynamic>;
+          String groupName0 = groupData['groupname'];
+          String major = groupData['groupmajor'];
+          String profilePic = groupData['groupicon'];
+
+          return _groupContainer(
+            NetworkImage(profilePic),
+            groupName0,
+            major,
+            () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => GroupDetailPage(
+                    groupName: groupName0,
+                  ),
+                ),
+              );
+            },
+          );
+        } else if (snapshot.hasError) {
+          return const Text('Error loading group');
+        }
+        return const CircularProgressIndicator();
+      },
+    );
+  }
+
+  Widget _groupContainer(
+    ImageProvider<Object> groupImage,
+    String groupName,
+    String groupmajor,
+    Function() onTapViewGroup,
+  ) {
+    return Container(
+      width: 240,
+      height: 300,
+      decoration: const BoxDecoration(
+        color: Colors.white,
+      ),
+      child: Column(
+        children: [
+          Container(
+            width: 240,
+            height: 145,
+            decoration: const BoxDecoration(
+              color: Color(0xFFF4F4F4),
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(10),
+                topRight: Radius.circular(10),
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color: Color(0x3F000000),
+                  blurRadius: 4,
+                  offset: Offset(0, 4),
+                  spreadRadius: 0,
+                ),
+              ],
+            ),
+            child: Image(
+              image: groupImage,
+              fit: BoxFit.cover,
+            ),
+          ),
+          Container(
+            width: 240,
+            height: 150,
+            decoration: const BoxDecoration(
+              color: Color(0xFFF4F4F4),
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(10),
+                bottomRight: Radius.circular(10),
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color: Color(0x3F000000),
+                  blurRadius: 4,
+                  offset: Offset(0, 4),
+                  spreadRadius: 0,
+                ),
+              ],
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Center(
+                  child: Text(
+                    groupName,
+                    style: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 20,
+                      fontFamily: 'Work Sans',
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Center(
+                  child: Text(
+                    groupmajor,
+                    style: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 16,
+                      fontFamily: 'Work Sans',
+                      fontWeight: FontWeight.w200,
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                InkWell(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            GroupDetailPage(groupName: groupName),
+                      ),
+                    );
+                  },
+                  child: Container(
+                    width: 127,
+                    height: 27.56,
+                    decoration: ShapeDecoration(
+                      color: const Color(0xFF7BE7FF),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      shadows: const [
+                        BoxShadow(
+                          color: Color(0x3F000000),
+                          blurRadius: 4,
+                          offset: Offset(0, 4),
+                          spreadRadius: 0,
+                        )
+                      ],
+                    ),
+                    child: const Center(
+                      child: Text(
+                        'View',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 16,
+                          fontFamily: 'Work Sans',
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+
+    // return Container(
+    //   width: 200,
+    //   height: 350,
+    //   decoration: const BoxDecoration(
+    //     color: Colors.white,
+    //   ),
+    //   child: Center(
+    //     child: Container(
+    //       height: 300,
+    //       width: 200,
+    //       decoration: BoxDecoration(
+    //         color: const Color(0xFFF4F4F4),
+    //         borderRadius: BorderRadius.circular(10),
+    //         boxShadow: const [
+    //           BoxShadow(
+    //             color: Color(0x3F000000),
+    //             blurRadius: 4,
+    //             offset: Offset(0, 4),
+    //             spreadRadius: 0,
+    //           ),
+    //         ],
+    //       ),
+    //       child: Column(
+    //         mainAxisAlignment: MainAxisAlignment.values[2],
+    //         children: [
+    //           ClipOval(
+    //             child: Image(
+    //               image: groupImage,
+    //               height: 100,
+    //               width: 100,
+    //               fit: BoxFit.cover,
+    //             ),
+    //           ),
+    //           const SizedBox(
+    //             height: 18,
+    //           ),
+    //           Text(
+    //             groupName,
+    //             style: const TextStyle(
+    //               color: Colors.black,
+    //               fontSize: 20,
+    //               fontFamily: 'Work Sans',
+    //               fontWeight: FontWeight.w600,
+    //             ),
+    //           ),
+    //           Text(
+    //             groupmajor,
+    //             style: const TextStyle(
+    //               color: Colors.black,
+    //               fontSize: 16,
+    //               fontFamily: 'Work Sans',
+    //               fontWeight: FontWeight.w200,
+    //             ),
+    //           ),
+    //           const SizedBox(
+    //             height: 11,
+    //           ),
+    //           GestureDetector(
+    //             onTap: onTapViewGroup,
+    //             child: Container(
+    //               width: 130,
+    //               height: 28,
+    //               decoration: ShapeDecoration(
+    //                 color: const Color(0xFF7BE7FF),
+    //                 shape: RoundedRectangleBorder(
+    //                   borderRadius: BorderRadius.circular(5),
+    //                 ),
+    //                 shadows: const [
+    //                   BoxShadow(
+    //                     color: Color(0x3F000000),
+    //                     blurRadius: 4,
+    //                     offset: Offset(0, 4),
+    //                     spreadRadius: 0,
+    //                   )
+    //                 ],
+    //               ),
+    //               child: const Center(
+    //                 child: Text(
+    //                   'View',
+    //                   style: TextStyle(
+    //                     color: Colors.black,
+    //                     fontSize: 16,
+    //                     fontFamily: 'Work Sans',
+    //                     fontWeight: FontWeight.w500,
+    //                   ),
+    //                 ),
+    //               ),
+    //             ),
+    //           ),
+    //         ],
+    //       ),
+    //     ),
+    //   ),
+    // );
+  }
+
+//end of the code piece tht i added ,i am eranga
 
 //Group Container Method
-
+//i commented this,Eranga
+/* 
   Widget _groupContainer(BuildContext context, Widget linkedPage,
       ImageProvider<Object> groupImage, String groupTopic) {
     return Container(
@@ -608,7 +943,8 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
-
+  */
+//i commented this,Eranga
 //View All Button
 
   Widget _viewallButton() {
