@@ -191,7 +191,6 @@ Widget _buildTab(String text, int tabIndex) {
     child: Container(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       decoration: BoxDecoration(
-        // color: const Color(0xFFEEEEEE),
         borderRadius: BorderRadius.circular(10),
       ),
       child: Text(

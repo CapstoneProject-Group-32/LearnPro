@@ -704,6 +704,21 @@ class _HomePageState extends State<HomePage> {
 //friend list method
 
   Widget _buildFriendsList(List<String> friends) {
+    if (friends.isEmpty) {
+      return Container(
+        alignment: Alignment.center,
+        child: const SizedBox(
+          height: 150,
+          child: Center(
+            child: Text(
+              "No freinds found",
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+          ),
+        ),
+      );
+    }
+
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Row(

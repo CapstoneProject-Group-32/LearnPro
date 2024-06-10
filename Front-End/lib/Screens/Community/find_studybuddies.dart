@@ -162,7 +162,7 @@ class _StudyBuddiesState extends State<StudyBuddies> {
                       ).toList()
                     else
                       const Center(
-                        child: Text("No friends found."),
+                        child: Text("No friends found"),
                       ),
                   ],
                 ),
