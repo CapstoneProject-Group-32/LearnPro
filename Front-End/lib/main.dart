@@ -5,6 +5,8 @@ import 'package:flutter_application_1/Models/usermodel.dart';
 import 'package:flutter_application_1/Services/auth_firebase.dart';
 
 import 'package:flutter_application_1/choosing_page.dart';
+import 'package:flutter_application_1/theme/dark_theme.dart';
+import 'package:flutter_application_1/theme/light_theme.dart';
 import 'package:provider/provider.dart';
 
 import 'Flashcards/generate_flashcard.dart';
@@ -36,9 +38,11 @@ class MyApp extends StatelessWidget {
         profilePic: '',
         friends: [],
       ),
-      child: const MaterialApp(
+      child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: Wrapper(),
+        theme: lightTheme,
+        darkTheme: darkTheme,
+        home: const Wrapper(),
       ),
     );
   }

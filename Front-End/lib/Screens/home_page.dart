@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -23,6 +25,54 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final currentUser = FirebaseAuth.instance.currentUser!;
+
+  late ScrollController _MotoCardScrollController;
+
+  late Timer _MotoScrollTimer;
+
+  @override
+  void initState() {
+    super.initState();
+    _MotoCardScrollController = ScrollController();
+    _startAutoScroll();
+  }
+
+  void _startAutoScroll() {
+    _MotoScrollTimer = Timer.periodic(const Duration(seconds: 3), (timer) {
+      if (_MotoCardScrollController.hasClients) {
+        final position = _MotoCardScrollController.position;
+        final maxScrollExtent = position.maxScrollExtent;
+        final currentScrollPosition = position.pixels;
+        final targetPosition = currentScrollPosition + 200.0;
+
+        if (currentScrollPosition >= maxScrollExtent) {
+          final double offset = position.minScrollExtent + 200.0;
+          _MotoCardScrollController.jumpTo(position.minScrollExtent);
+          _MotoCardScrollController.animateTo(
+            offset,
+            duration: const Duration(seconds: 2),
+            curve: Curves.easeInOut,
+          );
+        } else {
+          _MotoCardScrollController.animateTo(
+            targetPosition,
+            duration: const Duration(seconds: 2),
+            curve: Curves.easeInOut,
+          );
+        }
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _MotoCardScrollController.dispose();
+
+    _MotoScrollTimer.cancel();
+
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
 //date
@@ -32,7 +82,7 @@ class _HomePageState extends State<HomePage> {
 
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).colorScheme.background,
         body:
 
 //getting stored user data
@@ -61,10 +111,10 @@ class _HomePageState extends State<HomePage> {
 // First container
 
                         Container(
-                          height: 300,
+                          height: 230,
                           width: double.infinity,
                           decoration: const BoxDecoration(
-                            color: Color(0xFFDFFCE4),
+                            color: Color(0xffFFD453),
                           ),
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
@@ -76,7 +126,8 @@ class _HomePageState extends State<HomePage> {
 
                                   Padding(
                                     padding: const EdgeInsets.only(
-                                        top: 12, left: 10),
+                                      left: 10,
+                                    ),
                                     child: Row(
                                       children: [
                                         Expanded(
@@ -89,7 +140,7 @@ class _HomePageState extends State<HomePage> {
                                                 user.userName,
                                                 style: const TextStyle(
                                                     fontWeight: FontWeight.bold,
-                                                    fontSize: 30,
+                                                    fontSize: 20,
                                                     color: Colors.black),
                                               ),
 
@@ -98,7 +149,7 @@ class _HomePageState extends State<HomePage> {
                                                 formattedDate,
                                                 style: const TextStyle(
                                                   fontWeight: FontWeight.bold,
-                                                  fontSize: 20,
+                                                  fontSize: 13,
                                                   color: Colors.black,
                                                 ),
                                               ),
@@ -137,16 +188,16 @@ class _HomePageState extends State<HomePage> {
                                   ),
 
                                   const SizedBox(
-                                    height: 30,
+                                    height: 15,
                                   ),
 
 // Today progress container
 
                                   Container(
-                                    height: 150,
+                                    height: 125,
                                     width: 350,
                                     decoration: BoxDecoration(
-                                      color: const Color(0xFF82C0CC),
+                                      color: const Color(0Xff9494f6),
                                       borderRadius: BorderRadius.circular(10),
                                     ),
                                     child: Padding(
@@ -158,12 +209,12 @@ class _HomePageState extends State<HomePage> {
                                           const Text(
                                             "Today Progress",
                                             style: TextStyle(
-                                                fontSize: 25,
+                                                fontSize: 16,
                                                 fontWeight: FontWeight.w400,
                                                 color: Colors.black),
                                           ),
                                           const SizedBox(
-                                            height: 20,
+                                            height: 10,
                                           ),
                                           Row(
                                             mainAxisAlignment:
@@ -194,54 +245,36 @@ class _HomePageState extends State<HomePage> {
                         ),
 
                         const SizedBox(
-                          height: 10,
+                          height: 20,
                         ),
 
-// Search bar(design only)
+//Icons
 
                         Padding(
-                          padding: const EdgeInsets.all(15.0),
-                          child: TextField(
-                            decoration: InputDecoration(
-                              hintText: 'Search...',
-                              prefixIcon: const Icon(Icons.search),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(40),
-                              ),
-                            ),
-                          ),
-                        ),
-
-                        const SizedBox(
-                          height: 10,
-                        ),
-
-//Daily moto
-
-                        Container(
-                          height: 250,
-                          width: 350,
-                          decoration: BoxDecoration(
-                            color: const Color(0xFFDFFCE4),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
+                          padding: const EdgeInsets.all(8.0),
                           child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
-                              const Flexible(
-                                child: Padding(
-                                  padding: EdgeInsets.all(15.0),
-                                  child: Text(
-                                    "\"The journey of a thousand miles begins with a single step.Take that step, keep studying, and you'll eventually reach your destination.\"",
-                                    style: TextStyle(
-                                        fontSize: 22,
-                                        fontWeight: FontWeight.w400),
-                                  ),
-                                ),
+                              _iconMethod(
+                                context,
+                                const LearningTabBar(),
+                                const AssetImage('assets/ebook.png'),
                               ),
-                              Image.asset(
-                                "assets/boy.png",
-                                height: 150,
-                                width: 150,
+                              _iconMethod(
+                                context,
+                                const CommunityTabBar(),
+                                const AssetImage('assets/conversation.png'),
+                              ),
+                              _iconMethod(
+                                context,
+                                const TimerScreen(),
+                                const AssetImage(
+                                    'assets/pomodoro-technique.png'),
+                              ),
+                              _iconMethod(
+                                context,
+                                const HomeScreen(),
+                                const AssetImage('assets/to-do-list.png'),
                               ),
                             ],
                           ),
@@ -250,47 +283,17 @@ class _HomePageState extends State<HomePage> {
                           height: 20,
                         ),
 
-//Icons
+// Daily Moto Card row calling
 
-                        Container(
-                          width: 400,
-                          height: 125,
-                          decoration: const BoxDecoration(
-                            color: Colors.white,
-                          ),
-                          child: Row(
-                            children: [
-                              _iconMethod(
-                                context,
-                                const LearningTabBar(),
-                                const AssetImage('assets/task.png'),
-                                'Your Notes',
-                              ),
-                              _iconMethod(
-                                context,
-                                const CommunityTabBar(),
-                                const AssetImage('assets/cooperation.png'),
-                                'Request Tutoring',
-                              ),
-                              _iconMethod(
-                                context,
-                                const TimerScreen(),
-                                const AssetImage('assets/reading.png'),
-                                'Focus',
-                              ),
-                              _iconMethod(
-                                context,
-                                const HomeScreen(),
-                                const AssetImage('assets/notebook.png'),
-                                'Study Plan',
-                              ),
-                            ],
-                          ),
+                        _dailyMotoCardRow(),
+
+                        const SizedBox(
+                          height: 20,
                         ),
 
 //Today Goals subheading by calling subtopic method
 
-                        _subtopics('Today Goals'),
+                        //_subtopics('Today Goals'),
 
 //Join Groups subheading by calling subtopic method
 
@@ -363,17 +366,19 @@ class _HomePageState extends State<HomePage> {
 
   Widget _progressContainer(String value, String label) {
     return Container(
-      //height: 58,
-      //width: 110,
-      decoration: const BoxDecoration(
-        color: Color(0xFF82C0CC),
+      height: 60,
+      width: 90,
+      decoration: BoxDecoration(
+        color: const Color(0xffFFD453),
+        borderRadius: BorderRadius.circular(10),
       ),
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
             value,
             style: const TextStyle(
-              fontSize: 25,
+              fontSize: 15,
               fontWeight: FontWeight.w400,
               color: Colors.black,
             ),
@@ -381,9 +386,9 @@ class _HomePageState extends State<HomePage> {
           Text(
             label,
             style: const TextStyle(
-              fontSize: 25,
+              fontSize: 12,
               fontWeight: FontWeight.w300,
-              color: Color(0xFF6F7665),
+              color: Colors.black,
             ),
           ),
         ],
@@ -391,10 +396,90 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+//Daily moto card row
+
+  Widget _dailyMotoCardRow() {
+    List<Widget> motoCards = [
+      _dailyMotoCard(
+        "“If you only read the books that everyone else is reading, you can only think what everyone else is thinking.”",
+        const AssetImage(
+          "assets/reading.png",
+        ),
+      ),
+      _dailyMotoCard(
+        "“You are allowed to make a big deal about things that are important to you.”",
+        const AssetImage('assets/boy.png'),
+      ),
+      _dailyMotoCard(
+        "“Focus on the step in front of you and not the whole staircase.”",
+        const AssetImage('assets/target.png'),
+      ),
+      _dailyMotoCard(
+        "“The most important thing you learn in school is how to learn.",
+        const AssetImage('assets/artificial-intelligence.gif'),
+      ),
+      // Add more cards as needed
+    ];
+
+    // Duplicate the list to create a seamless infinite scroll effect
+    List<Widget> infiniteMotoCards = [
+      ...motoCards,
+      ...motoCards,
+      ...motoCards,
+      ...motoCards
+    ];
+
+    return SingleChildScrollView(
+      controller: _MotoCardScrollController,
+      scrollDirection: Axis.horizontal,
+      child: Row(
+        children: infiniteMotoCards,
+      ),
+    );
+  }
+
+//daily Moto Card
+
+  Widget _dailyMotoCard(String moto, ImageProvider<Object> motoImage) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 10, right: 10),
+      child: Container(
+        height: 225,
+        width: 300,
+        decoration: BoxDecoration(
+          color: const Color(0xffFFD453),
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Row(
+          children: [
+            Flexible(
+              child: Padding(
+                padding: const EdgeInsets.all(15.0),
+                child: Text(
+                  moto,
+                  style: const TextStyle(
+                      fontSize: 15, fontWeight: FontWeight.w400),
+                ),
+              ),
+            ),
+            Image(
+              image: motoImage,
+              height: 150,
+              width: 150,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
 //Icon Method
 
-  Widget _iconMethod(BuildContext context, Widget linkedPage,
-      ImageProvider<Object> iconImage, String imageTopic) {
+  Widget _iconMethod(
+    BuildContext context,
+    Widget linkedPage,
+    ImageProvider<Object> iconImage,
+  ) {
     return InkWell(
       onTap: () {
         Navigator.push(
@@ -404,33 +489,14 @@ class _HomePageState extends State<HomePage> {
           ),
         );
       },
-      child: Container(
-        height: 150,
-        width: 97,
-        decoration: const BoxDecoration(
-          color: Colors.white,
-        ),
-        child: Column(
-          children: [
-            Image(
-              image: iconImage,
-              height: 50,
-              width: 50,
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Center(
-              child: Text(
-                imageTopic,
-                style: const TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.w400,
-                    color: Colors.black),
-              ),
-            ),
-          ],
-        ),
+      child: Column(
+        children: [
+          Image(
+            image: iconImage,
+            height: 50,
+            width: 50,
+          ),
+        ],
       ),
     );
   }
@@ -447,7 +513,7 @@ class _HomePageState extends State<HomePage> {
             subtopic,
             style: const TextStyle(
               fontWeight: FontWeight.bold,
-              fontSize: 25,
+              fontSize: 20,
               color: Colors.black,
             ),
           ),
@@ -533,12 +599,8 @@ class _HomePageState extends State<HomePage> {
     String groupmajor,
     Function() onTapViewGroup,
   ) {
-    return Container(
-      width: 240,
-      height: 260,
-      decoration: const BoxDecoration(
-        color: Colors.white,
-      ),
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 8),
       child: Column(
         children: [
           Container(
@@ -574,7 +636,7 @@ class _HomePageState extends State<HomePage> {
             width: 240,
             height: 100,
             decoration: const BoxDecoration(
-              color: Color(0xFFF4F4F4),
+              color: Color(0xffFFD453),
               borderRadius: BorderRadius.only(
                 bottomLeft: Radius.circular(10),
                 bottomRight: Radius.circular(10),
@@ -596,7 +658,7 @@ class _HomePageState extends State<HomePage> {
                     groupName,
                     style: const TextStyle(
                       color: Colors.black,
-                      fontSize: 20,
+                      fontSize: 17,
                       fontFamily: 'Work Sans',
                       fontWeight: FontWeight.w500,
                     ),
@@ -607,7 +669,7 @@ class _HomePageState extends State<HomePage> {
                     groupmajor,
                     style: const TextStyle(
                       color: Colors.black,
-                      fontSize: 14,
+                      fontSize: 11,
                       fontFamily: 'Work Sans',
                       fontWeight: FontWeight.w200,
                     ),
@@ -630,7 +692,7 @@ class _HomePageState extends State<HomePage> {
                     width: 127,
                     height: 27.56,
                     decoration: ShapeDecoration(
-                      color: const Color(0xFF7BE7FF),
+                      color: const Color(0Xff9494f6),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(5),
                       ),
@@ -648,13 +710,16 @@ class _HomePageState extends State<HomePage> {
                         'View',
                         style: TextStyle(
                           color: Colors.black,
-                          fontSize: 16,
+                          fontSize: 13,
                           fontFamily: 'Work Sans',
                           fontWeight: FontWeight.w500,
                         ),
                       ),
                     ),
                   ),
+                ),
+                const SizedBox(
+                  height: 5,
                 ),
               ],
             ),
@@ -677,10 +742,10 @@ class _HomePageState extends State<HomePage> {
         );
       },
       child: Container(
-        width: 275,
+        width: 200,
         height: 40,
         decoration: ShapeDecoration(
-          color: const Color(0xFFD9D9D9),
+          color: const Color(0xffFFD453),
           shape: RoundedRectangleBorder(
             side: const BorderSide(width: 1),
             borderRadius: BorderRadius.circular(10),
@@ -691,7 +756,7 @@ class _HomePageState extends State<HomePage> {
             'View All',
             style: TextStyle(
               color: Colors.black,
-              fontSize: 20,
+              fontSize: 15,
               fontFamily: 'Work Sans',
               fontWeight: FontWeight.w400,
             ),
@@ -723,12 +788,16 @@ class _HomePageState extends State<HomePage> {
       scrollDirection: Axis.horizontal,
       child: Row(
         children: [
-          const SizedBox(width: 25), // Add space at the beginning
+          const SizedBox(
+            width: 25,
+          ), // Add space at the beginning
           for (int i = 0; i < friends.length; i++) ...[
             _buildFriend(friends[i]),
             const SizedBox(width: 25), // Add space between friendContainer
           ],
-          const SizedBox(width: 25), // Add space at the end
+          const SizedBox(
+            width: 25,
+          ), // Add space at the end
         ],
       ),
     );
@@ -778,97 +847,91 @@ class _HomePageState extends State<HomePage> {
     String frindLevel,
     Function() onTapRequestTuition,
   ) {
-    return Container(
-      width: 200,
-      height: 250,
-      decoration: const BoxDecoration(
-        color: Colors.white,
-      ),
-      child: Center(
-        child: Container(
-          height: 230,
-          width: 200,
-          decoration: BoxDecoration(
-            color: const Color(0xFFF4F4F4),
-            borderRadius: BorderRadius.circular(10),
-            boxShadow: const [
-              BoxShadow(
-                color: Color(0x3F000000),
-                blurRadius: 4,
-                offset: Offset(0, 4),
-                spreadRadius: 0,
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 8),
+      child: Container(
+        height: 230,
+        width: 200,
+        decoration: BoxDecoration(
+          color: const Color(0xffFFD453),
+          borderRadius: BorderRadius.circular(10),
+          boxShadow: const [
+            BoxShadow(
+              color: Color(0x3F000000),
+              blurRadius: 4,
+              offset: Offset(0, 4),
+              spreadRadius: 0,
+            ),
+          ],
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.values[2],
+          children: [
+            ClipOval(
+              child: Image(
+                image: friendImage,
+                height: 100,
+                width: 100,
+                fit: BoxFit.cover,
               ),
-            ],
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.values[2],
-            children: [
-              ClipOval(
-                child: Image(
-                  image: friendImage,
-                  height: 100,
-                  width: 100,
-                  fit: BoxFit.cover,
-                ),
+            ),
+            const SizedBox(
+              height: 18,
+            ),
+            Text(
+              friendname,
+              style: const TextStyle(
+                color: Colors.black,
+                fontSize: 17,
+                fontFamily: 'Work Sans',
+                fontWeight: FontWeight.w600,
               ),
-              const SizedBox(
-                height: 18,
+            ),
+            Text(
+              frindLevel,
+              style: const TextStyle(
+                color: Colors.black,
+                fontSize: 11,
+                fontFamily: 'Work Sans',
+                fontWeight: FontWeight.w200,
               ),
-              Text(
-                friendname,
-                style: const TextStyle(
-                  color: Colors.black,
-                  fontSize: 20,
-                  fontFamily: 'Work Sans',
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              Text(
-                frindLevel,
-                style: const TextStyle(
-                  color: Colors.black,
-                  fontSize: 16,
-                  fontFamily: 'Work Sans',
-                  fontWeight: FontWeight.w200,
-                ),
-              ),
-              const SizedBox(
-                height: 11,
-              ),
-              GestureDetector(
-                onTap: onTapRequestTuition,
-                child: Container(
-                  width: 130,
-                  height: 28,
-                  decoration: ShapeDecoration(
-                    color: const Color(0xFF7BE7FF),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(5),
-                    ),
-                    shadows: const [
-                      BoxShadow(
-                        color: Color(0x3F000000),
-                        blurRadius: 4,
-                        offset: Offset(0, 4),
-                        spreadRadius: 0,
-                      )
-                    ],
+            ),
+            const SizedBox(
+              height: 11,
+            ),
+            GestureDetector(
+              onTap: onTapRequestTuition,
+              child: Container(
+                width: 130,
+                height: 28,
+                decoration: ShapeDecoration(
+                  color: const Color(0Xff9494f6),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5),
                   ),
-                  child: const Center(
-                    child: Text(
-                      'Request Tution',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 16,
-                        fontFamily: 'Work Sans',
-                        fontWeight: FontWeight.w500,
-                      ),
+                  shadows: const [
+                    BoxShadow(
+                      color: Color(0x3F000000),
+                      blurRadius: 4,
+                      offset: Offset(0, 4),
+                      spreadRadius: 0,
+                    )
+                  ],
+                ),
+                child: const Center(
+                  child: Text(
+                    'Request Tution',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 13,
+                      fontFamily: 'Work Sans',
+                      fontWeight: FontWeight.w500,
                     ),
                   ),
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
