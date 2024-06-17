@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_application_1/Screens/Community/find_studybuddies.dart';
+import 'package:flutter_application_1/Screens/Community/tutored_users_screen.dart';
 
 import 'package:flutter_application_1/Widgets/navigation_bar.dart';
 import 'package:flutter_application_1/group/joined_group_screen.dart';
@@ -173,9 +174,7 @@ class _CommunityTabBarState extends State<CommunityTabBar>
                           ),
                         ),
                         const JoinedGroupsScreen(),
-                        const Center(
-                          child: Text("Still developing"),
-                        ),
+                        TutoredUsersScreen(),
                       ],
                     ),
                   ),
