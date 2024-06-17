@@ -120,7 +120,7 @@ Widget _learndeskContainerRowMethod(
             width: 180,
             height: 200,
             decoration: BoxDecoration(
-              color: const Color(0xffFFD453),
+              color: Theme.of(context).colorScheme.primary,
               borderRadius: BorderRadius.circular(20),
             ),
             child: Column(
@@ -136,12 +136,12 @@ Widget _learndeskContainerRowMethod(
                 Container(
                   height: 50,
                   width: double.infinity,
-                  decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.only(
+                  decoration: BoxDecoration(
+                    borderRadius: const BorderRadius.only(
                       bottomLeft: Radius.circular(20),
                       bottomRight: Radius.circular(20),
                     ),
-                    color: Color(0xffFFD453),
+                    color: Theme.of(context).colorScheme.primary,
                   ),
                   child: Center(
                     child: Text(
@@ -176,7 +176,7 @@ Widget _learndeskContainerRowMethod(
             width: 180,
             height: 200,
             decoration: BoxDecoration(
-              color: const Color(0xffFFD453),
+              color: Theme.of(context).colorScheme.primary,
               borderRadius: BorderRadius.circular(20),
             ),
             child: Column(
@@ -192,12 +192,12 @@ Widget _learndeskContainerRowMethod(
                 Container(
                   height: 50,
                   width: double.infinity,
-                  decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.only(
+                  decoration: BoxDecoration(
+                    borderRadius: const BorderRadius.only(
                       bottomLeft: Radius.circular(20),
                       bottomRight: Radius.circular(20),
                     ),
-                    color: Color(0xffFFD453),
+                    color: Theme.of(context).colorScheme.primary,
                   ),
                   child: Center(
                     child: Text(

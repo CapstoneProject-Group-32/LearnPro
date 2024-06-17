@@ -86,6 +86,7 @@ class _StudyBuddiesState extends State<StudyBuddies> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        backgroundColor: Theme.of(context).colorScheme.background,
         body: isLoading
             ? const Center(
                 child: SizedBox(
@@ -112,6 +113,7 @@ class _StudyBuddiesState extends State<StudyBuddies> {
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: _studybuddyCardBeforeAddFriend(
+                          context,
                           NetworkImage(widget.userMap!['profilePic']),
                           widget.userMap!['userName'],
                           widget.userMap!['major'],
@@ -134,6 +136,7 @@ class _StudyBuddiesState extends State<StudyBuddies> {
                           return Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: _studybuddyCardAfterAddFriend(
+                              context,
                               NetworkImage(friend.profilePic),
                               friend.userName,
                               friend.major,
@@ -174,6 +177,7 @@ class _StudyBuddiesState extends State<StudyBuddies> {
 
 // Study Buddy card before adding friend
 Widget _studybuddyCardBeforeAddFriend(
+  BuildContext context,
   ImageProvider<Object> userImage,
   String userName,
   String userLevel,
@@ -260,7 +264,7 @@ Widget _studybuddyCardBeforeAddFriend(
             width: 125,
             height: 30,
             decoration: ShapeDecoration(
-              color: const Color(0xFF74FE8A),
+              color: Theme.of(context).colorScheme.background,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(45),
               ),
@@ -293,6 +297,7 @@ Widget _studybuddyCardBeforeAddFriend(
 
 // Study Buddy card after adding friend
 Widget _studybuddyCardAfterAddFriend(
+  BuildContext context,
   ImageProvider<Object> userImage,
   String userName,
   String userLevel,
@@ -303,7 +308,7 @@ Widget _studybuddyCardAfterAddFriend(
     width: 370,
     height: 100,
     decoration: ShapeDecoration(
-      color: const Color(0xEAF6EEEE),
+      color: Theme.of(context).colorScheme.primary,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
       ),
@@ -360,7 +365,7 @@ Widget _studybuddyCardAfterAddFriend(
                   userName,
                   style: const TextStyle(
                     color: Colors.black,
-                    fontSize: 18,
+                    fontSize: 15,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -368,7 +373,7 @@ Widget _studybuddyCardAfterAddFriend(
                   userLevel,
                   style: const TextStyle(
                     color: Colors.black,
-                    fontSize: 14,
+                    fontSize: 11,
                   ),
                 ),
               ],
@@ -385,10 +390,10 @@ Widget _studybuddyCardAfterAddFriend(
                 GestureDetector(
                   onTap: onTapView,
                   child: Container(
-                    width: 125,
-                    height: 30,
+                    width: 110,
+                    height: 25,
                     decoration: ShapeDecoration(
-                      color: const Color(0xFF74FE8A),
+                      color: Theme.of(context).colorScheme.background,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(45),
                       ),
@@ -406,7 +411,7 @@ Widget _studybuddyCardAfterAddFriend(
                         'View',
                         style: TextStyle(
                           color: Colors.black,
-                          fontSize: 16,
+                          fontSize: 13,
                           fontFamily: 'Work Sans',
                           fontWeight: FontWeight.w400,
                         ),
@@ -417,10 +422,10 @@ Widget _studybuddyCardAfterAddFriend(
                 GestureDetector(
                   onTap: onTapRequestTuition,
                   child: Container(
-                    width: 125,
-                    height: 30,
+                    width: 110,
+                    height: 25,
                     decoration: ShapeDecoration(
-                      color: const Color(0xFF74FE8A),
+                      color: Theme.of(context).colorScheme.background,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(45),
                       ),
@@ -438,7 +443,7 @@ Widget _studybuddyCardAfterAddFriend(
                         'Request Tution',
                         style: TextStyle(
                           color: Colors.black,
-                          fontSize: 16,
+                          fontSize: 13,
                           fontFamily: 'Work Sans',
                           fontWeight: FontWeight.w400,
                         ),

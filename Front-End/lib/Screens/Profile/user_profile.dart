@@ -567,7 +567,7 @@ class _UserProfileState extends State<UserProfile> {
                   children: [
                     Icon(
                       Icons.arrow_back_ios_new_rounded,
-                      size: 28,
+                      size: 20,
                       color: Colors.black,
                     ),
                     SizedBox(
@@ -577,7 +577,7 @@ class _UserProfileState extends State<UserProfile> {
                       "Profile",
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontSize: 30,
+                        fontSize: 20,
                         color: Colors.black,
                       ),
                     ),
@@ -588,7 +588,7 @@ class _UserProfileState extends State<UserProfile> {
                 icon: const Icon(
                   Icons.notifications,
                   color: Colors.black,
-                  size: 35,
+                  size: 30,
                 ),
                 onPressed: () {
                   Navigator.push(
@@ -601,6 +601,7 @@ class _UserProfileState extends State<UserProfile> {
             ],
           ),
         ),
+        backgroundColor: Theme.of(context).colorScheme.background,
         body: StreamBuilder<DocumentSnapshot>(
           stream: FirebaseFirestore.instance
               .collection("users")
@@ -661,7 +662,7 @@ class _UserProfileState extends State<UserProfile> {
                               Text(
                                 user.userName,
                                 style: const TextStyle(
-                                  fontSize: 25,
+                                  fontSize: 22,
                                   fontWeight: FontWeight.w500,
                                   color: Colors.black,
                                 ),
@@ -669,7 +670,7 @@ class _UserProfileState extends State<UserProfile> {
                               Text(
                                 user.major,
                                 style: const TextStyle(
-                                  fontSize: 15,
+                                  fontSize: 12,
                                   fontWeight: FontWeight.w400,
                                   color: Colors.black,
                                 ),
@@ -678,7 +679,7 @@ class _UserProfileState extends State<UserProfile> {
                               Container(
                                 width: constraints.maxWidth * 0.9,
                                 decoration: ShapeDecoration(
-                                  color: const Color(0xEAF6EEEE),
+                                  color: Theme.of(context).colorScheme.primary,
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(10),
                                   ),
@@ -718,7 +719,7 @@ class _UserProfileState extends State<UserProfile> {
                                 child: Text(
                                   "Total Statistics",
                                   style: TextStyle(
-                                    fontSize: 20,
+                                    fontSize: 17,
                                     fontWeight: FontWeight.w500,
                                     color: Colors.black,
                                   ),
@@ -731,7 +732,7 @@ class _UserProfileState extends State<UserProfile> {
                               _buildStatContainer("Points", points.toString()),
                               const SizedBox(height: 20),
                               _buildStatContainer("Rating", "3.7"),
-                              const SizedBox(height: 20),
+                              const SizedBox(height: 25),
                               GestureDetector(
                                 onTap: () async {
                                   await AuthServices().logOut();
@@ -744,9 +745,10 @@ class _UserProfileState extends State<UserProfile> {
                                 },
                                 child: Container(
                                   width: constraints.maxWidth * 0.5,
-                                  height: 50,
+                                  height: 40,
                                   decoration: ShapeDecoration(
-                                    color: const Color(0xFF29F6D2),
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(10),
                                     ),
@@ -764,7 +766,7 @@ class _UserProfileState extends State<UserProfile> {
                                       'Log Out',
                                       style: TextStyle(
                                         color: Colors.black,
-                                        fontSize: 25,
+                                        fontSize: 17,
                                         fontFamily: 'Work Sans',
                                         fontWeight: FontWeight.w500,
                                       ),
@@ -794,11 +796,14 @@ class _UserProfileState extends State<UserProfile> {
     );
   }
 
-  Widget _buildStatColumn(String value, String label) {
+  Widget _buildStatColumn(
+    String value,
+    String label,
+  ) {
     return Expanded(
       child: Container(
-        decoration: const BoxDecoration(
-          color: Color(0x129f6eeee),
+        decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.primary,
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -806,14 +811,14 @@ class _UserProfileState extends State<UserProfile> {
             Text(
               value,
               style: const TextStyle(
-                  fontSize: 25,
+                  fontSize: 22,
                   fontWeight: FontWeight.w400,
                   color: Colors.black),
             ),
             Text(
               label,
               style: const TextStyle(
-                  fontSize: 25,
+                  fontSize: 18,
                   fontWeight: FontWeight.w300,
                   color: Color(0xFF6F7665)),
             ),
@@ -828,7 +833,7 @@ class _UserProfileState extends State<UserProfile> {
       width: double.infinity,
       height: 60,
       decoration: ShapeDecoration(
-        color: const Color(0xFFFCFCFC),
+        color: Theme.of(context).colorScheme.primary,
         shape: RoundedRectangleBorder(
           side: const BorderSide(width: 1),
           borderRadius: BorderRadius.circular(10),
@@ -850,7 +855,7 @@ class _UserProfileState extends State<UserProfile> {
             child: Text(
               label,
               style: const TextStyle(
-                fontSize: 20,
+                fontSize: 17,
                 fontWeight: FontWeight.w400,
                 color: Colors.black,
               ),
@@ -861,7 +866,7 @@ class _UserProfileState extends State<UserProfile> {
             child: Text(
               value,
               style: const TextStyle(
-                fontSize: 20,
+                fontSize: 17,
                 fontWeight: FontWeight.w400,
                 color: Colors.black,
               ),

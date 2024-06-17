@@ -113,8 +113,8 @@ class _HomePageState extends State<HomePage> {
                         Container(
                           height: 230,
                           width: double.infinity,
-                          decoration: const BoxDecoration(
-                            color: Color(0xffFFD453),
+                          decoration: BoxDecoration(
+                            color: Theme.of(context).colorScheme.primary,
                           ),
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
@@ -197,7 +197,9 @@ class _HomePageState extends State<HomePage> {
                                     height: 125,
                                     width: 350,
                                     decoration: BoxDecoration(
-                                      color: const Color(0Xff9494f6),
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .background,
                                       borderRadius: BorderRadius.circular(10),
                                     ),
                                     child: Padding(
@@ -369,7 +371,7 @@ class _HomePageState extends State<HomePage> {
       height: 60,
       width: 90,
       decoration: BoxDecoration(
-        color: const Color(0xffFFD453),
+        color: Theme.of(context).colorScheme.primary,
         borderRadius: BorderRadius.circular(10),
       ),
       child: Column(
@@ -447,7 +449,7 @@ class _HomePageState extends State<HomePage> {
         height: 225,
         width: 300,
         decoration: BoxDecoration(
-          color: const Color(0xffFFD453),
+          color: Theme.of(context).colorScheme.primary,
           borderRadius: BorderRadius.circular(10),
         ),
         child: Row(
@@ -635,13 +637,13 @@ class _HomePageState extends State<HomePage> {
           Container(
             width: 240,
             height: 100,
-            decoration: const BoxDecoration(
-              color: Color(0xffFFD453),
-              borderRadius: BorderRadius.only(
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.primary,
+              borderRadius: const BorderRadius.only(
                 bottomLeft: Radius.circular(10),
                 bottomRight: Radius.circular(10),
               ),
-              boxShadow: [
+              boxShadow: const [
                 BoxShadow(
                   color: Color(0x3F000000),
                   blurRadius: 4,
@@ -747,15 +749,18 @@ class _HomePageState extends State<HomePage> {
         decoration: ShapeDecoration(
           color: const Color(0Xff9494f6),
           shape: RoundedRectangleBorder(
-            side: const BorderSide(width: 3, color: Color(0xffFFD453)),
+            side: BorderSide(
+              width: 3,
+              color: Theme.of(context).colorScheme.primary,
+            ),
             borderRadius: BorderRadius.circular(10),
           ),
         ),
-        child: const Center(
+        child: Center(
           child: Text(
             'View All',
             style: TextStyle(
-              color: Color(0xffFFD453),
+              color: Theme.of(context).colorScheme.primary,
               fontSize: 16,
               fontFamily: 'Work Sans',
               fontWeight: FontWeight.w700,
@@ -853,7 +858,7 @@ class _HomePageState extends State<HomePage> {
         height: 230,
         width: 200,
         decoration: BoxDecoration(
-          color: const Color(0xffFFD453),
+          color: Theme.of(context).colorScheme.primary,
           borderRadius: BorderRadius.circular(10),
           boxShadow: const [
             BoxShadow(
@@ -905,7 +910,7 @@ class _HomePageState extends State<HomePage> {
                 width: 130,
                 height: 28,
                 decoration: ShapeDecoration(
-                  color: const Color(0Xff9494f6),
+                  color: Theme.of(context).colorScheme.background,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(5),
                   ),

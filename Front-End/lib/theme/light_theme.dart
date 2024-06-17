@@ -7,5 +7,6 @@ ThemeData lightTheme = ThemeData(
   ),
   colorScheme: const ColorScheme.light(
     background: Color(0Xff9494f6),
+    primary: Color(0xffFFD453),
   ),
 );

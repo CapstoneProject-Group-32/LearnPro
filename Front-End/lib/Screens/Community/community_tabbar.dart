@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_application_1/Screens/Community/find_studybuddies.dart';
 
-import 'package:flutter_application_1/Screens/learndesk_page.dart';
 import 'package:flutter_application_1/Widgets/navigation_bar.dart';
 import 'package:flutter_application_1/group/joined_group_screen.dart';
 
@@ -83,7 +82,7 @@ class _CommunityTabBarState extends State<CommunityTabBar>
               children: [
                 Icon(
                   Icons.arrow_back_ios_new_rounded,
-                  size: 28,
+                  size: 20,
                   color: Colors.black,
                 ),
                 SizedBox(
@@ -93,7 +92,7 @@ class _CommunityTabBarState extends State<CommunityTabBar>
                   "Student Community",
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    fontSize: 30,
+                    fontSize: 20,
                     color: Colors.black,
                   ),
                 ),
@@ -124,7 +123,7 @@ class _CommunityTabBarState extends State<CommunityTabBar>
                           child: const Icon(Icons.search),
                         ),
                         border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(40),
+                          borderRadius: BorderRadius.circular(35),
                         ),
                       ),
                     ),
@@ -132,7 +131,7 @@ class _CommunityTabBarState extends State<CommunityTabBar>
                   TabBar(
                     controller: _tabController,
                     indicator: BoxDecoration(
-                      color: const Color(0xFF00FF00),
+                      color: Theme.of(context).colorScheme.primary,
                       borderRadius: BorderRadius.circular(10),
                     ),
                     tabs: [

@@ -84,15 +84,16 @@ class LibraryPage extends StatelessWidget {
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
                       entry.key,
-                      style:
-                          const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                      style: const TextStyle(
+                          fontSize: 20, fontWeight: FontWeight.bold),
                     ),
                   ),
                   GridView.builder(
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
-                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2),
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2),
                     itemCount: entry.value.length,
                     itemBuilder: (context, index) {
                       var doc = entry.value[index];
@@ -140,7 +141,8 @@ class LibraryPage extends StatelessWidget {
                                             context: context,
                                             builder: (BuildContext context) {
                                               return AlertDialog(
-                                                title: const Text('Confirm Delete'),
+                                                title: const Text(
+                                                    'Confirm Delete'),
                                                 content: const Text(
                                                     'Do you want to delete this PDF?'),
                                                 actions: [
@@ -195,8 +197,8 @@ class LibraryPage extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.of(context)
-              .push(MaterialPageRoute(builder: (context) => const UploadPdfPage()));
+          Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) => const UploadPdfPage()));
         },
         child: const Icon(Icons.add),
       ),

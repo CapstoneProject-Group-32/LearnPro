@@ -46,7 +46,7 @@ class _LearningTabBarState extends State<LearningTabBar>
               children: [
                 Icon(
                   Icons.arrow_back_ios_new_rounded,
-                  size: 28,
+                  size: 20,
                   color: Colors.black,
                 ),
                 SizedBox(
@@ -56,7 +56,7 @@ class _LearningTabBarState extends State<LearningTabBar>
                   "Library",
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    fontSize: 30,
+                    fontSize: 20,
                     color: Colors.black,
                   ),
                 ),
