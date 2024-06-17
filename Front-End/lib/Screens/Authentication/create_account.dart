@@ -1550,7 +1550,7 @@ class _CreateAccountState extends State<CreateAccount> {
                       child: Text(
                         _profileImageError!,
                         style: TextStyle(
-                          color: Theme.of(context).errorColor,
+                          color: Theme.of(context).colorScheme.error,
                           fontSize: 12,
                         ),
                       ),
@@ -1588,7 +1588,7 @@ class _CreateAccountState extends State<CreateAccount> {
                       child: Text(
                         _emailError!,
                         style: TextStyle(
-                          color: Theme.of(context).errorColor,
+                          color: Theme.of(context).colorScheme.error,
                           fontSize: 12,
                         ),
                       ),
@@ -1626,7 +1626,7 @@ class _CreateAccountState extends State<CreateAccount> {
                       child: Text(
                         _userNameError!,
                         style: TextStyle(
-                          color: Theme.of(context).errorColor,
+                          color: Theme.of(context).colorScheme.error,
                           fontSize: 12,
                         ),
                       ),
@@ -1664,7 +1664,7 @@ class _CreateAccountState extends State<CreateAccount> {
                       child: Text(
                         _majorError!,
                         style: TextStyle(
-                          color: Theme.of(context).errorColor,
+                          color: Theme.of(context).colorScheme.error,
                           fontSize: 12,
                         ),
                       ),
@@ -1703,7 +1703,7 @@ class _CreateAccountState extends State<CreateAccount> {
                       child: Text(
                         _passwordError!,
                         style: TextStyle(
-                          color: Theme.of(context).errorColor,
+                          color: Theme.of(context).colorScheme.error,
                           fontSize: 12,
                         ),
                       ),
@@ -1744,7 +1744,7 @@ class _CreateAccountState extends State<CreateAccount> {
                       child: Text(
                         _confirmPasswordError!,
                         style: TextStyle(
-                          color: Theme.of(context).errorColor,
+                          color: Theme.of(context).colorScheme.error,
                           fontSize: 12,
                         ),
                       ),
@@ -1753,7 +1753,8 @@ class _CreateAccountState extends State<CreateAccount> {
                   if (_generalErrorMessage != null)
                     Text(
                       _generalErrorMessage!,
-                      style: TextStyle(color: Theme.of(context).errorColor),
+                      style:
+                          TextStyle(color: Theme.of(context).colorScheme.error),
                     ),
                   const SizedBox(height: 20),
 //                   GestureDetector(

@@ -513,7 +513,7 @@ class _LoginPageState extends State<LoginPage> {
                         Text(
                           _generalErrorMessage!,
                           style: TextStyle(
-                            color: Theme.of(context).errorColor,
+                            color: Theme.of(context).colorScheme.error,
                             fontSize: 12,
                           ),
                         ),
