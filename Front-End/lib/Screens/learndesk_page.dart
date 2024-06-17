@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Screens/Timer/timer_page.dart';
 import 'package:flutter_application_1/Screens/library.dart';
@@ -11,7 +10,7 @@ class LearnDesk extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).colorScheme.background,
         appBar: AppBar(
           automaticallyImplyLeading: false,
           title: InkWell(
@@ -28,7 +27,7 @@ class LearnDesk extends StatelessWidget {
               children: [
                 Icon(
                   Icons.arrow_back_ios_new_rounded,
-                  size: 28,
+                  size: 20,
                   color: Colors.black,
                 ),
                 SizedBox(
@@ -38,7 +37,7 @@ class LearnDesk extends StatelessWidget {
                   "Learn Desk",
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    fontSize: 30,
+                    fontSize: 20,
                     color: Colors.black,
                   ),
                 ),
@@ -52,7 +51,6 @@ class LearnDesk extends StatelessWidget {
               const SizedBox(
                 height: 5,
               ),
-
 //Learn Desk Container Row Method calling
 
               _learndeskContainerRowMethod(
@@ -102,16 +100,14 @@ Widget _learndeskContainerRowMethod(
   String containerTopic2,
   Widget linkedPage2,
 ) {
-  return Container(
-    color: Colors.white,
-    height: 230,
-    width: 400,
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: [
+  return Row(
+    mainAxisAlignment: MainAxisAlignment.center,
+    children: [
 //first icon start
 
-        InkWell(
+      Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: InkWell(
           onTap: () {
             Navigator.push(
               context,
@@ -124,11 +120,10 @@ Widget _learndeskContainerRowMethod(
             width: 180,
             height: 200,
             decoration: BoxDecoration(
-              color: Colors.grey[400],
+              color: const Color(0xffFFD453),
               borderRadius: BorderRadius.circular(20),
             ),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Padding(
                   padding: const EdgeInsets.all(15.0),
@@ -141,19 +136,19 @@ Widget _learndeskContainerRowMethod(
                 Container(
                   height: 50,
                   width: double.infinity,
-                  decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.only(
+                  decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.only(
                       bottomLeft: Radius.circular(20),
                       bottomRight: Radius.circular(20),
                     ),
-                    color: Colors.grey[400],
+                    color: Color(0xffFFD453),
                   ),
                   child: Center(
                     child: Text(
                       containerTopic1,
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontSize: 20,
+                        fontSize: 15,
                       ),
                     ),
                   ),
@@ -162,10 +157,13 @@ Widget _learndeskContainerRowMethod(
             ),
           ),
         ),
+      ),
 
 //first icon stopped and second icon started
 
-        InkWell(
+      Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: InkWell(
           onTap: () {
             Navigator.push(
               context,
@@ -178,11 +176,10 @@ Widget _learndeskContainerRowMethod(
             width: 180,
             height: 200,
             decoration: BoxDecoration(
-              color: Colors.grey[400],
+              color: const Color(0xffFFD453),
               borderRadius: BorderRadius.circular(20),
             ),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Padding(
                   padding: const EdgeInsets.all(15.0),
@@ -195,19 +192,19 @@ Widget _learndeskContainerRowMethod(
                 Container(
                   height: 50,
                   width: double.infinity,
-                  decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.only(
+                  decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.only(
                       bottomLeft: Radius.circular(20),
                       bottomRight: Radius.circular(20),
                     ),
-                    color: Colors.grey[400],
+                    color: Color(0xffFFD453),
                   ),
                   child: Center(
                     child: Text(
                       containerTopic2,
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontSize: 20,
+                        fontSize: 15,
                       ),
                     ),
                   ),
@@ -216,7 +213,7 @@ Widget _learndeskContainerRowMethod(
             ),
           ),
         ),
-      ],
-    ),
+      ),
+    ],
   );
 }

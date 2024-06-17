@@ -6,7 +6,6 @@ import 'package:flutter_application_1/Screens/home_page.dart';
 import 'package:flutter_application_1/Screens/learndesk_page.dart';
 import 'package:flutter_application_1/Screens/Profile/user_profile.dart';
 
-
 class NavigationBarBottom extends StatefulWidget {
   const NavigationBarBottom({super.key});
 
@@ -37,8 +36,8 @@ class _NavigationBarBottomState extends State<NavigationBarBottom> {
       body: _screens[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
         showUnselectedLabels: false,
-        backgroundColor: Colors.white,
-        selectedItemColor: Colors.lightBlue,
+        backgroundColor: const Color(0xffFFD453),
+        selectedItemColor: const Color(0Xff9494f6),
         iconSize: 28,
         type: BottomNavigationBarType.fixed,
         onTap: _navigateBottomBar,

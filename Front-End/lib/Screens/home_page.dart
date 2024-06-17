@@ -745,9 +745,9 @@ class _HomePageState extends State<HomePage> {
         width: 200,
         height: 40,
         decoration: ShapeDecoration(
-          color: const Color(0xffFFD453),
+          color: const Color(0Xff9494f6),
           shape: RoundedRectangleBorder(
-            side: const BorderSide(width: 1),
+            side: const BorderSide(width: 3, color: Color(0xffFFD453)),
             borderRadius: BorderRadius.circular(10),
           ),
         ),
@@ -755,10 +755,10 @@ class _HomePageState extends State<HomePage> {
           child: Text(
             'View All',
             style: TextStyle(
-              color: Colors.black,
-              fontSize: 15,
+              color: Color(0xffFFD453),
+              fontSize: 16,
               fontFamily: 'Work Sans',
-              fontWeight: FontWeight.w400,
+              fontWeight: FontWeight.w700,
             ),
           ),
         ),
