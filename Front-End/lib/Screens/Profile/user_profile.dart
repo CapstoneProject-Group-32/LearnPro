@@ -676,10 +676,14 @@ class _UserProfileState extends State<UserProfile> {
                                 ),
                               ),
                               const SizedBox(height: 15),
+
+                              //prograss container
+
                               Container(
                                 width: constraints.maxWidth * 0.9,
                                 decoration: ShapeDecoration(
-                                  color: Theme.of(context).colorScheme.primary,
+                                  color:
+                                      Theme.of(context).colorScheme.secondary,
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(10),
                                   ),
@@ -748,7 +752,7 @@ class _UserProfileState extends State<UserProfile> {
                                   height: 40,
                                   decoration: ShapeDecoration(
                                     color:
-                                        Theme.of(context).colorScheme.primary,
+                                        Theme.of(context).colorScheme.secondary,
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(10),
                                     ),
@@ -803,7 +807,7 @@ class _UserProfileState extends State<UserProfile> {
     return Expanded(
       child: Container(
         decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.primary,
+          color: Theme.of(context).colorScheme.secondary,
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

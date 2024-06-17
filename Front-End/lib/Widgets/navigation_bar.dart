@@ -37,7 +37,7 @@ class _NavigationBarBottomState extends State<NavigationBarBottom> {
       bottomNavigationBar: BottomNavigationBar(
         showUnselectedLabels: false,
         backgroundColor: Theme.of(context).colorScheme.primary,
-        selectedItemColor: Theme.of(context).colorScheme.background,
+        selectedItemColor: Theme.of(context).colorScheme.secondary,
         iconSize: 28,
         type: BottomNavigationBarType.fixed,
         onTap: _navigateBottomBar,

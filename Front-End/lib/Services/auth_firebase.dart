@@ -201,7 +201,7 @@ class AuthServices {
     required String email,
     required String password,
   }) async {
-    String res = "An error occurred";
+    String res = "Incorrect Email and Password";
 
     try {
       if (email.isNotEmpty && password.isNotEmpty) {

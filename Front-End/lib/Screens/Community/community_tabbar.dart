@@ -132,7 +132,7 @@ class _CommunityTabBarState extends State<CommunityTabBar>
                   TabBar(
                     controller: _tabController,
                     indicator: BoxDecoration(
-                      color: Theme.of(context).colorScheme.primary,
+                      color: Theme.of(context).colorScheme.secondary,
                       borderRadius: BorderRadius.circular(10),
                     ),
                     tabs: [
@@ -191,11 +191,10 @@ Widget _buildTab(String text, int tabIndex, BuildContext context) {
   return Tab(
     child: Container(
       height: 50,
-      // padding: const EdgeInsets.symmetric(vertical: 8.0),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           border: Border.all(
-            color: Theme.of(context).colorScheme.primary,
+            color: Theme.of(context).colorScheme.secondary,
             width: 1,
           )),
       child: Align(

@@ -393,7 +393,7 @@ Widget _studybuddyCardAfterAddFriend(
                     width: 110,
                     height: 25,
                     decoration: ShapeDecoration(
-                      color: Theme.of(context).colorScheme.background,
+                      color: Theme.of(context).colorScheme.secondary,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(45),
                       ),
@@ -425,7 +425,7 @@ Widget _studybuddyCardAfterAddFriend(
                     width: 110,
                     height: 25,
                     decoration: ShapeDecoration(
-                      color: Theme.of(context).colorScheme.background,
+                      color: Theme.of(context).colorScheme.secondary,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(45),
                       ),

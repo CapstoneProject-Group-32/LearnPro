@@ -6,7 +6,8 @@ ThemeData darkTheme = ThemeData(
     backgroundColor: Colors.transparent,
   ),
   colorScheme: const ColorScheme.dark(
-    background: Color.fromARGB(209, 158, 158, 158),
-    primary: Color.fromARGB(83, 244, 255, 83),
+    background: Color(0xff7B8794),
+    primary: Color(0Xff616E7C),
+    secondary: Color(0Xff52606D),
   ),
 );

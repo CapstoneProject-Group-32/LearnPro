@@ -134,13 +134,13 @@ class _CreateAccountState extends State<CreateAccount> {
                   width: 150,
                 ),
                 const SizedBox(height: 30),
-                Center(
+                const Center(
                   child: Text(
-                    "Login with Email",
+                    "Create Account",
                     style: TextStyle(
                       fontSize: 25,
                       fontWeight: FontWeight.w500,
-                      color: Theme.of(context).colorScheme.primary,
+                      color: Colors.black,
                     ),
                   ),
                 ),
@@ -388,7 +388,7 @@ class _CreateAccountState extends State<CreateAccount> {
                           width: 275,
                           height: 50,
                           decoration: ShapeDecoration(
-                            color: Theme.of(context).colorScheme.primary,
+                            color: Theme.of(context).colorScheme.secondary,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(35),
                             ),
@@ -440,7 +440,7 @@ class _CreateAccountState extends State<CreateAccount> {
                           width: 275,
                           height: 50,
                           decoration: ShapeDecoration(
-                            color: Theme.of(context).colorScheme.primary,
+                            color: Theme.of(context).colorScheme.secondary,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(35),
                             ),

@@ -26,35 +26,35 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final currentUser = FirebaseAuth.instance.currentUser!;
 
-  late ScrollController _MotoCardScrollController;
+  late ScrollController _motoCardScrollController;
 
-  late Timer _MotoScrollTimer;
+  late Timer _motoScrollTimer;
 
   @override
   void initState() {
     super.initState();
-    _MotoCardScrollController = ScrollController();
+    _motoCardScrollController = ScrollController();
     _startAutoScroll();
   }
 
   void _startAutoScroll() {
-    _MotoScrollTimer = Timer.periodic(const Duration(seconds: 3), (timer) {
-      if (_MotoCardScrollController.hasClients) {
-        final position = _MotoCardScrollController.position;
+    _motoScrollTimer = Timer.periodic(const Duration(seconds: 3), (timer) {
+      if (_motoCardScrollController.hasClients) {
+        final position = _motoCardScrollController.position;
         final maxScrollExtent = position.maxScrollExtent;
         final currentScrollPosition = position.pixels;
         final targetPosition = currentScrollPosition + 200.0;
 
         if (currentScrollPosition >= maxScrollExtent) {
           final double offset = position.minScrollExtent + 200.0;
-          _MotoCardScrollController.jumpTo(position.minScrollExtent);
-          _MotoCardScrollController.animateTo(
+          _motoCardScrollController.jumpTo(position.minScrollExtent);
+          _motoCardScrollController.animateTo(
             offset,
             duration: const Duration(seconds: 2),
             curve: Curves.easeInOut,
           );
         } else {
-          _MotoCardScrollController.animateTo(
+          _motoCardScrollController.animateTo(
             targetPosition,
             duration: const Duration(seconds: 2),
             curve: Curves.easeInOut,
@@ -66,10 +66,8 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void dispose() {
-    _MotoCardScrollController.dispose();
-
-    _MotoScrollTimer.cancel();
-
+    _motoCardScrollController.dispose();
+    _motoScrollTimer.cancel();
     super.dispose();
   }
 
@@ -199,7 +197,7 @@ class _HomePageState extends State<HomePage> {
                                     decoration: BoxDecoration(
                                       color: Theme.of(context)
                                           .colorScheme
-                                          .background,
+                                          .secondary,
                                       borderRadius: BorderRadius.circular(10),
                                     ),
                                     child: Padding(
@@ -432,7 +430,7 @@ class _HomePageState extends State<HomePage> {
     ];
 
     return SingleChildScrollView(
-      controller: _MotoCardScrollController,
+      controller: _motoCardScrollController,
       scrollDirection: Axis.horizontal,
       child: Row(
         children: infiniteMotoCards,
@@ -694,7 +692,7 @@ class _HomePageState extends State<HomePage> {
                     width: 127,
                     height: 27.56,
                     decoration: ShapeDecoration(
-                      color: const Color(0Xff9494f6),
+                      color: Theme.of(context).colorScheme.secondary,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(5),
                       ),
@@ -747,20 +745,28 @@ class _HomePageState extends State<HomePage> {
         width: 200,
         height: 40,
         decoration: ShapeDecoration(
-          color: const Color(0Xff9494f6),
+          color: Theme.of(context).colorScheme.secondary,
           shape: RoundedRectangleBorder(
             side: BorderSide(
               width: 3,
-              color: Theme.of(context).colorScheme.primary,
+              color: Theme.of(context).colorScheme.secondary,
             ),
             borderRadius: BorderRadius.circular(10),
           ),
+          shadows: const [
+            BoxShadow(
+              color: Color(0x3F000000),
+              blurRadius: 4,
+              offset: Offset(0, 4),
+              spreadRadius: 0,
+            )
+          ],
         ),
-        child: Center(
+        child: const Center(
           child: Text(
             'View All',
             style: TextStyle(
-              color: Theme.of(context).colorScheme.primary,
+              color: Colors.black,
               fontSize: 16,
               fontFamily: 'Work Sans',
               fontWeight: FontWeight.w700,
@@ -910,7 +916,7 @@ class _HomePageState extends State<HomePage> {
                 width: 130,
                 height: 28,
                 decoration: ShapeDecoration(
-                  color: Theme.of(context).colorScheme.background,
+                  color: Theme.of(context).colorScheme.secondary,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(5),
                   ),
