@@ -406,17 +406,17 @@ class _LoginPageState extends State<LoginPage> {
                 const SizedBox(height: 30),
                 Image.asset(
                   "assets/LearnProLogo.jpg",
-                  height: 200,
-                  width: 200,
+                  height: 150,
+                  width: 150,
                 ),
                 const SizedBox(height: 30),
-                const Center(
+                Center(
                   child: Text(
                     "Login with Email",
                     style: TextStyle(
-                      fontSize: 40,
+                      fontSize: 25,
                       fontWeight: FontWeight.w500,
-                      color: Color(0xFF051A85),
+                      color: Theme.of(context).colorScheme.primary,
                     ),
                   ),
                 ),
@@ -429,17 +429,17 @@ class _LoginPageState extends State<LoginPage> {
                         controller: _emailController,
                         decoration: InputDecoration(
                           labelText: "Email",
-                          labelStyle: const TextStyle(
-                            color: Color(0xFF16697A),
-                            fontSize: 20,
-                            fontWeight: FontWeight.w400,
+                          labelStyle: TextStyle(
+                            color: Theme.of(context).colorScheme.primary,
+                            fontSize: 17,
+                            fontWeight: FontWeight.w500,
                           ),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(5),
                           ),
-                          focusedBorder: const OutlineInputBorder(
+                          focusedBorder: OutlineInputBorder(
                             borderSide: BorderSide(
-                              color: Color(0xFF16697A),
+                              color: Theme.of(context).colorScheme.primary,
                               width: 2,
                             ),
                           ),
@@ -452,17 +452,17 @@ class _LoginPageState extends State<LoginPage> {
                         obscureText: true,
                         decoration: InputDecoration(
                           labelText: "Password",
-                          labelStyle: const TextStyle(
-                            color: Color(0xFF16697A),
-                            fontSize: 20,
+                          labelStyle: TextStyle(
+                            color: Theme.of(context).colorScheme.primary,
+                            fontSize: 17,
                             fontWeight: FontWeight.w400,
                           ),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(5),
                           ),
-                          focusedBorder: const OutlineInputBorder(
+                          focusedBorder: OutlineInputBorder(
                             borderSide: BorderSide(
-                              color: Color(0xFF16697A),
+                              color: Theme.of(context).colorScheme.primary,
                               width: 2,
                             ),
                           ),
@@ -478,7 +478,7 @@ class _LoginPageState extends State<LoginPage> {
                           width: 275,
                           height: 50,
                           decoration: ShapeDecoration(
-                            color: const Color(0xFF29F6D2),
+                            color: Theme.of(context).colorScheme.primary,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(35),
                             ),
@@ -500,7 +500,7 @@ class _LoginPageState extends State<LoginPage> {
                                     'Login',
                                     style: TextStyle(
                                       color: Colors.black,
-                                      fontSize: 25,
+                                      fontSize: 20,
                                       fontFamily: 'Work Sans',
                                       fontWeight: FontWeight.w500,
                                     ),
@@ -520,8 +520,10 @@ class _LoginPageState extends State<LoginPage> {
                       const SizedBox(height: 8),
                       const Text(
                         "Don't have an account?",
-                        style:
-                            TextStyle(color: Color(0xFF092D3F), fontSize: 20),
+                        style: TextStyle(
+                          color: Color(0xFF092D3F),
+                          fontSize: 17,
+                        ),
                       ),
                       const SizedBox(height: 8),
                       GestureDetector(
@@ -532,7 +534,7 @@ class _LoginPageState extends State<LoginPage> {
                           width: 275,
                           height: 50,
                           decoration: ShapeDecoration(
-                            color: const Color(0xFF29F6D2),
+                            color: Theme.of(context).colorScheme.primary,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(35),
                             ),
@@ -550,7 +552,7 @@ class _LoginPageState extends State<LoginPage> {
                               'Create a new Account',
                               style: TextStyle(
                                 color: Colors.black,
-                                fontSize: 25,
+                                fontSize: 20,
                                 fontFamily: 'Work Sans',
                                 fontWeight: FontWeight.w500,
                               ),
@@ -558,7 +560,9 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                         ),
                       ),
-                      const SizedBox(height: 20),
+                      const SizedBox(
+                        height: 20,
+                      ),
                     ],
                   ),
                 ),

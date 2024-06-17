@@ -138,14 +138,17 @@ class _CommunityTabBarState extends State<CommunityTabBar>
                       _buildTab(
                         'People',
                         0,
+                        context,
                       ),
                       _buildTab(
                         'Groups',
                         1,
+                        context,
                       ),
                       _buildTab(
                         'Tutored You',
                         2,
+                        context,
                       ),
                     ],
                   ),
@@ -185,18 +188,25 @@ class _CommunityTabBarState extends State<CommunityTabBar>
 
 //Tab bar widget
 
-Widget _buildTab(String text, int tabIndex) {
+Widget _buildTab(String text, int tabIndex, BuildContext context) {
   return Tab(
     child: Container(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      height: 50,
+      // padding: const EdgeInsets.symmetric(vertical: 8.0),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Text(
-        text,
-        style: const TextStyle(
-          color: Colors.black,
-          fontWeight: FontWeight.bold,
+          borderRadius: BorderRadius.circular(10),
+          border: Border.all(
+            color: Theme.of(context).colorScheme.primary,
+            width: 1,
+          )),
+      child: Align(
+        alignment: Alignment.center,
+        child: Text(
+          text,
+          style: const TextStyle(
+            color: Colors.black,
+            fontWeight: FontWeight.bold,
+          ),
         ),
       ),
     ),
