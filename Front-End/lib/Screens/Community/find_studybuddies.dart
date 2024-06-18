@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 import 'package:flutter_application_1/Models/usermodel.dart';
 import 'package:flutter_application_1/Screens/Community/request_tution.dart';
@@ -187,7 +189,7 @@ Widget _studybuddyCardBeforeAddFriend(
     width: 370,
     height: 100,
     decoration: ShapeDecoration(
-      color: const Color(0xEAF6EEEE),
+      color: Theme.of(context).colorScheme.primary,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
       ),
@@ -234,57 +236,64 @@ Widget _studybuddyCardBeforeAddFriend(
         const SizedBox(
           width: 15,
         ),
-        Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              userName,
-              style: const TextStyle(
-                color: Colors.black,
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
+        Expanded(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                userName,
+                overflow: TextOverflow.ellipsis,
+                maxLines: 1,
+                style: const TextStyle(
+                  color: Colors.black,
+                  fontSize: 15,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-            ),
-            Text(
-              userLevel,
-              style: const TextStyle(
-                color: Colors.black,
-                fontSize: 16,
+              Text(
+                userLevel,
+                style: const TextStyle(
+                  color: Colors.black,
+                  fontSize: 11,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
         const SizedBox(
           width: 25,
         ),
-        GestureDetector(
-          onTap: onTapView,
-          child: Container(
-            width: 125,
-            height: 30,
-            decoration: ShapeDecoration(
-              color: Theme.of(context).colorScheme.background,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(45),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: GestureDetector(
+            onTap: onTapView,
+            child: Container(
+              width: 110,
+              height: 25,
+              decoration: ShapeDecoration(
+                color: Theme.of(context).colorScheme.background,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(45),
+                ),
+                shadows: const [
+                  BoxShadow(
+                    color: Color(0x3F000000),
+                    blurRadius: 4,
+                    offset: Offset(0, 4),
+                    spreadRadius: 0,
+                  )
+                ],
               ),
-              shadows: const [
-                BoxShadow(
-                  color: Color(0x3F000000),
-                  blurRadius: 4,
-                  offset: Offset(0, 4),
-                  spreadRadius: 0,
-                )
-              ],
-            ),
-            child: const Center(
-              child: Text(
-                'View',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 16,
-                  fontFamily: 'Work Sans',
-                  fontWeight: FontWeight.w400,
+              child: const Center(
+                child: Text(
+                  'View',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 13,
+                    fontFamily: 'Work Sans',
+                    fontWeight: FontWeight.w400,
+                  ),
                 ),
               ),
             ),
@@ -356,13 +365,15 @@ Widget _studybuddyCardAfterAddFriend(
           const SizedBox(
             width: 15,
           ),
-          Flexible(
+          Expanded(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   userName,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
                   style: const TextStyle(
                     color: Colors.black,
                     fontSize: 15,

@@ -73,8 +73,9 @@ class _JoinedGroupsScreenState extends State<JoinedGroupsScreen> {
               itemBuilder: (context, index) {
                 final group = _joinedGroups[index];
                 return Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  padding: const EdgeInsets.all(8.0),
                   child: _groupCard(
+                    context,
                     NetworkImage(group['groupicon']),
                     group['groupname'],
                     group['groupmajor'],
@@ -90,6 +91,7 @@ class _JoinedGroupsScreenState extends State<JoinedGroupsScreen> {
 }
 
 Widget _groupCard(
+  BuildContext context,
   ImageProvider<Object> groupIcon,
   String groupName,
   String groupMajor,
@@ -99,7 +101,7 @@ Widget _groupCard(
     width: 370,
     height: 100,
     decoration: ShapeDecoration(
-      color: const Color(0xEAF6EEEE),
+      color: Theme.of(context).colorScheme.primary,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
       ),
@@ -152,7 +154,7 @@ Widget _groupCard(
                   maxLines: 1,
                   style: const TextStyle(
                     color: Colors.black,
-                    fontSize: 18,
+                    fontSize: 15,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -162,7 +164,7 @@ Widget _groupCard(
                   maxLines: 1,
                   style: const TextStyle(
                     color: Colors.black,
-                    fontSize: 14,
+                    fontSize: 11,
                   ),
                 ),
               ],
@@ -173,10 +175,10 @@ Widget _groupCard(
             child: GestureDetector(
               onTap: onTapView,
               child: Container(
-                width: 125,
-                height: 30,
+                width: 110,
+                height: 25,
                 decoration: ShapeDecoration(
-                  color: const Color(0xFF74FE8A),
+                  color: Theme.of(context).colorScheme.secondary,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(45),
                   ),
@@ -194,7 +196,7 @@ Widget _groupCard(
                     'View',
                     style: TextStyle(
                       color: Colors.black,
-                      fontSize: 16,
+                      fontSize: 13,
                       fontFamily: 'Work Sans',
                       fontWeight: FontWeight.w400,
                     ),

@@ -131,6 +131,7 @@ class _CommunityTabBarState extends State<CommunityTabBar>
                   ),
                   TabBar(
                     controller: _tabController,
+                    dividerColor: Colors.transparent,
                     indicator: BoxDecoration(
                       color: Theme.of(context).colorScheme.secondary,
                       borderRadius: BorderRadius.circular(10),
@@ -164,17 +165,31 @@ class _CommunityTabBarState extends State<CommunityTabBar>
                             top: 10,
                             bottom: 10,
                           ),
-                          child: Container(
-                            child: StudyBuddies(
-                              userMap: userMap,
-                              isLoading: isLoading,
-                              errorMessage: errorMessage,
-                              onSearch: onSearch,
-                            ),
+                          child: StudyBuddies(
+                            userMap: userMap,
+                            isLoading: isLoading,
+                            errorMessage: errorMessage,
+                            onSearch: onSearch,
                           ),
                         ),
-                        const JoinedGroupsScreen(),
-                        TutoredUsersScreen(),
+                        const Padding(
+                          padding: EdgeInsets.only(
+                            left: 15,
+                            right: 15,
+                            top: 10,
+                            bottom: 10,
+                          ),
+                          child: JoinedGroupsScreen(),
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.only(
+                            left: 15,
+                            right: 15,
+                            top: 10,
+                            bottom: 10,
+                          ),
+                          child: TutoredUsersScreen(),
+                        ),
                       ],
                     ),
                   ),

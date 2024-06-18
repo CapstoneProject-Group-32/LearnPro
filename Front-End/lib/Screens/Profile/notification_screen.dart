@@ -256,8 +256,29 @@ class _NotificationScreenState extends State<NotificationScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          title: const Text(
+            "Profile",
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 20,
+              color: Colors.black,
+            ),
+          ),
+          leading: IconButton(
+            icon: const Icon(
+              Icons.arrow_back_ios_new_rounded,
+              size: 20,
+              color: Colors.black,
+            ),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+        ),
+        backgroundColor: Theme.of(context).colorScheme.background,
         body: Container(
-          color: Colors.white,
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,
           padding: const EdgeInsets.symmetric(horizontal: 1, vertical: 20),
@@ -266,41 +287,6 @@ class _NotificationScreenState extends State<NotificationScreen> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                // Notifications back button
-                Padding(
-                  padding: const EdgeInsets.all(4.0),
-                  child: InkWell(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const UserProfile(),
-                        ),
-                      );
-                    },
-                    child: const Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        SizedBox(width: 10),
-                        Icon(
-                          Icons.arrow_back_ios_new_rounded,
-                          size: 28,
-                          color: Colors.black,
-                        ),
-                        SizedBox(width: 8),
-                        Text(
-                          "Notifications",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 30,
-                            color: Colors.black,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 10),
                 // Notification list
                 StreamBuilder<QuerySnapshot>(
                   stream: FirebaseFirestore.instance
@@ -337,7 +323,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                             height: 140,
                             margin: const EdgeInsets.symmetric(vertical: 10),
                             decoration: ShapeDecoration(
-                              color: const Color(0x190043CE),
+                              color: Theme.of(context).colorScheme.secondary,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(8),
                               ),
@@ -368,8 +354,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                         ),
                                       )
                                     : const Padding(
-                                        padding:
-                                            EdgeInsets.only(left: 18),
+                                        padding: EdgeInsets.only(left: 18),
                                         child: SizedBox(
                                           height: 85,
                                           width: 85,
@@ -391,7 +376,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                           '$senderName Requested for tutoring',
                                           style: const TextStyle(
                                             color: Colors.black,
-                                            fontSize: 18,
+                                            fontSize: 15,
                                             fontFamily: 'Work Sans',
                                             fontWeight: FontWeight.w600,
                                           ),
@@ -403,7 +388,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                             'Subject: $subject',
                                             style: const TextStyle(
                                               color: Colors.black,
-                                              fontSize: 15,
+                                              fontSize: 12,
                                               fontFamily: 'Work Sans',
                                               fontWeight: FontWeight.w400,
                                             ),
@@ -415,7 +400,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                             'Lesson: $lesson',
                                             style: const TextStyle(
                                               color: Colors.black,
-                                              fontSize: 15,
+                                              fontSize: 12,
                                               fontFamily: 'Work Sans',
                                               fontWeight: FontWeight.w400,
                                             ),
@@ -427,7 +412,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                             'Date: $date',
                                             style: const TextStyle(
                                               color: Colors.black,
-                                              fontSize: 15,
+                                              fontSize: 12,
                                               fontFamily: 'Work Sans',
                                               fontWeight: FontWeight.w400,
                                             ),
@@ -439,7 +424,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                             'Time: $time',
                                             style: const TextStyle(
                                               color: Colors.black,
-                                              fontSize: 15,
+                                              fontSize: 12,
                                               fontFamily: 'Work Sans',
                                               fontWeight: FontWeight.w400,
                                             ),
@@ -509,7 +494,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                             height: 50,
                             margin: const EdgeInsets.symmetric(vertical: 10),
                             decoration: ShapeDecoration(
-                              color: const Color(0x190043CE),
+                              color: Theme.of(context).colorScheme.secondary,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(8),
                               ),
@@ -531,7 +516,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                   child: Text(
                                     message,
                                     style: const TextStyle(
-                                      fontSize: 16,
+                                      fontSize: 13,
                                       fontWeight: FontWeight.bold,
                                       color: Colors.red,
                                     ),
@@ -590,7 +575,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                               height: 140,
                               margin: const EdgeInsets.symmetric(vertical: 10),
                               decoration: ShapeDecoration(
-                                color: const Color(0x190043CE),
+                                color: Theme.of(context).colorScheme.secondary,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(8),
                                 ),
@@ -622,8 +607,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                           ),
                                         )
                                       : const Padding(
-                                          padding:
-                                              EdgeInsets.only(left: 18),
+                                          padding: EdgeInsets.only(left: 18),
                                           child: SizedBox(
                                             height: 85,
                                             width: 85,
@@ -645,7 +629,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                             '$receiverName Accepted for tutoring',
                                             style: const TextStyle(
                                               color: Colors.black,
-                                              fontSize: 18,
+                                              fontSize: 15,
                                               fontFamily: 'Work Sans',
                                               fontWeight: FontWeight.w600,
                                             ),
@@ -657,7 +641,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                               'Link: $Link',
                                               style: const TextStyle(
                                                 color: Colors.black,
-                                                fontSize: 15,
+                                                fontSize: 12,
                                                 fontFamily: 'Work Sans',
                                                 fontWeight: FontWeight.w400,
                                               ),
@@ -669,7 +653,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                               'Date: $date',
                                               style: const TextStyle(
                                                 color: Colors.black,
-                                                fontSize: 15,
+                                                fontSize: 12,
                                                 fontFamily: 'Work Sans',
                                                 fontWeight: FontWeight.w400,
                                               ),
@@ -681,7 +665,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                               'Time: $time',
                                               style: const TextStyle(
                                                 color: Colors.black,
-                                                fontSize: 15,
+                                                fontSize: 12,
                                                 fontFamily: 'Work Sans',
                                                 fontWeight: FontWeight.w400,
                                               ),

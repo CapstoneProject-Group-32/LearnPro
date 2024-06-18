@@ -13,35 +13,12 @@ class LearnDesk extends StatelessWidget {
         backgroundColor: Theme.of(context).colorScheme.background,
         appBar: AppBar(
           automaticallyImplyLeading: false,
-          title: InkWell(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const NavigationBarBottom(),
-                ),
-              );
-            },
-            child: const Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Icon(
-                  Icons.arrow_back_ios_new_rounded,
-                  size: 20,
-                  color: Colors.black,
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                Text(
-                  "Learn Desk",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
-                    color: Colors.black,
-                  ),
-                ),
-              ],
+          title: const Text(
+            "Learn Desk",
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 20,
+              color: Colors.black,
             ),
           ),
         ),

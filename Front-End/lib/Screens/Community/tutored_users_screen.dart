@@ -1,8 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 class TutoredUsersScreen extends StatelessWidget {
+  const TutoredUsersScreen({super.key});
+
   Future<Map<String, dynamic>> getCurrentUserData() async {
     final uid = FirebaseAuth.instance.currentUser!.uid;
     final userDoc =
@@ -39,17 +42,22 @@ class TutoredUsersScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   title: Text('Tutored By'),
-      // ),
       body: FutureBuilder<List<Map<String, dynamic>>>(
         future: fetchTutoredUsers(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(
+              child: SizedBox(
+                height: 20,
+                width: 20,
+                child: CircularProgressIndicator(),
+              ),
+            );
           }
           if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return Center(child: Text('No tutored users found'));
+            return const Center(
+              child: Text('No tutored users found'),
+            );
           }
 
           final tutoredUsers = snapshot.data!;
@@ -58,28 +66,28 @@ class TutoredUsersScreen extends StatelessWidget {
             itemCount: tutoredUsers.length,
             itemBuilder: (context, index) {
               final user = tutoredUsers[index];
-              return Container(
-                width: 370,
-                height: 100,
-                margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-                decoration: ShapeDecoration(
-                  color: const Color(0xEAF6EEEE),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  width: 370,
+                  height: 100,
+                  decoration: ShapeDecoration(
+                    color: Theme.of(context).colorScheme.primary,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    shadows: const [
+                      BoxShadow(
+                        color: Color(0x3F000000),
+                        blurRadius: 4,
+                        offset: Offset(0, 4),
+                        spreadRadius: 0,
+                      )
+                    ],
                   ),
-                  shadows: const [
-                    BoxShadow(
-                      color: Color(0x3F000000),
-                      blurRadius: 4,
-                      offset: Offset(0, 4),
-                      spreadRadius: 0,
-                    )
-                  ],
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(4.0),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       Center(
                         child: Padding(
@@ -109,16 +117,18 @@ class TutoredUsersScreen extends StatelessWidget {
                       const SizedBox(
                         width: 15,
                       ),
-                      Flexible(
+                      Expanded(
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
                               user['userName'],
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
                               style: const TextStyle(
                                 color: Colors.black,
-                                fontSize: 18,
+                                fontSize: 15,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -126,7 +136,7 @@ class TutoredUsersScreen extends StatelessWidget {
                               user['major'],
                               style: const TextStyle(
                                 color: Colors.black,
-                                fontSize: 14,
+                                fontSize: 11,
                               ),
                             ),
                           ],
@@ -145,10 +155,11 @@ class TutoredUsersScreen extends StatelessWidget {
                                 // Add view function here
                               },
                               child: Container(
-                                width: 125,
-                                height: 30,
+                                width: 110,
+                                height: 25,
                                 decoration: ShapeDecoration(
-                                  color: const Color(0xFF74FE8A),
+                                  color:
+                                      Theme.of(context).colorScheme.secondary,
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(45),
                                   ),
@@ -166,7 +177,7 @@ class TutoredUsersScreen extends StatelessWidget {
                                     'View',
                                     style: TextStyle(
                                       color: Colors.black,
-                                      fontSize: 16,
+                                      fontSize: 13,
                                       fontFamily: 'Work Sans',
                                       fontWeight: FontWeight.w400,
                                     ),
@@ -179,10 +190,11 @@ class TutoredUsersScreen extends StatelessWidget {
                                 // Add review function here
                               },
                               child: Container(
-                                width: 125,
-                                height: 30,
+                                width: 110,
+                                height: 25,
                                 decoration: ShapeDecoration(
-                                  color: const Color(0xFF74FE8A),
+                                  color:
+                                      Theme.of(context).colorScheme.secondary,
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(45),
                                   ),
@@ -200,7 +212,7 @@ class TutoredUsersScreen extends StatelessWidget {
                                     'Review',
                                     style: TextStyle(
                                       color: Colors.black,
-                                      fontSize: 16,
+                                      fontSize: 13,
                                       fontFamily: 'Work Sans',
                                       fontWeight: FontWeight.w400,
                                     ),
