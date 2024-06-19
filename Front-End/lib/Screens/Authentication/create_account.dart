@@ -209,19 +209,8 @@ class _CreateAccountState extends State<CreateAccount> {
                         controller: _emailController,
                         decoration: InputDecoration(
                           labelText: "Email*",
-                          labelStyle: TextStyle(
-                            color: Theme.of(context).colorScheme.primary,
-                            fontSize: 17,
-                            fontWeight: FontWeight.w400,
-                          ),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(5),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Theme.of(context).colorScheme.primary,
-                              width: 2,
-                            ),
                           ),
                         ),
                       ),
@@ -241,19 +230,8 @@ class _CreateAccountState extends State<CreateAccount> {
                         controller: _userNameController,
                         decoration: InputDecoration(
                           labelText: "User Name*",
-                          labelStyle: TextStyle(
-                            color: Theme.of(context).colorScheme.primary,
-                            fontSize: 17,
-                            fontWeight: FontWeight.w400,
-                          ),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(5),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Theme.of(context).colorScheme.primary,
-                              width: 2,
-                            ),
                           ),
                         ),
                       ),
@@ -273,19 +251,8 @@ class _CreateAccountState extends State<CreateAccount> {
                         controller: _majorController,
                         decoration: InputDecoration(
                           labelText: "Major*",
-                          labelStyle: TextStyle(
-                            color: Theme.of(context).colorScheme.primary,
-                            fontSize: 17,
-                            fontWeight: FontWeight.w400,
-                          ),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(5),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Theme.of(context).colorScheme.primary,
-                              width: 2,
-                            ),
                           ),
                         ),
                       ),
@@ -306,19 +273,8 @@ class _CreateAccountState extends State<CreateAccount> {
                         obscureText: true,
                         decoration: InputDecoration(
                           labelText: "Password*",
-                          labelStyle: TextStyle(
-                            color: Theme.of(context).colorScheme.primary,
-                            fontSize: 17,
-                            fontWeight: FontWeight.w400,
-                          ),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(5),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Theme.of(context).colorScheme.primary,
-                              width: 2,
-                            ),
                           ),
                         ),
                       ),
@@ -339,19 +295,8 @@ class _CreateAccountState extends State<CreateAccount> {
                         obscureText: true,
                         decoration: InputDecoration(
                           labelText: "Confirm Password*",
-                          labelStyle: TextStyle(
-                            color: Theme.of(context).colorScheme.primary,
-                            fontSize: 17,
-                            fontWeight: FontWeight.w400,
-                          ),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(5),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Theme.of(context).colorScheme.primary,
-                              width: 2,
-                            ),
                           ),
                         ),
                       ),

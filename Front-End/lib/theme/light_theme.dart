@@ -18,4 +18,17 @@ ThemeData lightTheme = ThemeData(
     primary: Color(0Xff93cec3),
     secondary: Color(0xff58b6a6),
   ),
+  inputDecorationTheme: const InputDecorationTheme(
+    labelStyle: TextStyle(
+      color: Colors.green, // Custom label color
+      fontSize: 17,
+      fontWeight: FontWeight.w400,
+    ),
+    focusedBorder: OutlineInputBorder(
+      borderSide: BorderSide(
+        color: Colors.green, // Custom border color when focused
+        width: 2,
+      ),
+    ),
+  ),
 );

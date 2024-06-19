@@ -119,41 +119,6 @@ class AuthServices {
 
   //login using email and password
 
-  // Future<String> loginWithEmailAndPassword({
-  //   required String email,
-  //   required String password,
-  // }) async {
-  //   String res = "An error occured";
-
-  //   try {
-  //     //if the inputs are not empty
-  //     if (email.isNotEmpty && password.isNotEmpty) {
-  //       //login the user with email and password
-  //       await _auth.signInWithEmailAndPassword(
-  //           email: email, password: password);
-
-  //       res = "success";
-  //     } else {
-  //       res = "Please enter email and password";
-  //     }
-  //   }
-
-  //   //catch the errors extra error handling
-  //   on FirebaseAuthException catch (error) {
-  //     if (error.code == "invalid-email") {
-  //       res = "Invalid email";
-  //     } else if (error.code == "weak-password") {
-  //       res = "Weak password";
-  //     } else if (error.code == "email-already-in-use") {
-  //       res = "Email already in use";
-  //     }
-  //   } catch (error) {
-  //     res = error.toString();
-  //   }
-
-  //   return res;
-  // }
-
   Future<String> loginWithEmailAndPassword({
     required String email,
     required String password,
@@ -181,6 +146,16 @@ class AuthServices {
     }
 
     return res;
+  }
+
+  //Forgot Password
+
+  Future<void> sendPasswordResetLink(String email) async {
+    try {
+      await _auth.sendPasswordResetEmail(email: email);
+    } catch (e) {
+      print(e.toString());
+    }
   }
 
   //get the current user details

@@ -533,7 +533,9 @@ class _HomePageState extends State<HomePage> {
           child: Center(
             child: Text(
               "No joined groups",
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                fontSize: 15,
+              ),
             ),
           ),
         ),
@@ -788,7 +790,9 @@ class _HomePageState extends State<HomePage> {
           child: Center(
             child: Text(
               "No freinds found",
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                fontSize: 15,
+              ),
             ),
           ),
         ),
