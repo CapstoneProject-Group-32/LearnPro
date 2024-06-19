@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Services/auth_firebase.dart';
 import 'package:flutter_application_1/Widgets/navigation_bar.dart';
 import 'package:flutter_application_1/utils/util_functions.dart';
+import 'package:flutter_application_1/wrapper.dart';
 import 'package:image_picker/image_picker.dart';
 
 class CreateAccount extends StatefulWidget {
@@ -95,7 +96,7 @@ class _CreateAccountState extends State<CreateAccount> {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (context) => const NavigationBarBottom(),
+            builder: (context) => const Wrapper(),
           ),
         );
       } else {
@@ -129,7 +130,7 @@ class _CreateAccountState extends State<CreateAccount> {
               children: [
                 const SizedBox(height: 30),
                 Image.asset(
-                  "assets/LearnProLogo.jpg",
+                  "assets/LearnProLogo_transparent.png",
                   height: 150,
                   width: 150,
                 ),

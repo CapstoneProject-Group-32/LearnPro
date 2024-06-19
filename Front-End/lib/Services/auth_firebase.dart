@@ -37,59 +37,6 @@ class AuthServices {
 
   //register using email and password
 
-  // Future<String> registerWithEmailAndPassword({
-  //   required Uint8List profilePic,
-  //   required String email,
-  //   required String userName,
-  //   required String major,
-  //   required String password,
-  //   required String confirmPassword,
-  // }) async {
-  //   String res = "An error occured";
-  //   try {
-  //     if (userName.isNotEmpty &&
-  //         password.isNotEmpty &&
-  //         email.isNotEmpty &&
-  //         confirmPassword.isNotEmpty &&
-  //         major.isNotEmpty &&
-  //         profilePic.isNotEmpty &&
-  //         password == confirmPassword) {
-  //       //create a new user
-
-  //       final UserCredential userCredential = await _auth
-  //           .createUserWithEmailAndPassword(email: email, password: password);
-
-  //       //the profile pic to the storage
-  //       String photoURL = await StorageMethods().uploadImage(
-  //         folderName: "ProfileImages",
-  //         isFile: false,
-  //         file: profilePic,
-  //       );
-
-  //       UserModel user = UserModel(
-  //         uid: _auth.currentUser!.uid,
-  //         email: email,
-  //         userName: userName,
-  //         major: major,
-  //         profilePic: photoURL,
-  //         friends: [],
-  //       );
-
-  //       if (userCredential.user != null) {
-  //         await _firestore.collection('users').doc(_auth.currentUser!.uid).set(
-  //               user.toJSON(),
-  //             );
-  //         res = "success";
-  //       } else {
-  //         res = "Passwords do not match or some fields are empty";
-  //       }
-  //     }
-  //   } catch (error) {
-  //     res = error.toString();
-  //   }
-  //   return res;
-  // }
-
   Future<String> registerWithEmailAndPassword({
     required Uint8List profilePic,
     required String email,
@@ -158,6 +105,16 @@ class AuthServices {
       res = error.toString();
     }
     return res;
+  }
+
+  //Email Verification
+
+  Future<void> sendEmailVerificationLink() async {
+    try {
+      await _auth.currentUser?.sendEmailVerification();
+    } catch (e) {
+      print(e.toString());
+    }
   }
 
   //login using email and password

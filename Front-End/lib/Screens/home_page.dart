@@ -416,7 +416,7 @@ class _HomePageState extends State<HomePage> {
       ),
       _dailyMotoCard(
         "“The most important thing you learn in school is how to learn.",
-        const AssetImage('assets/artificial-intelligence.gif'),
+        const AssetImage('assets/task.png'),
       ),
       // Add more cards as needed
     ];

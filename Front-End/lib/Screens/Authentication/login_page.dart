@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Services/auth_firebase.dart';
 import 'package:flutter_application_1/Widgets/navigation_bar.dart';
+import 'package:flutter_application_1/wrapper.dart';
 
 class LoginPage extends StatefulWidget {
   final Function toggle;
@@ -62,8 +63,7 @@ class _LoginPageState extends State<LoginPage> {
         } else if (result == "success") {
           Navigator.pushReplacement(
             context,
-            MaterialPageRoute(
-                builder: (context) => const NavigationBarBottom()),
+            MaterialPageRoute(builder: (context) => const Wrapper()),
           );
         } else {
           _generalErrorMessage = result;
@@ -86,7 +86,7 @@ class _LoginPageState extends State<LoginPage> {
               children: [
                 const SizedBox(height: 30),
                 Image.asset(
-                  "assets/LearnProLogo.jpg",
+                  "assets/LearnProLogo_transparent.png",
                   height: 150,
                   width: 150,
                 ),
