@@ -37,6 +37,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(),
       body: Align(
         alignment: Alignment.center,
         child: Padding(

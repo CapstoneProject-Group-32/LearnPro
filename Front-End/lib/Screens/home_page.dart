@@ -8,11 +8,12 @@ import 'package:flutter_application_1/Models/usermodel.dart';
 import 'package:flutter_application_1/Screens/Community/community_tabbar.dart';
 
 import 'package:flutter_application_1/Screens/Community/request_tution.dart';
+import 'package:flutter_application_1/Screens/Notification/notification_tabbar.dart';
 import 'package:flutter_application_1/Screens/Timer/timer_page.dart';
 import 'package:flutter_application_1/Screens/Library/learning_tabbar.dart';
 
 import 'package:flutter_application_1/group/group_detail_page.dart';
-import 'package:flutter_application_1/group/group_invitation_notifications.dart';
+import 'package:flutter_application_1/Screens/Notification/group_invitation_notifications.dart';
 import 'package:intl/intl.dart';
 
 class HomePage extends StatefulWidget {
@@ -175,7 +176,7 @@ class _HomePageState extends State<HomePage> {
                                                   context, // Context of the current widget
                                                   MaterialPageRoute(
                                                       builder: (context) =>
-                                                          const GroupInvitationNotificationScreen()),
+                                                          const NotificationTabBar()),
                                                 );
                                               },
                                             ),

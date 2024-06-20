@@ -158,7 +158,7 @@ class AuthServices {
     }
   }
 
-  //get the current user details
+  // get the current user details
 
   Future<UserModel?> getCurrentUser() async {
     User? currentUser = _auth.currentUser;
@@ -239,5 +239,57 @@ class AuthServices {
 
   Future logOut() async {
     return await _auth.signOut();
+  }
+
+  Future<String> updateProfile({
+    required String userName,
+    required String major,
+    Uint8List? profilePic,
+  }) async {
+    String res = "An error occurred";
+    try {
+      User? currentUser = _auth.currentUser;
+
+      if (currentUser != null) {
+        // Check if username is already taken
+        QuerySnapshot querySnapshot = await _firestore
+            .collection('users')
+            .where('userName', isEqualTo: userName)
+            .get();
+        if (querySnapshot.docs.isNotEmpty &&
+            querySnapshot.docs.first.id != currentUser.uid) {
+          return "User name is already taken";
+        }
+
+        String? photoURL;
+        if (profilePic != null) {
+          photoURL = await StorageMethods().uploadImage(
+            folderName: "ProfileImages",
+            isFile: false,
+            file: profilePic,
+          );
+        }
+
+        Map<String, dynamic> updatedData = {
+          'userName': userName,
+          'major': major,
+        };
+
+        if (photoURL != null) {
+          updatedData['profilePic'] = photoURL;
+        }
+
+        await _firestore
+            .collection('users')
+            .doc(currentUser.uid)
+            .update(updatedData);
+        res = "success";
+      } else {
+        res = "User not logged in";
+      }
+    } catch (error) {
+      res = error.toString();
+    }
+    return res;
   }
 }

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/Screens/Authentication/authenticate.dart';
+
 import 'package:flutter_application_1/Services/auth_firebase.dart';
-import 'package:google_generative_ai/google_generative_ai.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
   const ForgotPasswordScreen({super.key});

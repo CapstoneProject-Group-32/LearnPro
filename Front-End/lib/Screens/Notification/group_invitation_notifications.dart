@@ -86,7 +86,6 @@ class _GroupInvitationNotificationScreenState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Notifications')),
       body: FutureBuilder<List<Map<String, dynamic>>>(
         future: invitationsFuture,
         builder: (context, snapshot) {
@@ -118,7 +117,8 @@ class InvitationCard extends StatefulWidget {
   final Map<String, dynamic> groupDetails;
   final Map<String, dynamic> ownerDetails;
 
-  const InvitationCard({super.key, required this.groupDetails, required this.ownerDetails});
+  const InvitationCard(
+      {super.key, required this.groupDetails, required this.ownerDetails});
 
   @override
   _InvitationCardState createState() => _InvitationCardState();

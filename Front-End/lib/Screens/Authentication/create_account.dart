@@ -1,7 +1,8 @@
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/Screens/Authentication/verification.dart';
 import 'package:flutter_application_1/Services/auth_firebase.dart';
-import 'package:flutter_application_1/Widgets/navigation_bar.dart';
+
 import 'package:flutter_application_1/utils/util_functions.dart';
 import 'package:flutter_application_1/wrapper.dart';
 import 'package:image_picker/image_picker.dart';
