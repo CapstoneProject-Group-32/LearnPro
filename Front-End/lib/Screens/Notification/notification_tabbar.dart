@@ -57,6 +57,7 @@ class _NotificationTabBarState extends State<NotificationTabBar>
             ),
           ),
         ),
+        backgroundColor: Theme.of(context).colorScheme.background,
         body: isLoading
             ? const Center(
                 child: SizedBox(
@@ -67,6 +68,9 @@ class _NotificationTabBarState extends State<NotificationTabBar>
               )
             : Column(
                 children: [
+                  const SizedBox(
+                    height: 10,
+                  ),
                   TabBar(
                     controller: _tabController,
                     dividerColor: Colors.transparent,
@@ -76,22 +80,22 @@ class _NotificationTabBarState extends State<NotificationTabBar>
                     ),
                     tabs: [
                       _buildTab(
-                        'Tuition Notification',
+                        'Tuition',
                         0,
                         context,
                       ),
                       _buildTab(
-                        'Group Requests',
+                        'Meetings',
                         1,
                         context,
                       ),
                       _buildTab(
-                        'Tab 3',
+                        'Messages',
                         2,
                         context,
                       ),
                       _buildTab(
-                        'Tab 4',
+                        'Invites',
                         0,
                         context,
                       ),
