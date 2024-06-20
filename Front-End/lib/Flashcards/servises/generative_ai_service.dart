@@ -21,7 +21,7 @@ the subject I studied is $subject
 the topic under that subject is $topic
 under that main topic this is a list of subtopics and points under each of those subtopics. $points
  don’t give any other information in the result only flash cards should be included as I mentioned earlier title and body.
- create 10 flashcards.
+
 
 
 

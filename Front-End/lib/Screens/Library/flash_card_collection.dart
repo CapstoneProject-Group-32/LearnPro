@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_application_1/Flashcards/models/Flashcard.dart';
+import 'package:flutter_application_1/Flashcards/screen/content_form.dart';
 import 'package:flutter_application_1/Flashcards/screen/flashcard_home%20_screen.dart';
 
 class FlashCardCollectionScreen extends StatelessWidget {
@@ -74,7 +75,6 @@ class FlashCardCollectionScreen extends StatelessWidget {
                         context,
                         MaterialPageRoute(
                           builder: (context) => FlashcardScreen(
-                            flashcards: flashcardList,
                             flashcardSetId: flashcardSetId,
                           ),
                         ),
@@ -86,6 +86,15 @@ class FlashCardCollectionScreen extends StatelessWidget {
             },
           );
         },
+      ),
+            floatingActionButton:FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const ContentForm()),
+          );
+        },
+        child: const Icon(Icons.add),
       ),
     );
   }

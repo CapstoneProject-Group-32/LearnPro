@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/Flashcards/screen/home_screen.dart';
 import 'package:flutter_application_1/Models/usermodel.dart';
 import 'package:flutter_application_1/Screens/Community/community_tabbar.dart';
 
@@ -14,6 +13,8 @@ import 'package:flutter_application_1/Screens/Library/learning_tabbar.dart';
 import 'package:flutter_application_1/group/group_detail_page.dart';
 import 'package:flutter_application_1/group/group_invitation_notifications.dart';
 import 'package:intl/intl.dart';
+
+import 'Library/flash_card_collection.dart';
 
 class HomePage extends StatefulWidget {
   // final String uid;
@@ -273,7 +274,7 @@ class _HomePageState extends State<HomePage> {
                               ),
                               _iconMethod(
                                 context,
-                                const HomeScreen(),
+                                const FlashCardCollectionScreen(),
                                 const AssetImage('assets/to-do-list.png'),
                               ),
                             ],

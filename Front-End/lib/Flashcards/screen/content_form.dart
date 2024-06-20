@@ -60,7 +60,7 @@ class _ContentFormState extends State<ContentForm> {
             context,
             MaterialPageRoute(
               builder: (context) => FlashcardScreen(
-                  flashcards: flashcards, flashcardSetId: flashcardSetID),
+                   flashcardSetId: flashcardSetID),
             ),
           );
         } catch (e) {
