@@ -4,7 +4,9 @@ import 'package:flutter_application_1/Screens/Library/libray_page.dart';
 import 'package:flutter_application_1/Widgets/navigation_bar.dart';
 
 class LearningTabBar extends StatefulWidget {
-  const LearningTabBar({Key? key}) : super(key: key);
+  final int initialIndex;
+
+  const LearningTabBar({Key? key, this.initialIndex = 0}) : super(key: key);
 
   @override
   State<LearningTabBar> createState() => _LearningTabBarState();
@@ -17,7 +19,7 @@ class _LearningTabBarState extends State<LearningTabBar>
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 3, vsync: this);
+    _tabController = TabController(length: 3, vsync: this, initialIndex: widget.initialIndex);
   }
 
   @override
@@ -45,9 +47,10 @@ class _LearningTabBarState extends State<LearningTabBar>
           children: [
             TabBar(
               controller: _tabController,
+              dividerColor: Colors.transparent,
               indicator: BoxDecoration(
-                color: Colors.blue,
-                borderRadius: BorderRadius.circular(30),
+                color: Theme.of(context).colorScheme.secondary,
+                borderRadius: BorderRadius.circular(10),
               ),
               tabs: [
                 _buildTab('Notes', 0),
@@ -58,10 +61,10 @@ class _LearningTabBarState extends State<LearningTabBar>
             Expanded(
               child: TabBarView(
                 controller: _tabController,
-                children: const [
+                children: [
                   LibraryPage(),
                   FlashCardCollectionScreen(),
-                  Center(child: Text("Quiz feature is not available ")),
+                  Center(child: Text("Quiz feature is not available")),
                 ],
               ),
             ),
@@ -75,12 +78,20 @@ class _LearningTabBarState extends State<LearningTabBar>
     return Tab(
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 15.0),
-        decoration: BoxDecoration(borderRadius: BorderRadius.circular(10.0)),
-        child: Text(
-          text,
-          style: const TextStyle(
-            color: Colors.black,
-            fontWeight: FontWeight.bold,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            border: Border.all(
+              color: Theme.of(context).colorScheme.secondary,
+              width: 1,
+            )),
+        child: Align(
+          alignment: Alignment.center,
+          child: Text(
+            text,
+            style: const TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
       ),

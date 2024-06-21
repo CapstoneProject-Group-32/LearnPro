@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/Flashcards/screen/home_screen.dart';
 import 'package:flutter_application_1/Models/usermodel.dart';
 import 'package:flutter_application_1/Screens/Community/community_tabbar.dart';
 
@@ -16,6 +15,8 @@ import 'package:flutter_application_1/Widgets/navigation_bar.dart';
 import 'package:flutter_application_1/group/group_detail_page.dart';
 import 'package:flutter_application_1/Screens/Notification/group_invitation_notifications.dart';
 import 'package:intl/intl.dart';
+
+import 'Library/flash_card_collection.dart';
 
 class HomePage extends StatefulWidget {
   // final String uid;
@@ -277,6 +278,37 @@ class _HomePageState extends State<HomePage> {
                             height: 20,
                           ),
 
+
+//Icons
+
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              _iconMethod(
+                                context,
+                                const LearningTabBar(),
+                                const AssetImage('assets/ebook.png'),
+                              ),
+                              _iconMethod(
+                                context,
+                                const CommunityTabBar(),
+                                const AssetImage('assets/conversation.png'),
+                              ),
+                              _iconMethod(
+                                context,
+                                const TimerScreen(),
+                                const AssetImage(
+                                    'assets/pomodoro-technique.png'),
+                              ),
+                              _iconMethod(
+                                context,
+                                const FlashCardCollectionScreen(),
+                                const AssetImage('assets/to-do-list.png'),
+                              ),
+                            ],
+
                           //Icons
 
                           Padding(
@@ -310,6 +342,7 @@ class _HomePageState extends State<HomePage> {
                           ),
                           const SizedBox(
                             height: 20,
+
                           ),
 
                           // Daily Moto Card row calling
