@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Screens/Community/find_studybuddies.dart';
 import 'package:flutter_application_1/Screens/Community/tutored_users_screen.dart';
+import 'package:flutter_application_1/Widgets/navigation_bar.dart';
 import 'package:flutter_application_1/group/joined_group_screen.dart';
 
 class CommunityTabBar extends StatefulWidget {
@@ -65,113 +66,122 @@ class _CommunityTabBarState extends State<CommunityTabBar>
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
-          title: const Text(
-            "Community",
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 20,
-              color: Colors.black,
+    return WillPopScope(
+      onWillPop: () async {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const NavigationBarBottom()),
+        );
+        return false; // Prevent the default back button behavior
+      },
+      child: SafeArea(
+        child: Scaffold(
+          appBar: AppBar(
+            automaticallyImplyLeading: false,
+            title: const Text(
+              "Community",
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+                color: Colors.black,
+              ),
             ),
           ),
-        ),
-        body: isLoading
-            ? const Center(
-                child: SizedBox(
-                  height: 20,
-                  width: 20,
-                  child: CircularProgressIndicator(),
-                ),
-              )
-            : Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(15.0),
-                    child: TextField(
-                      controller: _search,
-                      decoration: InputDecoration(
-                        hintText: 'Search...',
-                        prefixIcon: GestureDetector(
-                          onTap: () {
-                            onSearch();
-                          },
-                          child: const Icon(Icons.search),
-                        ),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(35),
+          body: isLoading
+              ? const Center(
+                  child: SizedBox(
+                    height: 20,
+                    width: 20,
+                    child: CircularProgressIndicator(),
+                  ),
+                )
+              : Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(15.0),
+                      child: TextField(
+                        controller: _search,
+                        decoration: InputDecoration(
+                          hintText: 'Search...',
+                          prefixIcon: GestureDetector(
+                            onTap: () {
+                              onSearch();
+                            },
+                            child: const Icon(Icons.search),
+                          ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(35),
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  TabBar(
-                    controller: _tabController,
-                    dividerColor: Colors.transparent,
-                    indicator: BoxDecoration(
-                      color: Theme.of(context).colorScheme.secondary,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    tabs: [
-                      _buildTab(
-                        'People',
-                        0,
-                        context,
-                      ),
-                      _buildTab(
-                        'Groups',
-                        1,
-                        context,
-                      ),
-                      _buildTab(
-                        'Tutored You',
-                        2,
-                        context,
-                      ),
-                    ],
-                  ),
-                  Expanded(
-                    child: TabBarView(
+                    TabBar(
                       controller: _tabController,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(
-                            left: 15,
-                            right: 15,
-                            top: 10,
-                            bottom: 10,
-                          ),
-                          child: StudyBuddies(
-                            userMap: userMap,
-                            isLoading: isLoading,
-                            errorMessage: errorMessage,
-                            onSearch: onSearch,
-                          ),
+                      dividerColor: Colors.transparent,
+                      indicator: BoxDecoration(
+                        color: Theme.of(context).colorScheme.secondary,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      tabs: [
+                        _buildTab(
+                          'People',
+                          0,
+                          context,
                         ),
-                        const Padding(
-                          padding: EdgeInsets.only(
-                            left: 15,
-                            right: 15,
-                            top: 10,
-                            bottom: 10,
-                          ),
-                          child: JoinedGroupsScreen(),
+                        _buildTab(
+                          'Groups',
+                          1,
+                          context,
                         ),
-                        const Padding(
-                          padding: EdgeInsets.only(
-                            left: 15,
-                            right: 15,
-                            top: 10,
-                            bottom: 10,
-                          ),
-                          child: TutoredUsersScreen(),
+                        _buildTab(
+                          'Tutored You',
+                          2,
+                          context,
                         ),
                       ],
                     ),
-                  ),
-                ],
-              ),
+                    Expanded(
+                      child: TabBarView(
+                        controller: _tabController,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(
+                              left: 15,
+                              right: 15,
+                              top: 10,
+                              bottom: 10,
+                            ),
+                            child: StudyBuddies(
+                              userMap: userMap,
+                              isLoading: isLoading,
+                              errorMessage: errorMessage,
+                              onSearch: onSearch,
+                            ),
+                          ),
+                          const Padding(
+                            padding: EdgeInsets.only(
+                              left: 15,
+                              right: 15,
+                              top: 10,
+                              bottom: 10,
+                            ),
+                            child: JoinedGroupsScreen(),
+                          ),
+                          const Padding(
+                            padding: EdgeInsets.only(
+                              left: 15,
+                              right: 15,
+                              top: 10,
+                              bottom: 10,
+                            ),
+                            child: TutoredUsersScreen(),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+        ),
       ),
     );
   }

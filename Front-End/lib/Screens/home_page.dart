@@ -1,22 +1,15 @@
 import 'dart:async';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Models/usermodel.dart';
 import 'package:flutter_application_1/Screens/Community/community_tabbar.dart';
-
 import 'package:flutter_application_1/Screens/Community/request_tution.dart';
 import 'package:flutter_application_1/Screens/Notification/notification_tabbar.dart';
 import 'package:flutter_application_1/Screens/Timer/timer_page.dart';
-import 'package:flutter_application_1/Screens/Library/learning_tabbar.dart';
 import 'package:flutter_application_1/Widgets/navigation_bar.dart';
-
 import 'package:flutter_application_1/group/group_detail_page.dart';
-import 'package:flutter_application_1/Screens/Notification/group_invitation_notifications.dart';
 import 'package:intl/intl.dart';
-
-import 'Library/flash_card_collection.dart';
 
 class HomePage extends StatefulWidget {
   // final String uid;

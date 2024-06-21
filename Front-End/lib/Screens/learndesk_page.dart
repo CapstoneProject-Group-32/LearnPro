@@ -7,62 +7,71 @@ class LearnDesk extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: Theme.of(context).colorScheme.background,
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
-          title: const Text(
-            "Learn Desk",
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 20,
-              color: Colors.black,
+    return WillPopScope(
+      onWillPop: () async {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const NavigationBarBottom()),
+        );
+        return false; // Prevent the default back button behavior
+      },
+      child: SafeArea(
+        child: Scaffold(
+          backgroundColor: Theme.of(context).colorScheme.background,
+          appBar: AppBar(
+            automaticallyImplyLeading: false,
+            title: const Text(
+              "Learn Desk",
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+                color: Colors.black,
+              ),
             ),
           ),
-        ),
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              const SizedBox(
-                height: 5,
-              ),
-//Learn Desk Container Row Method calling
+          body: SingleChildScrollView(
+            child: Column(
+              children: [
+                const SizedBox(
+                  height: 5,
+                ),
+                //Learn Desk Container Row Method calling
 
-              _learndeskContainerRowMethod(
-                context,
-                const AssetImage('assets/clock.png'),
-                'Focus Timer',
-                const TimerScreen(),
-                const AssetImage('assets/cloud.png'),
-                'Upload Notes',
-                const NavigationBarBottom(
-                    initialIndex: 1, learningTabBarIndex: 0),
-              ),
-              _learndeskContainerRowMethod(
-                context,
-                const AssetImage('assets/flashcards.png'),
-                'Create Flashcards',
-                const NavigationBarBottom(
-                    initialIndex: 1, learningTabBarIndex: 1),
-                const AssetImage('assets/help.png'),
-                'Request Tution',
-                const NavigationBarBottom(
-                    initialIndex: 3, communityTabBarIndex: 0),
-              ),
+                _learndeskContainerRowMethod(
+                  context,
+                  const AssetImage('assets/clock.png'),
+                  'Focus Timer',
+                  const TimerScreen(),
+                  const AssetImage('assets/cloud.png'),
+                  'Upload Notes',
+                  const NavigationBarBottom(
+                      initialIndex: 1, learningTabBarIndex: 0),
+                ),
+                _learndeskContainerRowMethod(
+                  context,
+                  const AssetImage('assets/flashcards.png'),
+                  'Create Flashcards',
+                  const NavigationBarBottom(
+                      initialIndex: 1, learningTabBarIndex: 1),
+                  const AssetImage('assets/help.png'),
+                  'Request Tution',
+                  const NavigationBarBottom(
+                      initialIndex: 3, communityTabBarIndex: 0),
+                ),
 
-              _learndeskContainerRowMethod(
-                context,
-                const AssetImage('assets/target.png'),
-                'Set Goals',
-                const NavigationBarBottom(
-                    initialIndex: 1, learningTabBarIndex: 2),
-                const AssetImage('assets/quiz.png'),
-                'Quizes',
-                const NavigationBarBottom(
-                    initialIndex: 1, learningTabBarIndex: 2),
-              ),
-            ],
+                _learndeskContainerRowMethod(
+                  context,
+                  const AssetImage('assets/target.png'),
+                  'Set Goals',
+                  const NavigationBarBottom(
+                      initialIndex: 1, learningTabBarIndex: 2),
+                  const AssetImage('assets/quiz.png'),
+                  'Quizes',
+                  const NavigationBarBottom(
+                      initialIndex: 1, learningTabBarIndex: 2),
+                ),
+              ],
+            ),
           ),
         ),
       ),

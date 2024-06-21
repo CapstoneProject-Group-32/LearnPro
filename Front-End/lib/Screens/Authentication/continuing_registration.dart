@@ -4,14 +4,14 @@ import 'package:flutter_application_1/Models/usermodel.dart';
 import 'package:flutter_application_1/Services/auth_firebase.dart';
 import 'package:image_picker/image_picker.dart';
 
-class EditProfile extends StatefulWidget {
-  const EditProfile({super.key});
+class ContinuingRegistration extends StatefulWidget {
+  const ContinuingRegistration({super.key});
 
   @override
-  State<EditProfile> createState() => _EditProfileState();
+  State<ContinuingRegistration> createState() => _ContinuingRegistrationState();
 }
 
-class _EditProfileState extends State<EditProfile> {
+class _ContinuingRegistrationState extends State<ContinuingRegistration> {
   final TextEditingController _majorController = TextEditingController();
   final TextEditingController _userNameController = TextEditingController();
   Uint8List? _profileImage;

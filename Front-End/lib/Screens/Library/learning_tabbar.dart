@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Screens/Library/flash_card_collection.dart';
 import 'package:flutter_application_1/Screens/Library/libray_page.dart';
+import 'package:flutter_application_1/Widgets/navigation_bar.dart';
 
 class LearningTabBar extends StatefulWidget {
   final int initialIndex;
@@ -30,47 +31,56 @@ class _LearningTabBarState extends State<LearningTabBar>
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
-          title: const Text(
-            "Library",
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 20,
-              color: Colors.black,
+    return WillPopScope(
+      onWillPop: () async {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const NavigationBarBottom()),
+        );
+        return false; // Prevent the default back button behavior
+      },
+      child: SafeArea(
+        child: Scaffold(
+          appBar: AppBar(
+            automaticallyImplyLeading: false,
+            title: const Text(
+              "Library",
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+                color: Colors.black,
+              ),
             ),
           ),
-        ),
-        body: Column(
-          children: [
-            TabBar(
-              controller: _tabController,
-              dividerColor: Colors.transparent,
-              indicator: BoxDecoration(
-                color: Theme.of(context).colorScheme.secondary,
-                borderRadius: BorderRadius.circular(10),
-              ),
-              tabs: [
-                _buildTab('Notes', 0),
-                _buildTab('Flashcards', 1),
-                _buildTab('Quizzes', 2),
-              ],
-            ),
-            Expanded(
-              child: TabBarView(
+          body: Column(
+            children: [
+              TabBar(
                 controller: _tabController,
-                children: const [
-                  LibraryPage(),
-                  FlashCardCollectionScreen(),
-                  Center(
-                    child: Text("Quiz feature is not available"),
-                  ),
+                dividerColor: Colors.transparent,
+                indicator: BoxDecoration(
+                  color: Theme.of(context).colorScheme.secondary,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                tabs: [
+                  _buildTab('Notes', 0),
+                  _buildTab('Flashcards', 1),
+                  _buildTab('Quizzes', 2),
                 ],
               ),
-            ),
-          ],
+              Expanded(
+                child: TabBarView(
+                  controller: _tabController,
+                  children: const [
+                    LibraryPage(),
+                    FlashCardCollectionScreen(),
+                    Center(
+                      child: Text("Quiz feature is not available"),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
