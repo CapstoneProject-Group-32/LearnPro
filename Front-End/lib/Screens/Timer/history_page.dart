@@ -45,6 +45,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(
         title: const Text(
           "Focus History",
@@ -73,20 +74,69 @@ class _HistoryScreenState extends State<HistoryScreen> {
                   children: [
                     Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        'Total Focus Time: ${formatDuration(sumOfFocusTimeInSeconds)}', // Display the correctly formatted total focus time
-                        style: const TextStyle(fontSize: 18),
+                      child: Container(
+                        width: 300,
+                        height: 50,
+                        decoration: ShapeDecoration(
+                          color: Theme.of(context).colorScheme.secondary,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(35),
+                          ),
+                          shadows: const [
+                            BoxShadow(
+                              color: Color(0x3F000000),
+                              blurRadius: 4,
+                              offset: Offset(0, 4),
+                              spreadRadius: 0,
+                            )
+                          ],
+                        ),
+                        child: Align(
+                          alignment: Alignment.center,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              'Total Focus Time: ${formatDuration(sumOfFocusTimeInSeconds)}', // Display the correctly formatted total focus time
+                              style: const TextStyle(fontSize: 15),
+                            ),
+                          ),
+                        ),
                       ),
                     ),
                     Expanded(
                       child: ListView.builder(
                         itemCount: listHistory.length,
                         itemBuilder: (context, index) {
-                          return ListTile(
-                            title: Text(
-                                'Focus Duration: ${formatDuration(listHistory[index].focusedSecs)}'),
-                            subtitle: Text(
-                                'Date: ${listHistory[index].dateTime.toLocal().toString().split(' ')[0]}'),
+                          return Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                              width: 370,
+                              height: 75,
+                              decoration: ShapeDecoration(
+                                color: Theme.of(context).colorScheme.primary,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                shadows: const [
+                                  BoxShadow(
+                                    color: Color(0x3F000000),
+                                    blurRadius: 4,
+                                    offset: Offset(0, 4),
+                                    spreadRadius: 0,
+                                  )
+                                ],
+                              ),
+                              child: ListTile(
+                                title: Text(
+                                    'Focus Duration: ${formatDuration(listHistory[index].focusedSecs)}'),
+                                subtitle: Text(
+                                  'Date: ${listHistory[index].dateTime.toLocal().toString().split(' ')[0]}',
+                                  style: const TextStyle(
+                                    fontSize: 11,
+                                  ),
+                                ),
+                              ),
+                            ),
                           );
                         },
                       ),

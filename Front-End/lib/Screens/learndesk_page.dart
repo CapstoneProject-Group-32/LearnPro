@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Screens/Timer/timer_page.dart';
 import 'package:flutter_application_1/Screens/library.dart';
-import 'package:flutter_application_1/Widgets/navigation_bar.dart';
 
 class LearnDesk extends StatelessWidget {
   const LearnDesk({super.key});
@@ -54,7 +53,7 @@ class LearnDesk extends StatelessWidget {
                 const AssetImage('assets/target.png'),
                 'Set Goals',
                 const Library(),
-                const AssetImage('assets/quize.png'),
+                const AssetImage('assets/quiz.png'),
                 'Quizes',
                 const Library(),
               ),

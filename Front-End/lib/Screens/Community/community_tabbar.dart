@@ -1,10 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-
 import 'package:flutter_application_1/Screens/Community/find_studybuddies.dart';
 import 'package:flutter_application_1/Screens/Community/tutored_users_screen.dart';
-
-import 'package:flutter_application_1/Widgets/navigation_bar.dart';
 import 'package:flutter_application_1/group/joined_group_screen.dart';
 
 class CommunityTabBar extends StatefulWidget {
@@ -69,35 +66,12 @@ class _CommunityTabBarState extends State<CommunityTabBar>
       child: Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
-          title: InkWell(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const NavigationBarBottom(),
-                ),
-              );
-            },
-            child: const Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Icon(
-                  Icons.arrow_back_ios_new_rounded,
-                  size: 20,
-                  color: Colors.black,
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                Text(
-                  "Student Community",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
-                    color: Colors.black,
-                  ),
-                ),
-              ],
+          title: const Text(
+            "Community",
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 20,
+              color: Colors.black,
             ),
           ),
         ),
