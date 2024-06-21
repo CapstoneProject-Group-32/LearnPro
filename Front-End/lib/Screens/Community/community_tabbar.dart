@@ -1,10 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-
 import 'package:flutter_application_1/Screens/Community/find_studybuddies.dart';
 import 'package:flutter_application_1/Screens/Community/tutored_users_screen.dart';
-
-import 'package:flutter_application_1/Widgets/navigation_bar.dart';
 import 'package:flutter_application_1/group/joined_group_screen.dart';
 
 class CommunityTabBar extends StatefulWidget {
@@ -68,26 +65,14 @@ class _CommunityTabBarState extends State<CommunityTabBar>
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
+          automaticallyImplyLeading: false,
           title: const Text(
-            "Student Community",
+            "Community",
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 20,
               color: Colors.black,
             ),
-          ),
-          leading: IconButton(
-            icon: const Icon(
-              Icons.arrow_back_ios_new_rounded,
-              size: 20,
-              color: Colors.black,
-            ),
-            onPressed: () {
-              Navigator.push(
-                  context, // Context of the current widget
-                  MaterialPageRoute(
-                      builder: (context) => const NavigationBarBottom()));
-            },
           ),
         ),
         body: isLoading

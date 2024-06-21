@@ -286,10 +286,10 @@ class _UserProfileState extends State<UserProfile> {
             ),
             Text(
               label,
-              style: const TextStyle(
+              style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w300,
-                  color: Color(0xFF6F7665)),
+                  color: Colors.grey.shade800),
             ),
           ],
         ),

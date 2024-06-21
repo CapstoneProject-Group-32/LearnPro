@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_application_1/Screens/Authentication/verification.dart';
 import 'package:flutter_application_1/Services/auth_firebase.dart';
 
@@ -135,10 +136,10 @@ class _CreateAccountState extends State<CreateAccount> {
                   height: 150,
                   width: 150,
                 ),
-                const SizedBox(height: 30),
+                const SizedBox(height: 20),
                 const Center(
                   child: Text(
-                    "Create Account",
+                    "Create account",
                     style: TextStyle(
                       fontSize: 25,
                       fontWeight: FontWeight.w500,
@@ -151,46 +152,46 @@ class _CreateAccountState extends State<CreateAccount> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Stack(
-                            children: [
-                              _profileImage != null
-                                  ? CircleAvatar(
-                                      radius: 50,
-                                      backgroundColor: Colors.grey[300],
-                                      backgroundImage:
-                                          MemoryImage(_profileImage!),
-                                    )
-                                  : CircleAvatar(
-                                      radius: 50,
-                                      backgroundColor: Colors.grey[300],
-                                      backgroundImage: const AssetImage(
-                                          'assets/userIconImage.png'),
+                      GestureDetector(
+                        onTap: selectImage,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Stack(
+                              children: [
+                                _profileImage != null
+                                    ? CircleAvatar(
+                                        radius: 50,
+                                        backgroundColor: Colors.grey[300],
+                                        backgroundImage:
+                                            MemoryImage(_profileImage!),
+                                      )
+                                    : CircleAvatar(
+                                        radius: 50,
+                                        backgroundColor: Colors.grey[300],
+                                        backgroundImage: const AssetImage(
+                                            'assets/defaultuser.png'),
+                                      ),
+                                Positioned(
+                                  bottom: 0,
+                                  right: 0,
+                                  child: Container(
+                                    height: 35,
+                                    width: 28,
+                                    decoration: BoxDecoration(
+                                      color: Colors.transparent,
+                                      borderRadius: BorderRadius.circular(30),
                                     ),
-                              Positioned(
-                                bottom: 0,
-                                right: 0,
-                                child: Container(
-                                  height: 40,
-                                  width: 40,
-                                  decoration: BoxDecoration(
-                                    color: Colors.white70,
-                                    borderRadius: BorderRadius.circular(30),
-                                  ),
-                                  child: IconButton(
-                                    onPressed: selectImage,
-                                    icon: Icon(
+                                    child: Icon(
                                       Icons.add_a_photo,
                                       color: Colors.grey[600],
                                     ),
                                   ),
                                 ),
-                              ),
-                            ],
-                          ),
-                        ],
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
                       const SizedBox(
                         height: 10,
@@ -337,7 +338,7 @@ class _CreateAccountState extends State<CreateAccount> {
                           decoration: ShapeDecoration(
                             color: Theme.of(context).colorScheme.secondary,
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(35),
+                              borderRadius: BorderRadius.circular(10),
                             ),
                             shadows: const [
                               BoxShadow(
@@ -353,9 +354,9 @@ class _CreateAccountState extends State<CreateAccount> {
                               'Register',
                               style: TextStyle(
                                 color: Colors.black,
-                                fontSize: 20,
+                                fontSize: 17,
                                 fontFamily: 'Work Sans',
-                                fontWeight: FontWeight.w500,
+                                fontWeight: FontWeight.w400,
                               ),
                             ),
                           ),
@@ -368,8 +369,7 @@ class _CreateAccountState extends State<CreateAccount> {
                       const Text(
                         "Already have an account?",
                         style: TextStyle(
-                          color: Color(0xFF092D3F),
-                          fontSize: 17,
+                          fontSize: 12,
                         ),
                       ),
                       const SizedBox(
@@ -389,7 +389,7 @@ class _CreateAccountState extends State<CreateAccount> {
                           decoration: ShapeDecoration(
                             color: Theme.of(context).colorScheme.secondary,
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(35),
+                              borderRadius: BorderRadius.circular(10),
                             ),
                             shadows: const [
                               BoxShadow(
@@ -405,9 +405,9 @@ class _CreateAccountState extends State<CreateAccount> {
                               'Login',
                               style: TextStyle(
                                 color: Colors.black,
-                                fontSize: 20,
+                                fontSize: 17,
                                 fontFamily: 'Work Sans',
-                                fontWeight: FontWeight.w500,
+                                fontWeight: FontWeight.w400,
                               ),
                             ),
                           ),

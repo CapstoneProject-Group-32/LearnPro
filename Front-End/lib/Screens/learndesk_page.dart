@@ -53,7 +53,7 @@ class LearnDesk extends StatelessWidget {
                 const AssetImage('assets/target.png'),
                 'Set Goals',
                 const Library(),
-                const AssetImage('assets/quize.png'),
+                const AssetImage('assets/quiz.png'),
                 'Quizes',
                 const Library(),
               ),

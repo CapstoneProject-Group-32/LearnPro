@@ -21,7 +21,7 @@ ThemeData lightTheme = ThemeData(
   inputDecorationTheme: const InputDecorationTheme(
     labelStyle: TextStyle(
       color: Colors.green, // Custom label color
-      fontSize: 17,
+      fontSize: 14,
       fontWeight: FontWeight.w400,
     ),
     focusedBorder: OutlineInputBorder(
