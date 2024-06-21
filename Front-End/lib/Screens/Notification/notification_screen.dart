@@ -6,8 +6,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_application_1/Screens/Community/schedule_meeting.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import 'user_profile.dart';
-
 class StorageMethods {
   final FirebaseStorage _storage = FirebaseStorage.instance;
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -256,27 +254,6 @@ class _NotificationScreenState extends State<NotificationScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
-          title: const Text(
-            "Profile",
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 20,
-              color: Colors.black,
-            ),
-          ),
-          leading: IconButton(
-            icon: const Icon(
-              Icons.arrow_back_ios_new_rounded,
-              size: 20,
-              color: Colors.black,
-            ),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          ),
-        ),
         backgroundColor: Theme.of(context).colorScheme.background,
         body: Container(
           width: MediaQuery.of(context).size.width,

@@ -8,11 +8,13 @@ import 'package:flutter_application_1/Models/usermodel.dart';
 import 'package:flutter_application_1/Screens/Community/community_tabbar.dart';
 
 import 'package:flutter_application_1/Screens/Community/request_tution.dart';
+import 'package:flutter_application_1/Screens/Notification/notification_tabbar.dart';
 import 'package:flutter_application_1/Screens/Timer/timer_page.dart';
 import 'package:flutter_application_1/Screens/Library/learning_tabbar.dart';
+import 'package:flutter_application_1/Widgets/navigation_bar.dart';
 
 import 'package:flutter_application_1/group/group_detail_page.dart';
-import 'package:flutter_application_1/group/group_invitation_notifications.dart';
+import 'package:flutter_application_1/Screens/Notification/group_invitation_notifications.dart';
 import 'package:intl/intl.dart';
 
 class HomePage extends StatefulWidget {
@@ -100,253 +102,281 @@ class _HomePageState extends State<HomePage> {
               List<String> joinedgroups =
                   List<String>.from(userData['joinedgroups'] ?? []);
 //new code added by eranga
-              return SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Column(
-                      children: [
-// First container
+              return WillPopScope(
+                onWillPop: () async {
+                  final value = await showDialog<bool>(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          title: const Text("Alert"),
+                          content: const Text("Do you want to exit"),
+                          actions: [
+                            ElevatedButton(
+                              onPressed: () => Navigator.of(context).pop(false),
+                              child: const Text("No"),
+                            ),
+                            ElevatedButton(
+                              onPressed: () => Navigator.of(context).pop(true),
+                              child: const Text("Exit"),
+                            ),
+                          ],
+                        );
+                      });
+                  if (value != null) {
+                    return Future.value(value);
+                  } else {
+                    return Future.value(false);
+                  }
+                },
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Column(
+                        children: [
+                          // First container
 
-                        Container(
-                          height: 230,
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                            color: Theme.of(context).colorScheme.primary,
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
+                          Container(
+                            height: 230,
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                              color: Theme.of(context).colorScheme.primary,
+                            ),
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
-                              child: Column(
-                                children: [
-// Name and Date
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Column(
+                                  children: [
+                                    // Name and Date
 
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                      left: 10,
-                                    ),
-                                    child: Row(
-                                      children: [
-                                        Expanded(
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-//Name
-                                              Text(
-                                                user.userName,
-                                                style: const TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 20,
-                                                    color: Colors.black),
-                                              ),
-
-//date
-                                              Text(
-                                                formattedDate,
-                                                style: const TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 13,
-                                                  color: Colors.black,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-
-                                        const SizedBox(
-                                          width: 100,
-                                        ),
-
-//Notification
-
-                                        Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.end,
-                                          children: [
-                                            GestureDetector(
-                                              child: const Icon(
-                                                Icons.notifications,
-                                                size: 30,
-                                              ),
-                                              onTap: () {
-                                                Navigator.push(
-                                                  context, // Context of the current widget
-                                                  MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          const GroupInvitationNotificationScreen()),
-                                                );
-                                              },
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-
-                                  const SizedBox(
-                                    height: 15,
-                                  ),
-
-// Today progress container
-
-                                  Container(
-                                    height: 125,
-                                    width: 350,
-                                    decoration: BoxDecoration(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .secondary,
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                        left: 10,
+                                      ),
+                                      child: Row(
                                         children: [
-                                          const Text(
-                                            "Today Progress",
-                                            style: TextStyle(
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.w400,
-                                                color: Colors.black),
+                                          Expanded(
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                //Name
+                                                Text(
+                                                  user.userName,
+                                                  style: const TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 20,
+                                                      color: Colors.black),
+                                                ),
+
+                                                //date
+                                                Text(
+                                                  formattedDate,
+                                                  style: const TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 13,
+                                                    color: Colors.black,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
                                           ),
+
                                           const SizedBox(
-                                            height: 10,
+                                            width: 100,
                                           ),
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceAround,
+
+                                          //Notification
+
+                                          Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.end,
                                             children: [
-                                              _progressContainer(
-                                                "4h",
-                                                "Focus Time",
-                                              ),
-                                              _progressContainer(
-                                                "300",
-                                                "Points",
-                                              ),
-                                              _progressContainer(
-                                                "3",
-                                                "Tutored",
+                                              GestureDetector(
+                                                child: const Icon(
+                                                  Icons.notifications,
+                                                  size: 30,
+                                                ),
+                                                onTap: () {
+                                                  Navigator.push(
+                                                    context, // Context of the current widget
+                                                    MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            const NotificationTabBar()),
+                                                  );
+                                                },
                                               ),
                                             ],
                                           ),
                                         ],
                                       ),
                                     ),
-                                  ),
-                                ],
+
+                                    const SizedBox(
+                                      height: 15,
+                                    ),
+
+                                    // Today progress container
+
+                                    Container(
+                                      height: 125,
+                                      width: 350,
+                                      decoration: BoxDecoration(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .secondary,
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            const Text(
+                                              "Today Progress",
+                                              style: TextStyle(
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.w400,
+                                                  color: Colors.black),
+                                            ),
+                                            const SizedBox(
+                                              height: 10,
+                                            ),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceAround,
+                                              children: [
+                                                _progressContainer(
+                                                  "4h",
+                                                  "Focus Time",
+                                                ),
+                                                _progressContainer(
+                                                  "300",
+                                                  "Points",
+                                                ),
+                                                _progressContainer(
+                                                  "3",
+                                                  "Tutored",
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           ),
-                        ),
 
-                        const SizedBox(
-                          height: 20,
-                        ),
-
-//Icons
-
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              _iconMethod(
-                                context,
-                                const LearningTabBar(),
-                                const AssetImage('assets/ebook.png'),
-                              ),
-                              _iconMethod(
-                                context,
-                                const CommunityTabBar(),
-                                const AssetImage('assets/conversation.png'),
-                              ),
-                              _iconMethod(
-                                context,
-                                const TimerScreen(),
-                                const AssetImage(
-                                    'assets/pomodoro-technique.png'),
-                              ),
-                              _iconMethod(
-                                context,
-                                const HomeScreen(),
-                                const AssetImage('assets/to-do-list.png'),
-                              ),
-                            ],
+                          const SizedBox(
+                            height: 20,
                           ),
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
 
-// Daily Moto Card row calling
+                          //Icons
 
-                        _dailyMotoCardRow(),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                _iconMethod(
+                                  context,
+                                  const NavigationBarBottom(initialIndex: 1),
+                                  const AssetImage('assets/ebook.png'),
+                                ),
+                                _iconMethod(
+                                  context,
+                                  const NavigationBarBottom(initialIndex: 3),
+                                  const AssetImage('assets/conversation.png'),
+                                ),
+                                _iconMethod(
+                                  context,
+                                  const TimerScreen(),
+                                  const AssetImage(
+                                      'assets/pomodoro-technique.png'),
+                                ),
+                                _iconMethod(
+                                  context,
+                                  const HomeScreen(),
+                                  const AssetImage('assets/to-do-list.png'),
+                                ),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
 
-                        const SizedBox(
-                          height: 20,
-                        ),
+                          // Daily Moto Card row calling
 
-//Today Goals subheading by calling subtopic method
+                          _dailyMotoCardRow(),
 
-                        //_subtopics('Today Goals'),
+                          const SizedBox(
+                            height: 20,
+                          ),
 
-//Join Groups subheading by calling subtopic method
+                          //Today Goals subheading by calling subtopic method
 
-                        _subtopics('Join Groups'),
-                        const SizedBox(
-                          height: 20,
-                        ),
+                          //_subtopics('Today Goals'),
 
-//calling buildGroupList method
+                          //Join Groups subheading by calling subtopic method
 
-                        _buildGroupsList(joinedgroups),
-                        const SizedBox(
-                          height: 20,
-                        ),
+                          _subtopics('Join Groups'),
+                          const SizedBox(
+                            height: 20,
+                          ),
 
-// ViewAll Button method calling
+                          //calling buildGroupList method
 
-                        _viewallButton(
-                          context,
-                          const CommunityTabBar(),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
+                          _buildGroupsList(joinedgroups),
+                          const SizedBox(
+                            height: 20,
+                          ),
 
-//Your Freinds subheading by calling subtopic method
+                          // ViewAll Button method calling
 
-                        _subtopics('Your Freinds'),
+                          _viewallButton(
+                            context,
+                            const CommunityTabBar(),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
 
-                        const SizedBox(
-                          height: 10,
-                        ),
+                          //Your Freinds subheading by calling subtopic method
 
-//Calling buildFreindsList method
+                          _subtopics('Your Freinds'),
 
-                        _buildFriendsList(friends),
-                        const SizedBox(
-                          height: 27,
-                        ),
+                          const SizedBox(
+                            height: 10,
+                          ),
 
-// ViewALL Button method calling
+                          //Calling buildFreindsList method
 
-                        _viewallButton(
-                          context,
-                          const CommunityTabBar(),
-                        ),
+                          _buildFriendsList(friends),
+                          const SizedBox(
+                            height: 27,
+                          ),
 
-                        const SizedBox(
-                          height: 20,
-                        ),
-                      ],
-                    ),
-                  ],
+                          // ViewALL Button method calling
+
+                          _viewallButton(
+                            context,
+                            const CommunityTabBar(),
+                          ),
+
+                          const SizedBox(
+                            height: 20,
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               );
             } else if (snapshot.hasError) {
@@ -416,7 +446,7 @@ class _HomePageState extends State<HomePage> {
       ),
       _dailyMotoCard(
         "“The most important thing you learn in school is how to learn.",
-        const AssetImage('assets/artificial-intelligence.gif'),
+        const AssetImage('assets/task.png'),
       ),
       // Add more cards as needed
     ];
@@ -533,7 +563,9 @@ class _HomePageState extends State<HomePage> {
           child: Center(
             child: Text(
               "No joined groups",
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                fontSize: 15,
+              ),
             ),
           ),
         ),
@@ -788,7 +820,9 @@ class _HomePageState extends State<HomePage> {
           child: Center(
             child: Text(
               "No freinds found",
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                fontSize: 15,
+              ),
             ),
           ),
         ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/Screens/Authentication/forgot_password_screen.dart';
 import 'package:flutter_application_1/Services/auth_firebase.dart';
-import 'package:flutter_application_1/Widgets/navigation_bar.dart';
+import 'package:flutter_application_1/wrapper.dart';
 
 class LoginPage extends StatefulWidget {
   final Function toggle;
@@ -50,6 +51,8 @@ class _LoginPageState extends State<LoginPage> {
         password: password,
       );
 
+      if (!mounted) return; // Check if the widget is still in the tree
+
       setState(() {
         isLoading = false;
         _generalErrorMessage = null; // Reset the general error message
@@ -62,8 +65,7 @@ class _LoginPageState extends State<LoginPage> {
         } else if (result == "success") {
           Navigator.pushReplacement(
             context,
-            MaterialPageRoute(
-                builder: (context) => const NavigationBarBottom()),
+            MaterialPageRoute(builder: (context) => const Wrapper()),
           );
         } else {
           _generalErrorMessage = result;
@@ -79,21 +81,20 @@ class _LoginPageState extends State<LoginPage> {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Container(
-            height: MediaQuery.of(context).size.height,
             width: double.infinity,
             padding: const EdgeInsets.symmetric(horizontal: 32),
             child: Column(
               children: [
                 const SizedBox(height: 30),
                 Image.asset(
-                  "assets/LearnProLogo.jpg",
+                  "assets/LearnProLogo_transparent.png",
                   height: 150,
                   width: 150,
                 ),
-                const SizedBox(height: 30),
+                const SizedBox(height: 20),
                 const Center(
                   child: Text(
-                    "Login with Email",
+                    "Welcome back",
                     style: TextStyle(
                       fontSize: 25,
                       fontWeight: FontWeight.w500,
@@ -101,7 +102,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                 ),
-                const SizedBox(height: 45),
+                const SizedBox(height: 25),
                 Form(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -110,47 +111,50 @@ class _LoginPageState extends State<LoginPage> {
                         controller: _emailController,
                         decoration: InputDecoration(
                           labelText: "Email",
-                          labelStyle: TextStyle(
-                            color: Theme.of(context).colorScheme.primary,
-                            fontSize: 17,
-                            fontWeight: FontWeight.w500,
-                          ),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(5),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Theme.of(context).colorScheme.primary,
-                              width: 2,
-                            ),
                           ),
                           errorText: _emailError,
                         ),
                       ),
-                      const SizedBox(height: 30),
+                      const SizedBox(height: 20),
                       TextFormField(
                         controller: _passwordController,
                         obscureText: true,
                         decoration: InputDecoration(
                           labelText: "Password",
-                          labelStyle: TextStyle(
-                            color: Theme.of(context).colorScheme.primary,
-                            fontSize: 17,
-                            fontWeight: FontWeight.w400,
-                          ),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(5),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Theme.of(context).colorScheme.primary,
-                              width: 2,
-                            ),
                           ),
                           errorText: _passwordError,
                         ),
                       ),
-                      const SizedBox(height: 30),
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: Builder(
+                          builder: (BuildContext context) {
+                            return GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        const ForgotPasswordScreen(),
+                                  ),
+                                );
+                              },
+                              child: const Text(
+                                "Forgot Password?",
+                                style: TextStyle(
+                                  color: Colors.blue,
+                                  fontSize: 12,
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                      const SizedBox(height: 10),
                       GestureDetector(
                         onTap: () {
                           if (!isLoading) loginUser();
@@ -161,7 +165,7 @@ class _LoginPageState extends State<LoginPage> {
                           decoration: ShapeDecoration(
                             color: Theme.of(context).colorScheme.secondary,
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(35),
+                              borderRadius: BorderRadius.circular(10),
                             ),
                             shadows: const [
                               BoxShadow(
@@ -182,9 +186,9 @@ class _LoginPageState extends State<LoginPage> {
                                     'Login',
                                     style: TextStyle(
                                       color: Colors.black,
-                                      fontSize: 20,
+                                      fontSize: 17,
                                       fontFamily: 'Work Sans',
-                                      fontWeight: FontWeight.w500,
+                                      fontWeight: FontWeight.w400,
                                     ),
                                   ),
                           ),
@@ -199,15 +203,13 @@ class _LoginPageState extends State<LoginPage> {
                             fontSize: 12,
                           ),
                         ),
-                      const SizedBox(height: 8),
                       const Text(
                         "Don't have an account?",
                         style: TextStyle(
-                          color: Color(0xFF092D3F),
-                          fontSize: 17,
+                          fontSize: 12,
                         ),
                       ),
-                      const SizedBox(height: 8),
+                      const SizedBox(height: 5),
                       GestureDetector(
                         onTap: () {
                           widget.toggle();
@@ -218,7 +220,7 @@ class _LoginPageState extends State<LoginPage> {
                           decoration: ShapeDecoration(
                             color: Theme.of(context).colorScheme.secondary,
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(35),
+                              borderRadius: BorderRadius.circular(10),
                             ),
                             shadows: const [
                               BoxShadow(
@@ -234,9 +236,9 @@ class _LoginPageState extends State<LoginPage> {
                               'Create a new Account',
                               style: TextStyle(
                                 color: Colors.black,
-                                fontSize: 20,
+                                fontSize: 17,
                                 fontFamily: 'Work Sans',
-                                fontWeight: FontWeight.w500,
+                                fontWeight: FontWeight.w400,
                               ),
                             ),
                           ),
@@ -244,6 +246,80 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       const SizedBox(
                         height: 20,
+                      ),
+                      const Row(
+                        children: [
+                          Expanded(
+                            child: Divider(
+                              thickness: 0,
+                            ),
+                          ),
+                          SizedBox(
+                            width: 4,
+                          ),
+                          Text(
+                            "OR",
+                            style: TextStyle(
+                              fontSize: 12,
+                            ),
+                          ),
+                          SizedBox(
+                            width: 4,
+                          ),
+                          Expanded(
+                            child: Divider(
+                              thickness: 0,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          widget.toggle();
+                        },
+                        child: Container(
+                          width: 275,
+                          height: 50,
+                          decoration: ShapeDecoration(
+                            color: Theme.of(context).colorScheme.secondary,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            shadows: const [
+                              BoxShadow(
+                                color: Color(0x3F000000),
+                                blurRadius: 4,
+                                offset: Offset(0, 4),
+                                spreadRadius: 0,
+                              ),
+                            ],
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Image.asset(
+                                "assets/google.png",
+                                height: 30,
+                                width: 30,
+                              ),
+                              const SizedBox(
+                                width: 15,
+                              ),
+                              const Text(
+                                'Continue with Google',
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 17,
+                                  fontFamily: 'Work Sans',
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
                     ],
                   ),

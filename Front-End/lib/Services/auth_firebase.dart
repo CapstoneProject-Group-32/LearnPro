@@ -37,59 +37,6 @@ class AuthServices {
 
   //register using email and password
 
-  // Future<String> registerWithEmailAndPassword({
-  //   required Uint8List profilePic,
-  //   required String email,
-  //   required String userName,
-  //   required String major,
-  //   required String password,
-  //   required String confirmPassword,
-  // }) async {
-  //   String res = "An error occured";
-  //   try {
-  //     if (userName.isNotEmpty &&
-  //         password.isNotEmpty &&
-  //         email.isNotEmpty &&
-  //         confirmPassword.isNotEmpty &&
-  //         major.isNotEmpty &&
-  //         profilePic.isNotEmpty &&
-  //         password == confirmPassword) {
-  //       //create a new user
-
-  //       final UserCredential userCredential = await _auth
-  //           .createUserWithEmailAndPassword(email: email, password: password);
-
-  //       //the profile pic to the storage
-  //       String photoURL = await StorageMethods().uploadImage(
-  //         folderName: "ProfileImages",
-  //         isFile: false,
-  //         file: profilePic,
-  //       );
-
-  //       UserModel user = UserModel(
-  //         uid: _auth.currentUser!.uid,
-  //         email: email,
-  //         userName: userName,
-  //         major: major,
-  //         profilePic: photoURL,
-  //         friends: [],
-  //       );
-
-  //       if (userCredential.user != null) {
-  //         await _firestore.collection('users').doc(_auth.currentUser!.uid).set(
-  //               user.toJSON(),
-  //             );
-  //         res = "success";
-  //       } else {
-  //         res = "Passwords do not match or some fields are empty";
-  //       }
-  //     }
-  //   } catch (error) {
-  //     res = error.toString();
-  //   }
-  //   return res;
-  // }
-
   Future<String> registerWithEmailAndPassword({
     required Uint8List profilePic,
     required String email,
@@ -160,42 +107,17 @@ class AuthServices {
     return res;
   }
 
+  //Email Verification
+
+  Future<void> sendEmailVerificationLink() async {
+    try {
+      await _auth.currentUser?.sendEmailVerification();
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
   //login using email and password
-
-  // Future<String> loginWithEmailAndPassword({
-  //   required String email,
-  //   required String password,
-  // }) async {
-  //   String res = "An error occured";
-
-  //   try {
-  //     //if the inputs are not empty
-  //     if (email.isNotEmpty && password.isNotEmpty) {
-  //       //login the user with email and password
-  //       await _auth.signInWithEmailAndPassword(
-  //           email: email, password: password);
-
-  //       res = "success";
-  //     } else {
-  //       res = "Please enter email and password";
-  //     }
-  //   }
-
-  //   //catch the errors extra error handling
-  //   on FirebaseAuthException catch (error) {
-  //     if (error.code == "invalid-email") {
-  //       res = "Invalid email";
-  //     } else if (error.code == "weak-password") {
-  //       res = "Weak password";
-  //     } else if (error.code == "email-already-in-use") {
-  //       res = "Email already in use";
-  //     }
-  //   } catch (error) {
-  //     res = error.toString();
-  //   }
-
-  //   return res;
-  // }
 
   Future<String> loginWithEmailAndPassword({
     required String email,
@@ -226,7 +148,17 @@ class AuthServices {
     return res;
   }
 
-  //get the current user details
+  //Forgot Password
+
+  Future<void> sendPasswordResetLink(String email) async {
+    try {
+      await _auth.sendPasswordResetEmail(email: email);
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  // get the current user details
 
   Future<UserModel?> getCurrentUser() async {
     User? currentUser = _auth.currentUser;
@@ -307,5 +239,57 @@ class AuthServices {
 
   Future logOut() async {
     return await _auth.signOut();
+  }
+
+  Future<String> updateProfile({
+    required String userName,
+    required String major,
+    Uint8List? profilePic,
+  }) async {
+    String res = "An error occurred";
+    try {
+      User? currentUser = _auth.currentUser;
+
+      if (currentUser != null) {
+        // Check if username is already taken
+        QuerySnapshot querySnapshot = await _firestore
+            .collection('users')
+            .where('userName', isEqualTo: userName)
+            .get();
+        if (querySnapshot.docs.isNotEmpty &&
+            querySnapshot.docs.first.id != currentUser.uid) {
+          return "User name is already taken";
+        }
+
+        String? photoURL;
+        if (profilePic != null) {
+          photoURL = await StorageMethods().uploadImage(
+            folderName: "ProfileImages",
+            isFile: false,
+            file: profilePic,
+          );
+        }
+
+        Map<String, dynamic> updatedData = {
+          'userName': userName,
+          'major': major,
+        };
+
+        if (photoURL != null) {
+          updatedData['profilePic'] = photoURL;
+        }
+
+        await _firestore
+            .collection('users')
+            .doc(currentUser.uid)
+            .update(updatedData);
+        res = "success";
+      } else {
+        res = "User not logged in";
+      }
+    } catch (error) {
+      res = error.toString();
+    }
+    return res;
   }
 }
