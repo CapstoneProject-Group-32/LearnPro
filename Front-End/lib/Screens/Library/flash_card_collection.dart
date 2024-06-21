@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_application_1/Flashcards/models/Flashcard.dart';
-import 'package:flutter_application_1/Flashcards/screen/content_form.dart';
-import 'package:flutter_application_1/Flashcards/screen/flashcard_home%20_screen.dart';
+import 'package:LearnPro/Flashcards/models/Flashcard.dart';
+import 'package:LearnPro/Flashcards/screen/content_form.dart';
+import 'package:LearnPro/Flashcards/screen/flashcard_home%20_screen.dart';
 
 class FlashCardCollectionScreen extends StatelessWidget {
   const FlashCardCollectionScreen({super.key});

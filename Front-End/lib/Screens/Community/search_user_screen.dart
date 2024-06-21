@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import 'package:flutter_application_1/Models/usermodel.dart';
+import 'package:LearnPro/Models/usermodel.dart';
 
 class SearchUserScreen extends StatefulWidget {
   final UserModel user;

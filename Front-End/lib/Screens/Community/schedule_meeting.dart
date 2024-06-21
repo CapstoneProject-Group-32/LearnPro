@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_application_1/Services/auth_firebase.dart';
+import 'package:LearnPro/Services/auth_firebase.dart';
 
 class AcceptRequest extends StatefulWidget {
   final String senderUid; // The UID of the sender

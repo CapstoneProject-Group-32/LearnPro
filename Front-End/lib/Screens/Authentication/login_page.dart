@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_application_1/Screens/Authentication/forgot_password_screen.dart';
-import 'package:flutter_application_1/Services/auth_firebase.dart';
-import 'package:flutter_application_1/wrapper.dart';
+import 'package:LearnPro/Screens/Authentication/forgot_password_screen.dart';
+import 'package:LearnPro/Services/auth_firebase.dart';
+import 'package:LearnPro/wrapper.dart';
 
 class LoginPage extends StatefulWidget {
   final Function toggle;

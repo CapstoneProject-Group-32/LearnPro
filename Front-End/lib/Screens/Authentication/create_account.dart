@@ -1,9 +1,9 @@
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/Services/auth_firebase.dart';
+import 'package:LearnPro/Services/auth_firebase.dart';
 
-import 'package:flutter_application_1/utils/util_functions.dart';
-import 'package:flutter_application_1/wrapper.dart';
+import 'package:LearnPro/utils/util_functions.dart';
+import 'package:LearnPro/wrapper.dart';
 import 'package:image_picker/image_picker.dart';
 
 class CreateAccount extends StatefulWidget {
@@ -321,8 +321,8 @@ class _CreateAccountState extends State<CreateAccount> {
                         if (_generalErrorMessage != null)
                           Text(
                             _generalErrorMessage!,
-                            style:
-                                TextStyle(color: Theme.of(context).colorScheme.error),
+                            style: TextStyle(
+                                color: Theme.of(context).colorScheme.error),
                           ),
                         const SizedBox(height: 20),
 

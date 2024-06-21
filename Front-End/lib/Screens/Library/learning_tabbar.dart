@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/Screens/Library/flash_card_collection.dart';
-import 'package:flutter_application_1/Screens/Library/libray_page.dart';
-import 'package:flutter_application_1/Widgets/navigation_bar.dart';
+import 'package:LearnPro/Screens/Library/flash_card_collection.dart';
+import 'package:LearnPro/Screens/Library/libray_page.dart';
+import 'package:LearnPro/Widgets/navigation_bar.dart';
 
 class LearningTabBar extends StatefulWidget {
   final int initialIndex;

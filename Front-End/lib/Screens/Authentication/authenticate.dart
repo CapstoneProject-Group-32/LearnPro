@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/Screens/Authentication/create_account.dart';
-import 'package:flutter_application_1/Screens/Authentication/login_page.dart';
+import 'package:LearnPro/Screens/Authentication/create_account.dart';
+import 'package:LearnPro/Screens/Authentication/login_page.dart';
 
 class Authenticate extends StatefulWidget {
   const Authenticate({super.key});

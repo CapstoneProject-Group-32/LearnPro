@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/Screens/Timer/timer_page.dart';
-import 'package:flutter_application_1/Widgets/navigation_bar.dart';
+import 'package:LearnPro/Screens/Timer/timer_page.dart';
+import 'package:LearnPro/Widgets/navigation_bar.dart';
 
 class LearnDesk extends StatelessWidget {
   const LearnDesk({super.key});

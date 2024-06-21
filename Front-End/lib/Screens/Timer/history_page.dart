@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/Controllers/history_controller.dart';
-import 'package:flutter_application_1/models/timer_history_model.dart';
+import 'package:LearnPro/Controllers/history_controller.dart';
+import 'package:LearnPro/models/timer_history_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-import 'package:flutter_application_1/utils/util_functions.dart'; // Import the utility file
+import 'package:LearnPro/utils/util_functions.dart'; // Import the utility file
 
 class HistoryScreen extends StatefulWidget {
   const HistoryScreen({Key? key}) : super(key: key);

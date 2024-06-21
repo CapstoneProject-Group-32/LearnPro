@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/Screens/Community/find_studybuddies.dart';
-import 'package:flutter_application_1/Screens/Community/tutored_users_screen.dart';
-import 'package:flutter_application_1/Widgets/navigation_bar.dart';
-import 'package:flutter_application_1/group/joined_group_screen.dart';
+import 'package:LearnPro/Screens/Community/find_studybuddies.dart';
+import 'package:LearnPro/Screens/Community/tutored_users_screen.dart';
+import 'package:LearnPro/Widgets/navigation_bar.dart';
+import 'package:LearnPro/group/joined_group_screen.dart';
 
 class CommunityTabBar extends StatefulWidget {
   final int initialIndex;

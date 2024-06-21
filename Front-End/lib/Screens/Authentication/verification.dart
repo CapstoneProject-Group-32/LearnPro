@@ -1,9 +1,9 @@
 // import 'dart:async';
 // import 'package:firebase_auth/firebase_auth.dart';
 // import 'package:flutter/material.dart';
-// import 'package:flutter_application_1/Screens/Authentication/authenticate.dart';
-// import 'package:flutter_application_1/Services/auth_firebase.dart';
-// import 'package:flutter_application_1/wrapper.dart';
+// import 'package:LearnPro/Screens/Authentication/authenticate.dart';
+// import 'package:LearnPro/Services/auth_firebase.dart';
+// import 'package:LearnPro/wrapper.dart';
 
 // class VerificationScreen extends StatefulWidget {
 //   const VerificationScreen({super.key});
@@ -158,9 +158,9 @@
 import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/Screens/Authentication/authenticate.dart';
-import 'package:flutter_application_1/Services/auth_firebase.dart';
-import 'package:flutter_application_1/wrapper.dart';
+import 'package:LearnPro/Screens/Authentication/authenticate.dart';
+import 'package:LearnPro/Services/auth_firebase.dart';
+import 'package:LearnPro/wrapper.dart';
 
 class VerificationScreen extends StatefulWidget {
   const VerificationScreen({super.key});

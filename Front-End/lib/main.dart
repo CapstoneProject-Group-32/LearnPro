@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter_application_1/Models/usermodel.dart';
-import 'package:flutter_application_1/Services/auth_firebase.dart';
-import 'package:flutter_application_1/theme/dark_theme.dart';
-import 'package:flutter_application_1/theme/light_theme.dart';
-import 'package:flutter_application_1/wrapper.dart';
+import 'package:LearnPro/Models/usermodel.dart';
+import 'package:LearnPro/Services/auth_firebase.dart';
+import 'package:LearnPro/theme/dark_theme.dart';
+import 'package:LearnPro/theme/light_theme.dart';
+import 'package:LearnPro/wrapper.dart';
 import 'package:provider/provider.dart';
 
 import 'Flashcards/generate_flashcard.dart';

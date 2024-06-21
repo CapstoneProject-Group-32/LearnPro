@@ -3,9 +3,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
 
-import 'package:flutter_application_1/Models/usermodel.dart';
-import 'package:flutter_application_1/Screens/Community/request_tution.dart';
-import 'package:flutter_application_1/Screens/Community/search_user_screen.dart';
+import 'package:LearnPro/Models/usermodel.dart';
+import 'package:LearnPro/Screens/Community/request_tution.dart';
+import 'package:LearnPro/Screens/Community/search_user_screen.dart';
 
 class StudyBuddies extends StatefulWidget {
   final Map<String, dynamic>? userMap;

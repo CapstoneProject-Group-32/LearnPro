@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_application_1/group/create_group_form.dart';
+import 'package:LearnPro/group/create_group_form.dart';
 
 class JoinedGroupsScreen extends StatefulWidget {
   const JoinedGroupsScreen({super.key});

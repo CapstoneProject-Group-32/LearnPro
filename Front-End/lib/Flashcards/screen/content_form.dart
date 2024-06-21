@@ -2,9 +2,9 @@ import 'dart:convert';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/Flashcards/utill/dialog_utils.dart';
-import 'package:flutter_application_1/Models/studiedcontent.dart';
-import 'package:flutter_application_1/Widgets/myuploadbutton.dart';
+import 'package:LearnPro/Flashcards/utill/dialog_utils.dart';
+import 'package:LearnPro/Models/studiedcontent.dart';
+import 'package:LearnPro/Widgets/myuploadbutton.dart';
 import 'package:provider/provider.dart';
 
 import '../generate_flashcard.dart';
@@ -59,15 +59,16 @@ class _ContentFormState extends State<ContentForm> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => FlashcardScreen(
-                   flashcardSetId: flashcardSetID),
+              builder: (context) =>
+                  FlashcardScreen(flashcardSetId: flashcardSetID),
             ),
           );
         } catch (e) {
           hideLoadingDialog(context);
           print('Error creating flashcards: $e');
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Failed to create flashcards, Try again!')),
+            const SnackBar(
+                content: Text('Failed to create flashcards, Try again!')),
           );
         }
       } else {

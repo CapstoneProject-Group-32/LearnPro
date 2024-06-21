@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_application_1/Screens/Community/schedule_meeting.dart';
+import 'package:LearnPro/Screens/Community/schedule_meeting.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class StorageMethods {

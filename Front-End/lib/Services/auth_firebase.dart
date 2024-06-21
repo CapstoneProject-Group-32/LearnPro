@@ -5,8 +5,8 @@ import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-import 'package:flutter_application_1/Models/usermodel.dart';
-import 'package:flutter_application_1/Services/storage_services.dart';
+import 'package:LearnPro/Models/usermodel.dart';
+import 'package:LearnPro/Services/storage_services.dart';
 
 class AuthServices {
   //firebase instance

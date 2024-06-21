@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/Models/usermodel.dart';
-import 'package:flutter_application_1/Services/auth_firebase.dart';
+import 'package:LearnPro/Models/usermodel.dart';
+import 'package:LearnPro/Services/auth_firebase.dart';
 import 'package:image_picker/image_picker.dart';
 
 class EditProfile extends StatefulWidget {
@@ -265,8 +265,8 @@ class _EditProfileState extends State<EditProfile> {
                         if (_generalErrorMessage != null)
                           Text(
                             _generalErrorMessage!,
-                            style:
-                                TextStyle(color: Theme.of(context).colorScheme.error),
+                            style: TextStyle(
+                                color: Theme.of(context).colorScheme.error),
                           ),
                         const SizedBox(height: 20),
                         GestureDetector(

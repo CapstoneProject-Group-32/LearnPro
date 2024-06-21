@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/Screens/Community/community_tabbar.dart';
-import 'package:flutter_application_1/Screens/Library/learning_tabbar.dart';
-import 'package:flutter_application_1/Screens/home_page.dart';
-import 'package:flutter_application_1/Screens/learndesk_page.dart';
-import 'package:flutter_application_1/Screens/Profile/user_profile.dart';
+import 'package:LearnPro/Screens/Community/community_tabbar.dart';
+import 'package:LearnPro/Screens/Library/learning_tabbar.dart';
+import 'package:LearnPro/Screens/home_page.dart';
+import 'package:LearnPro/Screens/learndesk_page.dart';
+import 'package:LearnPro/Screens/Profile/user_profile.dart';
 
 class NavigationBarBottom extends StatefulWidget {
   final int initialIndex;

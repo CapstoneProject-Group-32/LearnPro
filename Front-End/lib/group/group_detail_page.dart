@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter_application_1/Screens/pdf_viewer_page.dart';
-import 'package:flutter_application_1/group/comment_section.dart';
-import 'package:flutter_application_1/group/content_upload_form.dart';
-import 'package:flutter_application_1/group/send_group_invites.dart';
+import 'package:LearnPro/Screens/pdf_viewer_page.dart';
+import 'package:LearnPro/group/comment_section.dart';
+import 'package:LearnPro/group/content_upload_form.dart';
+import 'package:LearnPro/group/send_group_invites.dart';
 import 'group_content_request_page.dart';
 
 class GroupDetailPage extends StatelessWidget {
@@ -204,7 +204,8 @@ class ContentCard extends StatefulWidget {
   final String profilePic;
   final bool isOwnerOrPoster;
 
-  const ContentCard({super.key, 
+  const ContentCard({
+    super.key,
     required this.groupName,
     required this.contentId,
     required this.contentData,
@@ -427,7 +428,8 @@ class _ContentCardState extends State<ContentCard> {
             ),
             const SizedBox(height: 10),
             Text(widget.contentData['contentTitle'],
-                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                style:
+                    const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
             const SizedBox(height: 5),
             Text(widget.contentData['contentDescription']),
             const SizedBox(height: 10),

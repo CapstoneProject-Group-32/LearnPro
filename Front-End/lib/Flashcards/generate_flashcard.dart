@@ -1,10 +1,8 @@
-
-
 import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/Flashcards/models/Flashcard.dart';
-import 'package:flutter_application_1/Flashcards/servises/generative_ai_service.dart';
+import 'package:LearnPro/Flashcards/models/Flashcard.dart';
+import 'package:LearnPro/Flashcards/servises/generative_ai_service.dart';
 import 'package:uuid/uuid.dart';
 
 class GenerateFlashcard with ChangeNotifier {
@@ -23,8 +21,7 @@ class GenerateFlashcard with ChangeNotifier {
 
     final List<dynamic> parsedJson = jsonDecode(content);
 
-    flashcardSetId =
-        const Uuid().v4(); // Use a unique ID for the flashcard set
+    flashcardSetId = const Uuid().v4(); // Use a unique ID for the flashcard set
     final List<Flashcard> newFlashcards = [];
 
     for (var entry in parsedJson) {
@@ -52,11 +49,10 @@ class GenerateFlashcard with ChangeNotifier {
       'subject': subject,
       'flashcards': newFlashcards.map((fc) => fc.toMap()).toList(),
     });
-    
+
     notifyListeners();
     return _flashcards;
   }
-  
 
   Future<void> _updateFirestoreFlashcards(
       String uid, String flashcardSetId) async {
@@ -86,7 +82,7 @@ class GenerateFlashcard with ChangeNotifier {
         _flashcards = flashcards.map((flashcard) {
           return Flashcard.fromMap(flashcard);
         }).toList();
-        
+
         this.flashcardSetId = flashcardSetId;
         notifyListeners();
       } else {

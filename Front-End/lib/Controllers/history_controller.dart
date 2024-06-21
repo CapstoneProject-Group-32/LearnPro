@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter_application_1/models/timer_history_model.dart';
+import 'package:LearnPro/models/timer_history_model.dart';
 
 class HistoryController {
   final CollectionReference users =

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'package:flutter_application_1/Screens/Notification/group_invitation_notifications.dart';
-import 'package:flutter_application_1/Screens/Notification/notification_screen.dart';
+import 'package:LearnPro/Screens/Notification/group_invitation_notifications.dart';
+import 'package:LearnPro/Screens/Notification/notification_screen.dart';
 
 class NotificationTabBar extends StatefulWidget {
   const NotificationTabBar({super.key});

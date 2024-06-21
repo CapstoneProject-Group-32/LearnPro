@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter_application_1/Screens/pdf_viewer_page.dart';
+import 'package:LearnPro/Screens/pdf_viewer_page.dart';
 
 class GroupContentRequestsPage extends StatefulWidget {
   final String groupName;
@@ -189,7 +189,8 @@ class _GroupContentRequestsPageState extends State<GroupContentRequestsPage> {
                               Expanded(
                                 child: Text(
                                   '$username has requested to post this on ${widget.groupName}',
-                                  style: const TextStyle(fontWeight: FontWeight.bold),
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold),
                                 ),
                               ),
                             ],

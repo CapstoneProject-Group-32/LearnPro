@@ -2,11 +2,11 @@
 // import 'package:firebase_auth/firebase_auth.dart';
 
 // import 'package:flutter/material.dart';
-// import 'package:flutter_application_1/Controllers/history_controller.dart';
-// import 'package:flutter_application_1/Screens/Timer/history_page.dart';
+// import 'package:LearnPro/Controllers/history_controller.dart';
+// import 'package:LearnPro/Screens/Timer/history_page.dart';
 
 // import 'package:sleek_circular_slider/sleek_circular_slider.dart';
-// import 'package:flutter_application_1/models/timer_history_model.dart';
+// import 'package:LearnPro/models/timer_history_model.dart';
 
 // class TimerScreen extends StatefulWidget {
 //   const TimerScreen({Key? key}) : super(key: key);
@@ -238,11 +238,11 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/Controllers/history_controller.dart';
-import 'package:flutter_application_1/Screens/Timer/history_page.dart';
+import 'package:LearnPro/Controllers/history_controller.dart';
+import 'package:LearnPro/Screens/Timer/history_page.dart';
 
 import 'package:sleek_circular_slider/sleek_circular_slider.dart';
-import 'package:flutter_application_1/models/timer_history_model.dart';
+import 'package:LearnPro/models/timer_history_model.dart';
 
 class TimerScreen extends StatefulWidget {
   const TimerScreen({Key? key}) : super(key: key);

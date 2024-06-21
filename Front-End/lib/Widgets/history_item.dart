@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/Models/timer_history_model.dart';
+import 'package:LearnPro/Models/timer_history_model.dart';
 
 import 'package:intl/intl.dart';
 

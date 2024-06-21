@@ -1,10 +1,10 @@
 import 'package:card_swiper/card_swiper.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/Widgets/navigation_bar.dart';
+import 'package:LearnPro/Widgets/navigation_bar.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_application_1/Flashcards/generate_flashcard.dart';
+import 'package:LearnPro/Flashcards/generate_flashcard.dart';
 import 'package:uuid/uuid.dart';
 import '../models/Flashcard.dart';
 
@@ -136,7 +136,7 @@ class FlashcardScreen extends StatelessWidget {
                                               flashcardSetId,
                                               flashcard.id,
                                               !flashcard.isMarked);
-                                                                        },
+                                    },
                                   ),
                                   IconButton(
                                     icon: const Icon(Icons.edit),
@@ -150,9 +150,9 @@ class FlashcardScreen extends StatelessWidget {
                                     onPressed: () {
                                       Provider.of<GenerateFlashcard>(context,
                                               listen: false)
-                                          .deleteFlashcard(uid,
-                                              flashcardSetId, flashcard.id);
-                                                                        },
+                                          .deleteFlashcard(uid, flashcardSetId,
+                                              flashcard.id);
+                                    },
                                   ),
                                 ],
                               ),
@@ -206,8 +206,8 @@ class FlashcardScreen extends StatelessWidget {
                 controller: titleController,
                 decoration: InputDecoration(
                   labelText: 'Title',
-                  contentPadding:
-                      const EdgeInsets.symmetric(vertical: 15.0, horizontal: 15.0),
+                  contentPadding: const EdgeInsets.symmetric(
+                      vertical: 15.0, horizontal: 15.0),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10.0),
                   ),

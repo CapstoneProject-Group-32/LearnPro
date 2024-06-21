@@ -1,9 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import 'package:flutter_application_1/Screens/Authentication/authenticate.dart';
-import 'package:flutter_application_1/Screens/Authentication/verification.dart';
-import 'package:flutter_application_1/Widgets/navigation_bar.dart';
+import 'package:LearnPro/Screens/Authentication/authenticate.dart';
+import 'package:LearnPro/Screens/Authentication/verification.dart';
+import 'package:LearnPro/Widgets/navigation_bar.dart';
 
 class Wrapper extends StatelessWidget {
   const Wrapper({super.key});

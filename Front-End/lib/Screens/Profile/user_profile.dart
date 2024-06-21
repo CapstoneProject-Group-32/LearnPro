@@ -2,12 +2,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/Models/usermodel.dart';
-import 'package:flutter_application_1/Screens/Authentication/authenticate.dart';
+import 'package:LearnPro/Models/usermodel.dart';
+import 'package:LearnPro/Screens/Authentication/authenticate.dart';
 
-import 'package:flutter_application_1/Screens/Profile/edit_profile.dart';
-import 'package:flutter_application_1/Services/auth_firebase.dart';
-import 'package:flutter_application_1/Widgets/navigation_bar.dart';
+import 'package:LearnPro/Screens/Profile/edit_profile.dart';
+import 'package:LearnPro/Services/auth_firebase.dart';
+import 'package:LearnPro/Widgets/navigation_bar.dart';
 
 class UserProfile extends StatefulWidget {
   const UserProfile({super.key});

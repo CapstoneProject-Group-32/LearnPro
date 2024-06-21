@@ -2,13 +2,13 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/Models/usermodel.dart';
-import 'package:flutter_application_1/Screens/Community/community_tabbar.dart';
-import 'package:flutter_application_1/Screens/Community/request_tution.dart';
-import 'package:flutter_application_1/Screens/Notification/notification_tabbar.dart';
-import 'package:flutter_application_1/Screens/Timer/timer_page.dart';
-import 'package:flutter_application_1/Widgets/navigation_bar.dart';
-import 'package:flutter_application_1/group/group_detail_page.dart';
+import 'package:LearnPro/Models/usermodel.dart';
+import 'package:LearnPro/Screens/Community/community_tabbar.dart';
+import 'package:LearnPro/Screens/Community/request_tution.dart';
+import 'package:LearnPro/Screens/Notification/notification_tabbar.dart';
+import 'package:LearnPro/Screens/Timer/timer_page.dart';
+import 'package:LearnPro/Widgets/navigation_bar.dart';
+import 'package:LearnPro/group/group_detail_page.dart';
 import 'package:intl/intl.dart';
 
 class HomePage extends StatefulWidget {
