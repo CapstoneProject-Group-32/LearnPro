@@ -14,9 +14,6 @@ class FlashCardCollectionScreen extends StatelessWidget {
 
     if (user == null) {
       return const Scaffold(
-        // appBar: AppBar(
-        //   title: Text('Flashcard yyyy '),
-        // ),
         body: Center(
           child: Text('User not signed in'),
         ),
@@ -63,7 +60,8 @@ class FlashCardCollectionScreen extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+                  margin:
+                      const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
                   child: ListTile(
                     title: Text(
                       subject,
@@ -87,7 +85,7 @@ class FlashCardCollectionScreen extends StatelessWidget {
           );
         },
       ),
-            floatingActionButton:FloatingActionButton(
+      floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(
             context,
@@ -106,7 +104,8 @@ class FlashCardCollectionScreen extends StatelessWidget {
       builder: (context) {
         return AlertDialog(
           title: const Text('Delete Flashcard Set'),
-          content: const Text('Are you sure you want to delete this flashcard set?'),
+          content:
+              const Text('Are you sure you want to delete this flashcard set?'),
           actions: [
             TextButton(
               onPressed: () {

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Screens/Library/flash_card_collection.dart';
 import 'package:flutter_application_1/Screens/Library/libray_page.dart';
-import 'package:flutter_application_1/Widgets/navigation_bar.dart';
 
 class LearningTabBar extends StatefulWidget {
   final int initialIndex;
@@ -19,7 +18,8 @@ class _LearningTabBarState extends State<LearningTabBar>
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 3, vsync: this, initialIndex: widget.initialIndex);
+    _tabController = TabController(
+        length: 3, vsync: this, initialIndex: widget.initialIndex);
   }
 
   @override
@@ -61,10 +61,12 @@ class _LearningTabBarState extends State<LearningTabBar>
             Expanded(
               child: TabBarView(
                 controller: _tabController,
-                children: [
+                children: const [
                   LibraryPage(),
                   FlashCardCollectionScreen(),
-                  Center(child: Text("Quiz feature is not available")),
+                  Center(
+                    child: Text("Quiz feature is not available"),
+                  ),
                 ],
               ),
             ),

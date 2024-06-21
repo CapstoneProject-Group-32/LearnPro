@@ -79,9 +79,13 @@ import 'package:flutter_application_1/Screens/Profile/user_profile.dart';
 class NavigationBarBottom extends StatefulWidget {
   final int initialIndex;
   final int? learningTabBarIndex;
+  final int? communityTabBarIndex;
 
   const NavigationBarBottom(
-      {Key? key, this.initialIndex = 0, this.learningTabBarIndex})
+      {Key? key,
+      this.initialIndex = 0,
+      this.learningTabBarIndex,
+      this.communityTabBarIndex})
       : super(key: key);
 
   @override
@@ -100,7 +104,7 @@ class _NavigationBarBottomState extends State<NavigationBarBottom> {
       const HomePage(),
       LearningTabBar(initialIndex: widget.learningTabBarIndex ?? 0),
       const LearnDesk(),
-      const CommunityTabBar(),
+      CommunityTabBar(initialIndex: widget.learningTabBarIndex ?? 0),
       const UserProfile(),
     ];
   }

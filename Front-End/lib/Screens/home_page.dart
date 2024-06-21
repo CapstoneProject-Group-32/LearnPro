@@ -292,7 +292,10 @@ class _HomePageState extends State<HomePage> {
                                 ),
                                 _iconMethod(
                                   context,
-                                  const NavigationBarBottom(initialIndex: 3),
+                                  const NavigationBarBottom(
+                                    initialIndex: 3,
+                                    communityTabBarIndex: 0,
+                                  ),
                                   const AssetImage('assets/conversation.png'),
                                 ),
                                 _iconMethod(
@@ -304,7 +307,9 @@ class _HomePageState extends State<HomePage> {
                                 _iconMethod(
                                   context,
                                   const NavigationBarBottom(
-                                      initialIndex: 1, learningTabBarIndex: 1),
+                                    initialIndex: 1,
+                                    learningTabBarIndex: 1,
+                                  ),
                                   const AssetImage('assets/to-do-list.png'),
                                 ),
                               ],

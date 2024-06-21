@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Screens/Timer/timer_page.dart';
-import 'package:flutter_application_1/Screens/library.dart';
 import 'package:flutter_application_1/Widgets/navigation_bar.dart';
 
 class LearnDesk extends StatelessWidget {
@@ -37,7 +36,8 @@ class LearnDesk extends StatelessWidget {
                 const TimerScreen(),
                 const AssetImage('assets/cloud.png'),
                 'Upload Notes',
-                const Library(),
+                const NavigationBarBottom(
+                    initialIndex: 1, learningTabBarIndex: 0),
               ),
               _learndeskContainerRowMethod(
                 context,
@@ -47,17 +47,20 @@ class LearnDesk extends StatelessWidget {
                     initialIndex: 1, learningTabBarIndex: 1),
                 const AssetImage('assets/help.png'),
                 'Request Tution',
-                const Library(),
+                const NavigationBarBottom(
+                    initialIndex: 3, communityTabBarIndex: 0),
               ),
 
               _learndeskContainerRowMethod(
                 context,
                 const AssetImage('assets/target.png'),
                 'Set Goals',
-                const Library(),
+                const NavigationBarBottom(
+                    initialIndex: 1, learningTabBarIndex: 2),
                 const AssetImage('assets/quiz.png'),
                 'Quizes',
-                const Library(),
+                const NavigationBarBottom(
+                    initialIndex: 1, learningTabBarIndex: 2),
               ),
             ],
           ),

@@ -5,7 +5,9 @@ import 'package:flutter_application_1/Screens/Community/tutored_users_screen.dar
 import 'package:flutter_application_1/group/joined_group_screen.dart';
 
 class CommunityTabBar extends StatefulWidget {
-  const CommunityTabBar({super.key});
+  final int initialIndex;
+
+  const CommunityTabBar({Key? key, this.initialIndex = 0}) : super(key: key);
 
   @override
   State<CommunityTabBar> createState() => _CommunityTabBarState();
@@ -22,7 +24,8 @@ class _CommunityTabBarState extends State<CommunityTabBar>
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 3, vsync: this);
+    _tabController = TabController(
+        length: 3, vsync: this, initialIndex: widget.initialIndex);
   }
 
   void onSearch() async {
