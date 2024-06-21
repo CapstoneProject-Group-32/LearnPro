@@ -278,38 +278,7 @@ class _HomePageState extends State<HomePage> {
                             height: 20,
                           ),
 
-
 //Icons
-
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              _iconMethod(
-                                context,
-                                const LearningTabBar(),
-                                const AssetImage('assets/ebook.png'),
-                              ),
-                              _iconMethod(
-                                context,
-                                const CommunityTabBar(),
-                                const AssetImage('assets/conversation.png'),
-                              ),
-                              _iconMethod(
-                                context,
-                                const TimerScreen(),
-                                const AssetImage(
-                                    'assets/pomodoro-technique.png'),
-                              ),
-                              _iconMethod(
-                                context,
-                                const FlashCardCollectionScreen(),
-                                const AssetImage('assets/to-do-list.png'),
-                              ),
-                            ],
-
-                          //Icons
 
                           Padding(
                             padding: const EdgeInsets.all(8.0),
@@ -334,7 +303,7 @@ class _HomePageState extends State<HomePage> {
                                 ),
                                 _iconMethod(
                                   context,
-                                  const HomeScreen(),
+                                  const LearningTabBar(initialIndex: 1),
                                   const AssetImage('assets/to-do-list.png'),
                                 ),
                               ],
@@ -342,7 +311,6 @@ class _HomePageState extends State<HomePage> {
                           ),
                           const SizedBox(
                             height: 20,
-
                           ),
 
                           // Daily Moto Card row calling
