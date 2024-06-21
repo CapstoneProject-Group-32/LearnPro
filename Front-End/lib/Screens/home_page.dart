@@ -303,7 +303,8 @@ class _HomePageState extends State<HomePage> {
                                 ),
                                 _iconMethod(
                                   context,
-                                  const LearningTabBar(initialIndex: 1),
+                                  const NavigationBarBottom(
+                                      initialIndex: 1, learningTabBarIndex: 1),
                                   const AssetImage('assets/to-do-list.png'),
                                 ),
                               ],

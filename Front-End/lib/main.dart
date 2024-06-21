@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_application_1/Models/usermodel.dart';
-
 import 'package:flutter_application_1/Services/auth_firebase.dart';
-
 import 'package:flutter_application_1/theme/dark_theme.dart';
 import 'package:flutter_application_1/theme/light_theme.dart';
 import 'package:flutter_application_1/wrapper.dart';

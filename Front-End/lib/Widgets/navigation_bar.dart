@@ -78,7 +78,10 @@ import 'package:flutter_application_1/Screens/Profile/user_profile.dart';
 
 class NavigationBarBottom extends StatefulWidget {
   final int initialIndex;
-  const NavigationBarBottom({Key? key, this.initialIndex = 0})
+  final int? learningTabBarIndex;
+
+  const NavigationBarBottom(
+      {Key? key, this.initialIndex = 0, this.learningTabBarIndex})
       : super(key: key);
 
   @override
@@ -87,11 +90,19 @@ class NavigationBarBottom extends StatefulWidget {
 
 class _NavigationBarBottomState extends State<NavigationBarBottom> {
   late int _selectedIndex;
+  late List<Widget> _screens;
 
   @override
   void initState() {
     super.initState();
     _selectedIndex = widget.initialIndex;
+    _screens = [
+      const HomePage(),
+      LearningTabBar(initialIndex: widget.learningTabBarIndex ?? 0),
+      const LearnDesk(),
+      const CommunityTabBar(),
+      const UserProfile(),
+    ];
   }
 
   void _navigateBottomBar(int index) {
@@ -100,13 +111,13 @@ class _NavigationBarBottomState extends State<NavigationBarBottom> {
     });
   }
 
-  final List<Widget> _screens = [
-    const HomePage(),
-    const LearningTabBar(),
-    const LearnDesk(),
-    const CommunityTabBar(),
-    const UserProfile(),
-  ];
+  // final List<Widget> _screens = [
+  //   const HomePage(),
+  //   LearningTabBar(initialIndex: widget.learningTabBarIndex ?? 0),
+  //   const LearnDesk(),
+  //   const CommunityTabBar(),
+  //   const UserProfile(),
+  // ];
 
   @override
   Widget build(BuildContext context) {
