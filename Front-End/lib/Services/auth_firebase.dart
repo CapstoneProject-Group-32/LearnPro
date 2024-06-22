@@ -2,18 +2,26 @@ import 'dart:async';
 
 import 'dart:typed_data';
 
+import 'package:LearnPro/Screens/Authentication/continuing_registration.dart';
+import 'package:LearnPro/Screens/Authentication/forgot_password_screen.dart';
+import 'package:LearnPro/Widgets/navigation_bar.dart';
+import 'package:LearnPro/wrapper.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:LearnPro/Models/usermodel.dart';
 import 'package:LearnPro/Services/storage_services.dart';
+import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:http/http.dart' as http;
 
 class AuthServices {
   //firebase instance
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-
+  final StorageMethods _storageMethods = StorageMethods();
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
   //create a user from firebase user with UID
 
   UserModel? _userWithFirebaseUserUid(User? user) {
@@ -241,6 +249,8 @@ class AuthServices {
     return await _auth.signOut();
   }
 
+  //update user profile for continuing registration
+
   Future<String> updateProfile({
     required String userName,
     required String major,
@@ -291,5 +301,74 @@ class AuthServices {
       res = error.toString();
     }
     return res;
+  }
+
+  // Clear previous Google sign-in session
+  Future<void> clearGoogleSignInSession() async {
+    await _googleSignIn.signOut();
+  }
+
+  // Sign in with Google
+  Future<bool> signInWithGoogle(BuildContext context) async {
+    try {
+      await clearGoogleSignInSession();
+      final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
+      if (googleUser == null) {
+        // User cancelled the sign-in
+        return false;
+      }
+
+      final GoogleSignInAuthentication googleAuth =
+          await googleUser.authentication;
+      final AuthCredential credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
+
+      final UserCredential userCredential =
+          await _auth.signInWithCredential(credential);
+      final User? user = userCredential.user;
+
+      if (user != null) {
+        DocumentSnapshot snapshot =
+            await _firestore.collection('users').doc(user.uid).get();
+        if (snapshot.exists) {
+          return true;
+        } else {
+          String? profilePicUrl;
+          if (user.photoURL != null && user.photoURL!.isNotEmpty) {
+            // Fetch and upload the profile picture to Firebase Storage
+            final http.Response response =
+                await http.get(Uri.parse(user.photoURL!));
+            if (response.statusCode == 200) {
+              Uint8List data = response.bodyBytes;
+              profilePicUrl = await _storageMethods.uploadImage(
+                folderName: 'ProfileImages',
+                isFile: false,
+                file: data,
+              );
+            }
+          }
+
+          // Save the email, profile picture URL, and additional fields in Firestore (half registration)
+          await _firestore.collection('users').doc(user.uid).set({
+            'email': user.email,
+            'profilePic': profilePicUrl ?? '',
+            'uid': user.uid,
+            'userName': '',
+            'major': '',
+            'friends': [],
+          });
+
+          return false;
+        }
+      } else {
+        print("User is null after sign-in");
+        return false;
+      }
+    } catch (e) {
+      print("Error during Google sign-in: ${e.toString()}");
+      return false;
+    }
   }
 }

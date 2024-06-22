@@ -1,3 +1,5 @@
+import 'package:LearnPro/Screens/Authentication/continuing_registration.dart';
+import 'package:LearnPro/Widgets/navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:LearnPro/Screens/Authentication/forgot_password_screen.dart';
@@ -14,6 +16,7 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final AuthServices _auth = AuthServices();
+
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   bool isLoading = false;
@@ -26,6 +29,29 @@ class _LoginPageState extends State<LoginPage> {
     _emailController.dispose();
     _passwordController.dispose();
     super.dispose();
+  }
+
+  Future<void> _signInWithGoogle() async {
+    setState(() {
+      isLoading = true;
+    });
+
+    bool userExists = await _auth.signInWithGoogle(context);
+    if (userExists) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const NavigationBarBottom()),
+      );
+    } else {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const ContinuingRegistration()),
+      );
+    }
+
+    setState(() {
+      isLoading = false;
+    });
   }
 
   void loginUser() async {
@@ -283,9 +309,7 @@ class _LoginPageState extends State<LoginPage> {
                           height: 18,
                         ),
                         GestureDetector(
-                          onTap: () {
-                            widget.toggle();
-                          },
+                          onTap: _signInWithGoogle,
                           child: Container(
                             width: 275,
                             height: 50,

@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "1043776246821",
+    "firebase_url": "https://learnpro-mobile-app-default-rtdb.firebaseio.com",
     "project_id": "learnpro-mobile-app",
     "storage_bucket": "learnpro-mobile-app.appspot.com"
   },
@@ -9,10 +10,23 @@
       "client_info": {
         "mobilesdk_app_id": "1:1043776246821:android:9744e66358f8f4a9b61bcc",
         "android_client_info": {
-          "package_name": "com.example.LearnPro"
+          "package_name": "com.example.flutter_application_1"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "1043776246821-k7k4sm0c3dfteq352u93irbu1mdhp05m.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.flutter_application_1",
+            "certificate_hash": "2a9682d65f05ff16e87a27b1db9d8707d350e695"
+          }
+        },
+        {
+          "client_id": "1043776246821-lma1h28brntipu5gch8tl9lk05roenjg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyCcTW-DW_vznUw5kbILvMvCMx7tlQStNOs"
@@ -20,7 +34,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1043776246821-lma1h28brntipu5gch8tl9lk05roenjg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

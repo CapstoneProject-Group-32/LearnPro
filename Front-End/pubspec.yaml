@@ -59,11 +59,12 @@ dependencies:
   internet_file: ^1.2.0
   pdfx: ^2.6.0
   cached_network_image: ^3.3.1
-  
+  google_sign_in: ^6.2.1
+
 
 
 dependency_overrides:
-  http: ^1.0.0
+  http: ^1.2.1
   
 
 dev_dependencies:
