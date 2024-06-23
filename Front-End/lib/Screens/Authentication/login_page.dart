@@ -1,3 +1,4 @@
+import 'package:LearnPro/Screens/Authentication/authenticate.dart';
 import 'package:LearnPro/Screens/Authentication/continuing_registration.dart';
 import 'package:LearnPro/Widgets/navigation_bar.dart';
 import 'package:flutter/material.dart';
@@ -5,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:LearnPro/Screens/Authentication/forgot_password_screen.dart';
 import 'package:LearnPro/Services/auth_firebase.dart';
 import 'package:LearnPro/wrapper.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class LoginPage extends StatefulWidget {
   final Function toggle;
@@ -36,17 +38,39 @@ class _LoginPageState extends State<LoginPage> {
       isLoading = true;
     });
 
-    bool userExists = await _auth.signInWithGoogle(context);
-    if (userExists) {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => const NavigationBarBottom()),
-      );
-    } else {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => const ContinuingRegistration()),
-      );
+    Map<SignInStatus, GoogleSignInAccount?> signInStatusMap =
+        await _auth.signInWithGoogle(context);
+    if (!mounted) return;
+
+    SignInStatus signInStatus = signInStatusMap.keys.first;
+    GoogleSignInAccount? googleUser = signInStatusMap.values.first;
+
+    switch (signInStatus) {
+      case SignInStatus.canceled:
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const Authenticate(),
+          ),
+        );
+        break;
+      case SignInStatus.registered:
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const NavigationBarBottom(),
+          ),
+        );
+        break;
+      case SignInStatus.notRegistered:
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) =>
+                ContinuingRegistration(googleUser: googleUser),
+          ),
+        );
+        break;
     }
 
     setState(() {

@@ -2,10 +2,6 @@ import 'dart:async';
 
 import 'dart:typed_data';
 
-import 'package:LearnPro/Screens/Authentication/continuing_registration.dart';
-import 'package:LearnPro/Screens/Authentication/forgot_password_screen.dart';
-import 'package:LearnPro/Widgets/navigation_bar.dart';
-import 'package:LearnPro/wrapper.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -13,14 +9,19 @@ import 'package:LearnPro/Models/usermodel.dart';
 import 'package:LearnPro/Services/storage_services.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:http/http.dart' as http;
+
+enum SignInStatus {
+  canceled,
+  registered,
+  notRegistered,
+}
 
 class AuthServices {
   //firebase instance
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-  final StorageMethods _storageMethods = StorageMethods();
+
   final GoogleSignIn _googleSignIn = GoogleSignIn();
   //create a user from firebase user with UID
 
@@ -245,9 +246,9 @@ class AuthServices {
 
   //logout
 
-  Future logOut() async {
-    return await _auth.signOut();
-  }
+  // Future logOut() async {
+  //   return await _auth.signOut();
+  // }
 
   //update user profile for continuing registration
 
@@ -303,19 +304,25 @@ class AuthServices {
     return res;
   }
 
-  // Clear previous Google sign-in session
+// Log out
+
   Future<void> clearGoogleSignInSession() async {
-    await _googleSignIn.signOut();
+    await _googleSignIn.disconnect();
+    await _auth.signOut();
   }
 
-  // Sign in with Google
-  Future<bool> signInWithGoogle(BuildContext context) async {
+// Sign in with Google
+
+  Future<Map<SignInStatus, GoogleSignInAccount?>> signInWithGoogle(
+      BuildContext context) async {
     try {
-      await clearGoogleSignInSession();
+      //clearGoogleSignInSession();
       final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
+
       if (googleUser == null) {
-        // User cancelled the sign-in
-        return false;
+        return {
+          SignInStatus.canceled: null
+        }; // User canceled the sign-in process
       }
 
       final GoogleSignInAuthentication googleAuth =
@@ -330,45 +337,146 @@ class AuthServices {
       final User? user = userCredential.user;
 
       if (user != null) {
-        DocumentSnapshot snapshot =
-            await _firestore.collection('users').doc(user.uid).get();
-        if (snapshot.exists) {
-          return true;
+        // Check if the user is already registered in your database
+        bool isRegistered = await checkIfUserIsRegistered(googleUser.email);
+        print('Is registered: $isRegistered');
+
+        if (isRegistered) {
+          return {SignInStatus.registered: googleUser};
         } else {
-          String? profilePicUrl;
-          if (user.photoURL != null && user.photoURL!.isNotEmpty) {
-            // Fetch and upload the profile picture to Firebase Storage
-            final http.Response response =
-                await http.get(Uri.parse(user.photoURL!));
-            if (response.statusCode == 200) {
-              Uint8List data = response.bodyBytes;
-              profilePicUrl = await _storageMethods.uploadImage(
-                folderName: 'ProfileImages',
-                isFile: false,
-                file: data,
-              );
-            }
-          }
-
-          // Save the email, profile picture URL, and additional fields in Firestore (half registration)
-          await _firestore.collection('users').doc(user.uid).set({
-            'email': user.email,
-            'profilePic': profilePicUrl ?? '',
-            'uid': user.uid,
-            'userName': '',
-            'major': '',
-            'friends': [],
-          });
-
-          return false;
+          return {SignInStatus.notRegistered: googleUser};
         }
       } else {
-        print("User is null after sign-in");
-        return false;
+        return {SignInStatus.canceled: null};
       }
     } catch (e) {
-      print("Error during Google sign-in: ${e.toString()}");
-      return false;
+      print('Error during Google sign-in: $e');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error during Google sign-in: ${e.toString()}')),
+      );
+      return {SignInStatus.canceled: null};
     }
+  }
+
+  Future<bool> checkIfUserIsRegistered(String email) async {
+    // try {
+    //   // Fetch sign-in methods for the email
+
+    //   //  var methods =
+    //   //await FirebaseAuth.instance.fetchSignInMethodsForEmail(email);
+
+    //   // If the user has signed up with Google before, check Firestore
+    //   QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+    //       .collection('users')
+    //       .where('email', isEqualTo: email)
+    //       .get();
+
+    //   if (querySnapshot.docs.isNotEmpty) {
+    //     return true; // Email found, user is registered
+    //   } else {
+    //     return false; // Email not found, user is not registered
+    //   }
+    // } catch (e) {
+    //   print('Error checking if user is registered: $e');
+    //   return false;
+    // }
+
+    return false;
+  }
+
+  // Future<bool> checkIfUserIsRegistered(String email) async {
+  //   try {
+  //     print('Checking if user is registered with email: $email');
+
+  //     QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+  //         .collection('users')
+  //         .where('email', isEqualTo: email)
+  //         .get();
+
+  //     print(
+  //         'Query completed. Number of documents found: ${querySnapshot.docs.length}');
+  //     for (var doc in querySnapshot.docs) {
+  //       print('Document ID: ${doc.id}, Data: ${doc.data()}');
+  //     }
+
+  //     if (querySnapshot.docs.isNotEmpty) {
+  //       print('User found with email: $email');
+  //       return true; // Email found, user is registered
+  //     } else {
+  //       print('No user found with email: $email');
+  //       return false; // Email not found, user is not registered
+  //     }
+  //   } catch (e) {
+  //     print('Error checking if user is registered: $e');
+  //     return false;
+  //   }
+  // }
+
+  // Future<bool> checkIfUserIsRegistered(String email) async {
+  //   try {
+  //     QuerySnapshot querySnapshot = await _firestore
+  //         .collection('users')
+  //         .where('email', isEqualTo: email)
+  //         .get();
+
+  //     return querySnapshot.docs.isNotEmpty;
+  //   } catch (e) {
+  //     print('Error checking if user is registered: $e');
+  //     return false;
+  //   }
+  // }
+
+//register user with googlesignin
+
+  Future<String> registerWithGoogleAccount({
+    required String userName,
+    required String major,
+    Uint8List? profilePic,
+  }) async {
+    String res = "An error occurred";
+    try {
+      User? currentUser = _auth.currentUser;
+
+      if (currentUser != null) {
+        // Check if username is already taken
+        QuerySnapshot querySnapshot = await _firestore
+            .collection('users')
+            .where('userName', isEqualTo: userName)
+            .get();
+        if (querySnapshot.docs.isNotEmpty &&
+            querySnapshot.docs.first.id != currentUser.uid) {
+          return "User name is already taken";
+        }
+
+        String? photoURL;
+        if (profilePic != null) {
+          photoURL = await StorageMethods().uploadImage(
+            folderName: "ProfileImages",
+            isFile: false,
+            file: profilePic,
+          );
+        }
+
+        Map<String, dynamic> updatedData = {
+          'userName': userName,
+          'major': major,
+        };
+
+        if (photoURL != null) {
+          updatedData['profilePic'] = photoURL;
+        }
+
+        await _firestore
+            .collection('users')
+            .doc(currentUser.uid)
+            .update(updatedData);
+        res = "success";
+      } else {
+        res = "User not logged in";
+      }
+    } catch (error) {
+      res = error.toString();
+    }
+    return res;
   }
 }

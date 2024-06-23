@@ -1,36 +1,44 @@
 import 'dart:typed_data';
+import 'package:LearnPro/Services/storage_services.dart';
 import 'package:LearnPro/Widgets/navigation_bar.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:LearnPro/Models/usermodel.dart';
 import 'package:LearnPro/Services/auth_firebase.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 
 class ContinuingRegistration extends StatefulWidget {
-  const ContinuingRegistration({super.key});
+  final GoogleSignInAccount? googleUser;
+
+  const ContinuingRegistration({Key? key, this.googleUser}) : super(key: key);
 
   @override
   State<ContinuingRegistration> createState() => _ContinuingRegistrationState();
 }
 
 class _ContinuingRegistrationState extends State<ContinuingRegistration> {
+  final AuthServices _auth = AuthServices();
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final FirebaseAuth _auth1 = FirebaseAuth.instance;
   final TextEditingController _majorController = TextEditingController();
   final TextEditingController _userNameController = TextEditingController();
-  Uint8List? _profileImage;
+
   String? _profileImageUrl;
-
-  bool isLoading = false;
-
-  final AuthServices _auth = AuthServices();
-
   String? _profileImageError;
   String? _userNameError;
   String? _majorError;
   String? _generalErrorMessage;
+  Uint8List? _profileImage;
+  bool isLoading = false;
 
   @override
   void initState() {
     super.initState();
     _loadUserData();
+    _halfRegisterGoogleUser();
   }
 
   Future<void> _loadUserData() async {
@@ -61,7 +69,38 @@ class _ContinuingRegistrationState extends State<ContinuingRegistration> {
     return null;
   }
 
-  Future<void> _updateProfile() async {
+  Future<void> _halfRegisterGoogleUser() async {
+    if (widget.googleUser == null) return;
+
+    User? currentUser = _auth1.currentUser;
+    if (currentUser == null) return;
+
+    String? profilePicUrl;
+    if (widget.googleUser!.photoUrl != null &&
+        widget.googleUser!.photoUrl!.isNotEmpty) {
+      final http.Response response =
+          await http.get(Uri.parse(widget.googleUser!.photoUrl!));
+      if (response.statusCode == 200) {
+        Uint8List data = response.bodyBytes;
+        profilePicUrl = await StorageMethods().uploadImage(
+          folderName: 'ProfileImages',
+          isFile: false,
+          file: data,
+        );
+      }
+    }
+
+    await _firestore.collection('users').doc(currentUser.uid).set({
+      'email': widget.googleUser!.email,
+      'profilePic': profilePicUrl ?? '',
+      'uid': currentUser.uid,
+      'userName': '',
+      'major': '',
+      'friends': [],
+    });
+  }
+
+  Future<void> _registerWithGoogleAccount() async {
     setState(() {
       isLoading = true;
       _profileImageError = null;
@@ -98,7 +137,7 @@ class _ContinuingRegistrationState extends State<ContinuingRegistration> {
       return;
     }
 
-    String res = await _auth.updateProfile(
+    String res = await _auth.registerWithGoogleAccount(
       userName: _userNameController.text,
       major: _majorController.text,
       profilePic: _profileImage,
@@ -280,7 +319,7 @@ class _ContinuingRegistrationState extends State<ContinuingRegistration> {
                             onTap: () async {
                               //calling method for update the user details
                               if (!isLoading) {
-                                await _updateProfile();
+                                await _registerWithGoogleAccount();
                               }
                             },
                             child: Container(

@@ -215,7 +215,8 @@ class _UserProfileState extends State<UserProfile> {
                                 const SizedBox(height: 25),
                                 GestureDetector(
                                   onTap: () async {
-                                    await AuthServices().logOut();
+                                    await AuthServices()
+                                        .clearGoogleSignInSession();
                                     Navigator.of(context).pushReplacement(
                                       MaterialPageRoute(
                                         builder: (context) =>
