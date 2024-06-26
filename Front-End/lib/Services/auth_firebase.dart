@@ -316,7 +316,7 @@ class AuthServices {
   Future<Map<SignInStatus, GoogleSignInAccount?>> signInWithGoogle(
       BuildContext context) async {
     try {
-      //clearGoogleSignInSession();
+      clearGoogleSignInSession();
       final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
 
       if (googleUser == null) {
@@ -332,22 +332,30 @@ class AuthServices {
         idToken: googleAuth.idToken,
       );
 
-      final UserCredential userCredential =
+      final UserCredential authResult =
           await _auth.signInWithCredential(credential);
-      final User? user = userCredential.user;
+      final User? user = authResult.user;
 
-      if (user != null) {
+      // final UserCredential userCredential =
+      //     await _auth.signInWithCredential(credential);
+      // final User? user = userCredential.user;
+
+      if (authResult.additionalUserInfo!.isNewUser) {
         // Check if the user is already registered in your database
-        bool isRegistered = await checkIfUserIsRegistered(googleUser.email);
-        print('Is registered: $isRegistered');
+        // bool isRegistered =
+        //     await checkIfUserIsRegisteredInFirestore(googleUser);
+        // print('Is registered: $isRegistered');
 
-        if (isRegistered) {
-          return {SignInStatus.registered: googleUser};
-        } else {
+        if (user != null) {
+          //return {SignInStatus.registered: googleUser};
           return {SignInStatus.notRegistered: googleUser};
+        } else {
+          //return {SignInStatus.notRegistered: googleUser};
+          return {SignInStatus.registered: googleUser};
         }
       } else {
-        return {SignInStatus.canceled: null};
+        //return {SignInStatus.canceled: null};
+        return {SignInStatus.registered: googleUser};
       }
     } catch (e) {
       print('Error during Google sign-in: $e');
@@ -358,58 +366,47 @@ class AuthServices {
     }
   }
 
-  Future<bool> checkIfUserIsRegistered(String email) async {
-    // try {
-    //   // Fetch sign-in methods for the email
-
-    //   //  var methods =
-    //   //await FirebaseAuth.instance.fetchSignInMethodsForEmail(email);
-
-    //   // If the user has signed up with Google before, check Firestore
-    //   QuerySnapshot querySnapshot = await FirebaseFirestore.instance
-    //       .collection('users')
-    //       .where('email', isEqualTo: email)
-    //       .get();
-
-    //   if (querySnapshot.docs.isNotEmpty) {
-    //     return true; // Email found, user is registered
-    //   } else {
-    //     return false; // Email not found, user is not registered
-    //   }
-    // } catch (e) {
-    //   print('Error checking if user is registered: $e');
-    //   return false;
-    // }
-
-    return false;
-  }
-
   // Future<bool> checkIfUserIsRegistered(String email) async {
-  //   try {
-  //     print('Checking if user is registered with email: $email');
+  //   // try {
+  //   // Fetch sign-in methods for the email
 
-  //     QuerySnapshot querySnapshot = await FirebaseFirestore.instance
-  //         .collection('users')
-  //         .where('email', isEqualTo: email)
-  //         .get();
+  //   //  var methods =
+  //   //await FirebaseAuth.instance.fetchSignInMethodsForEmail(email);
 
-  //     print(
-  //         'Query completed. Number of documents found: ${querySnapshot.docs.length}');
-  //     for (var doc in querySnapshot.docs) {
-  //       print('Document ID: ${doc.id}, Data: ${doc.data()}');
-  //     }
+  //   // If the user has signed up with Google before, check Firestore
+  //   QuerySnapshot userEmailCheck =await _firestore
+  //       /* await FirebaseFirestore.instance*/
+  //           .collection('users')
+  //           .where('email', isEqualTo: email)
+  //           .get();
 
-  //     if (querySnapshot.docs.isNotEmpty) {
-  //       print('User found with email: $email');
-  //       return true; // Email found, user is registered
-  //     } else {
-  //       print('No user found with email: $email');
-  //       return false; // Email not found, user is not registered
-  //     }
-  //   } catch (e) {
-  //     print('Error checking if user is registered: $e');
-  //     return false;
+  //   if (userEmailCheck.docs.isNotEmpty) {
+  //     return true; // Email found, user is registered
+  //   } else {
+  //     return false; // Email not found, user is not registered
   //   }
+  //   // } catch (e) {
+  //   // print('Error checking if user is registered: $e');
+  //   // return false;
+  //   // }
+
+  //   //return true;
+  // }
+
+  // Future<bool> checkIfUserIsRegisteredInFirestore(
+  //     GoogleSignInAccount googleUser) async {
+  //   // User? currentUser = FirebaseAuth.instance.currentUser;
+  //   // String uid = currentUser!.uid;
+  //   // DocumentSnapshot userDoc =
+  //   //     await FirebaseFirestore.instance.collection('users').doc(uid).get();
+
+  //   // if (userDoc.exists) {
+  //   //   return true; // Email found, user is registered
+  //   // } else {
+  //   //   return false; // Email not found, user is not registered
+  //   // }
+
+  //   return false;
   // }
 
   // Future<bool> checkIfUserIsRegistered(String email) async {
