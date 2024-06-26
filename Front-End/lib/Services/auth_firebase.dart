@@ -246,9 +246,9 @@ class AuthServices {
 
   //logout
 
-  // Future logOut() async {
-  //   return await _auth.signOut();
-  // }
+  Future logOut() async {
+    return await _auth.signOut();
+  }
 
   //update user profile for continuing registration
 
