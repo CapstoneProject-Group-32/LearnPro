@@ -304,7 +304,7 @@ class AuthServices {
     return res;
   }
 
-// Log out
+// clear google sign in session
 
   Future<void> clearGoogleSignInSession() async {
     await _googleSignIn.disconnect();
@@ -327,6 +327,7 @@ class AuthServices {
 
       final GoogleSignInAuthentication googleAuth =
           await googleUser.authentication;
+
       final AuthCredential credential = GoogleAuthProvider.credential(
         accessToken: googleAuth.accessToken,
         idToken: googleAuth.idToken,
@@ -334,27 +335,16 @@ class AuthServices {
 
       final UserCredential authResult =
           await _auth.signInWithCredential(credential);
+
       final User? user = authResult.user;
 
-      // final UserCredential userCredential =
-      //     await _auth.signInWithCredential(credential);
-      // final User? user = userCredential.user;
-
       if (authResult.additionalUserInfo!.isNewUser) {
-        // Check if the user is already registered in your database
-        // bool isRegistered =
-        //     await checkIfUserIsRegisteredInFirestore(googleUser);
-        // print('Is registered: $isRegistered');
-
         if (user != null) {
-          //return {SignInStatus.registered: googleUser};
           return {SignInStatus.notRegistered: googleUser};
         } else {
-          //return {SignInStatus.notRegistered: googleUser};
           return {SignInStatus.registered: googleUser};
         }
       } else {
-        //return {SignInStatus.canceled: null};
         return {SignInStatus.registered: googleUser};
       }
     } catch (e) {
@@ -365,63 +355,6 @@ class AuthServices {
       return {SignInStatus.canceled: null};
     }
   }
-
-  // Future<bool> checkIfUserIsRegistered(String email) async {
-  //   // try {
-  //   // Fetch sign-in methods for the email
-
-  //   //  var methods =
-  //   //await FirebaseAuth.instance.fetchSignInMethodsForEmail(email);
-
-  //   // If the user has signed up with Google before, check Firestore
-  //   QuerySnapshot userEmailCheck =await _firestore
-  //       /* await FirebaseFirestore.instance*/
-  //           .collection('users')
-  //           .where('email', isEqualTo: email)
-  //           .get();
-
-  //   if (userEmailCheck.docs.isNotEmpty) {
-  //     return true; // Email found, user is registered
-  //   } else {
-  //     return false; // Email not found, user is not registered
-  //   }
-  //   // } catch (e) {
-  //   // print('Error checking if user is registered: $e');
-  //   // return false;
-  //   // }
-
-  //   //return true;
-  // }
-
-  // Future<bool> checkIfUserIsRegisteredInFirestore(
-  //     GoogleSignInAccount googleUser) async {
-  //   // User? currentUser = FirebaseAuth.instance.currentUser;
-  //   // String uid = currentUser!.uid;
-  //   // DocumentSnapshot userDoc =
-  //   //     await FirebaseFirestore.instance.collection('users').doc(uid).get();
-
-  //   // if (userDoc.exists) {
-  //   //   return true; // Email found, user is registered
-  //   // } else {
-  //   //   return false; // Email not found, user is not registered
-  //   // }
-
-  //   return false;
-  // }
-
-  // Future<bool> checkIfUserIsRegistered(String email) async {
-  //   try {
-  //     QuerySnapshot querySnapshot = await _firestore
-  //         .collection('users')
-  //         .where('email', isEqualTo: email)
-  //         .get();
-
-  //     return querySnapshot.docs.isNotEmpty;
-  //   } catch (e) {
-  //     print('Error checking if user is registered: $e');
-  //     return false;
-  //   }
-  // }
 
 //register user with googlesignin
 
