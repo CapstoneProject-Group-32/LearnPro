@@ -28,6 +28,15 @@ android {
     compileSdkVersion flutter.compileSdkVersion
     ndkVersion flutter.ndkVersion
 
+    signingConfigs{
+        release{
+            keyAlias 'key0'
+            keyPassword '123456'
+            storeFile file('E:/Flutter Files/LearnPro_Keystore/learnpro_keystore.jks')
+            storePassword '123456'
+        }
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -56,7 +65,7 @@ android {
         release {
             // TODO: Add your own signing config for the release build.
             // Signing with the debug keys for now, so `flutter run --release` works.
-            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.release
         }
     }
 }
