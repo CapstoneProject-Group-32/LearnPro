@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:LearnPro/Screens/Library/flash_card_collection.dart';
 import 'package:LearnPro/Screens/Library/libray_page.dart';
 import 'package:LearnPro/Widgets/navigation_bar.dart';
+import '../../Quiz/screens/quiz_library.dart';
 
 class LearningTabBar extends StatefulWidget {
   final int initialIndex;
@@ -73,9 +74,7 @@ class _LearningTabBarState extends State<LearningTabBar>
                   children: const [
                     LibraryPage(),
                     FlashCardCollectionScreen(),
-                    Center(
-                      child: Text("Quiz feature is not available"),
-                    ),
+                    QuizLibraryWidget(),
                   ],
                 ),
               ),
