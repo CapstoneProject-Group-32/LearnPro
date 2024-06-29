@@ -96,8 +96,8 @@ class FlashcardScreen extends StatelessWidget {
                     itemBuilder: (BuildContext context, int index) {
                       final flashcard = flashcardList[index];
                       return Card(
-                        elevation: 8,
-                        color: const Color(0Xff93cec3),
+                        elevation: 4,
+                        color: Theme.of(context).colorScheme.primary,
                         child: Padding(
                           padding: const EdgeInsets.all(20.0),
                           child: Column(
