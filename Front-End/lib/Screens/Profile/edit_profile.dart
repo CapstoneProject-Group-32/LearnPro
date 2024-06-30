@@ -145,186 +145,191 @@ class _EditProfileState extends State<EditProfile> {
           },
         ),
       ),
-      body: Stack(children: [
-        SafeArea(
-          child: SingleChildScrollView(
-            child: Container(
-              width: double.infinity,
-              padding: const EdgeInsets.symmetric(horizontal: 32),
-              child: Column(
-                children: [
-                  const SizedBox(height: 20),
-                  Form(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        GestureDetector(
-                          onTap: selectImage,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Stack(
-                                children: [
-                                  _profileImage != null
-                                      ? CircleAvatar(
-                                          radius: 50,
-                                          backgroundColor: Colors.grey[300],
-                                          backgroundImage:
-                                              MemoryImage(_profileImage!),
-                                        )
-                                      : (_profileImageUrl != null
-                                          ? CircleAvatar(
-                                              radius: 50,
-                                              backgroundColor: Colors.grey[300],
-                                              backgroundImage: NetworkImage(
-                                                  _profileImageUrl!),
-                                            )
-                                          : CircleAvatar(
-                                              radius: 50,
-                                              backgroundColor: Colors.grey[300],
-                                              backgroundImage: const AssetImage(
-                                                  'assets/defaultuser.png'),
-                                            )),
-                                  Positioned(
-                                    bottom: 0,
-                                    right: 0,
-                                    child: Container(
-                                      height: 30,
-                                      width: 30,
-                                      decoration: BoxDecoration(
-                                        color: Colors.grey.shade400,
-                                        borderRadius: BorderRadius.circular(30),
-                                      ),
-                                      child: const Icon(
-                                        Icons.edit,
-                                        color: Colors.black,
+      body: Stack(
+        children: [
+          SafeArea(
+            child: SingleChildScrollView(
+              child: Container(
+                width: double.infinity,
+                padding: const EdgeInsets.symmetric(horizontal: 32),
+                child: Column(
+                  children: [
+                    const SizedBox(height: 20),
+                    Form(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          GestureDetector(
+                            onTap: selectImage,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Stack(
+                                  children: [
+                                    _profileImage != null
+                                        ? CircleAvatar(
+                                            radius: 50,
+                                            backgroundColor: Colors.grey[300],
+                                            backgroundImage:
+                                                MemoryImage(_profileImage!),
+                                          )
+                                        : (_profileImageUrl != null
+                                            ? CircleAvatar(
+                                                radius: 50,
+                                                backgroundColor:
+                                                    Colors.grey[300],
+                                                backgroundImage: NetworkImage(
+                                                    _profileImageUrl!),
+                                              )
+                                            : CircleAvatar(
+                                                radius: 50,
+                                                backgroundColor:
+                                                    Colors.grey[300],
+                                                backgroundImage: const AssetImage(
+                                                    'assets/defaultuser.png'),
+                                              )),
+                                    Positioned(
+                                      bottom: 0,
+                                      right: 0,
+                                      child: Container(
+                                        height: 30,
+                                        width: 30,
+                                        decoration: BoxDecoration(
+                                          color: Colors.grey.shade400,
+                                          borderRadius:
+                                              BorderRadius.circular(30),
+                                        ),
+                                        child: const Icon(
+                                          Icons.edit,
+                                          color: Colors.black,
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        if (_profileImageError != null)
-                          Center(
-                            child: Text(
-                              _profileImageError!,
-                              style: TextStyle(
-                                color: Theme.of(context).colorScheme.error,
-                                fontSize: 12,
-                              ),
-                            ),
-                          ),
-                        const SizedBox(height: 10),
-                        TextFormField(
-                          controller: _userNameController,
-                          decoration: InputDecoration(
-                            labelText: "User Name*",
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(5),
-                            ),
-                          ),
-                        ),
-                        if (_userNameError != null)
-                          Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              _userNameError!,
-                              style: TextStyle(
-                                color: Theme.of(context).colorScheme.error,
-                                fontSize: 12,
-                              ),
-                            ),
-                          ),
-                        const SizedBox(height: 30),
-                        TextFormField(
-                          controller: _majorController,
-                          decoration: InputDecoration(
-                            labelText: "Major*",
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(5),
-                            ),
-                          ),
-                        ),
-                        if (_majorError != null)
-                          Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              _majorError!,
-                              style: TextStyle(
-                                color: Theme.of(context).colorScheme.error,
-                                fontSize: 12,
-                              ),
-                            ),
-                          ),
-                        const SizedBox(height: 20),
-                        if (_generalErrorMessage != null)
-                          Text(
-                            _generalErrorMessage!,
-                            style: TextStyle(
-                                color: Theme.of(context).colorScheme.error),
-                          ),
-                        const SizedBox(height: 20),
-                        GestureDetector(
-                          onTap: () async {
-                            //calling method for update the user details
-                            if (!isLoading) {
-                              await _updateProfile();
-                            }
-                          },
-                          child: Container(
-                            width: 275,
-                            height: 50,
-                            decoration: ShapeDecoration(
-                              color: Theme.of(context).colorScheme.secondary,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(35),
-                              ),
-                              shadows: const [
-                                BoxShadow(
-                                  color: Color(0x3F000000),
-                                  blurRadius: 4,
-                                  offset: Offset(0, 4),
-                                  spreadRadius: 0,
-                                )
+                                  ],
+                                ),
                               ],
                             ),
-                            child: const Center(
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          if (_profileImageError != null)
+                            Center(
                               child: Text(
-                                'Update',
+                                _profileImageError!,
                                 style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 20,
-                                  fontFamily: 'Work Sans',
-                                  fontWeight: FontWeight.w500,
+                                  color: Theme.of(context).colorScheme.error,
+                                  fontSize: 12,
+                                ),
+                              ),
+                            ),
+                          const SizedBox(height: 10),
+                          TextFormField(
+                            controller: _userNameController,
+                            decoration: InputDecoration(
+                              labelText: "User Name*",
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                            ),
+                          ),
+                          if (_userNameError != null)
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                _userNameError!,
+                                style: TextStyle(
+                                  color: Theme.of(context).colorScheme.error,
+                                  fontSize: 12,
+                                ),
+                              ),
+                            ),
+                          const SizedBox(height: 30),
+                          TextFormField(
+                            controller: _majorController,
+                            decoration: InputDecoration(
+                              labelText: "Major*",
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                            ),
+                          ),
+                          if (_majorError != null)
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                _majorError!,
+                                style: TextStyle(
+                                  color: Theme.of(context).colorScheme.error,
+                                  fontSize: 12,
+                                ),
+                              ),
+                            ),
+                          const SizedBox(height: 20),
+                          if (_generalErrorMessage != null)
+                            Text(
+                              _generalErrorMessage!,
+                              style: TextStyle(
+                                  color: Theme.of(context).colorScheme.error),
+                            ),
+                          const SizedBox(height: 20),
+                          GestureDetector(
+                            onTap: () async {
+                              //calling method for update the user details
+                              if (!isLoading) {
+                                await _updateProfile();
+                              }
+                            },
+                            child: Container(
+                              width: 275,
+                              height: 50,
+                              decoration: ShapeDecoration(
+                                color: Theme.of(context).colorScheme.secondary,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(35),
+                                ),
+                                shadows: const [
+                                  BoxShadow(
+                                    color: Color(0x3F000000),
+                                    blurRadius: 4,
+                                    offset: Offset(0, 4),
+                                    spreadRadius: 0,
+                                  )
+                                ],
+                              ),
+                              child: const Center(
+                                child: Text(
+                                  'Update',
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 20,
+                                    fontFamily: 'Work Sans',
+                                    fontWeight: FontWeight.w500,
+                                  ),
                                 ),
                               ),
                             ),
                           ),
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                      ],
+                          const SizedBox(
+                            height: 20,
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),
-        ),
-        if (isLoading)
-          Container(
-            color: Colors.black54,
-            child: const Center(
-              child: CircularProgressIndicator(),
+          if (isLoading)
+            Container(
+              color: Colors.black54,
+              child: const Center(
+                child: CircularProgressIndicator(),
+              ),
             ),
-          ),
-      ]),
+        ],
+      ),
     );
   }
 }

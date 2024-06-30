@@ -127,307 +127,321 @@ class _CreateAccountState extends State<CreateAccount> {
       },
       child: Scaffold(
         backgroundColor: Theme.of(context).colorScheme.background,
-        body: SafeArea(
-          child: SingleChildScrollView(
-            child: Container(
-              width: double.infinity,
-              padding: const EdgeInsets.symmetric(horizontal: 32),
-              child: Column(
-                children: [
-                  const SizedBox(height: 30),
-                  Image.asset(
-                    "assets/LearnProLogo_transparent.png",
-                    height: 150,
-                    width: 150,
-                  ),
-                  const SizedBox(height: 20),
-                  const Center(
-                    child: Text(
-                      "Create account",
-                      style: TextStyle(
-                        fontSize: 25,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.black,
+        body: Stack(
+          children: [
+            SafeArea(
+              child: SingleChildScrollView(
+                child: Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.symmetric(horizontal: 32),
+                  child: Column(
+                    children: [
+                      const SizedBox(height: 30),
+                      Image.asset(
+                        "assets/LearnProLogo_transparent.png",
+                        height: 150,
+                        width: 150,
                       ),
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-                  Form(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        GestureDetector(
-                          onTap: selectImage,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Stack(
+                      const SizedBox(height: 20),
+                      const Center(
+                        child: Text(
+                          "Create account",
+                          style: TextStyle(
+                            fontSize: 25,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      Form(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            GestureDetector(
+                              onTap: selectImage,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  _profileImage != null
-                                      ? CircleAvatar(
-                                          radius: 50,
-                                          backgroundColor: Colors.grey[300],
-                                          backgroundImage:
-                                              MemoryImage(_profileImage!),
-                                        )
-                                      : CircleAvatar(
-                                          radius: 50,
-                                          backgroundColor: Colors.grey[300],
-                                          backgroundImage: const AssetImage(
-                                              'assets/defaultuser.png'),
+                                  Stack(
+                                    children: [
+                                      _profileImage != null
+                                          ? CircleAvatar(
+                                              radius: 50,
+                                              backgroundColor: Colors.grey[300],
+                                              backgroundImage:
+                                                  MemoryImage(_profileImage!),
+                                            )
+                                          : CircleAvatar(
+                                              radius: 50,
+                                              backgroundColor: Colors.grey[300],
+                                              backgroundImage: const AssetImage(
+                                                  'assets/defaultuser.png'),
+                                            ),
+                                      Positioned(
+                                        bottom: 0,
+                                        right: 0,
+                                        child: Container(
+                                          height: 35,
+                                          width: 28,
+                                          decoration: BoxDecoration(
+                                            color: Colors.transparent,
+                                            borderRadius:
+                                                BorderRadius.circular(30),
+                                          ),
+                                          child: Icon(
+                                            Icons.add_a_photo,
+                                            color: Colors.grey[600],
+                                          ),
                                         ),
-                                  Positioned(
-                                    bottom: 0,
-                                    right: 0,
-                                    child: Container(
-                                      height: 35,
-                                      width: 28,
-                                      decoration: BoxDecoration(
-                                        color: Colors.transparent,
-                                        borderRadius: BorderRadius.circular(30),
                                       ),
-                                      child: Icon(
-                                        Icons.add_a_photo,
-                                        color: Colors.grey[600],
-                                      ),
-                                    ),
+                                    ],
                                   ),
                                 ],
                               ),
-                            ],
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        if (_profileImageError != null)
-                          Center(
-                            child: Text(
-                              _profileImageError!,
-                              style: TextStyle(
-                                color: Theme.of(context).colorScheme.error,
-                                fontSize: 12,
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            if (_profileImageError != null)
+                              Center(
+                                child: Text(
+                                  _profileImageError!,
+                                  style: TextStyle(
+                                    color: Theme.of(context).colorScheme.error,
+                                    fontSize: 12,
+                                  ),
+                                ),
                               ),
-                            ),
-                          ),
-                        const SizedBox(height: 10),
-                        TextFormField(
-                          controller: _emailController,
-                          decoration: InputDecoration(
-                            labelText: "Email*",
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(5),
-                            ),
-                          ),
-                        ),
-                        if (_emailError != null)
-                          Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              _emailError!,
-                              style: TextStyle(
-                                color: Theme.of(context).colorScheme.error,
-                                fontSize: 12,
-                              ),
-                            ),
-                          ),
-                        const SizedBox(height: 30),
-                        TextFormField(
-                          controller: _userNameController,
-                          decoration: InputDecoration(
-                            labelText: "User Name*",
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(5),
-                            ),
-                          ),
-                        ),
-                        if (_userNameError != null)
-                          Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              _userNameError!,
-                              style: TextStyle(
-                                color: Theme.of(context).colorScheme.error,
-                                fontSize: 12,
-                              ),
-                            ),
-                          ),
-                        const SizedBox(height: 30),
-                        TextFormField(
-                          controller: _majorController,
-                          decoration: InputDecoration(
-                            labelText: "Major*",
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(5),
-                            ),
-                          ),
-                        ),
-                        if (_majorError != null)
-                          Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              _majorError!,
-                              style: TextStyle(
-                                color: Theme.of(context).colorScheme.error,
-                                fontSize: 12,
-                              ),
-                            ),
-                          ),
-                        const SizedBox(height: 30),
-                        TextFormField(
-                          controller: _passwordController,
-                          obscureText: true,
-                          decoration: InputDecoration(
-                            labelText: "Password*",
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(5),
-                            ),
-                          ),
-                        ),
-                        if (_passwordError != null)
-                          Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              _passwordError!,
-                              style: TextStyle(
-                                color: Theme.of(context).colorScheme.error,
-                                fontSize: 12,
-                              ),
-                            ),
-                          ),
-                        const SizedBox(height: 30),
-                        TextFormField(
-                          controller: _confirmPassword,
-                          obscureText: true,
-                          decoration: InputDecoration(
-                            labelText: "Confirm Password*",
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(5),
-                            ),
-                          ),
-                        ),
-                        if (_confirmPasswordError != null)
-                          Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              _confirmPasswordError!,
-                              style: TextStyle(
-                                color: Theme.of(context).colorScheme.error,
-                                fontSize: 12,
-                              ),
-                            ),
-                          ),
-                        const SizedBox(height: 20),
-                        if (_generalErrorMessage != null)
-                          Text(
-                            _generalErrorMessage!,
-                            style: TextStyle(
-                                color: Theme.of(context).colorScheme.error),
-                          ),
-                        const SizedBox(height: 20),
-
-                        //Register Button
-
-                        GestureDetector(
-                          onTap: () async {
-                            //calling method for register the user
-                            isLoading
-                                ? const CircularProgressIndicator(
-                                    color: Colors.blue,
-                                  )
-                                : registerUser();
-                          },
-                          child: Container(
-                            width: 275,
-                            height: 50,
-                            decoration: ShapeDecoration(
-                              color: Theme.of(context).colorScheme.secondary,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              shadows: const [
-                                BoxShadow(
-                                  color: Color(0x3F000000),
-                                  blurRadius: 4,
-                                  offset: Offset(0, 4),
-                                  spreadRadius: 0,
-                                )
-                              ],
-                            ),
-                            child: const Center(
-                              child: Text(
-                                'Register',
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 17,
-                                  fontFamily: 'Work Sans',
-                                  fontWeight: FontWeight.w400,
+                            const SizedBox(height: 10),
+                            TextFormField(
+                              controller: _emailController,
+                              decoration: InputDecoration(
+                                labelText: "Email*",
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(5),
                                 ),
                               ),
                             ),
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 30,
-                        ),
-
-                        const Text(
-                          "Already have an account?",
-                          style: TextStyle(
-                            fontSize: 12,
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 8,
-                        ),
-
-                        //Login Button
-
-                        GestureDetector(
-                          //method for create account
-                          onTap: () {
-                            widget.toggle();
-                          },
-                          child: Container(
-                            width: 275,
-                            height: 50,
-                            decoration: ShapeDecoration(
-                              color: Theme.of(context).colorScheme.secondary,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
+                            if (_emailError != null)
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  _emailError!,
+                                  style: TextStyle(
+                                    color: Theme.of(context).colorScheme.error,
+                                    fontSize: 12,
+                                  ),
+                                ),
                               ),
-                              shadows: const [
-                                BoxShadow(
-                                  color: Color(0x3F000000),
-                                  blurRadius: 4,
-                                  offset: Offset(0, 4),
-                                  spreadRadius: 0,
-                                )
-                              ],
-                            ),
-                            child: const Center(
-                              child: Text(
-                                'Login',
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 17,
-                                  fontFamily: 'Work Sans',
-                                  fontWeight: FontWeight.w400,
+                            const SizedBox(height: 30),
+                            TextFormField(
+                              controller: _userNameController,
+                              decoration: InputDecoration(
+                                labelText: "User Name*",
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(5),
                                 ),
                               ),
                             ),
-                          ),
+                            if (_userNameError != null)
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  _userNameError!,
+                                  style: TextStyle(
+                                    color: Theme.of(context).colorScheme.error,
+                                    fontSize: 12,
+                                  ),
+                                ),
+                              ),
+                            const SizedBox(height: 30),
+                            TextFormField(
+                              controller: _majorController,
+                              decoration: InputDecoration(
+                                labelText: "Major*",
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(5),
+                                ),
+                              ),
+                            ),
+                            if (_majorError != null)
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  _majorError!,
+                                  style: TextStyle(
+                                    color: Theme.of(context).colorScheme.error,
+                                    fontSize: 12,
+                                  ),
+                                ),
+                              ),
+                            const SizedBox(height: 30),
+                            TextFormField(
+                              controller: _passwordController,
+                              obscureText: true,
+                              decoration: InputDecoration(
+                                labelText: "Password*",
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(5),
+                                ),
+                              ),
+                            ),
+                            if (_passwordError != null)
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  _passwordError!,
+                                  style: TextStyle(
+                                    color: Theme.of(context).colorScheme.error,
+                                    fontSize: 12,
+                                  ),
+                                ),
+                              ),
+                            const SizedBox(height: 30),
+                            TextFormField(
+                              controller: _confirmPassword,
+                              obscureText: true,
+                              decoration: InputDecoration(
+                                labelText: "Confirm Password*",
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(5),
+                                ),
+                              ),
+                            ),
+                            if (_confirmPasswordError != null)
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  _confirmPasswordError!,
+                                  style: TextStyle(
+                                    color: Theme.of(context).colorScheme.error,
+                                    fontSize: 12,
+                                  ),
+                                ),
+                              ),
+                            const SizedBox(height: 20),
+                            if (_generalErrorMessage != null)
+                              Text(
+                                _generalErrorMessage!,
+                                style: TextStyle(
+                                    color: Theme.of(context).colorScheme.error),
+                              ),
+                            const SizedBox(height: 20),
+
+                            //Register Button
+
+                            GestureDetector(
+                              onTap: () async {
+                                //calling method for register the user
+                                isLoading
+                                    ? const CircularProgressIndicator(
+                                        color: Colors.blue,
+                                      )
+                                    : registerUser();
+                              },
+                              child: Container(
+                                width: 275,
+                                height: 50,
+                                decoration: ShapeDecoration(
+                                  color:
+                                      Theme.of(context).colorScheme.secondary,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  shadows: const [
+                                    BoxShadow(
+                                      color: Color(0x3F000000),
+                                      blurRadius: 4,
+                                      offset: Offset(0, 4),
+                                      spreadRadius: 0,
+                                    )
+                                  ],
+                                ),
+                                child: const Center(
+                                  child: Text(
+                                    'Register',
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 17,
+                                      fontFamily: 'Work Sans',
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 30,
+                            ),
+
+                            const Text(
+                              "Already have an account?",
+                              style: TextStyle(
+                                fontSize: 12,
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 8,
+                            ),
+
+                            //Login Button
+
+                            GestureDetector(
+                              //method for create account
+                              onTap: () {
+                                widget.toggle();
+                              },
+                              child: Container(
+                                width: 275,
+                                height: 50,
+                                decoration: ShapeDecoration(
+                                  color:
+                                      Theme.of(context).colorScheme.secondary,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  shadows: const [
+                                    BoxShadow(
+                                      color: Color(0x3F000000),
+                                      blurRadius: 4,
+                                      offset: Offset(0, 4),
+                                      spreadRadius: 0,
+                                    )
+                                  ],
+                                ),
+                                child: const Center(
+                                  child: Text(
+                                    'Login',
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 17,
+                                      fontFamily: 'Work Sans',
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                          ],
                         ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-                ],
+                ),
               ),
             ),
-          ),
+            if (isLoading)
+              Container(
+                color: Colors.black54,
+                child: const Center(
+                  child: CircularProgressIndicator(),
+                ),
+              ),
+          ],
         ),
       ),
     );
