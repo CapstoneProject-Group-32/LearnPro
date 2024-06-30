@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:LearnPro/Flashcards/models/Flashcard.dart';
-import 'package:LearnPro/Flashcards/screen/content_form.dart';
-import 'package:LearnPro/Flashcards/screen/flashcard_home%20_screen.dart';
+import 'package:intl/intl.dart';
+import '/Flashcards/models/Flashcard.dart';
+import '/Flashcards/screen/content_form.dart';
+import '/Flashcards/screen/flashcard_home%20_screen.dart';
+
+import '../../Quiz/screens/quiz_home_screen.dart';
 
 class FlashCardCollectionScreen extends StatelessWidget {
   const FlashCardCollectionScreen({super.key});
@@ -11,9 +14,14 @@ class FlashCardCollectionScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final User? user = FirebaseAuth.instance.currentUser;
-
+    final textColor = Theme.of(context).brightness == Brightness.dark
+        ? Colors.white
+        : Colors.black;
     if (user == null) {
       return const Scaffold(
+        // appBar: AppBar(
+        //   title: Text('Flashcard yyyy '),
+        // ),
         body: Center(
           child: Text('User not signed in'),
         ),
@@ -46,6 +54,7 @@ class FlashCardCollectionScreen extends StatelessWidget {
               final subject = flashcardSet['subject'];
               final date = flashcardSet['date'].toDate();
               final flashcardSetId = flashcardSet.id;
+              final formattedDate = DateFormat('yyyy-MM-dd').format(date);
 
               List<Flashcard> flashcardList = flashcards
                   .map((flashcard) => Flashcard.fromMap(flashcard))
@@ -56,6 +65,7 @@ class FlashCardCollectionScreen extends StatelessWidget {
                   _showDeleteDialog(context, uid, flashcardSetId);
                 },
                 child: Card(
+                   color: Theme.of(context).colorScheme.primary,
                   elevation: 5,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
@@ -67,7 +77,7 @@ class FlashCardCollectionScreen extends StatelessWidget {
                       subject,
                       style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
-                    subtitle: Text('Created on: $date'),
+                    subtitle: Text('Created on: $formattedDate'),
                     onTap: () {
                       Navigator.push(
                         context,
@@ -78,6 +88,23 @@ class FlashCardCollectionScreen extends StatelessWidget {
                         ),
                       );
                     },
+                    trailing: TextButton(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                           Text('Go to',style: TextStyle(color:textColor ),),
+                           Text('Quiz',style: TextStyle(color:textColor ),),
+                        ],
+                      ),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => QuizHomescreen(flashcardSetId: flashcardSetId),
+                          ),
+                        );
+                      },
+                    ),
                   ),
                 ),
               );
