@@ -18,10 +18,11 @@ class QuizHomescreen extends StatelessWidget {
     final textColor = Theme.of(context).brightness == Brightness.dark
         ? Colors.white
         : Colors.black;
+
     if (user == null) {
       return Scaffold(
         appBar: AppBar(
-          title: const Text('Quizes'),
+          title: const Text('Quizzes'),
         ),
         body: const Center(
           child: Text('User not signed in'),
@@ -31,7 +32,7 @@ class QuizHomescreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Quizes'),
+        title: const Text('Quizzes'),
       ),
       body: StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance
@@ -42,9 +43,21 @@ class QuizHomescreen extends StatelessWidget {
             .collection('quizes')
             .snapshots(),
         builder: (context, snapshot) {
-          if (!snapshot.hasData) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(
               child: CircularProgressIndicator(),
+            );
+          }
+
+          if (snapshot.hasError) {
+            return Center(
+              child: Text('Error: ${snapshot.error}'),
+            );
+          }
+
+          if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+            return const Center(
+              child: Text('No quizzes available'),
             );
           }
 
@@ -135,61 +148,6 @@ class QuizHomescreen extends StatelessWidget {
         },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      // floatingActionButton: TextButton(
-      //   style: ButtonStyle(
-      //     backgroundColor:  MaterialStateProperty.all<Color>(Theme.of(context).colorScheme.secondary),
-      //     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-      //       RoundedRectangleBorder(
-      //         borderRadius: BorderRadius.circular(10),
-      //       ),
-      //     ),
-      //     shadowColor: MaterialStateProperty.all<Color>(Color(0x3F000000)),
-      //     elevation: MaterialStateProperty.all<double>(4),
-      //   ),
-      //   onPressed: () async {
-      //     showDialog(
-      //       context: context,
-      //       barrierDismissible: false,
-      //       builder: (BuildContext context) {
-      //         return const Dialog(
-      //           child: Padding(
-      //             padding: EdgeInsets.all(16.0),
-      //             child: Row(
-      //               mainAxisSize: MainAxisSize.min,
-      //               children: [
-      //                 CircularProgressIndicator(),
-      //                 SizedBox(width: 16),
-      //                 Text("Generating Quiz..."),
-      //               ],
-      //             ),
-      //           ),
-      //         );
-      //       },
-      //     );
-
-      //     List<Question> questions;
-      //     questions = await Provider.of<QuizController>(context, listen: false)
-      //         .createQuiz(uid!, flashcardSetId);
-
-      //     Navigator.pop(context);
-
-      //     Navigator.push(
-      //       context,
-      //       MaterialPageRoute(
-      //         builder: (context) => QuizScreen(questions: questions),
-      //       ),
-      //     );
-      //   },
-      //   child: Text(
-      //     'Generate Quiz',
-      //     style: TextStyle(
-      //       color: textColor,
-      //       fontSize: 17,
-      //       fontFamily: 'Work Sans',
-      //       fontWeight: FontWeight.w400,
-      //     ),
-      //   ),
-      // ),
       floatingActionButton: GestureDetector(
         onTap: () async {
           showDialog(
