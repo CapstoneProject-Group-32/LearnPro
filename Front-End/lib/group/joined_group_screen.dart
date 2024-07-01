@@ -1,3 +1,4 @@
+import 'package:LearnPro/group/group_detail_page.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -14,6 +15,7 @@ class _JoinedGroupsScreenState extends State<JoinedGroupsScreen> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   List<Map<String, dynamic>> _joinedGroups = [];
+  bool _isLoading = true;
 
   @override
   void initState() {
@@ -44,8 +46,17 @@ class _JoinedGroupsScreenState extends State<JoinedGroupsScreen> {
 
         setState(() {
           _joinedGroups = groupDetails;
+          _isLoading = false;
+        });
+      } else {
+        setState(() {
+          _isLoading = false;
         });
       }
+    } else {
+      setState(() {
+        _isLoading = false;
+      });
     }
   }
 
@@ -61,31 +72,40 @@ class _JoinedGroupsScreenState extends State<JoinedGroupsScreen> {
         },
         child: const Icon(Icons.add),
       ),
-      body: _joinedGroups.isEmpty
+      body: _isLoading
           ? const Center(
-              child: Text(
-                "No joined groups",
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-              ),
+              child: CircularProgressIndicator(),
             )
-          : ListView.builder(
-              itemCount: _joinedGroups.length,
-              itemBuilder: (context, index) {
-                final group = _joinedGroups[index];
-                return Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: _groupCard(
-                    context,
-                    NetworkImage(group['groupicon']),
-                    group['groupname'],
-                    group['groupmajor'],
-                    () {
-                      // TODO: Implement navigation to the group details page
-                    },
+          : _joinedGroups.isEmpty
+              ? const Center(
+                  child: Text(
+                    "No joined groups",
                   ),
-                );
-              },
-            ),
+                )
+              : ListView.builder(
+                  itemCount: _joinedGroups.length,
+                  itemBuilder: (context, index) {
+                    final group = _joinedGroups[index];
+                    return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: _groupCard(
+                        context,
+                        NetworkImage(group['groupicon']),
+                        group['groupname'],
+                        group['groupmajor'],
+                        () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => GroupDetailPage(
+                                  groupName: group['groupname']),
+                            ),
+                          );
+                        },
+                      ),
+                    );
+                  },
+                ),
     );
   }
 }

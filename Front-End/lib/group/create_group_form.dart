@@ -4,6 +4,8 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'dart:io';
+import '../tutoring_system/custom_appbar.dart';
+import '../tutoring_system/custom_button.dart';
 import 'invite_friends_screen.dart';
 
 class CreateGroupScreen extends StatefulWidget {
@@ -125,15 +127,19 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
       }
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please fill every field and add a group icon')),
+        const SnackBar(
+            content: Text('Please fill every field and add a group icon')),
       );
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final textColor = Theme.of(context).brightness == Brightness.dark
+        ? Colors.white
+        : Colors.black;
     return Scaffold(
-      appBar: AppBar(title: const Text('Create Group')),
+      appBar: const CustomAppBar(title: 'Create a Group'),
       body: Form(
         key: _formKey,
         child: SingleChildScrollView(
@@ -144,7 +150,7 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
                 TextFormField(
                   decoration: InputDecoration(
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12.0),
+                        borderRadius: BorderRadius.circular(5.0),
                       ),
                       labelText: 'Group Name'),
                   validator: (value) {
@@ -161,7 +167,7 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
                 TextFormField(
                   decoration: InputDecoration(
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12.0),
+                        borderRadius: BorderRadius.circular(5.0),
                       ),
                       labelText: 'Major'),
                   validator: (value) {
@@ -178,7 +184,7 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
                 TextFormField(
                   decoration: InputDecoration(
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12.0),
+                        borderRadius: BorderRadius.circular(5.0),
                       ),
                       labelText: 'Description'),
                   validator: (value) {
@@ -190,18 +196,28 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
                   onSaved: (value) => groupDescription = value,
                 ),
                 const SizedBox(height: 20),
-                ElevatedButton(
+                CustomButton(
+                  text: 'Choose Group Icon',
                   onPressed: pickGroupIcon,
-                  child: const Text('Choose Group Icon'),
+                  backgroundColor: Colors.white38,
                 ),
+                // ElevatedButton(
+                //   onPressed: pickGroupIcon,
+                //   child: const Text('Choose Group Icon'),
+                // ),
                 groupIcon != null
                     ? Image.file(File(groupIcon!.path))
                     : Container(),
                 const SizedBox(height: 20),
-                ElevatedButton(
+                CustomButton(
+                  text: 'Invite Friends',
                   onPressed: inviteFriends,
-                  child: const Text('Invite Friends'),
+                  backgroundColor: Colors.white70,
                 ),
+                // ElevatedButton(
+                //   onPressed: inviteFriends,
+                //   child: const Text('Invite Friends'),
+                // ),
                 ListView.builder(
                   shrinkWrap: true,
                   itemCount: invitedFriendsUsernames.length,
@@ -212,21 +228,64 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
                     );
                   },
                 ),
+                SizedBox(
+                  height: 30,
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    ElevatedButton(
-                      onPressed: isLoading ? null : createGroup,
-                      child: isLoading
-                          ? const CircularProgressIndicator(
-                              valueColor:
-                                  AlwaysStoppedAnimation<Color>(Colors.white),
-                            )
-                          : const Text('Create'),
+                    // ElevatedButton(
+                    //   onPressed: () => Navigator.pop(context),
+                    //   child: const Text('Cancel'),
+                    // ),
+
+                    SizedBox(
+                      height: 40,
+                      width: 120,
+                      child: CustomButton(
+                        text: "Cancel",
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        backgroundColor:
+                            Theme.of(context).colorScheme.background,
+                        foregroundColor:
+                            Theme.of(context).colorScheme.secondary,
+                        // foregroundColor: Colors.red,
+                        borderColor: Theme.of(context).colorScheme.secondary,
+                      ),
                     ),
-                    ElevatedButton(
-                      onPressed: () => Navigator.pop(context),
-                      child: const Text('Cancel'),
+                    SizedBox(
+                      height: 40,
+                      width: 120,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          elevation: 20, // newly added
+                          shadowColor:
+                              Colors.grey[800]?.withOpacity(0.15), //newly added
+                          backgroundColor:
+                              Theme.of(context).colorScheme.secondary,
+                          // foregroundColor: foregroundColor,
+                          shape: RoundedRectangleBorder(
+                            side: BorderSide(
+                              color: Theme.of(context).colorScheme.secondary,
+                            ),
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                        ),
+                        onPressed: isLoading ? null : createGroup,
+                        child: isLoading
+                            ? const CircularProgressIndicator(
+                                valueColor:
+                                    AlwaysStoppedAnimation<Color>(Colors.white),
+                              )
+                            : Text(
+                                'Create',
+                                style: TextStyle(
+                                  color: textColor,
+                                ),
+                              ),
+                      ),
                     ),
                   ],
                 ),

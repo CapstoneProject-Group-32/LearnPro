@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-
+//import 'package:get/get.dart';
 import '../upload_pdf_page.dart';
 import '../pdf_viewer_page.dart';
 
@@ -11,46 +11,13 @@ class LibraryPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double deviceWidth = MediaQuery.of(context).size.width;
     User? user = FirebaseAuth.instance.currentUser;
     if (user == null) {
       return const Center(child: Text('Please log in to view your library.'));
     }
 
     return Scaffold(
-      // appBar: AppBar(
-      //   automaticallyImplyLeading: false,
-      //   title: InkWell(
-      //     onTap: () {
-      //       Navigator.push(
-      //         context,
-      //         MaterialPageRoute(
-      //           builder: (context) => NavigationBarBottom(),
-      //         ),
-      //       );
-      //     },
-      //     child: const Row(
-      //       mainAxisAlignment: MainAxisAlignment.start,
-      //       children: [
-      //         Icon(
-      //           Icons.arrow_back_ios_new_rounded,
-      //           size: 28,
-      //           color: Colors.black,
-      //         ),
-      //         SizedBox(
-      //           width: 10,
-      //         ),
-      //         Text(
-      //           "Library",
-      //           style: TextStyle(
-      //             fontWeight: FontWeight.bold,
-      //             fontSize: 30,
-      //             color: Colors.black,
-      //           ),
-      //         ),
-      //       ],
-      //     ),
-      //   ),
-      // ),
       body: StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance
             .collection('users')
@@ -81,7 +48,8 @@ class LibraryPage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 10, horizontal: 20),
                     child: Text(
                       entry.key,
                       style: const TextStyle(
@@ -106,25 +74,53 @@ class LibraryPage extends StatelessWidget {
                           ));
                         },
                         child: Card(
+                          color: Theme.of(context).colorScheme.primary,
                           margin: const EdgeInsets.all(15.0),
                           child: Stack(
                             children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  const Icon(Icons.picture_as_pdf,
-                                      size: 100, color: Colors.red),
-                                  const Spacer(),
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text(
-                                      doc['title'],
-                                      textAlign: TextAlign.center,
-                                    ),
+                              //  Column(
+                              // crossAxisAlignment: CrossAxisAlignment.center,
+                              // mainAxisAlignment: MainAxisAlignment.center,
+                              //  children: [
+                              Container(
+                                alignment: Alignment.center,
+                                child: Align(
+                                  alignment: Alignment.center,
+                                  child: Icon(
+                                    Icons.picture_as_pdf,
+                                    size: 11 * deviceWidth / 36,
+                                    color:
+                                       Colors.red,
                                   ),
-                                ],
+                                ),
                               ),
+                              //const Spacer(),
+                              //  Padding(
+                              // padding: const EdgeInsets.all(8.0),
+                              /* child:*/ Align(
+                                alignment: Alignment.bottomCenter,
+                                child: Container(
+                                  width: double.infinity,
+                                  decoration: BoxDecoration(
+                                    color:
+                                        Theme.of(context).colorScheme.secondary,
+                                    borderRadius:
+                                        const BorderRadiusDirectional.only(
+                                            bottomStart: Radius.circular(10),
+                                            bottomEnd: Radius.circular(10)),
+                                  ),
+                                  child: Text(
+                                    style: const TextStyle(
+                                      fontSize: 18,
+                                    ),
+                                    doc['title'],
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                              ),
+                              //  ),
+                              //   ],
+                              //    ),
                               Positioned(
                                 right: 0,
                                 child: PopupMenuButton<String>(

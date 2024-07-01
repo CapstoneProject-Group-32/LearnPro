@@ -1,3 +1,4 @@
+import 'package:LearnPro/tutoring_system/custom_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:internet_file/internet_file.dart';
 import 'package:pdfx/pdfx.dart';
@@ -28,15 +29,16 @@ class _PdfViewerPageState extends State<PdfViewerPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          "PDF Viewer",
-          style: TextStyle(
-            color: Color.fromARGB(255, 38, 4, 4),
-          ),
-        ),
-        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
-      ),
+      appBar: const CustomAppBar(title: 'Pdf viewer'),
+      // appBar: AppBar(
+      //   title: const Text(
+      //     "PDF Viewer",
+      //     style: TextStyle(
+      //       color: Color.fromARGB(255, 38, 4, 4),
+      //     ),
+      //   ),
+      //   backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+      // ),
       body: _buildUI(),
     );
   }
