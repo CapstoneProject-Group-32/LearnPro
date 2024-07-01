@@ -1,3 +1,4 @@
+import 'package:LearnPro/tutoring_system/custom_button.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -83,6 +84,7 @@ class _GroupInvitationNotificationScreenState
     }
   }
 
+/*Error: ${snapshot.error}*/
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -92,7 +94,8 @@ class _GroupInvitationNotificationScreenState
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
-            return Center(child: Text('Error: ${snapshot.error}'));
+            return Center(
+                child: Text('No invitations')); /*Error: ${snapshot.error}*/
           } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
             return const Center(child: Text('No invitations'));
           } else {
@@ -183,67 +186,89 @@ class _InvitationCardState extends State<InvitationCard> {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(25.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                CircleAvatar(
-                  backgroundImage:
-                      NetworkImage(widget.ownerDetails['profilePic'] ?? ''),
-                ),
-                const SizedBox(width: 10),
-                Text(
-                    '${widget.ownerDetails['userName'] ?? 'Unknown user'} has invited you to his group'),
-              ],
-            ),
-            const SizedBox(height: 10),
-            Row(
-              children: [
-                Image.network(
-                  widget.groupDetails['groupicon'] ?? '',
-                  width: 50,
-                  height: 50,
-                ),
-                const SizedBox(width: 10),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(widget.groupDetails['groupname'] ?? 'Unknown group',
-                        style: const TextStyle(fontWeight: FontWeight.bold)),
-                    Text(widget.groupDetails['groupmajor'] ??
-                        'No major specified'),
-                  ],
-                ),
-              ],
-            ),
-            const SizedBox(height: 10),
-            Text(widget.groupDetails['groupdescription'] ??
-                'No description provided'),
-            const SizedBox(height: 10),
-            if (status == null) ...[
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Card(
+        color: Theme.of(context).colorScheme.primary.withOpacity(0.7),
+        child: Padding(
+          padding: const EdgeInsets.all(25.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
               Row(
                 children: [
-                  ElevatedButton(
-                      onPressed: handleAccept, child: const Text('Accept')),
+                  CircleAvatar(
+                    backgroundImage:
+                        NetworkImage(widget.ownerDetails['profilePic'] ?? ''),
+                  ),
                   const SizedBox(width: 10),
-                  ElevatedButton(
-                      onPressed: handleReject, child: const Text('Reject')),
+                  Text(
+                    '${widget.ownerDetails['userName'] ?? 'Unknown user'} has invited you to his group',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
                 ],
               ),
-            ] else if (status == 'accepted') ...[
-              const Center(
-                child: Text('Accepted', style: TextStyle(color: Colors.green)),
+              const SizedBox(height: 10),
+              Row(
+                children: [
+                  Image.network(
+                    widget.groupDetails['groupicon'] ?? '',
+                    width: 50,
+                    height: 50,
+                  ),
+                  const SizedBox(width: 10),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(widget.groupDetails['groupname'] ?? 'Unknown group',
+                          style: const TextStyle(fontWeight: FontWeight.bold)),
+                      Text(widget.groupDetails['groupmajor'] ??
+                          'No major specified'),
+                    ],
+                  ),
+                ],
               ),
-            ] else if (status == 'rejected') ...[
-              const Center(
-                child: Text('Rejected', style: TextStyle(color: Colors.red)),
-              ),
+              const SizedBox(height: 10),
+              Text(widget.groupDetails['groupdescription'] ??
+                  'No description provided'),
+              const SizedBox(height: 10),
+              if (status == null) ...[
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    CustomButton(
+                        text: "Reject",
+                        onPressed: handleReject,
+                        backgroundColor: Colors.redAccent.shade700),
+
+                    CustomButton(
+                      text: 'Accept',
+                      onPressed: handleAccept,
+                      backgroundColor: Theme.of(context).colorScheme.secondary,
+                      borderColor: Theme.of(context).colorScheme.secondary,
+                    ),
+
+                    // ElevatedButton(
+                    //     onPressed: handleAccept, child: const Text('Accept')),
+                    // const SizedBox(width: 10),
+                    // ElevatedButton(
+                    //     onPressed: handleReject, child: const Text('Reject')),
+                  ],
+                ),
+              ] else if (status == 'accepted') ...[
+                const Center(
+                  child:
+                      Text('Accepted', style: TextStyle(color: Colors.green)),
+                ),
+              ] else if (status == 'rejected') ...[
+                const Center(
+                  child: Text('Rejected', style: TextStyle(color: Colors.red)),
+                ),
+              ],
             ],
-          ],
+          ),
         ),
       ),
     );

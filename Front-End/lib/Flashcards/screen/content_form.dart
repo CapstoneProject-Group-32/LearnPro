@@ -1,12 +1,15 @@
 import 'dart:convert';
 
+import 'package:LearnPro/tutoring_system/custom_button.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:LearnPro/Flashcards/utill/dialog_utils.dart';
 import 'package:LearnPro/Models/studiedcontent.dart';
 import 'package:LearnPro/Widgets/myuploadbutton.dart';
+import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
+import '../../tutoring_system/custom_appbar.dart';
 import '../generate_flashcard.dart';
 import 'flashcard_home _screen.dart';
 
@@ -36,9 +39,9 @@ class _ContentFormState extends State<ContentForm> {
         mainTopic1: mainTopic1,
         dataSetMap: dataSetMap,
       );
-      print('Subject: $subject1');
-      print('Main Topic: $mainTopic1');
-      print('Data Set Map: $dataSetMap');
+      // print('Subject: $subject1');
+      // print('Main Topic: $mainTopic1');
+      // print('Data Set Map: $dataSetMap');
       // Here you can store the studiedcontent object as needed.
       String jsonString = jsonEncode(dataSetMap);
       final User? user = FirebaseAuth.instance.currentUser;
@@ -84,7 +87,68 @@ class _ContentFormState extends State<ContentForm> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: customizedAppbar(),
+      appBar: const CustomAppBar(title: 'Enter Content'),
+      bottomSheet: dataSetMap.isNotEmpty
+          ? Container(
+              decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.background),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  SizedBox(
+                    // height: 40,
+                    width: 120,
+                    child: CustomButton(
+                      text: 'Clear',
+                      onPressed: () {
+                        setState(() {
+                          dataSetMap.clear();
+                        });
+                      },
+                      backgroundColor: Colors.white38,
+                    ),
+                    // child: CustomButton(
+                    //   text: "Cancel",
+                    //   onPressed: () {
+                    //     Navigator.of(context).pop();
+                    //   },
+                    //   backgroundColor: Theme.of(context).colorScheme.background,
+                    //   foregroundColor: Theme.of(context).colorScheme.secondary,
+                    //   // foregroundColor: Colors.red,
+                    //   borderColor: Theme.of(context).colorScheme.secondary,
+                    // ),
+                  ),
+                  SizedBox(
+                    height: 40,
+                    width: 120,
+                    child: CustomButton(
+                      text: "Submit",
+                      onPressed: () {
+                        setState(() {
+                          if (dataSetMap.isNotEmpty &&
+                              _inputText4.text.isNotEmpty &&
+                              _inputText3.text.isNotEmpty) {
+                            mainTopic1 = _inputText4.text;
+                            subject1 = _inputText3.text;
+                            _submitForm();
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                  content: Text(
+                                      'Please Fill  all the fields in the form')),
+                            );
+                          }
+                          // Call submit form here
+                        });
+                      },
+                      backgroundColor: Theme.of(context).colorScheme.secondary,
+                      borderColor: Theme.of(context).colorScheme.secondary,
+                    ),
+                  ),
+                ],
+              ),
+            )
+          : null,
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(20.0),
@@ -98,7 +162,7 @@ class _ContentFormState extends State<ContentForm> {
                   obscureText: false,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12.0),
+                      borderRadius: BorderRadius.circular(5.0),
                     ),
                     labelText: "Subject",
                   ),
@@ -109,7 +173,7 @@ class _ContentFormState extends State<ContentForm> {
                   obscureText: false,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12.0),
+                      borderRadius: BorderRadius.circular(5.0),
                     ),
                     labelText: "Main topic",
                   ),
@@ -126,7 +190,7 @@ class _ContentFormState extends State<ContentForm> {
                         controller: _inputText1,
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12.0),
+                            borderRadius: BorderRadius.circular(5.0),
                           ),
                           labelText: "Sub Topics",
                         ),
@@ -145,9 +209,14 @@ class _ContentFormState extends State<ContentForm> {
                       },
                       style: ElevatedButton.styleFrom(
                         padding: EdgeInsets.zero,
+                        backgroundColor:
+                            Theme.of(context).colorScheme.secondary,
                         shape: const CircleBorder(),
                       ),
-                      child: const Icon(Icons.add_circle_outline_outlined),
+                      child: const Icon(
+                        Icons.add,
+                        color: Colors.white,
+                      ),
                     ),
                   ],
                 ),
@@ -160,7 +229,7 @@ class _ContentFormState extends State<ContentForm> {
                           controller: _inputText2,
                           decoration: InputDecoration(
                             border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(12.0),
+                              borderRadius: BorderRadius.circular(5.0),
                             ),
                             labelText: "Add points under subtopic",
                           ),
@@ -182,128 +251,219 @@ class _ContentFormState extends State<ContentForm> {
                         });
                       },
                       style: ElevatedButton.styleFrom(
+                        backgroundColor:
+                            Theme.of(context).colorScheme.secondary,
                         padding: EdgeInsets.zero,
                         shape: const CircleBorder(),
                       ),
-                      child: const Icon(Icons.add_circle_outline_outlined),
+                      child: const Icon(
+                        Icons.add,
+                        color: Colors.white,
+                      ),
                     ),
                   ],
                 ),
                 const SizedBox(height: 8),
                 SizedBox(
-                  height: heightofabox
-                      .toDouble(), // Constrained height for the list
-                  child: ListView.builder(
-                    itemCount: dataSetMap.keys.length,
-                    itemBuilder: (context, index) {
-                      String subtopics = dataSetMap.keys.elementAt(index);
-                      List<String> listitemsofsubtopic =
-                          dataSetMap[subtopics] ?? [];
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 4.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              width: double.infinity,
-                              padding: const EdgeInsets.all(8.0),
-                              color: const Color.fromARGB(255, 230, 230, 230),
-                              child: Center(
-                                child: Text(
-                                  subtopics,
-                                  style: const TextStyle(
-                                    fontSize: 24,
-                                    color: Colors.black,
-                                    decoration: TextDecoration.underline,
-                                    fontWeight: FontWeight.w900,
+                  height: heightofabox.toDouble() /
+                      1.3, // Constrained height for the list
+                  child: RawScrollbar(
+                    thumbVisibility: true,
+                    thickness: 6.0,
+                    child: ListView.builder(
+                      itemCount: dataSetMap.keys.length,
+                      itemBuilder: (context, index) {
+                        String subtopics = dataSetMap.keys.elementAt(index);
+                        List<String> listitemsofsubtopic =
+                            dataSetMap[subtopics] ?? [];
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 4.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                width: double.infinity,
+                                padding: const EdgeInsets.all(8.0),
+                                //Color.fromARGB(255, 230, 230, 230),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(5.0),
+                                    topRight: Radius.circular(5.0),
+                                  ),
+                                  color: Colors.white60,
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    subtopics,
+                                    style: const TextStyle(
+                                      fontSize: 18,
+                                      color: Colors.black,
+                                      // decoration: TextDecoration.underline,
+                                      fontWeight: FontWeight.w900,
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                            ...listitemsofsubtopic.map((listitemsofsubtopic) {
-                              return Container(
-                                height: 50,
-                                width: double.infinity,
-                                padding: const EdgeInsets.all(8.0),
-                                color: const Color.fromARGB(255, 255, 255, 255),
-                                child: RichText(
-                                  text: TextSpan(
-                                    style: const TextStyle(color: Colors.black),
-                                    children: <InlineSpan>[
-                                      const WidgetSpan(
-                                        child: Icon(Icons.circle, size: 16.0),
-                                      ),
-                                      TextSpan(text: "  $listitemsofsubtopic"),
-                                    ],
-                                  ),
-                                ),
-                              );
-                            }).toList(),
-                          ],
-                        ),
-                      );
-                    },
+                              ...listitemsofsubtopic.map((listitemsofsubtopic) {
+                                return Container(
+                                  height: 35,
+                                  width: double.infinity,
+                                  padding: const EdgeInsets.all(8.0),
+                                  //  color: Colors.white10,
+                                  color:
+                                      const Color.fromARGB(255, 255, 255, 255),
+                                  child: Text('\u2022 $listitemsofsubtopic'),
+                                  // child: RichText(
+                                  //   text: TextSpan(
+                                  //     style:
+                                  //         const TextStyle(color: Colors.black),
+                                  //     children: <InlineSpan>[
+                                  //       const WidgetSpan(
+                                  //         child: Icon(
+                                  //           Icons.circle,
+                                  //           size: 7.0,
+                                  //           color: Colors.black,
+                                  //         ),
+                                  //       ),
+                                  //       TextSpan(
+                                  //           text: "  $listitemsofsubtopic"),
+                                  //     ],
+                                  //   ),
+                                  // ),
+                                );
+                              }).toList(),
+                            ],
+                          ),
+                        );
+                      },
+                    ),
                   ),
                 ),
-                ElevatedButton(
-                  onPressed: () {
-                    setState(() {
-                      dataSetMap.clear();
-                    });
-                  },
-                  child: const Text("Clear"),
-                ),
-                const SizedBox(height: 30),
-                const FilePickerButton(),
-                const SizedBox(height: 50),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Flexible(
-                      child: SizedBox(
-                        width: 150,
-                        height: 40,
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor:
-                                const Color.fromARGB(255, 31, 231, 198),
+                // CustomButton(
+                //   text: 'Clear',
+                //   onPressed: () {
+                //     setState(() {
+                //       dataSetMap.clear();
+                //     });
+                //   },
+                //   backgroundColor: Colors.white38,
+                // ),
+                // ElevatedButton(
+                //   onPressed: () {
+                //     setState(() {
+                //       dataSetMap.clear();
+                //     });
+                //   },
+                //   child: const Text("Clear"),
+                // ),
+                const SizedBox(height: 20),
+                //   const FilePickerButton(),
+                //const SizedBox(height: 50),
+                dataSetMap.isEmpty
+                    ? Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          SizedBox(
+                            height: 40,
+                            width: 120,
+                            child: CustomButton(
+                              text: "Cancel",
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              backgroundColor:
+                                  Theme.of(context).colorScheme.background,
+                              foregroundColor:
+                                  Theme.of(context).colorScheme.secondary,
+                              // foregroundColor: Colors.red,
+                              borderColor:
+                                  Theme.of(context).colorScheme.secondary,
+                            ),
                           ),
-                          child: const Text(
-                            "Submit",
-                            style: TextStyle(color: Colors.black),
+                          SizedBox(
+                            height: 40,
+                            width: 120,
+                            child: CustomButton(
+                              text: "Submit",
+                              onPressed: () {
+                                setState(() {
+                                  if (dataSetMap.isNotEmpty &&
+                                      _inputText4.text.isNotEmpty &&
+                                      _inputText3.text.isNotEmpty) {
+                                    mainTopic1 = _inputText4.text;
+                                    subject1 = _inputText3.text;
+                                    _submitForm();
+                                  } else {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                          content: Text(
+                                              'Please Fill  all the fields in the form')),
+                                    );
+                                  }
+// Call submit form here
+                                });
+                              },
+                              backgroundColor:
+                                  Theme.of(context).colorScheme.secondary,
+                              borderColor:
+                                  Theme.of(context).colorScheme.secondary,
+                            ),
                           ),
-                          onPressed: () {
-                            setState(() {
-                              mainTopic1 = _inputText4.text;
-                              subject1 = _inputText3.text;
-                              _submitForm(); // Call submit form here
-                            });
-                          },
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 20),
-                    Flexible(
-                      child: SizedBox(
-                        width: 150,
-                        height: 40,
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor:
-                                const Color.fromARGB(255, 249, 249, 249),
-                          ),
-                          child: const Text(
-                            "Cancel",
-                            style: TextStyle(color: Colors.black),
-                          ),
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+//                     Flexible(
+//                       child: SizedBox(
+//                         width: 150,
+//                         height: 40,
+//                         child: ElevatedButton(
+//                           style: ElevatedButton.styleFrom(
+//                             backgroundColor:
+//                                 const Color.fromARGB(255, 31, 231, 198),
+//                           ),
+//                           child: const Text(
+//                             "Submit",
+//                             style: TextStyle(color: Colors.black),
+//                           ),
+//                           onPressed: () {
+//                             setState(() {
+//                               if (subject1.isNotEmpty) {
+//                                 mainTopic1 = _inputText4.text;
+//                                 subject1 = _inputText3.text;
+//                                 _submitForm();
+//                               } else {
+//                                 ScaffoldMessenger.of(context).showSnackBar(
+//                                   const SnackBar(
+//                                       content: Text(
+//                                           'Please Fill  all the fields in the form')),
+//                                 );
+//                               }
+// // Call submit form here
+//                             });
+//                           },
+//                         ),
+//                       ),
+//                     ),
+                          // const SizedBox(width: 20),
+                          // Flexible(
+                          //   child: SizedBox(
+                          //     width: 150,
+                          //     height: 40,
+                          //     child: ElevatedButton(
+                          //       style: ElevatedButton.styleFrom(
+                          //         backgroundColor:
+                          //             const Color.fromARGB(255, 249, 249, 249),
+                          //       ),
+                          //       child: const Text(
+                          //         "Cancel",
+                          //         style: TextStyle(color: Colors.black),
+                          //       ),
+                          //       onPressed: () {
+                          //         Navigator.pop(context);
+                          //       },
+                          //     ),
+                          //   ),
+                          // ),
+                        ],
+                      )
+                    : Text(""),
               ],
             ),
           ),
@@ -312,20 +472,20 @@ class _ContentFormState extends State<ContentForm> {
     );
   }
 
-  AppBar customizedAppbar() {
-    return AppBar(
-      title: const Row(
-        children: [
-          //Icon(Icons.arrow_back),
-          SizedBox(width: 20),
-          Flexible(
-            child: Text(
-              "Enter Content",
-              style: TextStyle(fontWeight: FontWeight.w700),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+  // AppBar customizedAppbar() {
+  //   return AppBar(
+  //     title: const Row(
+  //       children: [
+  //         //Icon(Icons.arrow_back),
+  //         SizedBox(width: 20),
+  //         Flexible(
+  //           child: Text(
+  //             "Enter Content",
+  //             style: TextStyle(fontWeight: FontWeight.w700),
+  //           ),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 }

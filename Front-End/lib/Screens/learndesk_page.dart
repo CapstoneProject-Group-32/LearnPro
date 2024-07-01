@@ -1,3 +1,10 @@
+import 'package:LearnPro/Flashcards/screen/content_form.dart';
+
+import 'package:LearnPro/Screens/setGoals/set_goals.dart';
+import 'package:LearnPro/Screens/upload_pdf_page.dart';
+import 'package:LearnPro/tutoring_system/learning_information.dart';
+import 'package:LearnPro/tutoring_system/learning_records.dart';
+
 import 'package:flutter/material.dart';
 import 'package:LearnPro/Screens/Timer/timer_page.dart';
 import 'package:LearnPro/Widgets/navigation_bar.dart';
@@ -38,33 +45,28 @@ class LearnDesk extends StatelessWidget {
                 //Learn Desk Container Row Method calling
 
                 _learndeskContainerRowMethod(
-                  context,
-                  const AssetImage('assets/clock.png'),
-                  'Focus Timer',
-                  const TimerScreen(),
-                  const AssetImage('assets/cloud.png'),
-                  'Upload Notes',
-                  const NavigationBarBottom(
-                      initialIndex: 1, learningTabBarIndex: 0),
-                ),
+                    context,
+                    const AssetImage('assets/clock.png'),
+                    'Focus Timer',
+                    const TimerScreen(),
+                    const AssetImage('assets/cloud.png'),
+                    'Upload Notes',
+                    const UploadPdfPage()),
                 _learndeskContainerRowMethod(
                   context,
                   const AssetImage('assets/flashcards.png'),
                   'Create Flashcards',
-                  const NavigationBarBottom(
-                      initialIndex: 1, learningTabBarIndex: 1),
-                  const AssetImage('assets/help.png'),
-                  'Request Tution',
-                  const NavigationBarBottom(
-                      initialIndex: 3, communityTabBarIndex: 0),
+                  const ContentForm(),
+                  const AssetImage('assets/boy.png'),
+                  'Records',
+                  LearningInformation(),
                 ),
 
                 _learndeskContainerRowMethod(
                   context,
                   const AssetImage('assets/target.png'),
                   'Set Goals',
-                  const NavigationBarBottom(
-                      initialIndex: 1, learningTabBarIndex: 2),
+                  SetGoals(),
                   const AssetImage('assets/quiz.png'),
                   'Quizes',
                   const NavigationBarBottom(
@@ -90,11 +92,13 @@ Widget _learndeskContainerRowMethod(
   String containerTopic2,
   Widget linkedPage2,
 ) {
+  double screenWidth = MediaQuery.of(context).size.width;
+  double containerWidth = (screenWidth / 2) - 24; // Adjust as needed
+
   return Row(
     mainAxisAlignment: MainAxisAlignment.center,
     children: [
-//first icon start
-
+      // First icon start
       Padding(
         padding: const EdgeInsets.all(8.0),
         child: InkWell(
@@ -107,8 +111,9 @@ Widget _learndeskContainerRowMethod(
             );
           },
           child: Container(
-            width: 180,
-            height: 200,
+            width: containerWidth,
+            // height: 200,
+            height: 180,
             decoration: BoxDecoration(
               color: Theme.of(context).colorScheme.primary,
               borderRadius: BorderRadius.circular(20),
@@ -119,12 +124,15 @@ Widget _learndeskContainerRowMethod(
                   padding: const EdgeInsets.all(15.0),
                   child: Image(
                     image: containerImage1,
-                    width: 120,
-                    height: 120,
+                    width: 90,
+                    height: 90,
+                    // width: 120,
+                    // height: 120,
                   ),
                 ),
                 Container(
-                  height: 50,
+                  // height: 50,
+                  height: 40,
                   width: double.infinity,
                   decoration: BoxDecoration(
                     borderRadius: const BorderRadius.only(
@@ -149,8 +157,7 @@ Widget _learndeskContainerRowMethod(
         ),
       ),
 
-//first icon stopped and second icon started
-
+      // Second icon start
       Padding(
         padding: const EdgeInsets.all(8.0),
         child: InkWell(
@@ -163,8 +170,8 @@ Widget _learndeskContainerRowMethod(
             );
           },
           child: Container(
-            width: 180,
-            height: 200,
+            width: containerWidth,
+            height: 180,
             decoration: BoxDecoration(
               color: Theme.of(context).colorScheme.primary,
               borderRadius: BorderRadius.circular(20),
@@ -175,12 +182,15 @@ Widget _learndeskContainerRowMethod(
                   padding: const EdgeInsets.all(15.0),
                   child: Image(
                     image: containerImage2,
-                    width: 120,
-                    height: 120,
+                    width: 90,
+                    height: 90,
+                    // width: 120,
+                    // height: 120,
                   ),
                 ),
                 Container(
-                  height: 50,
+                  // height: 50
+                  height: 40,
                   width: double.infinity,
                   decoration: BoxDecoration(
                     borderRadius: const BorderRadius.only(

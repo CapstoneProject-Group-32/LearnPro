@@ -3,11 +3,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
+import '../tutoring_system/custom_appbar.dart';
+
 class CommentSection extends StatefulWidget {
   final String groupName;
   final String contentId;
 
-  const CommentSection({super.key, required this.groupName, required this.contentId});
+  const CommentSection(
+      {super.key, required this.groupName, required this.contentId});
 
   @override
   _CommentSectionState createState() => _CommentSectionState();
@@ -108,9 +111,7 @@ class _CommentSectionState extends State<CommentSection> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Comments'),
-      ),
+      appBar: const CustomAppBar(title: 'Comments'),
       body: Column(
         children: [
           Expanded(
@@ -193,7 +194,8 @@ class _CommentSectionState extends State<CommentSection> {
                 Expanded(
                   child: TextField(
                     controller: _commentController,
-                    decoration: const InputDecoration(hintText: 'Add a comment...'),
+                    decoration:
+                        const InputDecoration(hintText: 'Add a comment...'),
                   ),
                 ),
                 IconButton(

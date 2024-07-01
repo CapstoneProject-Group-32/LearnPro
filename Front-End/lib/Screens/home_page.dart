@@ -1,15 +1,21 @@
 import 'dart:async';
+import 'package:LearnPro/Screens/setGoals/today_goal_widget.dart';
+import 'package:LearnPro/tutoring_system/all_notifications.dart';
+import 'package:LearnPro/tutoring_system/level_and_points.dart';
+import 'package:LearnPro/tutoring_system/notification_icon_with_badges.dart';
+import 'package:LearnPro/tutoring_system/request_tution_form.dart';
+import 'package:LearnPro/tutoring_system/tutored_count.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:LearnPro/Models/usermodel.dart';
 import 'package:LearnPro/Screens/Community/community_tabbar.dart';
-import 'package:LearnPro/Screens/Community/request_tution.dart';
-import 'package:LearnPro/Screens/Notification/notification_tabbar.dart';
 import 'package:LearnPro/Screens/Timer/timer_page.dart';
 import 'package:LearnPro/Widgets/navigation_bar.dart';
 import 'package:LearnPro/group/group_detail_page.dart';
 import 'package:intl/intl.dart';
+
+import 'Timer/focus_time_sum.dart';
 
 class HomePage extends StatefulWidget {
   // final String uid;
@@ -189,16 +195,14 @@ class _HomePageState extends State<HomePage> {
                                                 CrossAxisAlignment.end,
                                             children: [
                                               GestureDetector(
-                                                child: const Icon(
-                                                  Icons.notifications,
-                                                  size: 30,
-                                                ),
+                                                child:
+                                                    const NotificationIconWithBadge(),
                                                 onTap: () {
                                                   Navigator.push(
                                                     context, // Context of the current widget
                                                     MaterialPageRoute(
                                                         builder: (context) =>
-                                                            const NotificationTabBar()),
+                                                            const AllNotifications()),
                                                   );
                                                 },
                                               ),
@@ -230,7 +234,7 @@ class _HomePageState extends State<HomePage> {
                                               CrossAxisAlignment.start,
                                           children: [
                                             const Text(
-                                              "Today Progress",
+                                              "Progress",
                                               style: TextStyle(
                                                   fontSize: 16,
                                                   fontWeight: FontWeight.w400,
@@ -243,18 +247,24 @@ class _HomePageState extends State<HomePage> {
                                               mainAxisAlignment:
                                                   MainAxisAlignment.spaceAround,
                                               children: [
-                                                _progressContainer(
-                                                  "4h",
-                                                  "Focus Time",
-                                                ),
-                                                _progressContainer(
-                                                  "300",
-                                                  "Points",
-                                                ),
-                                                _progressContainer(
-                                                  "3",
-                                                  "Tutored",
-                                                ),
+                                                // _progressContainer(
+                                                //   "4h",
+                                                //   "Focus Time",
+                                                // ),
+                                                _progressContainerFocusTime(
+                                                    "Focus Time"),
+                                                _progressContainerPoints(
+                                                    "points"),
+                                                // _progressContainer(
+                                                //   "300",
+                                                //   "Points",
+                                                // ),
+                                                _progressContainerTutoredCount(
+                                                    "Tutored"),
+                                                // _progressContainer(
+                                                //   "3",
+                                                //   "Tutored",
+                                                // ),
                                               ],
                                             ),
                                           ],
@@ -326,6 +336,10 @@ class _HomePageState extends State<HomePage> {
 
                           //Join Groups subheading by calling subtopic method
 
+                          TodayGoalsWidget(),
+                          const SizedBox(
+                            height: 20,
+                          ),
                           _subtopics('Join Groups'),
                           const SizedBox(
                             height: 20,
@@ -413,6 +427,108 @@ class _HomePageState extends State<HomePage> {
               color: Colors.black,
             ),
           ),
+          Text(
+            label,
+            style: const TextStyle(
+              fontSize: 12,
+              fontWeight: FontWeight.w300,
+              color: Colors.black,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+//  tutored number
+  Widget _progressContainerTutoredCount(String label) {
+    return Container(
+      height: 60,
+      width: 90,
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.primary,
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          TutoredCount(userId: currentUser.uid, fontSize: 15),
+          // Text(
+          //   value,
+          //   style: const TextStyle(
+          //     fontSize: 15,
+          //     fontWeight: FontWeight.w400,
+          //     color: Colors.black,
+          //   ),
+          // ),
+          Text(
+            label,
+            style: const TextStyle(
+              fontSize: 12,
+              fontWeight: FontWeight.w300,
+              color: Colors.black,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+// points cal
+  Widget _progressContainerPoints(String label) {
+    return Container(
+      height: 60,
+      width: 90,
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.primary,
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          UserStats(choice: 'p', userId: currentUser.uid, fontSize: 15),
+          // Text(
+          //   value,
+          //   style: const TextStyle(
+          //     fontSize: 15,
+          //     fontWeight: FontWeight.w400,
+          //     color: Colors.black,
+          //   ),
+          // ),
+          Text(
+            label,
+            style: const TextStyle(
+              fontSize: 12,
+              fontWeight: FontWeight.w300,
+              color: Colors.black,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  //focus time calculator
+  Widget _progressContainerFocusTime(String label) {
+    return Container(
+      height: 60,
+      width: 90,
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.primary,
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          FocusTimeSum(userId: currentUser.uid),
+          // Text(
+          //   value,
+          //   style: const TextStyle(
+          //     fontSize: 15,
+          //     fontWeight: FontWeight.w400,
+          //     color: Colors.black,
+          //   ),
+          // ),
           Text(
             label,
             style: const TextStyle(
@@ -869,8 +985,8 @@ class _HomePageState extends State<HomePage> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => RequestTuitionScreen(
-                    friendUid: friendId,
+                  builder: (context) => RequestTuitionForm(
+                    userID: friendId,
                   ),
                 ),
               );

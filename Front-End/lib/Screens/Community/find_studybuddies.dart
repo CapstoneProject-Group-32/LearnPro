@@ -1,3 +1,4 @@
+import 'package:LearnPro/tutoring_system/request_tution_form.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -84,6 +85,7 @@ class _StudyBuddiesState extends State<StudyBuddies> {
 
   @override
   Widget build(BuildContext context) {
+    double deviceHeight = MediaQuery.of(context).size.height;
     return SafeArea(
       child: Scaffold(
         backgroundColor: Theme.of(context).colorScheme.background,
@@ -153,8 +155,8 @@ class _StudyBuddiesState extends State<StudyBuddies> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => RequestTuitionScreen(
-                                      friendUid: friend.uid,
+                                    builder: (context) => RequestTuitionForm(
+                                      userID: friend.uid,
                                     ),
                                   ),
                                 );
@@ -164,8 +166,9 @@ class _StudyBuddiesState extends State<StudyBuddies> {
                         },
                       ).toList()
                     else
-                      const Center(
-                        child: Text("No friends found"),
+                      Container(
+                        height: deviceHeight / 2,
+                        child: Center(child: Text("No friends found")),
                       ),
                   ],
                 ),
@@ -184,7 +187,8 @@ Widget _studybuddyCardBeforeAddFriend(
   Function() onTapView,
 ) {
   return Container(
-    width: 370,
+    width: double.infinity,
+    // width: 370,
     height: 100,
     decoration: ShapeDecoration(
       color: Theme.of(context).colorScheme.primary,
@@ -312,7 +316,8 @@ Widget _studybuddyCardAfterAddFriend(
   Function() onTapRequestTuition,
 ) {
   return Container(
-    width: 370,
+    width: double.infinity,
+    // width: 370,
     height: 100,
     decoration: ShapeDecoration(
       color: Theme.of(context).colorScheme.primary,

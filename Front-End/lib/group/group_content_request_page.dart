@@ -1,3 +1,6 @@
+import 'package:LearnPro/tutoring_system/custom_appbar.dart';
+import 'package:LearnPro/tutoring_system/custom_button.dart';
+import 'package:LearnPro/tutoring_system/defined_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -107,9 +110,7 @@ class _GroupContentRequestsPageState extends State<GroupContentRequestsPage> {
   Widget build(BuildContext context) {
     if (isLoading) {
       return Scaffold(
-        appBar: AppBar(
-          title: const Text('Content Requests'),
-        ),
+        appBar: const CustomAppBar(title: 'Content Requests'),
         body: const Center(
           child: CircularProgressIndicator(),
         ),
@@ -128,9 +129,7 @@ class _GroupContentRequestsPageState extends State<GroupContentRequestsPage> {
     }
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Content Requests'),
-      ),
+      appBar: const CustomAppBar(title: 'Content Requests'),
       body: StreamBuilder(
         stream: FirebaseFirestore.instance
             .collection('groups')
@@ -209,24 +208,45 @@ class _GroupContentRequestsPageState extends State<GroupContentRequestsPage> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              ElevatedButton(
+                              CustomButton(
+                                  text: "Reject",
+                                  onPressed: () => () async {
+                                        await _handleReject(doc.id);
+                                        setState(() {
+                                          // Update state to reflect changes
+                                        });
+                                      },
+                                  backgroundColor: rejectButtonColor),
+
+                              CustomButton(
+                                text: "Accept",
                                 onPressed: () async {
                                   await _handleAccept(doc.id, contentData);
                                   setState(() {
                                     // Update state to reflect changes
                                   });
                                 },
-                                child: const Text('Accept'),
+                                backgroundColor:
+                                    Theme.of(context).colorScheme.secondary,
                               ),
-                              ElevatedButton(
-                                onPressed: () async {
-                                  await _handleReject(doc.id);
-                                  setState(() {
-                                    // Update state to reflect changes
-                                  });
-                                },
-                                child: const Text('Reject'),
-                              ),
+                              // ElevatedButton(
+                              //   onPressed: () async {
+                              //     await _handleAccept(doc.id, contentData);
+                              //     setState(() {
+                              //       // Update state to reflect changes
+                              //     });
+                              //   },
+                              //   child: const Text('Accept'),
+                              // ),
+                              // ElevatedButton(
+                              //   onPressed: () async {
+                              //     await _handleReject(doc.id);
+                              //     setState(() {
+                              //       // Update state to reflect changes
+                              //     });
+                              //   },
+                              //   child: const Text('Reject'),
+                              // ),
                             ],
                           ),
                         ],
