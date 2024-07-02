@@ -109,7 +109,10 @@ class _NotificationIconWithBadgeState extends State<NotificationIconWithBadge> {
             badgeColor: Colors.red,
           ),
           position: badges.BadgePosition.topEnd(top: -10, end: -10),
-          child: const Icon(Icons.notifications),
+          child: const Icon(
+            Icons.notifications,
+            color: Colors.black,
+          ),
         );
       },
     );

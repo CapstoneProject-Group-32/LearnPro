@@ -65,7 +65,7 @@ class LearnDesk extends StatelessWidget {
                   context,
                   const AssetImage('assets/target.png'),
                   'Set Goals',
-                  SetGoals(),
+                  const SetGoals(),
                   const AssetImage('assets/quiz.png'),
                   'Quizes',
                   const NavigationBarBottom(

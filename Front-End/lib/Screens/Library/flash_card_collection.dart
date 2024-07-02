@@ -1,6 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 import '../../Flashcards/screen/flashcard_home _screen.dart';
 import '/Flashcards/models/Flashcard.dart';
@@ -52,7 +54,7 @@ class FlashCardCollectionScreen extends StatelessWidget {
 
           if (flashcardSets.isEmpty) {
             return const Center(
-              child: Text('No flashcard sets available.'),
+              child: Text('No flashcard sets available'),
             );
           }
 
@@ -102,13 +104,17 @@ class FlashCardCollectionScreen extends StatelessWidget {
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Text(
-                            'Go to',
-                            style: TextStyle(color: textColor),
+                          Expanded(
+                            child: Text(
+                              'Go to',
+                              style: TextStyle(color: textColor),
+                            ),
                           ),
-                          Text(
-                            'Quiz',
-                            style: TextStyle(color: textColor),
+                          Expanded(
+                            child: Text(
+                              'Quiz',
+                              style: TextStyle(color: textColor),
+                            ),
                           ),
                         ],
                       ),

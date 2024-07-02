@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-//import 'package:get/get.dart';
 import '../upload_pdf_page.dart';
 import '../pdf_viewer_page.dart';
 
@@ -30,7 +29,7 @@ class LibraryPage extends StatelessWidget {
           }
 
           if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-            return const Center(child: Text('No PDFs found.'));
+            return const Center(child: Text('No PDFs found'));
           }
 
           var groupedData = <String, List<DocumentSnapshot>>{};
@@ -78,10 +77,6 @@ class LibraryPage extends StatelessWidget {
                           margin: const EdgeInsets.all(15.0),
                           child: Stack(
                             children: [
-                              //  Column(
-                              // crossAxisAlignment: CrossAxisAlignment.center,
-                              // mainAxisAlignment: MainAxisAlignment.center,
-                              //  children: [
                               Container(
                                 alignment: Alignment.center,
                                 child: Align(
@@ -89,15 +84,11 @@ class LibraryPage extends StatelessWidget {
                                   child: Icon(
                                     Icons.picture_as_pdf,
                                     size: 11 * deviceWidth / 36,
-                                    color:
-                                       Colors.red,
+                                    color: Colors.red,
                                   ),
                                 ),
                               ),
-                              //const Spacer(),
-                              //  Padding(
-                              // padding: const EdgeInsets.all(8.0),
-                              /* child:*/ Align(
+                              Align(
                                 alignment: Alignment.bottomCenter,
                                 child: Container(
                                   width: double.infinity,
@@ -118,9 +109,6 @@ class LibraryPage extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                              //  ),
-                              //   ],
-                              //    ),
                               Positioned(
                                 right: 0,
                                 child: PopupMenuButton<String>(

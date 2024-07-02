@@ -29,40 +29,6 @@ class _CommunityTabBarState extends State<CommunityTabBar>
         length: 3, vsync: this, initialIndex: widget.initialIndex);
   }
 
-  // void onSearch() async {
-  //   FirebaseFirestore firestore = FirebaseFirestore.instance;
-
-  //   setState(() {
-  //     isLoading = true;
-  //     errorMessage = null;
-  //     userMap = null;
-  //   });
-  //   try {
-  //     QuerySnapshot searchResult = await firestore
-  //         .collection('users')
-  //         .where("userName", isEqualTo: _search.text)
-  //         .get();
-
-  //     if (searchResult.docs.isNotEmpty) {
-  //       Map<String, dynamic> userData =
-  //           searchResult.docs[0].data() as Map<String, dynamic>;
-  //       setState(() {
-  //         userMap = userData;
-  //         isLoading = false;
-  //       });
-  //     } else {
-  //       setState(() {
-  //         errorMessage = "Invalid user";
-  //         isLoading = false;
-  //       });
-  //     }
-  //   } catch (e) {
-  //     setState(() {
-  //       errorMessage = "Error searching user: $e";
-  //       isLoading = false;
-  //     });
-  //   }
-  // }
   void onSearch() async {
     FirebaseFirestore firestore = FirebaseFirestore.instance;
 

@@ -1,4 +1,5 @@
-import 'package:LearnPro/tutoring_system/custom_appbar.dart';
+import 'package:LearnPro/Screens/home_page.dart';
+import 'package:LearnPro/Widgets/navigation_bar.dart';
 import 'package:LearnPro/tutoring_system/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -6,6 +7,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:intl/intl.dart';
 
 class SetGoals extends StatefulWidget {
+  const SetGoals({super.key});
+
   @override
   _SetGoalsState createState() => _SetGoalsState();
 }
@@ -14,11 +17,11 @@ class _SetGoalsState extends State<SetGoals> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   String _currentMonth = '';
-  DateTime _currentDate = DateTime.now();
+  final DateTime _currentDate = DateTime.now();
   DateTime _selectedDate = DateTime.now();
   Map<String, Map<String, dynamic>> _goals = {};
   bool _isUpdated = false;
-  ScrollController _scrollController = ScrollController();
+  final ScrollController _scrollController = ScrollController();
 
   @override
   void initState() {
@@ -62,7 +65,7 @@ class _SetGoalsState extends State<SetGoals> {
     double scrollPosition = (todayIndex - 3) * containerWidth;
     _scrollController.animateTo(
       scrollPosition,
-      duration: Duration(milliseconds: 500),
+      duration: const Duration(milliseconds: 500),
       curve: Curves.easeInOut,
     );
   }
@@ -87,7 +90,7 @@ class _SetGoalsState extends State<SetGoals> {
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               TextField(
@@ -106,7 +109,7 @@ class _SetGoalsState extends State<SetGoals> {
               onPressed: () {
                 Navigator.pop(context);
               },
-              child: Text('Cancel'),
+              child: const Text('Cancel'),
             ),
             TextButton(
               onPressed: () {
@@ -157,7 +160,7 @@ class _SetGoalsState extends State<SetGoals> {
 
   Widget _buildGoalsList() {
     if (_goals.isEmpty) {
-      return Center(
+      return const Center(
         child: Text("Set goals"),
       );
     }
@@ -171,7 +174,7 @@ class _SetGoalsState extends State<SetGoals> {
           child: Row(
             children: [
               SizedBox(width: screenWidth / 8, child: Text(time)),
-              SizedBox(
+              const SizedBox(
                 width: 10,
               ),
               Expanded(child: Text(goal)),
@@ -189,11 +192,11 @@ class _SetGoalsState extends State<SetGoals> {
                   ),
                   PopupMenuButton(
                     itemBuilder: (context) => [
-                      PopupMenuItem(
+                      const PopupMenuItem(
                         value: 'edit',
                         child: Text('Edit'),
                       ),
-                      PopupMenuItem(
+                      const PopupMenuItem(
                         value: 'delete',
                         child: Text('Delete'),
                       ),
@@ -220,7 +223,7 @@ class _SetGoalsState extends State<SetGoals> {
         DateUtils.getDaysInMonth(_currentDate.year, _currentDate.month);
     int today = _currentDate.day;
 
-    return Container(
+    return SizedBox(
       height: 60,
       child: ListView.builder(
         controller: _scrollController,
@@ -241,7 +244,7 @@ class _SetGoalsState extends State<SetGoals> {
             },
             child: Container(
               width: 50,
-              margin: EdgeInsets.symmetric(horizontal: 4.0),
+              margin: const EdgeInsets.symmetric(horizontal: 4.0),
               decoration: BoxDecoration(
                 color: isSelected
                     ? Theme.of(context).colorScheme.secondary
@@ -272,41 +275,81 @@ class _SetGoalsState extends State<SetGoals> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: CustomAppBar(title: "Set goals"),
-      body: Padding(
-        padding: const EdgeInsets.all(12.0),
-        child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text('Calendar',
-                    style:
-                        TextStyle(fontSize: 18, fontWeight: FontWeight.w500)),
-                Text(_currentMonth, style: TextStyle(fontSize: 18)),
-              ],
+    return WillPopScope(
+      onWillPop: () async {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const NavigationBarBottom(
+              initialIndex: 0,
             ),
-            SizedBox(height: 10),
-            _buildDayContainers(),
-            Expanded(child: _buildGoalsList()),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                CustomButton(
-                  text: "Add New",
-                  onPressed: () => _showGoalDialog(),
-                  backgroundColor: Theme.of(context).colorScheme.secondary,
-                  borderColor: Theme.of(context).colorScheme.secondary,
+          ),
+        );
+        return false; // Prevent the default back button behavior
+      },
+      child: Scaffold(
+        backgroundColor: Theme.of(context).colorScheme.background,
+        appBar: AppBar(
+          title: const Text(
+            "Set Goals",
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 20,
+              color: Colors.black,
+            ),
+          ),
+          leading: IconButton(
+            icon: const Icon(
+              Icons.arrow_back_ios_new_rounded,
+              size: 20,
+              color: Colors.black,
+            ),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const NavigationBarBottom(
+                    initialIndex: 0,
+                  ),
                 ),
-                if (_isUpdated)
+              );
+            },
+          ),
+        ),
+        body: Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text('Calendar',
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.w500)),
+                  Text(_currentMonth, style: const TextStyle(fontSize: 18)),
+                ],
+              ),
+              const SizedBox(height: 10),
+              _buildDayContainers(),
+              Expanded(child: _buildGoalsList()),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
                   CustomButton(
-                    text: "Update",
-                    onPressed: _updateGoals,
-                  )
-              ],
-            ),
-          ],
+                    text: "Add New",
+                    onPressed: () => _showGoalDialog(),
+                    backgroundColor: Theme.of(context).colorScheme.secondary,
+                    borderColor: Theme.of(context).colorScheme.secondary,
+                  ),
+                  if (_isUpdated)
+                    CustomButton(
+                      text: "Update",
+                      onPressed: _updateGoals,
+                    )
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

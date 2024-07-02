@@ -20,13 +20,13 @@ ThemeData lightTheme = ThemeData(
   ),
   inputDecorationTheme: const InputDecorationTheme(
     labelStyle: TextStyle(
-      color: Colors.green, // Custom label color
+      color: Color(0xff58b6a6), // Custom label color
       fontSize: 14,
       fontWeight: FontWeight.w400,
     ),
     focusedBorder: OutlineInputBorder(
       borderSide: BorderSide(
-        color: Colors.green, // Custom border color when focused
+        color: Color(0xff58b6a6), // Custom border color when focused
         width: 2,
       ),
     ),

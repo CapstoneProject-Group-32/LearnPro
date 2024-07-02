@@ -194,14 +194,6 @@ class FlashcardScreen extends StatelessWidget {
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              // TextField(
-              //   controller: titleController,
-              //   decoration: InputDecoration(labelText: 'Title'),
-              // ),
-              // TextField(
-              //   controller: contentController,
-              //   decoration: InputDecoration(labelText: 'Content'),
-              // ),
               TextField(
                 controller: titleController,
                 decoration: InputDecoration(
@@ -216,20 +208,25 @@ class FlashcardScreen extends StatelessWidget {
               const SizedBox(
                 height: 10,
               ),
-
-              TextField(
-                controller: contentController,
-                maxLines:
-                    null, // Allows the TextField to expand vertically as needed
-                keyboardType: TextInputType.multiline,
-                minLines:
-                    1, // Minimum number of lines the TextField should have
-                decoration: InputDecoration(
-                  labelText: 'Content',
-                  contentPadding: const EdgeInsets.symmetric(
-                      vertical: 15.0, horizontal: 15.0),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.0),
+              RawScrollbar(
+                thumbVisibility: true,
+                thickness: 8.0,
+                radius: const Radius.circular(10),
+                thumbColor: Theme.of(context).colorScheme.secondary,
+                child: TextField(
+                  controller: contentController,
+                  maxLines:
+                      4, // Allows the TextField to expand vertically as needed
+                  keyboardType: TextInputType.multiline,
+                  minLines:
+                      1, // Minimum number of lines the TextField should have
+                  decoration: InputDecoration(
+                    labelText: 'Content',
+                    contentPadding: const EdgeInsets.symmetric(
+                        vertical: 15.0, horizontal: 15.0),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
                   ),
                 ),
               ),
@@ -240,7 +237,12 @@ class FlashcardScreen extends StatelessWidget {
               onPressed: () {
                 Navigator.pop(context);
               },
-              child: const Text('Cancel'),
+              child: Text(
+                'Cancel',
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.secondary,
+                ),
+              ),
             ),
             TextButton(
               onPressed: () {
@@ -259,7 +261,12 @@ class FlashcardScreen extends StatelessWidget {
                   });
                 }
               },
-              child: const Text('Add'),
+              child: Text(
+                'Add',
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.secondary,
+                ),
+              ),
             ),
           ],
         );

@@ -49,9 +49,19 @@ class FocusTimeSum extends StatelessWidget {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const CircularProgressIndicator();
         } else if (snapshot.hasError) {
-          return Text('Error: ${snapshot.error}');
+          return Text(
+            'Error: ${snapshot.error}',
+            style: const TextStyle(
+              color: Colors.black,
+            ),
+          );
         } else {
-          return Text('${snapshot.data ?? 0.0} h');
+          return Text(
+            '${snapshot.data ?? 0.0} h',
+            style: const TextStyle(
+              color: Colors.black,
+            ),
+          );
         }
       },
     );

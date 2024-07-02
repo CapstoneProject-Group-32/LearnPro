@@ -8,7 +8,10 @@ class UserStats extends StatelessWidget {
 
   // Constructor now includes fontSize
   const UserStats(
-      {super.key, required this.choice, required this.userId, required this.fontSize});
+      {super.key,
+      required this.choice,
+      required this.userId,
+      required this.fontSize});
 
   // Method to fetch feedback points
   Future<num> getFeedbackPoints() async {
@@ -125,14 +128,16 @@ class UserStats extends StatelessWidget {
           if (choice == 'p') {
             return Text(
               '${snapshot.data}',
-              style:
-                  TextStyle(fontSize: fontSize), // Use the font size parameter
+              style: TextStyle(
+                  fontSize: fontSize,
+                  color: Colors.black), // Use the font size parameter
             );
           } else {
             return Text(
               '${snapshot.data}',
-              style:
-                  TextStyle(fontSize: fontSize), // Use the font size parameter
+              style: TextStyle(
+                  fontSize: fontSize,
+                  color: Colors.black), // Use the font size parameter
             );
           }
         }

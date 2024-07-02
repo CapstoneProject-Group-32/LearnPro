@@ -73,8 +73,12 @@ class _JoinedGroupsScreenState extends State<JoinedGroupsScreen> {
         child: const Icon(Icons.add),
       ),
       body: _isLoading
-          ? const Center(
-              child: CircularProgressIndicator(),
+          ? Center(
+              child: _joinedGroups.isEmpty
+                  ? const Text(
+                      "No joined groups",
+                    )
+                  : const CircularProgressIndicator(),
             )
           : _joinedGroups.isEmpty
               ? const Center(

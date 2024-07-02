@@ -4,7 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:intl/intl.dart';
 
 class TodayGoalsWidget extends StatelessWidget {
-  const TodayGoalsWidget({Key? key}) : super(key: key);
+  const TodayGoalsWidget({super.key});
 
   Future<Map<String, dynamic>?> _fetchTodayGoals() async {
     try {
@@ -38,13 +38,13 @@ class TodayGoalsWidget extends StatelessWidget {
       future: _fetchTodayGoals(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Center(child: CircularProgressIndicator());
+          return const Center(child: CircularProgressIndicator());
         } else if (snapshot.hasError) {
           return Center(child: Text('Error: ${snapshot.error}'));
         } else if (!snapshot.hasData ||
             snapshot.data == null ||
             snapshot.data!.isEmpty) {
-          return Center(child: Text(''));
+          return const Center(child: Text(''));
         } else {
           final goals = snapshot.data!;
           final pendingGoals = goals.entries
@@ -85,26 +85,23 @@ class TodayGoalsWidget extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Text(time),
-                      SizedBox(
+                      const SizedBox(
                         width: 20,
                       ),
                       Container(
                         width: 3.6 * screenWidth / 5,
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Expanded(child: Text(goal)),
-                        ),
                         decoration: BoxDecoration(
                           border: Border.all(),
                           borderRadius: BorderRadius.circular(5.0),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Expanded(child: Text(goal)),
                         ),
                       ),
                     ],
                   ),
                 );
-                // return ListTile(
-                //   title: Text('$time  $goal'),
-                // );
               },
             ),
           ]);

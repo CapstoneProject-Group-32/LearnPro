@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:LearnPro/Screens/setGoals/set_goals.dart';
 import 'package:LearnPro/Screens/setGoals/today_goal_widget.dart';
 import 'package:LearnPro/tutoring_system/all_notifications.dart';
 import 'package:LearnPro/tutoring_system/level_and_points.dart';
@@ -247,24 +248,12 @@ class _HomePageState extends State<HomePage> {
                                               mainAxisAlignment:
                                                   MainAxisAlignment.spaceAround,
                                               children: [
-                                                // _progressContainer(
-                                                //   "4h",
-                                                //   "Focus Time",
-                                                // ),
                                                 _progressContainerFocusTime(
                                                     "Focus Time"),
                                                 _progressContainerPoints(
                                                     "points"),
-                                                // _progressContainer(
-                                                //   "300",
-                                                //   "Points",
-                                                // ),
                                                 _progressContainerTutoredCount(
                                                     "Tutored"),
-                                                // _progressContainer(
-                                                //   "3",
-                                                //   "Tutored",
-                                                // ),
                                               ],
                                             ),
                                           ],
@@ -309,10 +298,7 @@ class _HomePageState extends State<HomePage> {
                                 ),
                                 _iconMethod(
                                   context,
-                                  const NavigationBarBottom(
-                                    initialIndex: 1,
-                                    learningTabBarIndex: 1,
-                                  ),
+                                  const SetGoals(),
                                   const AssetImage('assets/to-do-list.png'),
                                 ),
                               ],
@@ -408,38 +394,6 @@ class _HomePageState extends State<HomePage> {
   }
 //progress Container Method
 
-  Widget _progressContainer(String value, String label) {
-    return Container(
-      height: 60,
-      width: 90,
-      decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.primary,
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            value,
-            style: const TextStyle(
-              fontSize: 15,
-              fontWeight: FontWeight.w400,
-              color: Colors.black,
-            ),
-          ),
-          Text(
-            label,
-            style: const TextStyle(
-              fontSize: 12,
-              fontWeight: FontWeight.w300,
-              color: Colors.black,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
 //  tutored number
   Widget _progressContainerTutoredCount(String label) {
     return Container(
@@ -453,14 +407,6 @@ class _HomePageState extends State<HomePage> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           TutoredCount(userId: currentUser.uid, fontSize: 15),
-          // Text(
-          //   value,
-          //   style: const TextStyle(
-          //     fontSize: 15,
-          //     fontWeight: FontWeight.w400,
-          //     color: Colors.black,
-          //   ),
-          // ),
           Text(
             label,
             style: const TextStyle(
@@ -487,14 +433,6 @@ class _HomePageState extends State<HomePage> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           UserStats(choice: 'p', userId: currentUser.uid, fontSize: 15),
-          // Text(
-          //   value,
-          //   style: const TextStyle(
-          //     fontSize: 15,
-          //     fontWeight: FontWeight.w400,
-          //     color: Colors.black,
-          //   ),
-          // ),
           Text(
             label,
             style: const TextStyle(
@@ -521,14 +459,6 @@ class _HomePageState extends State<HomePage> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           FocusTimeSum(userId: currentUser.uid),
-          // Text(
-          //   value,
-          //   style: const TextStyle(
-          //     fontSize: 15,
-          //     fontWeight: FontWeight.w400,
-          //     color: Colors.black,
-          //   ),
-          // ),
           Text(
             label,
             style: const TextStyle(

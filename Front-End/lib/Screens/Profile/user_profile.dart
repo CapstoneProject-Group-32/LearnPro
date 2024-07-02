@@ -25,22 +25,6 @@ class UserProfile extends StatefulWidget {
 class _UserProfileState extends State<UserProfile> {
   final currentUser = FirebaseAuth.instance.currentUser!;
 
-  // int calculatePoints(double sumOfFocusTime) {
-  //   if (sumOfFocusTime >= 4) return 7500;
-  //   if (sumOfFocusTime >= 3) return 3500;
-  //   if (sumOfFocusTime >= 2) return 1500;
-  //   if (sumOfFocusTime >= 1) return 500;
-  //   return 0;
-  // }
-
-  // int calculateLevel(int points) {
-  //   if (points >= 8000) return 4;
-  //   if (points >= 4000) return 3;
-  //   if (points >= 2000) return 2;
-  //   if (points >= 500) return 1;
-  //   return 0;
-  // }
-
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -420,12 +404,17 @@ class _UserProfileState extends State<UserProfile> {
               children: [
                 Text(
                   title,
-                  style: const TextStyle(fontSize: 18.0),
+                  style: const TextStyle(
+                    fontSize: 18.0,
+                    color: Colors.black,
+                  ),
                 ),
-                const Icon(Icons.chevron_right_outlined),
+                const Icon(
+                  Icons.chevron_right_outlined,
+                  color: Colors.black,
+                ),
               ],
             ),
-            // Icon(Icons.history_edu_outlined)
           )),
     );
   }
@@ -467,14 +456,6 @@ class _UserProfileState extends State<UserProfile> {
             padding: const EdgeInsets.only(right: 30),
             child: UserRatingWidget(userId: currentUser.uid)
                 .buildAverageRatingWidget(),
-            // child:Text(
-            //   value,
-            //   style: const TextStyle(
-            //     fontSize: 17,
-            //     fontWeight: FontWeight.w400,
-            //     color: Colors.black,
-            //   ),
-            // ),
           ),
         ],
       ),
@@ -492,13 +473,6 @@ class _UserProfileState extends State<UserProfile> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // Text(
-            //   value,
-            //   style: const TextStyle(
-            //       fontSize: 22,
-            //       fontWeight: FontWeight.w400,
-            //       color: Colors.black),
-            // ),
             TutoredCount(
               userId: currentUser.uid,
               fontSize: 22,
@@ -527,13 +501,6 @@ class _UserProfileState extends State<UserProfile> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // Text(
-            //   value,
-            // style: const TextStyle(
-            //     fontSize: 22,
-            //     fontWeight: FontWeight.w400,
-            //     color: Colors.black),
-            // ),
             UserStats(
               userId: currentUser.uid,
               choice: 'l',
@@ -591,16 +558,7 @@ class _UserProfileState extends State<UserProfile> {
                 choice: 'p',
                 userId: currentUser.uid,
                 fontSize: 17,
-              )
-              // child:Text(
-              //   value,
-              //   style: const TextStyle(
-              //     fontSize: 17,
-              //     fontWeight: FontWeight.w400,
-              //     color: Colors.black,
-              //   ),
-              // ),
-              ),
+              )),
         ],
       ),
     );

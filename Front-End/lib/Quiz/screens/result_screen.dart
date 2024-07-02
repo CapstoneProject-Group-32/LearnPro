@@ -24,8 +24,26 @@ class ResultScreen extends StatelessWidget {
         : Colors.black;
 
     return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(
-        title: const Text('Quiz Result'),
+        title: const Text(
+          "Quiz Result",
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 20,
+            color: Colors.black,
+          ),
+        ),
+        leading: IconButton(
+          icon: const Icon(
+            Icons.arrow_back_ios_new_rounded,
+            size: 20,
+            color: Colors.black,
+          ),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
       ),
       body: Container(
         child: Padding(
@@ -36,7 +54,7 @@ class ResultScreen extends StatelessWidget {
               const SizedBox(height: 16),
               Text(
                 '$score out of ${questions.length} are correct',
-                style:  TextStyle(
+                style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
                   color: textColor,
@@ -81,7 +99,9 @@ class ResultScreen extends StatelessWidget {
                         children: questions.asMap().entries.map((entry) {
                           final index = entry.key;
                           final question = entry.value;
-                          bool isCorrect = selectedOptions[index].toString() == /// current index need int
+                          bool isCorrect = selectedOptions[index].toString() ==
+
+                              /// current index need int
                               question.correctOptionIndex;
                           return GestureDetector(
                             onTap: () {
@@ -90,29 +110,28 @@ class ResultScreen extends StatelessWidget {
                                 MaterialPageRoute(
                                   builder: (context) => QuestionReviewScreen(
                                     question: question,
-                                    selectedOption:
-                                        selectedOptions[index],
+                                    selectedOption: selectedOptions[index],
                                     index: index,
-
                                   ),
                                 ),
                               );
                             },
-                            child: Container(
-                              width: 40,
-                              height: 40,
-                              decoration: BoxDecoration(
-                                color: isCorrect
-                                    ? Colors.green
-                                    : Colors.red,
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              child: Center(
-                                child: Text(
-                                  '${index + 1}',
-                                  style: const TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Container(
+                                width: 40,
+                                height: 40,
+                                decoration: BoxDecoration(
+                                  color: isCorrect ? Colors.green : Colors.red,
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    '${index + 1}',
+                                    style: const TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -129,15 +148,18 @@ class ResultScreen extends StatelessWidget {
                               Navigator.pushReplacementNamed(context, '/');
                             },
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: Theme.of(context).colorScheme.secondary,
+                              backgroundColor:
+                                  Theme.of(context).colorScheme.secondary,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               padding: const EdgeInsets.symmetric(
                                   horizontal: 32, vertical: 12),
                             ),
-                            child:  Text('Go to home',
-                            style: TextStyle(color:textColor),),
+                            child: Text(
+                              'Go to home',
+                              style: TextStyle(color: textColor),
+                            ),
                           ),
                           ElevatedButton(
                             onPressed: () {
@@ -151,15 +173,18 @@ class ResultScreen extends StatelessWidget {
                               );
                             },
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: Theme.of(context).colorScheme.secondary,
+                              backgroundColor:
+                                  Theme.of(context).colorScheme.secondary,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               padding: const EdgeInsets.symmetric(
                                   horizontal: 32, vertical: 12),
                             ),
-                            child:  Text('Try Again',
-                            style: TextStyle(color:textColor),),
+                            child: Text(
+                              'Try Again',
+                              style: TextStyle(color: textColor),
+                            ),
                           ),
                         ],
                       ),
@@ -174,6 +199,3 @@ class ResultScreen extends StatelessWidget {
     );
   }
 }
-
-
-

@@ -44,9 +44,7 @@ class UserRatingWidget {
           final averageRating = snapshot.data ?? 0.0;
           return Text(
             '$averageRating★',
-            style: const TextStyle(
-              fontSize: 18,
-            ),
+            style: const TextStyle(fontSize: 18, color: Colors.black),
           );
         }
       },

@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import '../models/question.dart';
 import 'result_screen.dart';
@@ -35,7 +34,7 @@ class _QuizScreenState extends State<QuizScreen> {
         _currentQuestionIndex++;
       });
     } else {
-      _submitQuiz();  
+      _submitQuiz();
     }
   }
 
@@ -48,9 +47,9 @@ class _QuizScreenState extends State<QuizScreen> {
   }
 
   void _submitQuiz() {
- 
     for (int i = 0; i < widget.questions.length; i++) {
-      if (widget.questions[i].correctOptionIndex == _selectedOptions[i].toString()) {
+      if (widget.questions[i].correctOptionIndex ==
+          _selectedOptions[i].toString()) {
         _score++;
       }
     }
@@ -69,14 +68,31 @@ class _QuizScreenState extends State<QuizScreen> {
   @override
   Widget build(BuildContext context) {
     final question = widget.questions[_currentQuestionIndex];
-     final textColor = Theme.of(context).brightness == Brightness.dark
+    final textColor = Theme.of(context).brightness == Brightness.dark
         ? Colors.white
         : Colors.black;
 
     return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(
-        title: const Text('Quiz'),
-        elevation: 0,
+        title: const Text(
+          "Quiz",
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 20,
+            color: Colors.black,
+          ),
+        ),
+        leading: IconButton(
+          icon: const Icon(
+            Icons.arrow_back_ios_new_rounded,
+            size: 20,
+            color: Colors.black,
+          ),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
       ),
       body: Container(
         child: Padding(
@@ -93,7 +109,7 @@ class _QuizScreenState extends State<QuizScreen> {
               ),
               const SizedBox(height: 16),
               Card(
-                color:  Theme.of(context).colorScheme.primary,
+                color: Theme.of(context).colorScheme.primary,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(15),
                 ),
@@ -118,7 +134,8 @@ class _QuizScreenState extends State<QuizScreen> {
                             margin: const EdgeInsets.symmetric(vertical: 8),
                             padding: const EdgeInsets.all(12),
                             decoration: BoxDecoration(
-                              color: _selectedOptions[_currentQuestionIndex] == index
+                              color: _selectedOptions[_currentQuestionIndex] ==
+                                      index
                                   ? Colors.blue.withOpacity(0.3)
                                   : Colors.grey.withOpacity(0.2),
                               borderRadius: BorderRadius.circular(10),
@@ -127,7 +144,8 @@ class _QuizScreenState extends State<QuizScreen> {
                               children: [
                                 Radio<int>(
                                   value: index,
-                                  groupValue: _selectedOptions[_currentQuestionIndex],
+                                  groupValue:
+                                      _selectedOptions[_currentQuestionIndex],
                                   onChanged: (value) {
                                     _selectOption(index);
                                   },
@@ -153,7 +171,8 @@ class _QuizScreenState extends State<QuizScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   ElevatedButton(
-                    onPressed: _currentQuestionIndex > 0 ? _previousQuestion : null,
+                    onPressed:
+                        _currentQuestionIndex > 0 ? _previousQuestion : null,
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Theme.of(context).colorScheme.secondary,
                       shape: RoundedRectangleBorder(
@@ -162,8 +181,10 @@ class _QuizScreenState extends State<QuizScreen> {
                       padding: const EdgeInsets.symmetric(
                           horizontal: 32, vertical: 12),
                     ),
-                    child:  Text('Previous',
-                    style: TextStyle(color:textColor,)),
+                    child: Text('Previous',
+                        style: TextStyle(
+                          color: textColor,
+                        )),
                   ),
                   ElevatedButton(
                     onPressed: _selectedOptions[_currentQuestionIndex] != null
@@ -177,8 +198,14 @@ class _QuizScreenState extends State<QuizScreen> {
                       padding: const EdgeInsets.symmetric(
                           horizontal: 32, vertical: 12),
                     ),
-                    child: Text(_currentQuestionIndex == widget.questions.length - 1 ? 'Submit' : 'Next',
-                    style: TextStyle(color:textColor,),),
+                    child: Text(
+                      _currentQuestionIndex == widget.questions.length - 1
+                          ? 'Submit'
+                          : 'Next',
+                      style: TextStyle(
+                        color: textColor,
+                      ),
+                    ),
                   ),
                 ],
               ),

@@ -42,7 +42,7 @@ class _QuizLibraryWidgetState extends State<QuizLibraryWidget> {
             if (snapshot.hasError) {
               return Text('Error: ${snapshot.error}');
             } else if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-              return  const Center(child: Text('No quizzes available.'));
+              return const Center(child: Text('No quizzes available'));
             } else {
               final flashcardSets = snapshot.data!.docs;
 
@@ -98,7 +98,8 @@ class _QuizLibraryWidgetState extends State<QuizLibraryWidget> {
                                   ),
                                 ),
                                 Container(
-                                  constraints: const BoxConstraints(maxHeight: 200),
+                                  constraints:
+                                      const BoxConstraints(maxHeight: 200),
                                   child: RawScrollbar(
                                     controller: innerScrollController,
                                     thumbVisibility: true,
@@ -135,7 +136,8 @@ class _QuizLibraryWidgetState extends State<QuizLibraryWidget> {
                                                       0, 2, 0, 7),
                                               child: Text(
                                                 'Quiz ${index + 1}',
-                                                style: const TextStyle(fontSize: 13),
+                                                style: const TextStyle(
+                                                    fontSize: 13),
                                                 textAlign: TextAlign.center,
                                               ),
                                             ),
