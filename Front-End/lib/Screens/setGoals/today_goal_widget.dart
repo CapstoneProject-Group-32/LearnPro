@@ -44,7 +44,7 @@ class TodayGoalsWidget extends StatelessWidget {
         } else if (!snapshot.hasData ||
             snapshot.data == null ||
             snapshot.data!.isEmpty) {
-          return Center(child: Text('Set goals'));
+          return Center(child: Text(''));
         } else {
           final goals = snapshot.data!;
           final pendingGoals = goals.entries
