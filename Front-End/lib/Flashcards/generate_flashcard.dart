@@ -21,7 +21,7 @@ class GenerateFlashcard with ChangeNotifier {
 
     final List<dynamic> parsedJson = jsonDecode(content);
 
-    flashcardSetId = const Uuid().v4(); // Use a unique ID for the flashcard set
+    flashcardSetId = const Uuid().v4(); 
     final List<Flashcard> newFlashcards = [];
 
     for (var entry in parsedJson) {
@@ -46,7 +46,8 @@ class GenerateFlashcard with ChangeNotifier {
         .doc(flashcardSetId)
         .set({
       'date': DateTime.now(),
-      'subject': subject,
+       'main subject':subject,
+      'subject': topic,
       'flashcards': newFlashcards.map((fc) => fc.toMap()).toList(),
     });
 
