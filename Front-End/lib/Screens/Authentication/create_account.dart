@@ -8,7 +8,7 @@ import 'package:image_picker/image_picker.dart';
 
 class CreateAccount extends StatefulWidget {
   final Function toggle;
-  const CreateAccount({Key? key, required this.toggle}) : super(key: key);
+  const CreateAccount({super.key, required this.toggle});
 
   @override
   State<CreateAccount> createState() => _CreateAccountState();

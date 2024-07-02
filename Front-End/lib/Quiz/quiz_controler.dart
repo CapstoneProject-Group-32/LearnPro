@@ -73,9 +73,9 @@ class QuizController with ChangeNotifier {
 
     final data = snapshot.data()!;
     final questions = data['questions'] as List<dynamic>;
-    final _questions = questions.map((q) {
+    final questions0 = questions.map((q) {
           return Question.fromMap(q);
         }).toList();
-    return _questions;
+    return questions0;
   }
 }

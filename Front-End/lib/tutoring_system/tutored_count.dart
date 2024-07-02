@@ -6,7 +6,7 @@ class TutoredCount extends StatelessWidget {
   final double fontSize; // New parameter for font size
 
   // Constructor now includes fontSize
-  TutoredCount({required this.userId, required this.fontSize}) {
+  TutoredCount({super.key, required this.userId, required this.fontSize}) {
     _initializeCount();
   }
 
@@ -50,7 +50,7 @@ class TutoredCount extends StatelessWidget {
       future: getTutoredCount(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return CircularProgressIndicator();
+          return const CircularProgressIndicator();
         } else if (snapshot.hasError) {
           return Text('Error: ${snapshot.error}');
         } else {

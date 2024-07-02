@@ -3,7 +3,6 @@ import 'package:LearnPro/Flashcards/screen/content_form.dart';
 import 'package:LearnPro/Screens/setGoals/set_goals.dart';
 import 'package:LearnPro/Screens/upload_pdf_page.dart';
 import 'package:LearnPro/tutoring_system/learning_information.dart';
-import 'package:LearnPro/tutoring_system/learning_records.dart';
 
 import 'package:flutter/material.dart';
 import 'package:LearnPro/Screens/Timer/timer_page.dart';
@@ -59,7 +58,7 @@ class LearnDesk extends StatelessWidget {
                   const ContentForm(),
                   const AssetImage('assets/boy.png'),
                   'Records',
-                  LearningInformation(),
+                  const LearningInformation(),
                 ),
 
                 _learndeskContainerRowMethod(

@@ -3,6 +3,8 @@ import 'package:LearnPro/tutoring_system/learning_records.dart';
 import 'package:flutter/material.dart';
 
 class LearningInformation extends StatelessWidget {
+  const LearningInformation({super.key});
+
   @override
   Widget build(BuildContext context) {
     return const Scaffold(

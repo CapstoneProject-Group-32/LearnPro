@@ -306,7 +306,7 @@ class _SearchUserScreenState extends State<SearchUserScreen> {
                                         FeedbacksPage(userId: widget.user.uid)),
                               ],
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 10,
                             ),
                             GestureDetector(

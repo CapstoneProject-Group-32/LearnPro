@@ -65,6 +65,7 @@ dependencies:
 
 
 
+  rxdart: any
 dependency_overrides:
   http: ^1.2.1
   

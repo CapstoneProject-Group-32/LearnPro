@@ -8,7 +8,7 @@ import 'package:LearnPro/group/joined_group_screen.dart';
 class CommunityTabBar extends StatefulWidget {
   final int initialIndex;
 
-  const CommunityTabBar({Key? key, this.initialIndex = 0}) : super(key: key);
+  const CommunityTabBar({super.key, this.initialIndex = 0});
 
   @override
   State<CommunityTabBar> createState() => _CommunityTabBarState();

@@ -336,7 +336,7 @@ class _HomePageState extends State<HomePage> {
 
                           //Join Groups subheading by calling subtopic method
 
-                          TodayGoalsWidget(),
+                          const TodayGoalsWidget(),
                           const SizedBox(
                             height: 20,
                           ),

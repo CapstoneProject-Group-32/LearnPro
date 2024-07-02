@@ -109,9 +109,9 @@ class _GroupContentRequestsPageState extends State<GroupContentRequestsPage> {
   @override
   Widget build(BuildContext context) {
     if (isLoading) {
-      return Scaffold(
-        appBar: const CustomAppBar(title: 'Content Requests'),
-        body: const Center(
+      return const Scaffold(
+        appBar: CustomAppBar(title: 'Content Requests'),
+        body: Center(
           child: CircularProgressIndicator(),
         ),
       );

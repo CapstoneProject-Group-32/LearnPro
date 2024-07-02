@@ -245,7 +245,7 @@ import 'package:sleek_circular_slider/sleek_circular_slider.dart';
 import 'package:LearnPro/models/timer_history_model.dart';
 
 class TimerScreen extends StatefulWidget {
-  const TimerScreen({Key? key}) : super(key: key);
+  const TimerScreen({super.key});
 
   @override
   _TimerScreenState createState() => _TimerScreenState();

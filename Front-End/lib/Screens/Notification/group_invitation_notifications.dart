@@ -94,7 +94,7 @@ class _GroupInvitationNotificationScreenState
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
-            return Center(
+            return const Center(
                 child: Text('No invitations')); /*Error: ${snapshot.error}*/
           } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
             return const Center(child: Text('No invitations'));
@@ -204,7 +204,7 @@ class _InvitationCardState extends State<InvitationCard> {
                   const SizedBox(width: 10),
                   Text(
                     '${widget.ownerDetails['userName'] ?? 'Unknown user'} has invited you to his group',
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontWeight: FontWeight.w700,
                     ),
                   ),

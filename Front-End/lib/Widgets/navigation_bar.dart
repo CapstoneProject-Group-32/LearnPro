@@ -11,11 +11,10 @@ class NavigationBarBottom extends StatefulWidget {
   final int? communityTabBarIndex;
 
   const NavigationBarBottom(
-      {Key? key,
+      {super.key,
       this.initialIndex = 0,
       this.learningTabBarIndex,
-      this.communityTabBarIndex})
-      : super(key: key);
+      this.communityTabBarIndex});
 
   @override
   State<NavigationBarBottom> createState() => _NavigationBarBottomState();

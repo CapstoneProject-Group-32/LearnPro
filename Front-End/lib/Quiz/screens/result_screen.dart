@@ -9,11 +9,11 @@ class ResultScreen extends StatelessWidget {
   final List<int?> selectedOptions;
 
   const ResultScreen({
-    Key? key,
+    super.key,
     required this.score,
     required this.questions,
     required this.selectedOptions,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

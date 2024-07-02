@@ -6,8 +6,7 @@ import 'package:intl/intl.dart';
 class HistoryItem extends StatefulWidget {
   final History history;
   final bool isNewDay;
-  const HistoryItem({Key? key, required this.history, required this.isNewDay})
-      : super(key: key);
+  const HistoryItem({super.key, required this.history, required this.isNewDay});
 
   @override
   State<HistoryItem> createState() => _HistoryItemState();

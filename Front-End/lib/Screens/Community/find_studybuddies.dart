@@ -5,7 +5,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'package:LearnPro/Models/usermodel.dart';
-import 'package:LearnPro/Screens/Community/request_tution.dart';
 import 'package:LearnPro/Screens/Community/search_user_screen.dart';
 
 class StudyBuddies extends StatefulWidget {
@@ -15,12 +14,12 @@ class StudyBuddies extends StatefulWidget {
   final VoidCallback onSearch;
 
   const StudyBuddies({
-    Key? key,
+    super.key,
     required this.userMap,
     required this.isLoading,
     required this.errorMessage,
     required this.onSearch,
-  }) : super(key: key);
+  });
 
   @override
   State<StudyBuddies> createState() => _StudyBuddiesState();
@@ -164,11 +163,11 @@ class _StudyBuddiesState extends State<StudyBuddies> {
                             ),
                           );
                         },
-                      ).toList()
+                      )
                     else
-                      Container(
+                      SizedBox(
                         height: deviceHeight / 2,
-                        child: Center(child: Text("No friends found")),
+                        child: const Center(child: Text("No friends found")),
                       ),
                   ],
                 ),

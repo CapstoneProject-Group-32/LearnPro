@@ -5,8 +5,7 @@ import 'package:badges/badges.dart' as badges;
 class GroupNotificationIconWithBadge extends StatefulWidget {
   final String groupName;
 
-  const GroupNotificationIconWithBadge({Key? key, required this.groupName})
-      : super(key: key);
+  const GroupNotificationIconWithBadge({super.key, required this.groupName});
 
   @override
   _GroupNotificationIconWithBadgeState createState() =>
@@ -42,13 +41,13 @@ class _GroupNotificationIconWithBadgeState
           showBadge: unreadCount > 0,
           badgeContent: Text(
             unreadCount.toString(),
-            style: TextStyle(color: Colors.white),
+            style: const TextStyle(color: Colors.white),
           ),
-          child: Icon(Icons.notifications),
-          badgeStyle: badges.BadgeStyle(
+          badgeStyle: const badges.BadgeStyle(
             badgeColor: Colors.red,
           ),
           position: badges.BadgePosition.topEnd(top: -10, end: -10),
+          child: const Icon(Icons.notifications),
         );
       },
     );

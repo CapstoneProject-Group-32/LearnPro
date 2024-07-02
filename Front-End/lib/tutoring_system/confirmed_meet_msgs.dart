@@ -95,17 +95,17 @@ class _ConfirmedMsgsScreenState extends State<ConfirmedMsgsScreen> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Delete Message'),
-          content: Text('Are you sure you want to delete this message?'),
+          title: const Text('Delete Message'),
+          content: const Text('Are you sure you want to delete this message?'),
           actions: [
             TextButton(
-              child: Text('Cancel'),
+              child: const Text('Cancel'),
               onPressed: () {
                 Navigator.of(context).pop();
               },
             ),
             TextButton(
-              child: Text('Delete'),
+              child: const Text('Delete'),
               onPressed: () {
                 _deleteMsg(docId);
                 Navigator.of(context).pop();
@@ -150,7 +150,7 @@ class _ConfirmedMsgsScreenState extends State<ConfirmedMsgsScreen> {
                       _firestore.collection('users').doc(msg['StdId']).get(),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
-                      return Text("");
+                      return const Text("");
                       // return ListTile(
                       //   leading: CircleAvatar(
                       //     backgroundColor: Colors.grey[300],
@@ -208,7 +208,7 @@ class _ConfirmedMsgsScreenState extends State<ConfirmedMsgsScreen> {
                                       Expanded(
                                         child: Text(
                                           '${studentData['userName']} will join your the meeting',
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                             fontWeight: FontWeight.w700,
                                           ),
                                         ),

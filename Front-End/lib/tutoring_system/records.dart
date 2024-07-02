@@ -7,7 +7,7 @@ import 'teaching_records.dart';
 class Records extends StatefulWidget {
   final String userID;
 
-  const Records({Key? key, required this.userID}) : super(key: key);
+  const Records({super.key, required this.userID});
 
   @override
   State<Records> createState() => _RecordsState();

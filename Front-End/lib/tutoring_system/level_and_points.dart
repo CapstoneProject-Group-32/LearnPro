@@ -7,8 +7,8 @@ class UserStats extends StatelessWidget {
   final double fontSize; // New parameter for font size
 
   // Constructor now includes fontSize
-  UserStats(
-      {required this.choice, required this.userId, required this.fontSize});
+  const UserStats(
+      {super.key, required this.choice, required this.userId, required this.fontSize});
 
   // Method to fetch feedback points
   Future<num> getFeedbackPoints() async {
@@ -118,7 +118,7 @@ class UserStats extends StatelessWidget {
       future: choice == 'p' ? getTotalPoints() : getLevel(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return CircularProgressIndicator();
+          return const CircularProgressIndicator();
         } else if (snapshot.hasError) {
           return Text('Error: ${snapshot.error}');
         } else {

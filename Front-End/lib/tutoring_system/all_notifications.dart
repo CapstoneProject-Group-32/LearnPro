@@ -136,7 +136,7 @@ import 'tutor_request_notifications.dart';
 class AllNotifications extends StatefulWidget {
   final int initialIndex;
 
-  const AllNotifications({Key? key, this.initialIndex = 0}) : super(key: key);
+  const AllNotifications({super.key, this.initialIndex = 0});
 
   @override
   State<AllNotifications> createState() => _AllNotificationsState();

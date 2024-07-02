@@ -5,7 +5,7 @@ class FocusTimeSum extends StatelessWidget {
   final String userId;
   double _sumOfFocusTimeInHours = 0.0;
 
-  FocusTimeSum({required this.userId}) {
+  FocusTimeSum({super.key, required this.userId}) {
     _initializeSumOfFocusTime();
   }
 
@@ -47,7 +47,7 @@ class FocusTimeSum extends StatelessWidget {
       future: getSumOfFocusTimeInHours(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return CircularProgressIndicator();
+          return const CircularProgressIndicator();
         } else if (snapshot.hasError) {
           return Text('Error: ${snapshot.error}');
         } else {

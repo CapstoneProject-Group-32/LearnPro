@@ -134,7 +134,7 @@ class _UploadPdfPageState extends State<UploadPdfPage> {
             //   onPressed: _pickFile,
             //   child: const Text('Choose PDF'),
             // ),
-            SizedBox(
+            const SizedBox(
               height: 25,
             ),
             Row(

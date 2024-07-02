@@ -93,17 +93,17 @@ class _RejectedMsgsScreenState extends State<RejectedMsgsScreen> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Delete Message'),
-          content: Text('Are you sure you want to delete this message?'),
+          title: const Text('Delete Message'),
+          content: const Text('Are you sure you want to delete this message?'),
           actions: [
             TextButton(
-              child: Text('Cancel'),
+              child: const Text('Cancel'),
               onPressed: () {
                 Navigator.of(context).pop();
               },
             ),
             TextButton(
-              child: Text('Delete'),
+              child: const Text('Delete'),
               onPressed: () {
                 _deleteMsg(docId);
                 Navigator.of(context).pop();
@@ -219,7 +219,7 @@ class _RejectedMsgsScreenState extends State<RejectedMsgsScreen> {
                                       Expanded(
                                         child: Text(
                                           '${teacherData['userName']} isn’t available to teach you',
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                             fontWeight: FontWeight.w700,
                                           ),
                                         ),

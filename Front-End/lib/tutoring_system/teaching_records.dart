@@ -57,7 +57,7 @@ class _TeachingRecordsState extends State<TeachingRecords> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: widget.userId.toString() != _currentUser?.uid.toString()
-          ? CustomAppBar(title: "Teaching Records")
+          ? const CustomAppBar(title: "Teaching Records")
           : null,
       body: Padding(
         padding: const EdgeInsets.all(8.0),

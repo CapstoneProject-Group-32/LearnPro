@@ -9,14 +9,14 @@ class CustomButton extends StatelessWidget {
   final Color borderColor;
 
   const CustomButton({
-    Key? key,
+    super.key,
     required this.text,
     this.onPressed,
     this.backgroundColor = Colors.blue,
     this.foregroundColor = Colors.white,
     this.borderColor = const Color.fromARGB(0, 0, 0, 0),
     this.borderRadius = 10.0,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

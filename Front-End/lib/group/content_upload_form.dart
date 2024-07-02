@@ -31,7 +31,7 @@ class _ContentUploadFormState extends State<ContentUploadForm> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Upload content"),
+        title: const Text("Upload content"),
         leading: IconButton(
           icon: const Icon(
             Icons.arrow_back_ios_new_rounded,
@@ -64,7 +64,7 @@ class _ContentUploadFormState extends State<ContentUploadForm> {
                 },
                 onSaved: (value) => _title = value,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               TextFormField(
@@ -82,7 +82,7 @@ class _ContentUploadFormState extends State<ContentUploadForm> {
                 },
                 onSaved: (value) => _description = value,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               Row(

@@ -7,11 +7,10 @@ class QuestionReviewScreen extends StatelessWidget {
   final index;
 
   const QuestionReviewScreen(
-      {Key? key,
+      {super.key,
       required this.question,
       required this.selectedOption,
-      required this.index})
-      : super(key: key);
+      required this.index});
 
   @override
   Widget build(BuildContext context) {
@@ -91,7 +90,7 @@ class QuestionReviewScreen extends StatelessWidget {
                             ],
                           ),
                         );
-                      }).toList(),
+                      }),
                     ],
                   ),
                 ),

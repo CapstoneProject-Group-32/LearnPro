@@ -18,12 +18,16 @@ class _SetGoalsState extends State<SetGoals> {
   DateTime _selectedDate = DateTime.now();
   Map<String, Map<String, dynamic>> _goals = {};
   bool _isUpdated = false;
+  ScrollController _scrollController = ScrollController();
 
   @override
   void initState() {
     super.initState();
     _currentMonth = DateFormat('MMMM').format(_currentDate);
     _loadGoals();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _scrollToToday();
+    });
   }
 
   Future<void> _loadGoals() async {
@@ -52,9 +56,19 @@ class _SetGoalsState extends State<SetGoals> {
     }
   }
 
+  void _scrollToToday() {
+    int todayIndex = _currentDate.day - 1;
+    double containerWidth = 58.0; // 50 width + 4 margin left + 4 margin right
+    double scrollPosition = (todayIndex - 3) * containerWidth;
+    _scrollController.animateTo(
+      scrollPosition,
+      duration: Duration(milliseconds: 500),
+      curve: Curves.easeInOut,
+    );
+  }
+
   void _showGoalDialog({String? time, String? goal, bool isEdit = false}) {
     TextEditingController timeController = TextEditingController(text: time);
-
     TextEditingController goalController = TextEditingController(text: goal);
     showDialog(
       context: context,
@@ -145,10 +159,6 @@ class _SetGoalsState extends State<SetGoals> {
     if (_goals.isEmpty) {
       return Center(
         child: Text("Set goals"),
-        // child: ElevatedButton(
-        //   onPressed: () => _showGoalDialog(),
-        //   child: Text('Add New'),
-        // ),
       );
     }
     double screenWidth = MediaQuery.of(context).size.width;
@@ -168,7 +178,6 @@ class _SetGoalsState extends State<SetGoals> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  //Center(child: Text(goal)),
                   Checkbox(
                     value: done,
                     onChanged: (bool? value) {
@@ -202,53 +211,6 @@ class _SetGoalsState extends State<SetGoals> {
             ],
           ),
         );
-        // return ListTile(
-        //   title: Row(
-        //     children: [
-        //       Text(
-        //         time,
-        //         style: TextStyle(fontWeight: FontWeight.bold),
-        //       ),
-        //       SizedBox(
-        //         width: 10,
-        //       ),
-        //       Expanded(
-        //         child: Container(
-        //           decoration: BoxDecoration(),
-        //           child: Text(goal),
-        //         ),
-        //       )
-        //     ],
-        //   ),
-        //   leading: Checkbox(
-        //     value: done,
-        //     onChanged: (bool? value) {
-        //       setState(() {
-        //         _goals[time]![goal] = value ?? false;
-        //         _isUpdated = true;
-        //       });
-        //     },
-        //   ),
-        //   trailing: PopupMenuButton(
-        //     itemBuilder: (context) => [
-        //       PopupMenuItem(
-        //         value: 'edit',
-        //         child: Text('Edit'),
-        //       ),
-        //       PopupMenuItem(
-        //         value: 'delete',
-        //         child: Text('Delete'),
-        //       ),
-        //     ],
-        //     onSelected: (value) {
-        //       if (value == 'edit') {
-        //         _showGoalDialog(time: time, goal: goal, isEdit: true);
-        //       } else if (value == 'delete') {
-        //         _deleteGoal(time);
-        //       }
-        //     },
-        //   ),
-        // );
       }).toList(),
     );
   }
@@ -259,9 +221,9 @@ class _SetGoalsState extends State<SetGoals> {
     int today = _currentDate.day;
 
     return Container(
-      // height: 100,
       height: 60,
       child: ListView.builder(
+        controller: _scrollController,
         scrollDirection: Axis.horizontal,
         itemCount: daysInMonth,
         itemBuilder: (context, index) {
@@ -278,11 +240,9 @@ class _SetGoalsState extends State<SetGoals> {
               });
             },
             child: Container(
-              // width: 80,
               width: 50,
               margin: EdgeInsets.symmetric(horizontal: 4.0),
               decoration: BoxDecoration(
-                //  color: isSelected ? Colors.blueAccent : Colors.grey[200],
                 color: isSelected
                     ? Theme.of(context).colorScheme.secondary
                     : Colors.grey[200],
@@ -314,9 +274,6 @@ class _SetGoalsState extends State<SetGoals> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(title: "Set goals"),
-      // appBar: AppBar(
-      //   title: Text('Set Goals'),
-      // ),
       body: Padding(
         padding: const EdgeInsets.all(12.0),
         child: Column(
@@ -342,19 +299,11 @@ class _SetGoalsState extends State<SetGoals> {
                   backgroundColor: Theme.of(context).colorScheme.secondary,
                   borderColor: Theme.of(context).colorScheme.secondary,
                 ),
-                // ElevatedButton(
-                //   onPressed: () => _showGoalDialog(),
-                //   child: Text('Add New'),
-                // ),
                 if (_isUpdated)
                   CustomButton(
-                    text: "update",
+                    text: "Update",
                     onPressed: _updateGoals,
                   )
-                // ElevatedButton(
-                //   onPressed: _updateGoals,
-                //   child: Text('Update'),
-                // ),
               ],
             ),
           ],

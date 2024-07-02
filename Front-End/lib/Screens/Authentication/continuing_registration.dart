@@ -13,7 +13,7 @@ import 'package:image_picker/image_picker.dart';
 class ContinuingRegistration extends StatefulWidget {
   final GoogleSignInAccount? googleUser;
 
-  const ContinuingRegistration({Key? key, this.googleUser}) : super(key: key);
+  const ContinuingRegistration({super.key, this.googleUser});
 
   @override
   State<ContinuingRegistration> createState() => _ContinuingRegistrationState();

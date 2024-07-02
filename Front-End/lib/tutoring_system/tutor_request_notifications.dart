@@ -71,17 +71,17 @@ class _TutorRequestNotificationsState extends State<TutorRequestNotifications> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Delete Message'),
-          content: Text('Are you sure you want to delete this message?'),
+          title: const Text('Delete Message'),
+          content: const Text('Are you sure you want to delete this message?'),
           actions: [
             TextButton(
-              child: Text('Cancel'),
+              child: const Text('Cancel'),
               onPressed: () {
                 Navigator.of(context).pop();
               },
             ),
             TextButton(
-              child: Text('Delete'),
+              child: const Text('Delete'),
               onPressed: () {
                 _deleteMsg(docId);
                 Navigator.of(context).pop();

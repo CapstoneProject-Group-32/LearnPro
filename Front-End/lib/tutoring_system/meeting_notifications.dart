@@ -130,7 +130,7 @@ class _MeetingNotificationsState extends State<MeetingNotifications> {
                 //Text('Subject: ${meeting.subject}'),
                 Row(
                   children: [
-                    Icon(
+                    const Icon(
                       Icons.book,
                     ),
                     const SizedBox(
@@ -142,7 +142,7 @@ class _MeetingNotificationsState extends State<MeetingNotifications> {
                 ),
                 Row(
                   children: [
-                    Icon(
+                    const Icon(
                       Icons.date_range,
                     ),
                     const SizedBox(

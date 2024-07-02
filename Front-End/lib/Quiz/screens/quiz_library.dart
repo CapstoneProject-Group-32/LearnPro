@@ -71,7 +71,7 @@ class _QuizLibraryWidgetState extends State<QuizLibraryWidget> {
                             .shrink(); // Hide the flashcard set if there are no quizzes
                       } else {
                         final quizes = quizSnapshot.data!.docs;
-                        final ScrollController _innerScrollController =
+                        final ScrollController innerScrollController =
                             ScrollController();
 
                         return GestureDetector(
@@ -98,15 +98,15 @@ class _QuizLibraryWidgetState extends State<QuizLibraryWidget> {
                                   ),
                                 ),
                                 Container(
-                                  constraints: BoxConstraints(maxHeight: 200),
+                                  constraints: const BoxConstraints(maxHeight: 200),
                                   child: RawScrollbar(
-                                    controller: _innerScrollController,
+                                    controller: innerScrollController,
                                     thumbVisibility: true,
                                     thickness: 6.0,
                                     radius: const Radius.circular(10),
                                     thumbColor: textColor,
                                     child: ListView.builder(
-                                      controller: _innerScrollController,
+                                      controller: innerScrollController,
                                       shrinkWrap: true,
                                       physics: const ClampingScrollPhysics(),
                                       itemCount: quizes.length,
@@ -135,7 +135,7 @@ class _QuizLibraryWidgetState extends State<QuizLibraryWidget> {
                                                       0, 2, 0, 7),
                                               child: Text(
                                                 'Quiz ${index + 1}',
-                                                style: TextStyle(fontSize: 13),
+                                                style: const TextStyle(fontSize: 13),
                                                 textAlign: TextAlign.center,
                                               ),
                                             ),

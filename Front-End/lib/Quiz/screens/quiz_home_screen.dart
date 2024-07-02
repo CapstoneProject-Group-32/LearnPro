@@ -97,7 +97,7 @@ class QuizHomescreen extends StatelessWidget {
                         context: context,
                         builder: (context) {
                           return AlertDialog(
-                            title: Text('Delete Quiz'),
+                            title: const Text('Delete Quiz'),
                             content: const Text(
                                 'Are you sure you want to delete this quiz?'),
                             actions: [

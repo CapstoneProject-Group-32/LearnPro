@@ -7,7 +7,7 @@ import '../../Quiz/screens/quiz_library.dart';
 class LearningTabBar extends StatefulWidget {
   final int initialIndex;
 
-  const LearningTabBar({Key? key, this.initialIndex = 0}) : super(key: key);
+  const LearningTabBar({super.key, this.initialIndex = 0});
 
   @override
   State<LearningTabBar> createState() => _LearningTabBarState();

@@ -228,7 +228,7 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
                     );
                   },
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 30,
                 ),
                 Row(

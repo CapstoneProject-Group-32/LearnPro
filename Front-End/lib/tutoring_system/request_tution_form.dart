@@ -8,7 +8,7 @@ import 'custom_button.dart';
 
 class RequestTuitionForm extends StatefulWidget {
   final String userID;
-  const RequestTuitionForm({required this.userID, Key? key}) : super(key: key);
+  const RequestTuitionForm({required this.userID, super.key});
 
   @override
   _RequestTuitionFormState createState() => _RequestTuitionFormState();

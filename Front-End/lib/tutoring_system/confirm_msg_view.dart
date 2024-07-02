@@ -8,7 +8,7 @@ import 'custom_button.dart';
 
 class ConfirmMsgView extends StatefulWidget {
   final String msgID;
-  const ConfirmMsgView({Key? key, required this.msgID}) : super(key: key);
+  const ConfirmMsgView({super.key, required this.msgID});
 
   @override
   _ConfirmMsgViewState createState() => _ConfirmMsgViewState();

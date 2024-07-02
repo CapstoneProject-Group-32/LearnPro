@@ -6,7 +6,7 @@ import 'package:pdfx/pdfx.dart';
 class PdfViewerPage extends StatefulWidget {
   String pdflink;
   // PdfViewerPage({super.key});
-  PdfViewerPage({Key? key, required this.pdflink}) : super(key: key);
+  PdfViewerPage({super.key, required this.pdflink});
   @override
   State<PdfViewerPage> createState() => _PdfViewerPageState();
 }

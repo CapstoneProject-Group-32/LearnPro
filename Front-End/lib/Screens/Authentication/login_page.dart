@@ -10,7 +10,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 
 class LoginPage extends StatefulWidget {
   final Function toggle;
-  const LoginPage({Key? key, required this.toggle}) : super(key: key);
+  const LoginPage({super.key, required this.toggle});
 
   @override
   State<LoginPage> createState() => _LoginPageState();

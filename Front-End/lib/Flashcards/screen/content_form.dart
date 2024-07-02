@@ -5,8 +5,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:LearnPro/Flashcards/utill/dialog_utils.dart';
 import 'package:LearnPro/Models/studiedcontent.dart';
-import 'package:LearnPro/Widgets/myuploadbutton.dart';
-import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
 import '../../tutoring_system/custom_appbar.dart';
@@ -285,7 +283,7 @@ class _ContentFormState extends State<ContentForm> {
                                 width: double.infinity,
                                 padding: const EdgeInsets.all(8.0),
                                 //Color.fromARGB(255, 230, 230, 230),
-                                decoration: BoxDecoration(
+                                decoration: const BoxDecoration(
                                   borderRadius: BorderRadius.only(
                                     topLeft: Radius.circular(5.0),
                                     topRight: Radius.circular(5.0),
@@ -331,7 +329,7 @@ class _ContentFormState extends State<ContentForm> {
                                   //   ),
                                   // ),
                                 );
-                              }).toList(),
+                              }),
                             ],
                           ),
                         );
@@ -463,7 +461,7 @@ class _ContentFormState extends State<ContentForm> {
                           // ),
                         ],
                       )
-                    : Text(""),
+                    : const Text(""),
               ],
             ),
           ),
