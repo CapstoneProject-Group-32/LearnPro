@@ -29,6 +29,40 @@ class _CommunityTabBarState extends State<CommunityTabBar>
         length: 3, vsync: this, initialIndex: widget.initialIndex);
   }
 
+  // void onSearch() async {
+  //   FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+  //   setState(() {
+  //     isLoading = true;
+  //     errorMessage = null;
+  //     userMap = null;
+  //   });
+  //   try {
+  //     QuerySnapshot searchResult = await firestore
+  //         .collection('users')
+  //         .where("userName", isEqualTo: _search.text)
+  //         .get();
+
+  //     if (searchResult.docs.isNotEmpty) {
+  //       Map<String, dynamic> userData =
+  //           searchResult.docs[0].data() as Map<String, dynamic>;
+  //       setState(() {
+  //         userMap = userData;
+  //         isLoading = false;
+  //       });
+  //     } else {
+  //       setState(() {
+  //         errorMessage = "Invalid user";
+  //         isLoading = false;
+  //       });
+  //     }
+  //   } catch (e) {
+  //     setState(() {
+  //       errorMessage = "Error searching user: $e";
+  //       isLoading = false;
+  //     });
+  //   }
+  // }
   void onSearch() async {
     FirebaseFirestore firestore = FirebaseFirestore.instance;
 
@@ -37,22 +71,29 @@ class _CommunityTabBarState extends State<CommunityTabBar>
       errorMessage = null;
       userMap = null;
     });
-    try {
-      QuerySnapshot searchResult = await firestore
-          .collection('users')
-          .where("userName", isEqualTo: _search.text)
-          .get();
 
-      if (searchResult.docs.isNotEmpty) {
-        Map<String, dynamic> userData =
-            searchResult.docs[0].data() as Map<String, dynamic>;
+    try {
+      // Fetch all users
+      QuerySnapshot searchResult = await firestore.collection('users').get();
+
+      // Filter users based on first letter (client-side)
+      List<Map<String, dynamic>> filteredUsers = searchResult.docs
+          .map((doc) => doc.data() as Map<String, dynamic>)
+          .where((userData) =>
+              userData['userName'] != null &&
+              userData['userName']
+                  .toLowerCase()
+                  .startsWith(_search.text.toLowerCase()))
+          .toList();
+
+      if (filteredUsers.isNotEmpty) {
         setState(() {
-          userMap = userData;
+          userMap = filteredUsers[0]; // Assuming you only want the first result
           isLoading = false;
         });
       } else {
         setState(() {
-          errorMessage = "Invalid user";
+          errorMessage = "User not found";
           isLoading = false;
         });
       }
@@ -103,14 +144,14 @@ class _CommunityTabBarState extends State<CommunityTabBar>
                         controller: _search,
                         decoration: InputDecoration(
                           hintText: 'Search...',
-                          prefixIcon: GestureDetector(
+                          suffixIcon: GestureDetector(
                             onTap: () {
                               onSearch();
                             },
                             child: const Icon(Icons.search),
                           ),
                           border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(35),
+                            borderRadius: BorderRadius.circular(5),
                           ),
                         ),
                       ),

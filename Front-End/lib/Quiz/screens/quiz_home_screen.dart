@@ -1,3 +1,4 @@
+import 'package:LearnPro/tutoring_system/custom_appbar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -31,9 +32,8 @@ class QuizHomescreen extends StatelessWidget {
     }
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Quizzes'),
-      ),
+      appBar: const CustomAppBar(title: 'Quizes'),
+
       body: StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance
             .collection('users')

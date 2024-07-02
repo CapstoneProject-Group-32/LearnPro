@@ -1,3 +1,4 @@
+import 'package:LearnPro/tutoring_system/request_tution_form.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -151,7 +152,15 @@ class TutoredUsersScreen extends StatelessWidget {
                           children: [
                             GestureDetector(
                               onTap: () {
-                                // Add view function here
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => RequestTuitionForm(
+                                      userID: user[
+                                          'uid'], // Pass the uid of the user
+                                    ),
+                                  ),
+                                );
                               },
                               child: Container(
                                 width: 110,
@@ -173,7 +182,7 @@ class TutoredUsersScreen extends StatelessWidget {
                                 ),
                                 child: const Center(
                                   child: Text(
-                                    'View',
+                                    'Request Tuition',
                                     style: TextStyle(
                                       color: Colors.black,
                                       fontSize: 13,
@@ -184,41 +193,41 @@ class TutoredUsersScreen extends StatelessWidget {
                                 ),
                               ),
                             ),
-                            GestureDetector(
-                              onTap: () {
-                                // Add review function here
-                              },
-                              child: Container(
-                                width: 110,
-                                height: 25,
-                                decoration: ShapeDecoration(
-                                  color:
-                                      Theme.of(context).colorScheme.secondary,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(45),
-                                  ),
-                                  shadows: const [
-                                    BoxShadow(
-                                      color: Color(0x3F000000),
-                                      blurRadius: 4,
-                                      offset: Offset(0, 4),
-                                      spreadRadius: 0,
-                                    )
-                                  ],
-                                ),
-                                child: const Center(
-                                  child: Text(
-                                    'Review',
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 13,
-                                      fontFamily: 'Work Sans',
-                                      fontWeight: FontWeight.w400,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
+                            // GestureDetector(
+                            //   onTap: () {
+                            //     // Add review function here
+                            //   },
+                            //   child: Container(
+                            //     width: 110,
+                            //     height: 25,
+                            //     decoration: ShapeDecoration(
+                            //       color:
+                            //           Theme.of(context).colorScheme.secondary,
+                            //       shape: RoundedRectangleBorder(
+                            //         borderRadius: BorderRadius.circular(45),
+                            //       ),
+                            //       shadows: const [
+                            //         BoxShadow(
+                            //           color: Color(0x3F000000),
+                            //           blurRadius: 4,
+                            //           offset: Offset(0, 4),
+                            //           spreadRadius: 0,
+                            //         )
+                            //       ],
+                            //     ),
+                            //     child: const Center(
+                            //       child: Text(
+                            //         'Review',
+                            //         style: TextStyle(
+                            //           color: Colors.black,
+                            //           fontSize: 13,
+                            //           fontFamily: 'Work Sans',
+                            //           fontWeight: FontWeight.w400,
+                            //         ),
+                            //       ),
+                            //     ),
+                            //   ),
+                            // ),
                           ],
                         ),
                       ),

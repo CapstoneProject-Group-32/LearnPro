@@ -1,3 +1,4 @@
+import 'package:LearnPro/tutoring_system/custom_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -60,7 +61,7 @@ class _SendGroupInvitesState extends State<SendGroupInvites> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Invite Friends')),
+      appBar: const CustomAppBar(title: 'Invite Friends'),
       body: ListView.builder(
         itemCount: friends.length,
         itemBuilder: (context, index) {

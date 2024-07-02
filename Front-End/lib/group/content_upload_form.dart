@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:uuid/uuid.dart';
 
+import '../tutoring_system/custom_button.dart';
+
 class ContentUploadForm extends StatefulWidget {
   final String groupName;
 
@@ -29,7 +31,17 @@ class _ContentUploadFormState extends State<ContentUploadForm> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Upload Content'),
+        title: Text("Upload content"),
+        leading: IconButton(
+          icon: const Icon(
+            Icons.arrow_back_ios_new_rounded,
+            size: 20,
+            color: Colors.black,
+          ),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -38,7 +50,12 @@ class _ContentUploadFormState extends State<ContentUploadForm> {
           child: Column(
             children: [
               TextFormField(
-                decoration: const InputDecoration(labelText: 'Title'),
+                //  decoration: const InputDecoration(labelText: 'Title'),
+                decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(5.0),
+                    ),
+                    labelText: 'Title'),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Please enter a title';
@@ -47,8 +64,16 @@ class _ContentUploadFormState extends State<ContentUploadForm> {
                 },
                 onSaved: (value) => _title = value,
               ),
+              SizedBox(
+                height: 20,
+              ),
               TextFormField(
-                decoration: const InputDecoration(labelText: 'Description'),
+                // decoration: const InputDecoration(labelText: 'Description'),
+                decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(5.0),
+                    ),
+                    labelText: 'Description'),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Please enter a description';
@@ -57,7 +82,11 @@ class _ContentUploadFormState extends State<ContentUploadForm> {
                 },
                 onSaved: (value) => _description = value,
               ),
+              SizedBox(
+                height: 20,
+              ),
               Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const Text('File Type:'),
                   Radio(
@@ -84,9 +113,15 @@ class _ContentUploadFormState extends State<ContentUploadForm> {
                   const Text('Images'),
                 ],
               ),
-              ElevatedButton(
+              // ElevatedButton(
+              //   onPressed: () => _pickFiles(),
+              //   child: Text(_fileType == 'pdf' ? 'Choose PDF' : 'Pick Images'),
+              // ),
+
+              CustomButton(
+                text: _fileType == 'pdf' ? 'Choose PDF' : 'Pick Images',
                 onPressed: () => _pickFiles(),
-                child: Text(_fileType == 'pdf' ? 'Choose PDF' : 'Pick Images'),
+                backgroundColor: Colors.white38,
               ),
               Expanded(
                 child:
@@ -95,19 +130,51 @@ class _ContentUploadFormState extends State<ContentUploadForm> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  ElevatedButton(
-                    onPressed: _isLoading ? null : () => _uploadContent(),
-                    child: _isLoading
-                        ? const CircularProgressIndicator(
-                            valueColor:
-                                AlwaysStoppedAnimation<Color>(Colors.white),
-                          )
-                        : const Text('Upload'),
+                  SizedBox(
+                    height: 40,
+                    width: 120,
+                    child: CustomButton(
+                      text: "Cancel",
+                      onPressed:
+                          _isLoading ? null : () => Navigator.pop(context),
+                      backgroundColor: Theme.of(context).colorScheme.background,
+                      foregroundColor: Theme.of(context).colorScheme.secondary,
+                      // foregroundColor: Colors.red,
+                      borderColor: Theme.of(context).colorScheme.secondary,
+                    ),
                   ),
-                  ElevatedButton(
-                    onPressed: _isLoading ? null : () => Navigator.pop(context),
-                    child: const Text('Cancel'),
-                  ),
+
+                  _isLoading
+                      ? const CircularProgressIndicator(
+                          valueColor:
+                              AlwaysStoppedAnimation<Color>(Colors.white),
+                        )
+                      : SizedBox(
+                          height: 40,
+                          width: 120,
+                          child: CustomButton(
+                            text: "Submit",
+                            onPressed:
+                                _isLoading ? null : () => _uploadContent(),
+                            backgroundColor:
+                                Theme.of(context).colorScheme.secondary,
+                          ),
+                        ),
+
+                  //  ElevatedButton(
+                  //  onPressed: _isLoading ? null : () => _uploadContent(),
+                  // child: _isLoading
+                  //     ? const CircularProgressIndicator(
+                  //         valueColor: AlwaysStoppedAnimation<Color>(
+                  //             Colors.white),
+                  //       )
+                  //     : const Text('Upload'),
+                  //   child: Text("Upload"),
+                  //   ),
+                  // ElevatedButton(
+                  //   onPressed: _isLoading ? null : () => Navigator.pop(context),
+                  //   child: const Text('Cancel'),
+                  // ),
                 ],
               ),
             ],

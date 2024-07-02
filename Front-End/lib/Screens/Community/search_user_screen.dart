@@ -1,8 +1,14 @@
+import 'package:LearnPro/tutoring_system/level_and_points.dart';
+import 'package:LearnPro/tutoring_system/teaching_records.dart';
+import 'package:LearnPro/tutoring_system/tutored_count.dart';
+import 'package:LearnPro/tutoring_system/user_rating_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'package:LearnPro/Models/usermodel.dart';
+
+import '../../tutoring_system/feedbacks_page.dart';
 
 class SearchUserScreen extends StatefulWidget {
   final UserModel user;
@@ -16,21 +22,21 @@ class SearchUserScreen extends StatefulWidget {
 class _SearchUserScreenState extends State<SearchUserScreen> {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final userUid = FirebaseAuth.instance.currentUser!.uid;
-  int calculatePoints(double sumOfFocusTime) {
-    if (sumOfFocusTime >= 4) return 7500;
-    if (sumOfFocusTime >= 3) return 3500;
-    if (sumOfFocusTime >= 2) return 1500;
-    if (sumOfFocusTime >= 1) return 500;
-    return 0;
-  }
+  // int calculatePoints(double sumOfFocusTime) {
+  //   if (sumOfFocusTime >= 4) return 7500;
+  //   if (sumOfFocusTime >= 3) return 3500;
+  //   if (sumOfFocusTime >= 2) return 1500;
+  //   if (sumOfFocusTime >= 1) return 500;
+  //   return 0;
+  // }
 
-  int calculateLevel(int points) {
-    if (points >= 8000) return 4;
-    if (points >= 4000) return 3;
-    if (points >= 2000) return 2;
-    if (points >= 500) return 1;
-    return 0;
-  }
+  // int calculateLevel(int points) {
+  //   if (points >= 8000) return 4;
+  //   if (points >= 4000) return 3;
+  //   if (points >= 2000) return 2;
+  //   if (points >= 500) return 1;
+  //   return 0;
+  // }
 
   bool isFriend = false;
 
@@ -142,8 +148,8 @@ class _SearchUserScreenState extends State<SearchUserScreen> {
                     ? timerData['sumOfFocusTime'] / 3600
                     : 0.0;
 
-            int points = calculatePoints(sumOfFocusTime);
-            int level = calculateLevel(points);
+            // int points = calculatePoints(sumOfFocusTime);
+            // int level = calculateLevel(points);
 
             return LayoutBuilder(
               builder: (context, constraints) {
@@ -233,12 +239,14 @@ class _SearchUserScreenState extends State<SearchUserScreen> {
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
-                                        _buildStatColumn(
-                                            level.toString(), "Level"),
+                                        _buildStatColumnLevel("Level"),
+                                        // _buildStatColumn(
+                                        //     level.toString(), "Level"),
                                         _buildStatColumn(
                                             "${sumOfFocusTime.toStringAsFixed(1)}H",
                                             "Time"),
-                                        _buildStatColumn("4", "Tutored"),
+                                        _buildStatColumnTutored("Tutored")
+                                        // _buildStatColumn("4", "Tutored"),
                                       ],
                                     ),
                                   ],
@@ -277,13 +285,30 @@ class _SearchUserScreenState extends State<SearchUserScreen> {
                             _buildStatContainer("Friends",
                                 widget.user.friends.length.toString()),
                             const SizedBox(height: 20),
-                            _buildStatContainer("Points", points.toString()),
+                            _buildStatContainerNewPoints("Points"),
+                            // _buildStatContainer("Points", points.toString()),
                             const SizedBox(height: 20),
-                            _buildStatContainer("Rating", "3.7"),
+                            _buildStatContainerRating('Rating'),
+                            // _buildStatContainer("Rating", "3.7"),
                             const SizedBox(
                               height: 20,
                             ),
-
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                newContainer(
+                                    'Records',
+                                    (context) => TeachingRecords(
+                                        userId: widget.user.uid)),
+                                newContainer(
+                                    'FeedBacks',
+                                    (context) =>
+                                        FeedbacksPage(userId: widget.user.uid)),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
                             GestureDetector(
                               onTap: isFriend ? removeFriend : addFriend,
                               child: Container(
@@ -416,6 +441,224 @@ class _SearchUserScreenState extends State<SearchUserScreen> {
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildStatColumnLevel(
+    String label,
+  ) {
+    return Expanded(
+      child: Container(
+        decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.secondary,
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            // Text(
+            //   value,
+            // style: const TextStyle(
+            //     fontSize: 22,
+            //     fontWeight: FontWeight.w400,
+            //     color: Colors.black),
+            // ),
+            UserStats(
+              userId: widget.user.uid,
+              choice: 'l',
+              fontSize: 24,
+            ),
+            Text(
+              label,
+              style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w300,
+                  color: Colors.grey.shade800),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildStatColumnTutored(
+    String label,
+  ) {
+    return Expanded(
+      child: Container(
+        decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.secondary,
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            // Text(
+            //   value,
+            //   style: const TextStyle(
+            //       fontSize: 22,
+            //       fontWeight: FontWeight.w400,
+            //       color: Colors.black),
+            // ),
+            TutoredCount(
+              userId: widget.user.uid,
+              fontSize: 22,
+            ),
+            Text(
+              label,
+              style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w300,
+                  color: Colors.grey.shade800),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildStatContainerNewPoints(String label) {
+    return Container(
+      width: double.infinity,
+      height: 60,
+      decoration: ShapeDecoration(
+        color: Theme.of(context).colorScheme.primary,
+        shape: RoundedRectangleBorder(
+          side: const BorderSide(width: 1),
+          borderRadius: BorderRadius.circular(10),
+        ),
+        shadows: const [
+          BoxShadow(
+            color: Color(0x3F000000),
+            blurRadius: 4,
+            offset: Offset(0, 4),
+            spreadRadius: 0,
+          )
+        ],
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(left: 30),
+            child: Text(
+              label,
+              style: const TextStyle(
+                fontSize: 17,
+                fontWeight: FontWeight.w400,
+                color: Colors.black,
+              ),
+            ),
+          ),
+          Padding(
+              padding: const EdgeInsets.only(right: 30),
+              child: UserStats(
+                choice: 'p',
+                userId: widget.user.uid,
+                fontSize: 17,
+              )
+              // child:Text(
+              //   value,
+              //   style: const TextStyle(
+              //     fontSize: 17,
+              //     fontWeight: FontWeight.w400,
+              //     color: Colors.black,
+              //   ),
+              // ),
+              ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildStatContainerRating(String label) {
+    return Container(
+      width: double.infinity,
+      height: 60,
+      decoration: ShapeDecoration(
+        color: Theme.of(context).colorScheme.primary,
+        shape: RoundedRectangleBorder(
+          side: const BorderSide(width: 1),
+          borderRadius: BorderRadius.circular(10),
+        ),
+        shadows: const [
+          BoxShadow(
+            color: Color(0x3F000000),
+            blurRadius: 4,
+            offset: Offset(0, 4),
+            spreadRadius: 0,
+          )
+        ],
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(left: 30),
+            child: Text(
+              label,
+              style: const TextStyle(
+                fontSize: 17,
+                fontWeight: FontWeight.w400,
+                color: Colors.black,
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(right: 30),
+            child: UserRatingWidget(userId: widget.user.uid)
+                .buildAverageRatingWidget(),
+
+            //  Text(
+            //   value,
+            //   style: const TextStyle(
+            //     fontSize: 17,
+            //     fontWeight: FontWeight.w400,
+            //     color: Colors.black,
+            //   ),
+            // ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget newContainer(String title, WidgetBuilder builder) {
+    return InkWell(
+      onTap: () => Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: builder,
+        ),
+      ),
+      child: Container(
+          decoration: ShapeDecoration(
+            color: Theme.of(context).colorScheme.primary,
+            shape: RoundedRectangleBorder(
+              side: const BorderSide(width: 1),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            shadows: const [
+              BoxShadow(
+                color: Color(0x3F000000),
+                blurRadius: 4,
+                offset: Offset(0, 4),
+                spreadRadius: 0,
+              )
+            ],
+          ),
+          width: 2.2 * MediaQuery.of(context).size.width / 5,
+          height: 60,
+          child: Center(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  title,
+                  style: const TextStyle(fontSize: 18.0),
+                ),
+                const Icon(Icons.chevron_right_outlined),
+              ],
+            ),
+          )),
     );
   }
 }

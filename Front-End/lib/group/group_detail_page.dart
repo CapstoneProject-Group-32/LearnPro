@@ -1,3 +1,5 @@
+import 'package:LearnPro/tutoring_system/custom_button.dart';
+import 'package:LearnPro/tutoring_system/group_notification_icon_with_badge.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -21,6 +23,16 @@ class GroupDetailPage extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: Text(groupName),
+          leading: IconButton(
+            icon: const Icon(
+              Icons.arrow_back_ios_new_rounded,
+              size: 20,
+              color: Colors.black,
+            ),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
           actions: [
             FutureBuilder<DocumentSnapshot>(
               future: FirebaseFirestore.instance
@@ -37,7 +49,9 @@ class GroupDetailPage extends StatelessWidget {
 
                 if (currentUser!.uid == groupData['owner']) {
                   return IconButton(
-                    icon: const Icon(Icons.notifications),
+                    icon: GroupNotificationIconWithBadge(
+                      groupName: groupData['groupname'],
+                    ),
                     onPressed: () {
                       Navigator.push(
                         context,
@@ -76,6 +90,7 @@ class GroupDetailPage extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
                         groupData['groupname'],
@@ -86,11 +101,15 @@ class GroupDetailPage extends StatelessWidget {
                       const SizedBox(height: 8),
                       Text('Members: ${groupData['members'].length}'),
                       const SizedBox(height: 8),
-                      Text(groupData['groupdescription']),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(groupData['groupdescription']),
+                      ),
                     ],
                   ),
                 ),
                 const TabBar(
+                  dividerColor: Colors.transparent,
                   tabs: [
                     Tab(text: "Content"),
                     Tab(text: "Members"),
@@ -111,17 +130,6 @@ class GroupDetailPage extends StatelessWidget {
               ],
             );
           },
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => ContentUploadForm(groupName: groupName),
-              ),
-            );
-          },
-          child: const Icon(Icons.add),
         ),
       ),
     );
@@ -146,50 +154,63 @@ class ContentTab extends StatelessWidget {
         var groupData = snapshot.data!.data() as Map<String, dynamic>;
         var owner = groupData['owner'];
 
-        return StreamBuilder(
-          stream: FirebaseFirestore.instance
-              .collection('groups')
-              .doc(groupName)
-              .collection('groupcontents')
-              .snapshots(),
-          builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-            if (!snapshot.hasData) {
-              return const Center(child: CircularProgressIndicator());
-            }
+        return Scaffold(
+          floatingActionButton: FloatingActionButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ContentUploadForm(groupName: groupName),
+                ),
+              );
+            },
+            child: const Icon(Icons.add),
+          ),
+          body: StreamBuilder(
+            stream: FirebaseFirestore.instance
+                .collection('groups')
+                .doc(groupName)
+                .collection('groupcontents')
+                .snapshots(),
+            builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+              if (!snapshot.hasData) {
+                return const Center(child: CircularProgressIndicator());
+              }
 
-            var currentUser = FirebaseAuth.instance.currentUser;
-            var contents = snapshot.data!.docs;
+              var currentUser = FirebaseAuth.instance.currentUser;
+              var contents = snapshot.data!.docs;
 
-            return ListView(
-              children: contents.map((doc) {
-                var contentData = doc.data() as Map<String, dynamic>;
-                return FutureBuilder<DocumentSnapshot>(
-                  future: FirebaseFirestore.instance
-                      .collection('users')
-                      .doc(contentData['postedby'])
-                      .get(),
-                  builder: (context, userSnapshot) {
-                    if (!userSnapshot.hasData) {
-                      return const Center(child: CircularProgressIndicator());
-                    }
+              return ListView(
+                children: contents.map((doc) {
+                  var contentData = doc.data() as Map<String, dynamic>;
+                  return FutureBuilder<DocumentSnapshot>(
+                    future: FirebaseFirestore.instance
+                        .collection('users')
+                        .doc(contentData['postedby'])
+                        .get(),
+                    builder: (context, userSnapshot) {
+                      if (!userSnapshot.hasData) {
+                        return const Center(child: CircularProgressIndicator());
+                      }
 
-                    var userData =
-                        userSnapshot.data!.data() as Map<String, dynamic>;
-                    return ContentCard(
-                      groupName: groupName,
-                      contentId: doc.id,
-                      contentData: contentData,
-                      username: userData['userName'],
-                      profilePic: userData['profilePic'],
-                      isOwnerOrPoster:
-                          currentUser!.uid == contentData['postedby'] ||
-                              currentUser.uid == owner,
-                    );
-                  },
-                );
-              }).toList(),
-            );
-          },
+                      var userData =
+                          userSnapshot.data!.data() as Map<String, dynamic>;
+                      return ContentCard(
+                        groupName: groupName,
+                        contentId: doc.id,
+                        contentData: contentData,
+                        username: userData['userName'],
+                        profilePic: userData['profilePic'],
+                        isOwnerOrPoster:
+                            currentUser!.uid == contentData['postedby'] ||
+                                currentUser.uid == owner,
+                      );
+                    },
+                  );
+                }).toList(),
+              );
+            },
+          ),
         );
       },
     );
@@ -596,61 +617,80 @@ class MembersTab extends StatelessWidget {
           ),
         ),
         if (FirebaseAuth.instance.currentUser!.uid == owner)
-          Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) =>
-                          SendGroupInvites(groupName: groupName)),
-                );
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFF29F6D2),
-                foregroundColor:
-                    Colors.black, // Use foregroundColor for text color
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10.0),
-                ),
-                textStyle: const TextStyle(
-                  fontSize: 25.0,
-                  fontFamily: 'Work Sans',
-                  fontWeight: FontWeight.w500,
-                ),
-                minimumSize: const Size(150.0, 50.0), // Set width and height
-                padding: EdgeInsets.zero, // Remove default padding
-              ),
-              child: const Text('Invite'),
-            ),
+          CustomButton(
+            text: "Invite",
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) =>
+                        SendGroupInvites(groupName: groupName)),
+              );
+            },
+            backgroundColor: Theme.of(context).colorScheme.secondary,
+            borderColor: Theme.of(context).colorScheme.secondary,
           ),
+        // Padding(
+        //   padding: const EdgeInsets.all(20.0),
+        //   child: ElevatedButton(
+        //     onPressed: () {
+        //       Navigator.push(
+        //         context,
+        //         MaterialPageRoute(
+        //             builder: (context) =>
+        //                 SendGroupInvites(groupName: groupName)),
+        //       );
+        //     },
+        //     style: ElevatedButton.styleFrom(
+        //       backgroundColor: const Color(0xFF29F6D2),
+        //       foregroundColor:
+        //           Colors.black, // Use foregroundColor for text color
+        //       shape: RoundedRectangleBorder(
+        //         borderRadius: BorderRadius.circular(10.0),
+        //       ),
+        //       textStyle: const TextStyle(
+        //         fontSize: 25.0,
+        //         fontFamily: 'Work Sans',
+        //         fontWeight: FontWeight.w500,
+        //       ),
+        //       minimumSize: const Size(150.0, 50.0), // Set width and height
+        //       padding: EdgeInsets.zero, // Remove default padding
+        //     ),
+        //     child: const Text('Invite'),
+        //   ),
+        // ),
         if (FirebaseAuth.instance.currentUser!.uid != owner)
-//
-          Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: ElevatedButton(
+          CustomButton(
+              text: "Leave",
               onPressed: () {
                 _showLeaveDialog(context);
               },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFF29F6D2),
-                foregroundColor:
-                    Colors.black, // Use foregroundColor for text color
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10.0),
-                ),
-                textStyle: const TextStyle(
-                  fontSize: 25.0,
-                  fontFamily: 'Work Sans',
-                  fontWeight: FontWeight.w500,
-                ),
-                minimumSize: const Size(150.0, 50.0), // Set width and height
-                padding: EdgeInsets.zero, // Remove default padding
-              ),
-              child: const Text('Leave'),
-            ),
-          )
+              backgroundColor: Colors.redAccent.shade700),
+//
+        // Padding(
+        //   padding: const EdgeInsets.all(20.0),
+        //   child: ElevatedButton(
+        //     onPressed: () {
+        //       _showLeaveDialog(context);
+        //     },
+        //     style: ElevatedButton.styleFrom(
+        //       backgroundColor: const Color(0xFF29F6D2),
+        //       foregroundColor:
+        //           Colors.black, // Use foregroundColor for text color
+        //       shape: RoundedRectangleBorder(
+        //         borderRadius: BorderRadius.circular(10.0),
+        //       ),
+        //       textStyle: const TextStyle(
+        //         fontSize: 25.0,
+        //         fontFamily: 'Work Sans',
+        //         fontWeight: FontWeight.w500,
+        //       ),
+        //       minimumSize: const Size(150.0, 50.0), // Set width and height
+        //       padding: EdgeInsets.zero, // Remove default padding
+        //     ),
+        //     child: const Text('Leave'),
+        //   ),
+        // )
       ],
     );
   }
