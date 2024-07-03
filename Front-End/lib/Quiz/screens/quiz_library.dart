@@ -93,8 +93,8 @@ class _QuizLibraryWidgetState extends State<QuizLibraryWidget> {
                                   child: Text(
                                     subject,
                                     style: const TextStyle(
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: 17),
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 15),
                                   ),
                                 ),
                                 Container(
@@ -129,6 +129,10 @@ class _QuizLibraryWidgetState extends State<QuizLibraryWidget> {
                                               .secondary,
                                           margin: const EdgeInsets.fromLTRB(
                                               8, 4, 12, 4),
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                          ),
                                           child: ListTile(
                                             title: Padding(
                                               padding:

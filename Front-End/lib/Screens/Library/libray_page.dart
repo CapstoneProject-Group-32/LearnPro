@@ -52,7 +52,7 @@ class LibraryPage extends StatelessWidget {
                     child: Text(
                       entry.key,
                       style: const TextStyle(
-                          fontSize: 20, fontWeight: FontWeight.bold),
+                          fontSize: 17, fontWeight: FontWeight.w500),
                     ),
                   ),
                   GridView.builder(
@@ -74,7 +74,8 @@ class LibraryPage extends StatelessWidget {
                         },
                         child: Card(
                           color: Theme.of(context).colorScheme.primary,
-                          margin: const EdgeInsets.all(15.0),
+                          margin: const EdgeInsets.only(
+                              left: 15, right: 15, bottom: 15),
                           child: Stack(
                             children: [
                               Container(
@@ -102,7 +103,7 @@ class LibraryPage extends StatelessWidget {
                                   ),
                                   child: Text(
                                     style: const TextStyle(
-                                      fontSize: 18,
+                                      fontSize: 14,
                                     ),
                                     doc['title'],
                                     textAlign: TextAlign.center,
@@ -173,6 +174,9 @@ class LibraryPage extends StatelessWidget {
                       );
                     },
                   ),
+                  // const SizedBox(
+                  // height: 20,
+                  //),
                 ],
               );
             }).toList(),

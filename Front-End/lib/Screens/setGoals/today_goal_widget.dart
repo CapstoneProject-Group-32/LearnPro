@@ -96,7 +96,7 @@ class TodayGoalsWidget extends StatelessWidget {
                         ),
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: Expanded(child: Text(goal)),
+                          child: Text(goal),
                         ),
                       ),
                     ],

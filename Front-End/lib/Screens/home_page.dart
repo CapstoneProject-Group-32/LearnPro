@@ -14,6 +14,7 @@ import 'package:LearnPro/Screens/Community/community_tabbar.dart';
 import 'package:LearnPro/Screens/Timer/timer_page.dart';
 import 'package:LearnPro/Widgets/navigation_bar.dart';
 import 'package:LearnPro/group/group_detail_page.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 
 import 'Timer/focus_time_sum.dart';
@@ -73,11 +74,6 @@ class _HomePageState extends State<HomePage> {
     _motoScrollTimer.cancel();
     super.dispose();
   }
-
-  // Future<void> _refreshPage() async {
-  //   // Add any data fetching or refreshing logic here
-  //   setState(() {});
-  // }
 
   Future<void> _refreshPage() async {
     Navigator.pushReplacement(
@@ -139,8 +135,7 @@ class _HomePageState extends State<HomePage> {
                                 child: const Text("No"),
                               ),
                               ElevatedButton(
-                                onPressed: () =>
-                                    Navigator.of(context).pop(true),
+                                onPressed: () => SystemNavigator.pop(),
                                 child: const Text("Exit"),
                               ),
                             ],
@@ -369,7 +364,8 @@ class _HomePageState extends State<HomePage> {
 
                             _viewallButton(
                               context,
-                              const CommunityTabBar(),
+                              const NavigationBarBottom(
+                                  initialIndex: 3, communityTabBarIndex: 1),
                             ),
                             const SizedBox(
                               height: 10,
@@ -394,7 +390,8 @@ class _HomePageState extends State<HomePage> {
 
                             _viewallButton(
                               context,
-                              const CommunityTabBar(),
+                              const NavigationBarBottom(
+                                  initialIndex: 3, communityTabBarIndex: 0),
                             ),
 
                             const SizedBox(

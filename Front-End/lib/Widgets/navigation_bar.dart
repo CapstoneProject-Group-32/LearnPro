@@ -32,7 +32,7 @@ class _NavigationBarBottomState extends State<NavigationBarBottom> {
       const HomePage(),
       LearningTabBar(initialIndex: widget.learningTabBarIndex ?? 0),
       const LearnDesk(),
-      CommunityTabBar(initialIndex: widget.learningTabBarIndex ?? 0),
+      CommunityTabBar(initialIndex: widget.communityTabBarIndex ?? 0),
       const UserProfile(),
     ];
   }

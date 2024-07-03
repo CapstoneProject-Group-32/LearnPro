@@ -276,14 +276,6 @@ class _SetGoalsState extends State<SetGoals> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        // Navigator.pushReplacement(
-        //   context,
-        //   MaterialPageRoute(
-        //     builder: (context) => const NavigationBarBottom(
-        //       initialIndex: 0,
-        //     ),
-        //   ),
-        // );
         Navigator.pop(context);
         return false; // Prevent the default back button behavior
       },
