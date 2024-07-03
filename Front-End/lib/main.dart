@@ -6,7 +6,6 @@ import 'package:LearnPro/theme/dark_theme.dart';
 import 'package:LearnPro/theme/light_theme.dart';
 import 'package:LearnPro/wrapper.dart';
 import 'package:provider/provider.dart';
-
 import 'Flashcards/generate_flashcard.dart';
 import 'Quiz/quiz_controler.dart';
 

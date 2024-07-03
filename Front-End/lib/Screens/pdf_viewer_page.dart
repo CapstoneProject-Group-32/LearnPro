@@ -30,15 +30,6 @@ class _PdfViewerPageState extends State<PdfViewerPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const CustomAppBar(title: 'Pdf viewer'),
-      // appBar: AppBar(
-      //   title: const Text(
-      //     "PDF Viewer",
-      //     style: TextStyle(
-      //       color: Color.fromARGB(255, 38, 4, 4),
-      //     ),
-      //   ),
-      //   backgroundColor: const Color.fromARGB(255, 255, 255, 255),
-      // ),
       body: _buildUI(),
     );
   }

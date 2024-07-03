@@ -1,4 +1,3 @@
-import 'package:LearnPro/Screens/home_page.dart';
 import 'package:LearnPro/Widgets/navigation_bar.dart';
 import 'package:LearnPro/tutoring_system/custom_button.dart';
 import 'package:flutter/material.dart';
@@ -277,14 +276,15 @@ class _SetGoalsState extends State<SetGoals> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const NavigationBarBottom(
-              initialIndex: 0,
-            ),
-          ),
-        );
+        // Navigator.pushReplacement(
+        //   context,
+        //   MaterialPageRoute(
+        //     builder: (context) => const NavigationBarBottom(
+        //       initialIndex: 0,
+        //     ),
+        //   ),
+        // );
+        Navigator.pop(context);
         return false; // Prevent the default back button behavior
       },
       child: Scaffold(
@@ -305,14 +305,7 @@ class _SetGoalsState extends State<SetGoals> {
               color: Colors.black,
             ),
             onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const NavigationBarBottom(
-                    initialIndex: 0,
-                  ),
-                ),
-              );
+              Navigator.pop(context);
             },
           ),
         ),
