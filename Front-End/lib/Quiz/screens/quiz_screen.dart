@@ -94,124 +94,132 @@ class _QuizScreenState extends State<QuizScreen> {
           },
         ),
       ),
-      body: Container(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Question ${_currentQuestionIndex + 1} of ${widget.questions.length}',
-                style: const TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(height: 16),
-              Card(
-                color: Theme.of(context).colorScheme.primary,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        question.questionText,
-                        style: const TextStyle(fontSize: 16),
-                      ),
-                      const SizedBox(height: 16),
-                      ...question.options.asMap().entries.map((entry) {
-                        final index = entry.key;
-                        final option = entry.value;
-                        return GestureDetector(
-                          onTap: () {
-                            _selectOption(index);
-                          },
-                          child: Container(
-                            margin: const EdgeInsets.symmetric(vertical: 8),
-                            padding: const EdgeInsets.all(12),
-                            decoration: BoxDecoration(
-                              color: _selectedOptions[_currentQuestionIndex] ==
-                                      index
-                                  ? Colors.blue.withOpacity(0.3)
-                                  : Colors.grey.withOpacity(0.2),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: Row(
-                              children: [
-                                Radio<int>(
-                                  value: index,
-                                  groupValue:
-                                      _selectedOptions[_currentQuestionIndex],
-                                  onChanged: (value) {
-                                    _selectOption(index);
-                                  },
-                                ),
-                                const SizedBox(width: 8),
-                                Expanded(
-                                  child: Text(
-                                    option,
-                                    style: const TextStyle(fontSize: 16),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        );
-                      }),
-                    ],
-                  ),
-                ),
-              ),
-              const Spacer(),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      body: Column(
+        children: [
+          Expanded(
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  ElevatedButton(
-                    onPressed:
-                        _currentQuestionIndex > 0 ? _previousQuestion : null,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Theme.of(context).colorScheme.secondary,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 32, vertical: 12),
+                  Text(
+                    'Question ${_currentQuestionIndex + 1} of ${widget.questions.length}',
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
                     ),
-                    child: Text('Previous',
-                        style: TextStyle(
-                          color: textColor,
-                        )),
                   ),
-                  ElevatedButton(
-                    onPressed: _selectedOptions[_currentQuestionIndex] != null
-                        ? _nextQuestion
-                        : null,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Theme.of(context).colorScheme.secondary,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 32, vertical: 12),
+                  const SizedBox(height: 16),
+                  Card(
+                    color: Theme.of(context).colorScheme.primary,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15),
                     ),
-                    child: Text(
-                      _currentQuestionIndex == widget.questions.length - 1
-                          ? 'Submit'
-                          : 'Next',
-                      style: TextStyle(
-                        color: textColor,
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            question.questionText,
+                            style: const TextStyle(fontSize: 16),
+                          ),
+                          const SizedBox(height: 16),
+                          ...question.options.asMap().entries.map((entry) {
+                            final index = entry.key;
+                            final option = entry.value;
+                            return GestureDetector(
+                              onTap: () {
+                                _selectOption(index);
+                              },
+                              child: Container(
+                                margin: const EdgeInsets.symmetric(vertical: 8),
+                                padding: const EdgeInsets.all(12),
+                                decoration: BoxDecoration(
+                                  color:
+                                      _selectedOptions[_currentQuestionIndex] ==
+                                              index
+                                          ? Colors.blue.withOpacity(0.3)
+                                          : Colors.grey.withOpacity(0.2),
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: Row(
+                                  children: [
+                                    Radio<int>(
+                                      value: index,
+                                      groupValue: _selectedOptions[
+                                          _currentQuestionIndex],
+                                      onChanged: (value) {
+                                        _selectOption(index);
+                                      },
+                                    ),
+                                    const SizedBox(width: 8),
+                                    Expanded(
+                                      child: Text(
+                                        option,
+                                        style: const TextStyle(fontSize: 16),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            );
+                          }),
+                        ],
                       ),
                     ),
                   ),
                 ],
               ),
-            ],
+            ),
           ),
-        ),
+          Container(
+            color: Theme.of(context).colorScheme.background,
+            padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 32),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                ElevatedButton(
+                  onPressed:
+                      _currentQuestionIndex > 0 ? _previousQuestion : null,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Theme.of(context).colorScheme.secondary,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 32, vertical: 12),
+                  ),
+                  child: Text('Previous',
+                      style: TextStyle(
+                        color: textColor,
+                      )),
+                ),
+                ElevatedButton(
+                  onPressed: _selectedOptions[_currentQuestionIndex] != null
+                      ? _nextQuestion
+                      : null,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Theme.of(context).colorScheme.secondary,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 32, vertical: 12),
+                  ),
+                  child: Text(
+                    _currentQuestionIndex == widget.questions.length - 1
+                        ? 'Submit'
+                        : 'Next',
+                    style: TextStyle(
+                      color: textColor,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          )
+        ],
       ),
     );
   }

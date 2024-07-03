@@ -33,7 +33,6 @@ class QuizHomescreen extends StatelessWidget {
 
     return Scaffold(
       appBar: const CustomAppBar(title: 'Quizes'),
-
       body: StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance
             .collection('users')
@@ -170,18 +169,38 @@ class QuizHomescreen extends StatelessWidget {
             },
           );
 
-          List<Question> questions;
-          questions = await Provider.of<QuizController>(context, listen: false)
-              .createQuiz(uid!, flashcardSetId);
+          try {
+            List<Question> questions;
+            questions =
+                await Provider.of<QuizController>(context, listen: false)
+                    .createQuiz(uid!, flashcardSetId);
 
-          Navigator.pop(context);
+            Navigator.pop(context);
 
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => QuizScreen(questions: questions),
-            ),
-          );
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => QuizScreen(questions: questions),
+              ),
+            );
+          } catch (e) {
+            Navigator.pop(context);
+            showDialog(
+              context: context,
+              builder: (context) {
+                return AlertDialog(
+                  title: const Text('Oops !!!'),
+                  content: const Text('Server busy... Please try again.'),
+                  actions: [
+                    TextButton(
+                      onPressed: () => Navigator.pop(context),
+                      child: Text('OK',style: TextStyle(color: textColor),),
+                    ),
+                  ],
+                );
+              },
+            );
+          }
         },
         child: Container(
           width: 200,
