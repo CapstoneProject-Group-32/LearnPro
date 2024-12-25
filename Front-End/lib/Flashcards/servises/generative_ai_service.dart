@@ -1,9 +1,9 @@
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 
 class GenerativeAIService {
   final model = GenerativeModel(
-      model: "gemini-1.5-pro-latest",
-      apiKey: "AIzaSyCVvMSw88d29co-TsEBuREFbXFsaRmrwLU");
+      model: "gemini-1.5-pro-latest", apiKey: dotenv.env['APIKEY']!);
 
   Future<String> generateFlashcardContent(
       String subject, String topic, String points) async {

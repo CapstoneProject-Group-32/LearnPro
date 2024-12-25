@@ -78,7 +78,7 @@ class _NotificationIconWithBadgeState extends State<NotificationIconWithBadge> {
     Stream<int> groupInvitationsCountStream =
         firestore.collection('users').doc(userId).snapshots().map((snapshot) {
       List<dynamic> groupInvitations =
-          snapshot.data()?['groupinvitaions'] ?? [];
+          snapshot.data()?['groupinvitations'] ?? [];
       return groupInvitations.length;
     });
 

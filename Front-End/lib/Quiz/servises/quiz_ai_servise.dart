@@ -1,9 +1,11 @@
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 
 class AIQuizService {
   final model = GenerativeModel(
-      model: "gemini-1.5-pro-latest",
-      apiKey: "AIzaSyCVvMSw88d29co-TsEBuREFbXFsaRmrwLU");
+    model: "gemini-1.5-pro-latest",
+    apiKey: dotenv.env['APIKEY']!,
+  );
 
   Future<String> generateQuizContent(String flashcardContent) async {
     final prompt = """
@@ -47,17 +49,15 @@ Please generate 10 quizzes that adhere to these guidelines.
               topP: 0.95,
               topK: 64),
         );
-        return response.text ?? 'No content generated'; 
+        return response.text ?? 'No content generated';
       } catch (e) {
         attempts++;
         print('Attempt $attempts failed: $e');
         if (attempts >= maxAttempts) {
           return 'Error: Failed to generate content after $maxAttempts attempts';
-          
         }
       }
     }
     return 'Error: Unexpected failure';
-    
   }
 }

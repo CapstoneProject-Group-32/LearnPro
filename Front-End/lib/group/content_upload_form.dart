@@ -137,7 +137,7 @@ class _ContentUploadFormState extends State<ContentUploadForm> {
                       text: "Cancel",
                       onPressed:
                           _isLoading ? null : () => Navigator.pop(context),
-                      backgroundColor: Theme.of(context).colorScheme.background,
+                      backgroundColor: Theme.of(context).colorScheme.surface,
                       foregroundColor: Theme.of(context).colorScheme.secondary,
                       // foregroundColor: Colors.red,
                       borderColor: Theme.of(context).colorScheme.secondary,

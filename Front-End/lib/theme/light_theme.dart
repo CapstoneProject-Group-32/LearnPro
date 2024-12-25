@@ -14,7 +14,7 @@ ThemeData lightTheme = ThemeData(
     // primary: Color(0Xffd2d3db),
     // secondary: Color(0xff9394a5),
 
-    background: Color(0Xffb6dcdd),
+    surface: Color(0Xffb6dcdd),
     primary: Color(0Xff93cec3),
     secondary: Color(0xff58b6a6),
   ),

@@ -10,7 +10,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:LearnPro/Models/usermodel.dart';
-import 'package:LearnPro/Screens/Community/community_tabbar.dart';
 import 'package:LearnPro/Screens/Timer/timer_page.dart';
 import 'package:LearnPro/Widgets/navigation_bar.dart';
 import 'package:LearnPro/group/group_detail_page.dart';
@@ -98,7 +97,7 @@ class _HomePageState extends State<HomePage> {
 
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Theme.of(context).colorScheme.background,
+        backgroundColor: Theme.of(context).colorScheme.surface,
         body:
 
 //getting stored user data

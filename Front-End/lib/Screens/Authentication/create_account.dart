@@ -126,7 +126,7 @@ class _CreateAccountState extends State<CreateAccount> {
         return false; // Prevent the default back button behavior
       },
       child: Scaffold(
-        backgroundColor: Theme.of(context).colorScheme.background,
+        backgroundColor: Theme.of(context).colorScheme.surface,
         body: Stack(
           children: [
             SafeArea(

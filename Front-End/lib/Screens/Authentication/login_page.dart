@@ -133,7 +133,7 @@ class _LoginPageState extends State<LoginPage> {
         return false; // Prevent further handling of the back button press
       },
       child: Scaffold(
-        backgroundColor: Theme.of(context).colorScheme.background,
+        backgroundColor: Theme.of(context).colorScheme.surface,
         body: Stack(
           children: [
             SafeArea(

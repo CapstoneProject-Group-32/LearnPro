@@ -1,4 +1,3 @@
-import 'package:LearnPro/Widgets/navigation_bar.dart';
 import 'package:LearnPro/tutoring_system/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -280,7 +279,7 @@ class _SetGoalsState extends State<SetGoals> {
         return false; // Prevent the default back button behavior
       },
       child: Scaffold(
-        backgroundColor: Theme.of(context).colorScheme.background,
+        backgroundColor: Theme.of(context).colorScheme.surface,
         appBar: AppBar(
           title: const Text(
             "Set Goals",

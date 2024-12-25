@@ -220,7 +220,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
       },
       child: SafeArea(
         child: Scaffold(
-          backgroundColor: Theme.of(context).colorScheme.background,
+          backgroundColor: Theme.of(context).colorScheme.surface,
           body: Stack(
             children: [
               SingleChildScrollView(

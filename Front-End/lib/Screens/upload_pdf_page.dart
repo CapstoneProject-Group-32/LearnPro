@@ -146,7 +146,7 @@ class _UploadPdfPageState extends State<UploadPdfPage> {
                   child: CustomButton(
                     text: "Cancel",
                     onPressed: () => Navigator.pop(context),
-                    backgroundColor: Theme.of(context).colorScheme.background,
+                    backgroundColor: Theme.of(context).colorScheme.surface,
                     foregroundColor: Theme.of(context).colorScheme.secondary,
                     // foregroundColor: Colors.red,
                     borderColor: Theme.of(context).colorScheme.secondary,

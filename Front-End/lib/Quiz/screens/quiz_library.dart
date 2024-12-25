@@ -84,12 +84,10 @@ class _QuizLibraryWidgetState extends State<QuizLibraryWidget> {
                             margin: const EdgeInsets.symmetric(
                                 vertical: 10, horizontal: 15),
                             child: Column(
-                              crossAxisAlignment:
-                                  CrossAxisAlignment.start, // Add this line
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Padding(
-                                  padding: const EdgeInsets.all(
-                                      8.0), // Add padding to the subject
+                                  padding: const EdgeInsets.all(8.0),
                                   child: Text(
                                     subject,
                                     style: const TextStyle(
@@ -124,12 +122,12 @@ class _QuizLibraryWidgetState extends State<QuizLibraryWidget> {
 
                                         return Container(
                                           height: 45,
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .secondary,
                                           margin: const EdgeInsets.fromLTRB(
                                               8, 4, 12, 4),
                                           decoration: BoxDecoration(
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .secondary, // Moved color here
                                             borderRadius:
                                                 BorderRadius.circular(10),
                                           ),

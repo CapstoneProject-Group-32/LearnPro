@@ -87,7 +87,7 @@ class _StudyBuddiesState extends State<StudyBuddies> {
     double deviceHeight = MediaQuery.of(context).size.height;
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Theme.of(context).colorScheme.background,
+        backgroundColor: Theme.of(context).colorScheme.surface,
         body: isLoading
             ? const Center(
                 child: SizedBox(
@@ -273,7 +273,7 @@ Widget _studybuddyCardBeforeAddFriend(
               width: 110,
               height: 25,
               decoration: ShapeDecoration(
-                color: Theme.of(context).colorScheme.background,
+                color: Theme.of(context).colorScheme.surface,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(45),
                 ),
