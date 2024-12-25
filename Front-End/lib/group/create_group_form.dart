@@ -248,7 +248,7 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
                           Navigator.of(context).pop();
                         },
                         backgroundColor:
-                            Theme.of(context).colorScheme.background,
+                            Theme.of(context).colorScheme.surface,
                         foregroundColor:
                             Theme.of(context).colorScheme.secondary,
                         // foregroundColor: Colors.red,

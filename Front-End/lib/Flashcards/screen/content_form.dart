@@ -89,7 +89,7 @@ class _ContentFormState extends State<ContentForm> {
       bottomSheet: dataSetMap.isNotEmpty
           ? Container(
               decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.background),
+                  color: Theme.of(context).colorScheme.surface),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -370,7 +370,7 @@ class _ContentFormState extends State<ContentForm> {
                                 Navigator.of(context).pop();
                               },
                               backgroundColor:
-                                  Theme.of(context).colorScheme.background,
+                                  Theme.of(context).colorScheme.surface,
                               foregroundColor:
                                   Theme.of(context).colorScheme.secondary,
                               // foregroundColor: Colors.red,

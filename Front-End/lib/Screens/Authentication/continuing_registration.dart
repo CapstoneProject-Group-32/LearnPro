@@ -173,7 +173,7 @@ class _ContinuingRegistrationState extends State<ContinuingRegistration> {
         return false;
       },
       child: Scaffold(
-        backgroundColor: Theme.of(context).colorScheme.background,
+        backgroundColor: Theme.of(context).colorScheme.surface,
         appBar: AppBar(
           automaticallyImplyLeading: false,
           title: const Text(

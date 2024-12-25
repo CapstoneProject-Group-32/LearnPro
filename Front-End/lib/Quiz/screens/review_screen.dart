@@ -110,7 +110,7 @@ class QuestionReviewScreen extends StatelessWidget {
             ),
           ),
           Container(
-            color: Theme.of(context).colorScheme.background,
+            color: Theme.of(context).colorScheme.surface,
             padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 32),
             child: Center(
                     child: ElevatedButton(

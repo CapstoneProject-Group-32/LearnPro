@@ -252,7 +252,7 @@ class _RequestTuitionFormState extends State<RequestTuitionForm> {
                               Navigator.of(context).pop();
                             },
                             backgroundColor:
-                                Theme.of(context).colorScheme.background,
+                                Theme.of(context).colorScheme.surface,
                             foregroundColor:
                                 Theme.of(context).colorScheme.secondary,
                             // foregroundColor: Colors.red,
