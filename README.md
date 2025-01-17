@@ -60,9 +60,6 @@ LearnPro is a mobile application developed using Flutter and Firebase. It serves
    flutter run
    ```
 
-## Contributing 🙌
-Contributions are welcome! Please fork the repository and create a pull request with your changes.
-
 
 
 ---
