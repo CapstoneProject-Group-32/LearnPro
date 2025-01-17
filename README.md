@@ -45,7 +45,7 @@ LearnPro is a mobile application developed using Flutter and Firebase. It serves
 ### Installation 🛠️
 1. Clone the repository:
    ```bash
-   git clone [https://github.com/yourusername/learnpro.git](https://github.com/CapstoneProject-Group-32/LearnPro.git)
+   git clone https://github.com/CapstoneProject-Group-32/LearnPro.git
    ```
 2. Navigate to the project directory:
    ```bash
